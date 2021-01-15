@@ -1,7 +1,16 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 
 import Header from '../Common/Header';
+import Footer from '../Common/Footer';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -22,7 +31,9 @@ const index = (props) => {
             파트너스
           </Text>
           {/* 파트너스 리스트(list) */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('PartnersDetail')}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -98,10 +109,12 @@ const index = (props) => {
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 파트너스 리스트(list) */}
           {/* 파트너스 리스트(list) */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('PartnersDetail')}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -178,10 +191,12 @@ const index = (props) => {
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 파트너스 리스트(list) */}
           {/* 파트너스 리스트(list) */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('PartnersDetail')}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -242,10 +257,12 @@ const index = (props) => {
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 파트너스 리스트(list) */}
           {/* 파트너스 리스트(list) */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('PartnersDetail')}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -306,10 +323,12 @@ const index = (props) => {
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 파트너스 리스트(list) */}
           {/* 파트너스 리스트(list) */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('PartnersDetail')}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -370,9 +389,11 @@ const index = (props) => {
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 파트너스 리스트(list) */}
         </View>
+
+        <Footer navigation={navigation} />
       </ScrollView>
     </>
   );

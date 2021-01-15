@@ -6,6 +6,7 @@ import MainScreen from '../Screens/Main';
 import EstimateScreen from '../Screens/Main/Estimate';
 import GalleryScreen from '../Screens/Gallery';
 import PartnersScreen from '../Screens/Partners';
+import PartnersDetailScreen from '../Screens/Partners/Detail';
 import StoryScreen from '../Screens/Story';
 import CCenterScreen from '../Screens/CCenter';
 import PaperInfoScreen from '../Screens/PaperInfo';
@@ -45,6 +46,7 @@ export const PartnersStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Partners" component={PartnersScreen} />
+      <Stack.Screen name="PartnersDetail" component={PartnersDetailScreen} />
     </Stack.Navigator>
   );
 };

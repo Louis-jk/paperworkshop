@@ -5,13 +5,19 @@ const Footer = (props) => {
   const navigation = props.navigation;
 
   return (
-    <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 32, paddingHorizontal: 20 }}>
+    <View
+      style={{
+        backgroundColor: '#F5F5F5',
+        paddingVertical: 32,
+        paddingHorizontal: 20,
+        marginTop: 30,
+      }}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          marginBottom: 30,
+          marginBottom: 15,
         }}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Terms')}>
           <View style={{ marginRight: 10 }}>

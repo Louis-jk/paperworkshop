@@ -87,7 +87,7 @@ const index = (props) => {
   return (
     <>
       <StatusBar hidden={true} />
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: '#fff' }}>
         {/* 메인 상단 슬라이더 section */}
         <View
           style={{
@@ -1182,7 +1182,6 @@ const index = (props) => {
                 alignItems: 'center',
                 backgroundColor: '#275696',
                 marginTop: 40,
-                marginBottom: 45,
               }}>
               <Text
                 style={{ textAlign: 'center', fontSize: 16, color: '#fff', paddingVertical: 15 }}>

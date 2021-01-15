@@ -21,7 +21,7 @@ const Header = (props) => {
         setTitle('페이퍼공작소');
         break;
       case 'Partners':
-        setTitle('파트너스 정보');
+        setTitle('파트너스');
         break;
       case 'Gallery':
         setTitle('갤러리');
@@ -37,6 +37,15 @@ const Header = (props) => {
         break;
       case 'Estimate':
         setTitle('실시간 견적 처리 현황');
+        break;
+      case 'Terms':
+        setTitle('이용약관');
+        break;
+      case 'Privacy':
+        setTitle('개인정보 처리방침');
+        break;
+      case 'PartnersDetail':
+        setTitle('파트너스 정보');
         break;
       default:
         return false;
