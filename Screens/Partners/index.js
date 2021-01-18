@@ -104,7 +104,7 @@ const index = (props) => {
             </View>
             <View>
               <Image
-                source={require('../../src/images/img05.jpg')}
+                source={require('../../src/images/p01.jpg')}
                 resizeMode="cover"
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
@@ -186,7 +186,7 @@ const index = (props) => {
             </View>
             <View>
               <Image
-                source={require('../../src/images/img07.jpg')}
+                source={require('../../src/images/p13.jpg')}
                 resizeMode="cover"
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
@@ -252,7 +252,7 @@ const index = (props) => {
             </View>
             <View>
               <Image
-                source={require('../../src/images/img12.jpg')}
+                source={require('../../src/images/p12.jpg')}
                 resizeMode="cover"
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
@@ -318,7 +318,7 @@ const index = (props) => {
             </View>
             <View>
               <Image
-                source={require('../../src/images/img01.jpg')}
+                source={require('../../src/images/p10.jpg')}
                 resizeMode="cover"
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />
@@ -384,7 +384,7 @@ const index = (props) => {
             </View>
             <View>
               <Image
-                source={require('../../src/images/img09.jpg')}
+                source={require('../../src/images/p11.jpg')}
                 resizeMode="cover"
                 style={{ width: 70, height: 70, borderRadius: 5 }}
               />

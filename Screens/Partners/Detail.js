@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Linking,
 } from 'react-native';
+import Swiper from 'react-native-swiper';
+import Carousel from 'react-native-snap-carousel';
 
 import Header from '../Common/Header';
 import Footer from '../Common/Footer';
@@ -19,16 +22,168 @@ const Detail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
+  const phoneNumber = '01012345678';
+  const emailAddress = 'paper_workshop@paperworkshop.com';
+
+  const carouselRef = React.useRef(null);
+
+  const entries = [
+    {
+      id: 1,
+      image: require('../../src/images/p01.jpg'),
+    },
+    {
+      id: 2,
+      image: require('../../src/images/p03.jpg'),
+    },
+    {
+      id: 2,
+      image: require('../../src/images/p04.jpg'),
+    },
+  ];
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <Image
+        key={index}
+        source={item.image}
+        resizeMode="cover"
+        style={{ width: Dimensions.get('window').width, height: 400 }}
+      />
+    );
+  };
+
+  const sliderWidth = Dimensions.get('window').width;
+  const itemWidth = Dimensions.get('window').width;
+
   return (
     <>
       <Header title={routeName} navigation={navigation} />
       <ScrollView style={styles.container}>
-        <View style={{ backgroundColor: '#fff', justifyContent: 'flex-start' }}>
-          <ImageBackground
-            source={require('../../src/images/img06.jpg')}
-            resizeMode="contain"
-            style={{ width: Dimensions.get('window').width, height: 500 }}
+        <View
+          style={{
+            position: 'relative',
+            backgroundColor: '#fff',
+            justifyContent: 'flex-start',
+            marginBottom: 20,
+          }}>
+          {/* <Swiper
+            ref={swiperRef}
+            style={{ height: 400, opacity: 0.85, backgroundColor: '#000' }}
+            showsButtons={false}
+            showsPagination={false}
+            // onIndexChanged={(index) => {
+            //   console.log('swipe index', index);
+            // }}
+          >
+            <Image
+              source={require('../../src/images/p01.jpg')}
+              resizeMode="cover"
+              style={{ width: Dimensions.get('window').width, height: 400 }}
+            />
+            <Image
+              source={require('../../src/images/p01.jpg')}
+              resizeMode="cover"
+              style={{ width: Dimensions.get('window').width, height: 400 }}
+            />
+          </Swiper> */}
+
+          <Carousel
+            ref={carouselRef}
+            data={entries}
+            renderItem={renderItem}
+            sliderWidth={sliderWidth}
+            itemWidth={itemWidth}
+            loop={true}
           />
+
+          {/* Swipe Prev,Next 버튼 Custom */}
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 111,
+              height: 67,
+              backgroundColor: '#275696',
+            }}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                carouselRef.current.snapToPrev();
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '100%',
+                }}>
+                <Image
+                  source={require('../../src/images/prevBtn.png')}
+                  resizeMode="contain"
+                  style={{ width: 20, height: 15 }}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+            <View style={{ borderWidth: 0.5, height: 15, borderColor: '#fff' }} />
+            <TouchableWithoutFeedback
+              onPress={() => {
+                carouselRef.current.snapToNext();
+              }}>
+              <View
+                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <Image
+                  source={require('../../src/images/nextBtn.png')}
+                  resizeMode="contain"
+                  style={{ width: 20, height: 15 }}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          {/* // Swipe Prev,Next 버튼 Custom */}
+
+          {/* 회사정보 상단 fix */}
+          <View
+            style={{
+              position: 'absolute',
+              top: 20,
+              right: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 156,
+              height: 156,
+              backgroundColor: '#fff',
+            }}>
+            <View style={{ justifyContent: 'flex-start' }}>
+              {/* Partner_logo.png */}
+              <Image
+                source={require('../../src/images/Partner_logo.png')}
+                resizeMode="cover"
+                style={{ width: 55, height: 15, marginBottom: 5 }}
+              />
+              <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 5 }}>
+                삼보인쇄(주)
+              </Text>
+              <Text style={{ fontSize: 12, marginBottom: 12 }}>담당자 김성준</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../../src/images/rating04.png')}
+                  resizeMode="cover"
+                  style={{ width: 65, height: 15, marginRight: 5 }}
+                />
+                <Text style={{ fontSize: 12 }}>4.0</Text>
+              </View>
+            </View>
+          </View>
+          {/* // 회사정보 상단 fix */}
         </View>
         <View style={{ paddingHorizontal: 20 }}>
           <View
@@ -42,7 +197,7 @@ const Detail = (props) => {
               backgroundColor: '#fff',
               marginBottom: 10,
             }}>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => Linking.openURL(`tel:${phoneNumber}`)}>
               <View
                 style={{
                   flex: 1,
@@ -67,7 +222,7 @@ const Detail = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => Linking.openURL(`mailto:${emailAddress}`)}>
               <View
                 style={{
                   flex: 1,

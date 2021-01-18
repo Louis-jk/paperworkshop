@@ -28,6 +28,7 @@ export const MainStackNavigator = () => {
       }}>
       <Stack.Screen name="Main" component={MainScreen} />
       <Stack.Screen name="Partners" component={PartnersScreen} />
+      <Stack.Screen name="PartnersDetail" component={PartnersDetailScreen} />
       <Stack.Screen name="Terms" component={TermsScreen} />
       <Stack.Screen name="Privacy" component={PrivacyScreen} />
       <Stack.Screen name="Estimate" component={EstimateScreen} />

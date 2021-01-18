@@ -14,64 +14,42 @@ import {
 import AutoHeightImage from 'react-native-auto-height-image';
 import { SliderBox } from 'react-native-image-slider-box';
 import Slider from '@react-native-community/slider';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
 import Footer from '../Common/Footer';
 
 const index = (props) => {
   const navigation = props.navigation;
   const [currentIndex, setCurrentIndex] = React.useState(1);
-  const [mainStepPercent, setMainStepPercent] = React.useState(1);
+  const [mainPercent, setMainPercent] = React.useState(1);
   const [currentRqIndex, setCurrentRqIndex] = React.useState(1);
   const [stepPercent, setStepPercent] = React.useState(1);
   const [currentBnIndex, setCurrentBnIndex] = React.useState(1);
 
-  const imageList = [
-    require('../../src/images/main_img01.jpg'),
-    require('../../src/images/main_img02.jpg'),
-    require('../../src/images/main_img03.jpg'),
-  ];
-
-  const rqImageList = [
-    require('../../src/images/s_img01.jpg'),
-    require('../../src/images/s_img02.jpg'),
-    require('../../src/images/s_img03.jpg'),
-  ];
-
-  const bannerList = [
-    require('../../src/images/img08.jpg'),
-    require('../../src/images/img09.jpg'),
-    require('../../src/images/img10.jpg'),
-  ];
-
-  const rqContent = [
+  const mainBanners = [
     {
       id: 1,
-      title: '견적요청',
-      step: 'STEP 1',
-      description: '간단견적만 작성하신다면 나머지는 페이퍼공작소가 도와드리겠습니다.',
-      info: '세부견적까지 작성하신다면 견적요청은 즉시 OK!',
+      image: require('../../src/images/main_img01.jpg'),
     },
     {
       id: 2,
-      title: '견적요청',
-      step: 'STEP 2',
-      description: '간단견적만 작성하신다면 나머지는 페이퍼공작소가 도와드리겠습니다.',
-      info: '세부견적까지 작성하신다면 견적요청은 즉시 OK!',
+      image: require('../../src/images/main_img02.jpg'),
     },
     {
       id: 3,
-      title: '견적요청',
-      step: 'STEP 3',
-      description: '간단견적만 작성하신다면 나머지는 페이퍼공작소가 도와드리겠습니다.',
-      info: '세부견적까지 작성하신다면 견적요청은 즉시 OK!',
+      image: require('../../src/images/main_img03.jpg'),
     },
   ];
 
   React.useEffect(() => {
-    let initialPer = 1 / rqImageList.length;
-    setStepPercent(initialPer);
+    let initialPer01 = 1 / mainBanners.length;
+    setMainPercent(initialPer01);
+
+    let initialPer02 = 1 / steps.length;
+    setStepPercent(initialPer02);
+
     return () => {
+      setMainPercent();
       setStepPercent();
     };
   }, []);
@@ -84,6 +62,105 @@ const index = (props) => {
     ]);
   };
 
+  const mainCarouselRef = React.useRef(null);
+  const stepCarouselRef = React.useRef(null);
+  const bannerCarouselRef = React.useRef(null);
+
+  const steps = [
+    {
+      id: 1,
+      image: require('../../src/images/s_img01.jpg'),
+    },
+    {
+      id: 2,
+      image: require('../../src/images/s_img02.jpg'),
+    },
+    {
+      id: 3,
+      image: require('../../src/images/s_img03.jpg'),
+    },
+  ];
+
+  const banners = [
+    {
+      id: 1,
+      image: require('../../src/images/img13.jpg'),
+    },
+    {
+      id: 2,
+      image: require('../../src/images/img12.jpg'),
+    },
+    {
+      id: 3,
+      image: require('../../src/images/img06.jpg'),
+    },
+    {
+      id: 4,
+      image: require('../../src/images/img07.jpg'),
+    },
+    {
+      id: 5,
+      image: require('../../src/images/img08.jpg'),
+    },
+  ];
+
+  const mainRenderItem = ({ item, index }) => {
+    return (
+      <View style={{ borderRadius: 20, height: 120 }}>
+        <Image
+          key={index}
+          source={item.image}
+          resizeMode="cover"
+          style={{
+            width: '100%',
+            height: 400,
+          }}
+        />
+      </View>
+    );
+  };
+
+  const stepRenderItem = ({ item, index }) => {
+    return (
+      <View style={{ borderRadius: 20, height: 120 }}>
+        <Image
+          key={index}
+          source={item.image}
+          resizeMode="cover"
+          style={{
+            width: '100%',
+            height: 350,
+          }}
+        />
+      </View>
+    );
+  };
+
+  const sliderWidth = Dimensions.get('window').width;
+  const minItemWidth = Dimensions.get('window').width;
+  const itemWidth = Dimensions.get('window').width - 60;
+
+  const [activeSlide, setActiveSlide] = React.useState(0);
+  const [mainActiveSlide, setMainActiveSlide] = React.useState(0);
+  const [stepActiveSlide, setStepActiveSlide] = React.useState(0);
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <View style={{ borderRadius: 20, height: 120 }}>
+        <Image
+          key={index}
+          source={item.image}
+          resizeMode="cover"
+          style={{
+            width: '100%',
+            height: '100%',
+            borderRadius: 7,
+          }}
+        />
+      </View>
+    );
+  };
+
   return (
     <>
       <StatusBar hidden={true} />
@@ -94,29 +171,20 @@ const index = (props) => {
             width: Dimensions.get('window').width,
           }}>
           <View style={{ position: 'relative', height: 400 }}>
-            <SliderBox
-              autoplay={true} //자동 슬라이드 넘김
-              circleLoop={true} //맨끝 슬라이드에서 다시 첫슬라이드로
-              resizeMode="cover" // 이미지 사이즈 조절값
-              images={imageList} // 이미지 주소 리스트
-              dotColor="rgba(0,0,0,0)" // 아래 점 투명으로 안보이게 가림
-              inactiveDotColor="rgba(0,0,0,0)"
-              paginationBoxVerticalPadding={50}
-              ImageComponentStyle={{
-                width: Dimensions.get('window').width,
-                opacity: 0.8,
-                backgroundColor: '#fff',
-              }} // 이미지 Style 적용
-              sliderBoxHeight={400}
-              currentImageEmitter={(index) => {
-                // 이미지가 바뀔때 어떤 동작을 할지 설정
-                setCurrentIndex(index + 1);
-                let stp = (currentIndex + 1) / imageList.length;
-                if (stp > 1) {
-                  stp = 1 / imageList.length;
-                }
-                setMainStepPercent(stp);
+            <Carousel
+              ref={mainCarouselRef}
+              data={mainBanners}
+              renderItem={mainRenderItem}
+              sliderWidth={sliderWidth}
+              itemWidth={minItemWidth}
+              layout="default"
+              loop={true}
+              onSnapToItem={(index) => {
+                setMainActiveSlide(index);
+                let stepPer = (index + 1) / mainBanners.length;
+                setMainPercent(stepPer);
               }}
+              containerCustomStyle={{ height: 400 }}
             />
             <View
               style={{
@@ -131,7 +199,7 @@ const index = (props) => {
                   alignItems: 'center',
                 }}>
                 <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#275696' }}>
-                  0{currentIndex}
+                  0{mainActiveSlide + 1}
                   {/* //총 이미지 갯수중 현재 index가 몇인지를 나타낸다 */}
                 </Text>
                 <View
@@ -147,14 +215,14 @@ const index = (props) => {
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      width: mainStepPercent === 1 ? '100%' : `${mainStepPercent * 100}%`,
+                      width: mainPercent === 1 ? '100%' : `${mainPercent * 100}%`,
                       height: 2,
                       backgroundColor: '#275696',
                     }}
                   />
                 </View>
                 <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C1C1C1' }}>
-                  0{imageList.length}
+                  0{mainBanners.length}
                 </Text>
               </View>
             </View>
@@ -425,7 +493,7 @@ const index = (props) => {
                 alignItems: 'center',
               }}>
               <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#275696' }}>
-                0{currentRqIndex}
+                {/* 0{currentRqIndex} */}0{stepActiveSlide + 1}
                 {/* //총 이미지 갯수중 현재 index가 몇인지를 나타낸다 */}
               </Text>
               <View
@@ -447,43 +515,29 @@ const index = (props) => {
                   }}
                 />
               </View>
-              {/* <Slider
-                style={{width: 80, height: 40}}
-                minimumValue={0}
-                maximumValue={1}
-                value={stepPercent}
-                minimumTrackTintColor="#275696"
-                maximumTrackTintColor="#C1C1C1"
-              /> */}
               <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C1C1C1' }}>
-                0{imageList.length}
+                0{mainBanners.length}
               </Text>
             </View>
           </View>
           <View>
-            <SliderBox
-              autoplay={false} //자동 슬라이드 넘김
-              circleLoop={true} //맨끝 슬라이드에서 다시 첫슬라이드로
-              resizeMode="cover" // 이미지 사이즈 조절값
-              images={rqImageList} // 이미지 주소 리스트
-              dotColor="rgba(0,0,0,0)" // 아래 점 투명으로 안보이게 가림
-              inactiveDotColor="rgba(0,0,0,0)"
-              ImageComponentStyle={{
-                width: Dimensions.get('window').width - 40,
-                height: 350,
-                backgroundColor: '#fff',
-              }} // 이미지 Style 적용
-              currentImageEmitter={(index) => {
-                // 이미지가 바뀔때 어떤 동작을 할지 설정
-                console.log('index ? ', index);
-                setCurrentRqIndex(index + 1);
-                let stp = (currentRqIndex + 1) / rqImageList.length;
-                console.log('stp', stp);
-                if (stp > 1) {
-                  stp = 1 / rqImageList.length;
-                }
-                setStepPercent(stp);
+            <Carousel
+              ref={stepCarouselRef}
+              data={steps}
+              renderItem={stepRenderItem}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              layout="default"
+              loop={false}
+              onSnapToItem={(index) => {
+                // console.log('C index', index);
+                setStepActiveSlide(index);
+
+                let stepPer = (index + 1) / steps.length;
+                setStepPercent(stepPer);
               }}
+              containerCustomStyle={{ height: 350 }}
+              // contentInset={{ marginHorizontal: 20 }}
             />
           </View>
         </View>
@@ -497,28 +551,44 @@ const index = (props) => {
             position: 'relative',
           }}>
           <View>
-            <SliderBox
-              autoplay={true} //자동 슬라이드 넘김
-              circleLoop={true} //맨끝 슬라이드에서 다시 첫슬라이드로
-              resizeMode="cover" // 이미지 사이즈 조절값
-              images={bannerList} // 이미지 주소 리스트
-              dotColor="rgba(39, 86, 150, 1)"
-              inactiveDotColor="rgba(200, 200, 200, 1)"
-              ImageComponentStyle={{
-                width: Dimensions.get('window').width - 40,
-                borderRadius: 7,
-                backgroundColor: '#fff',
-              }} // 이미지 Style 적용
-              sliderBoxHeight={120}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 5,
-                marginHorizontal: 0,
-                padding: 0,
-                margin: 0,
-                backgroundColor: 'rgba(200, 200, 200, 1)',
+            <Carousel
+              ref={bannerCarouselRef}
+              data={banners}
+              renderItem={renderItem}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              layout="default"
+              loop={false}
+              onSnapToItem={(index) => {
+                // console.log('C index', index);
+                setActiveSlide(index);
               }}
+              // containerCustomStyle={{ marginHorizontal: 20 }}
+              // contentInset={{ marginHorizontal: 20 }}
+            />
+            <Pagination
+              dotsLength={banners.length}
+              activeDotIndex={activeSlide}
+              dotContainerStyle={{ margin: 0, padding: 0 }}
+              dotStyle={{
+                width: 40,
+                height: 8,
+                borderRadius: 8,
+                marginHorizontal: 0,
+                paddingHorizontal: 0,
+                backgroundColor: '#275696',
+              }}
+              inactiveDotStyle={{
+                width: 8,
+                height: 8,
+                backgroundColor: '#C8C8C8',
+                marginHorizontal: 0,
+                paddingHorizontal: 0,
+              }}
+              inactiveDotOpacity={1}
+              inactiveDotScale={1}
+              tappableDots={true}
+              carouselRef={bannerCarouselRef}
             />
           </View>
         </View>
@@ -596,7 +666,9 @@ const index = (props) => {
               </Text>
             </View>
             {/* 파트너스 리스트(list) */}
-            <View
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('PartnersDetail')}
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -667,15 +739,17 @@ const index = (props) => {
               </View>
               <View>
                 <Image
-                  source={require('../../src/images/img05.jpg')}
+                  source={require('../../src/images/p07.jpg')}
                   resizeMode="cover"
                   style={{ width: 70, height: 70, borderRadius: 5 }}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
             {/* // 파트너스 리스트(list) */}
             {/* 파트너스 리스트(list) */}
-            <View
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('PartnersDetail')}
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -747,15 +821,17 @@ const index = (props) => {
               </View>
               <View>
                 <Image
-                  source={require('../../src/images/img07.jpg')}
+                  source={require('../../src/images/p06.jpg')}
                   resizeMode="cover"
                   style={{ width: 70, height: 70, borderRadius: 5 }}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
             {/* // 파트너스 리스트(list) */}
             {/* 파트너스 리스트(list) */}
-            <View
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('PartnersDetail')}
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -811,12 +887,12 @@ const index = (props) => {
               </View>
               <View>
                 <Image
-                  source={require('../../src/images/img12.jpg')}
+                  source={require('../../src/images/p05.jpg')}
                   resizeMode="cover"
                   style={{ width: 70, height: 70, borderRadius: 5 }}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
             {/* // 파트너스 리스트(list) */}
           </View>
         </View>
