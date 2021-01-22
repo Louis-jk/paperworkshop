@@ -16,6 +16,7 @@ import { SliderBox } from 'react-native-image-slider-box';
 import Slider from '@react-native-community/slider';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
+import { TabView, SceneMap } from 'react-native-tab-view';
 import Footer from '../Common/Footer';
 
 const index = (props) => {
@@ -161,9 +162,875 @@ const index = (props) => {
     );
   };
 
+  // 파트너스 탭 start
+  const FirstRoute = (props) => (
+    <View>
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+              }}>
+              삼보인쇄
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#3CD7C8',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                패키지
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p07.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+                letterSpacing: -1,
+              }}>
+              미래엔인쇄서비스
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#3CD7C8',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                패키지
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어 최고를 향해 달려...
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p06.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+                letterSpacing: -1,
+              }}>
+              동천문화인쇄
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는 UP시키...
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p05.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+    </View>
+  );
+
+  const SecondRoute = (props) => (
+    <View>
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+                letterSpacing: -1,
+              }}>
+              동천문화인쇄
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는 UP시키...
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p05.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+              }}>
+              삼보인쇄
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#3CD7C8',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                패키지
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p07.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+                letterSpacing: -1,
+              }}>
+              미래엔인쇄서비스
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#3CD7C8',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                패키지
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어 최고를 향해 달려...
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p06.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+    </View>
+  );
+
+  const ThirdRoute = (props) => (
+    <View>
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+                letterSpacing: -1,
+              }}>
+              미래엔인쇄서비스
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#3CD7C8',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                패키지
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어 최고를 향해 달려...
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p06.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+                letterSpacing: -1,
+              }}>
+              동천문화인쇄
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는 UP시키...
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p05.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+      {/* 파트너스 리스트(list) */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('PartnersDetail')}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F5F5F5',
+          paddingHorizontal: 20,
+          paddingVertical: 15,
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexShrink: 2,
+            marginRight: 35,
+            // backgroundColor: '#ffeeaa',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginBottom: 7,
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: 14,
+                fontWeight: 'bold',
+              }}>
+              삼보인쇄
+            </Text>
+            <View
+              style={{
+                backgroundColor: '#3CD7C8',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                패키지
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#275696',
+                borderRadius: 2,
+                marginLeft: 5,
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 11,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
+                }}>
+                일반인쇄
+              </Text>
+            </View>
+          </View>
+          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+            카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('../../src/images/p07.jpg')}
+            resizeMode="cover"
+            style={{ width: 70, height: 70, borderRadius: 5 }}
+          />
+        </View>
+      </TouchableOpacity>
+      {/* // 파트너스 리스트(list) */}
+    </View>
+  );
+
+  const initialLayout = { width: Dimensions.get('window').width };
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: '성실파트너스' },
+    { key: 'second', title: '인기파트너스' },
+    { key: 'third', title: '지역파트너스' },
+  ]);
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'first':
+        return <FirstRoute />;
+      case 'second':
+        return <SecondRoute />;
+      case 'third':
+        return <ThirdRoute />;
+    }
+  };
+
+  const [tabIndex, setTabIndex] = React.useState('first');
+
+  const TabBar = (props) => {
+    const { tabIndex, jumpTo } = props;
+
+    return (
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 10,
+              paddingBottom: 10,
+              paddingRight: 10,
+              // backgroundColor: '#ffaaee',
+            }}
+            onPress={async () => {
+              await jumpTo('first');
+              await setTabIndex('first');
+            }}>
+            <Text
+              style={{
+                paddingVertical: 12,
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: tabIndex === 'first' && index === 0 ? '#275696' : '#B5B5B5',
+              }}>
+              성실파트너스
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 10,
+              paddingBottom: 10,
+              paddingHorizontal: 10,
+              // backgroundColor: '#ffeeee',
+            }}
+            onPress={async () => {
+              await jumpTo('second');
+              await setTabIndex('second');
+            }}>
+            <Text
+              style={{
+                paddingVertical: 12,
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: tabIndex === 'second' || index === 1 ? '#275696' : '#B5B5B5',
+              }}>
+              인기파트너스
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 20,
+              paddingBottom: 10,
+              paddingHorizontal: 10,
+              // backgroundColor: '#ffeeaa',
+            }}
+            onPress={async () => {
+              await jumpTo('third');
+              await setTabIndex('third');
+            }}>
+            <Text
+              style={{
+                paddingVertical: 12,
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: tabIndex === 'third' || index === 2 ? '#275696' : '#B5B5B5',
+              }}>
+              지역파트너스
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
+  // 파트너스 탭 end
+
   return (
-    <>
+    <View style={{ position: 'relative' }}>
       <StatusBar hidden={true} />
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 5,
+          elevation: 0,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: Dimensions.get('window').width,
+          paddingVertical: 15,
+          paddingHorizontal: 25,
+          // backgroundColor: 'rgba(255,255,255,0.9)',
+        }}>
+        <View>
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: 'bold',
+              letterSpacing: -2,
+            }}>
+            페이퍼공작소
+          </Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
+            <Image
+              source={require('../../src/images/search_icon.png')}
+              resizeMode="contain"
+              style={{
+                width: 22,
+                height: 22,
+                marginRight: 28,
+              }}
+            />
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
+            <Image
+              source={require('../../src/images/menu.png')}
+              resizeMode="contain"
+              style={{
+                width: 22,
+                height: 22,
+              }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
       <ScrollView style={{ backgroundColor: '#fff' }}>
         {/* 메인 상단 슬라이더 section */}
         <View
@@ -178,6 +1045,9 @@ const index = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={minItemWidth}
               layout="default"
+              autoplay={false}
+              autoplayDelay={1000}
+              autoplayInterval={3000}
               loop={true}
               onSnapToItem={(index) => {
                 setMainActiveSlide(index);
@@ -226,41 +1096,7 @@ const index = (props) => {
                 </Text>
               </View>
             </View>
-            <Text
-              style={{
-                position: 'absolute',
-                top: 10,
-                left: 20,
-                fontSize: 22,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-              }}>
-              페이퍼공작소
-            </Text>
-            <Image
-              source={require('../../src/images/search_icon.png')}
-              resizeMode="contain"
-              style={{
-                position: 'absolute',
-                top: 17,
-                right: 75,
-                width: 22,
-                height: 22,
-              }}
-            />
-            <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
-              <Image
-                source={require('../../src/images/menu.png')}
-                resizeMode="contain"
-                style={{
-                  position: 'absolute',
-                  top: 17,
-                  right: 25,
-                  width: 22,
-                  height: 22,
-                }}
-              />
-            </TouchableWithoutFeedback>
+
             <View
               style={{
                 position: 'absolute',
@@ -558,13 +1394,15 @@ const index = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
               layout="default"
-              loop={false}
+              // autoplay={true}
+              // autoplayDelay={1000}
+              // autoplayInterval={5000}
+              loop={true}
               onSnapToItem={(index) => {
                 // console.log('C index', index);
                 setActiveSlide(index);
               }}
               // containerCustomStyle={{ marginHorizontal: 20 }}
-              // contentInset={{ marginHorizontal: 20 }}
             />
             <Pagination
               dotsLength={banners.length}
@@ -589,6 +1427,7 @@ const index = (props) => {
               inactiveDotScale={1}
               tappableDots={true}
               carouselRef={bannerCarouselRef}
+              containerStyle={{ paddingVertical: 20 }}
             />
           </View>
         </View>
@@ -597,7 +1436,7 @@ const index = (props) => {
         {/* 파트너스 section */}
         <View
           style={{
-            paddingVertical: 30,
+            paddingBottom: 30,
             backgroundColor: '#fff',
             position: 'relative',
           }}>
@@ -608,7 +1447,7 @@ const index = (props) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: 20,
+                marginBottom: 10,
                 paddingHorizontal: 20,
               }}>
               <Text
@@ -628,6 +1467,24 @@ const index = (props) => {
             </View>
           </TouchableWithoutFeedback>
           <View style={{ paddingHorizontal: 20 }}>
+            <TabView
+              renderTabBar={(props) => (
+                <TabBar
+                  {...props}
+                  navigation={navigation}
+                  setTabIndex={setTabIndex}
+                  tabIndex={tabIndex}
+                  onIndexChange={setIndex}
+                />
+              )}
+              navigationState={{ index, routes }}
+              renderScene={renderScene}
+              onIndexChange={setIndex}
+              initialLayout={initialLayout}
+              swipeEnabled={false}
+            />
+          </View>
+          {/* <View style={{ paddingHorizontal: 20 }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -665,254 +1522,26 @@ const index = (props) => {
                 지역파트너스
               </Text>
             </View>
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#F5F5F5',
-                paddingHorizontal: 20,
-                paddingVertical: 15,
-                borderRadius: 5,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 7,
-                  }}>
-                  <Text
-                    style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                    }}>
-                    삼보인쇄
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
-                      패키지
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-              <View>
-                <Image
-                  source={require('../../src/images/p07.jpg')}
-                  resizeMode="cover"
-                  style={{ width: 70, height: 70, borderRadius: 5 }}
-                />
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#F5F5F5',
-                paddingHorizontal: 20,
-                paddingVertical: 15,
-                borderRadius: 5,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 7,
-                  }}>
-                  <Text
-                    style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                      letterSpacing: -1,
-                    }}>
-                    미래엔인쇄서비스
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
-                      패키지
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
-                  대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어 최고를 향해 달려...
-                </Text>
-              </View>
-              <View>
-                <Image
-                  source={require('../../src/images/p06.jpg')}
-                  resizeMode="cover"
-                  style={{ width: 70, height: 70, borderRadius: 5 }}
-                />
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#F5F5F5',
-                paddingHorizontal: 20,
-                paddingVertical: 15,
-                borderRadius: 5,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 7,
-                  }}>
-                  <Text
-                    style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                      letterSpacing: -1,
-                    }}>
-                    동천문화인쇄
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
-                  국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는 UP시키...
-                </Text>
-              </View>
-              <View>
-                <Image
-                  source={require('../../src/images/p05.jpg')}
-                  resizeMode="cover"
-                  style={{ width: 70, height: 70, borderRadius: 5 }}
-                />
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
+           
           </View>
+         */}
         </View>
         {/* // 파트너스 section */}
 
         {/* 실시간 견적 처리 현황 section */}
         <View
           style={{
-            paddingVertical: 30,
+            paddingTop: 20,
+            paddingBottom: 30,
             backgroundColor: '#fff',
             position: 'relative',
           }}>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('파트너스', { title: '파트너스 정보' })}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('Estimate')}>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: 20,
                 paddingHorizontal: 20,
               }}>
               <Text
@@ -926,7 +1555,13 @@ const index = (props) => {
 
               <TouchableWithoutFeedback onPress={() => navigation.navigate('Estimate')}>
                 <View
-                  style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingVertical: 10,
+                    paddingLeft: 10,
+                  }}>
                   <Text style={{ fontSize: 13, color: '#275696', marginRight: 5 }}>
                     견적 더보기
                   </Text>
@@ -1269,7 +1904,7 @@ const index = (props) => {
         {/* // 실시간 견적 처리 현황 section */}
         <Footer navigation={navigation} />
       </ScrollView>
-    </>
+    </View>
   );
 };
 

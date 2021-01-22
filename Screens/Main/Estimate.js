@@ -1,5 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import Dash from 'react-native-dash';
 import Header from '../Common/Header';
 
 const Estimate = (props) => {
@@ -7,11 +16,581 @@ const Estimate = (props) => {
   const routeName = props.route.name;
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <Header title={routeName} navigation={navigation} />
       <ScrollView>
-        <View>
-          <Text>견적</Text>
+        <View style={{ paddingHorizontal: 20, marginBottom: 100 }}>
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          {/* 실시간 견적현황 리스트(list) */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#FFF',
+              marginVertical: 15,
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                borderRadius: 5,
+                marginRight: 15,
+              }}>
+              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexShrink: 2,
+                marginRight: 35,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 7,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                  numberOfLines={1}>
+                  중소기업 선물용 쇼핑백 제작요청
+                </Text>
+              </View>
+              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
+                단상자, 선물세트 / 견적 3건
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
+              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+            </View>
+          </View>
+          <Dash
+            style={{ width: '100%', height: 0.25 }}
+            dashLength={1}
+            dashColor="#ccc"
+            dashGap={2}
+            dashThickness={1}
+          />
+          {/* // 실시간 견적현황 리스트(list) */}
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#275696',
+              marginTop: 40,
+            }}>
+            <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff', paddingVertical: 15 }}>
+              견적 신청하기
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
