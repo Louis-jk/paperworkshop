@@ -24,7 +24,10 @@ const Header = (props) => {
         setTitle('파트너스');
         break;
       case 'Gallery':
-        setTitle('갤러리');
+        setTitle('인쇄/패키지 갤러리');
+        break;
+      case 'GalleryDetail':
+        setTitle('게시물 상세');
         break;
       case 'Story':
         setTitle('제작스토리');
@@ -75,12 +78,12 @@ const Header = (props) => {
           <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
             <View>
               <Image
-                source={require('../../src/images/search_icon.png')}
+                source={require('../../src/assets/top_seach02.png')}
                 resizeMode="contain"
                 style={{
-                  width: 22,
-                  height: 22,
-                  marginRight: 28,
+                  width: 30,
+                  height: 30,
+                  marginRight: 20,
                 }}
               />
             </View>
@@ -88,11 +91,11 @@ const Header = (props) => {
           <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
             <View>
               <Image
-                source={require('../../src/images/menu.png')}
+                source={require('../../src/assets/menu.png')}
                 resizeMode="contain"
                 style={{
-                  width: 22,
-                  height: 22,
+                  width: 30,
+                  height: 30,
                 }}
               />
             </View>

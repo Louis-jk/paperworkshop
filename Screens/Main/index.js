@@ -30,15 +30,15 @@ const index = (props) => {
   const mainBanners = [
     {
       id: 1,
-      image: require('../../src/images/main_img01.jpg'),
+      image: require('../../src/images/main_slide01.png'),
     },
     {
       id: 2,
-      image: require('../../src/images/main_img02.jpg'),
+      image: require('../../src/images/main_slide02.png'),
     },
     {
       id: 3,
-      image: require('../../src/images/main_img03.jpg'),
+      image: require('../../src/images/main_slide03.png'),
     },
   ];
 
@@ -70,38 +70,34 @@ const index = (props) => {
   const steps = [
     {
       id: 1,
-      image: require('../../src/images/s_img01.jpg'),
+      image: require('../../src/images/slide01.png'),
     },
     {
       id: 2,
-      image: require('../../src/images/s_img02.jpg'),
-    },
-    {
-      id: 3,
-      image: require('../../src/images/s_img03.jpg'),
+      image: require('../../src/images/slide02.png'),
     },
   ];
 
   const banners = [
     {
       id: 1,
-      image: require('../../src/images/img13.jpg'),
+      image: require('../../src/images/ban01.png'),
     },
     {
       id: 2,
-      image: require('../../src/images/img12.jpg'),
+      image: require('../../src/images/ban01.png'),
     },
     {
       id: 3,
-      image: require('../../src/images/img06.jpg'),
+      image: require('../../src/images/ban01.png'),
     },
     {
       id: 4,
-      image: require('../../src/images/img07.jpg'),
+      image: require('../../src/images/ban01.png'),
     },
     {
       id: 5,
-      image: require('../../src/images/img08.jpg'),
+      image: require('../../src/images/ban01.png'),
     },
   ];
 
@@ -151,7 +147,7 @@ const index = (props) => {
         <Image
           key={index}
           source={item.image}
-          resizeMode="cover"
+          resizeMode="contain"
           style={{
             width: '100%',
             height: '100%',
@@ -1010,22 +1006,22 @@ const index = (props) => {
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
             <Image
-              source={require('../../src/images/search_icon.png')}
+              source={require('../../src/assets/top_seach02.png')}
               resizeMode="contain"
               style={{
-                width: 22,
-                height: 22,
-                marginRight: 28,
+                width: 30,
+                height: 30,
+                marginRight: 20,
               }}
             />
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
             <Image
-              source={require('../../src/images/menu.png')}
+              source={require('../../src/assets/menu.png')}
               resizeMode="contain"
               style={{
-                width: 22,
-                height: 22,
+                width: 30,
+                height: 30,
               }}
             />
           </TouchableWithoutFeedback>
@@ -1318,7 +1314,7 @@ const index = (props) => {
               style={{
                 fontSize: 18,
                 fontWeight: 'bold',
-                letterSpacing: -2,
+                letterSpacing: -1,
               }}>
               페이퍼공작소의 제작 과정
             </Text>
@@ -1352,7 +1348,7 @@ const index = (props) => {
                 />
               </View>
               <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C1C1C1' }}>
-                0{mainBanners.length}
+                0{steps.length}
               </Text>
             </View>
           </View>
@@ -1454,7 +1450,7 @@ const index = (props) => {
                 style={{
                   fontSize: 18,
                   fontWeight: 'bold',
-                  letterSpacing: -2,
+                  letterSpacing: -1,
                 }}>
                 파트너스
               </Text>

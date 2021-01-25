@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MainScreen from '../Screens/Main';
 import EstimateScreen from '../Screens/Main/Estimate';
 import GalleryScreen from '../Screens/Gallery';
+import GalleryDetailScreen from '../Screens/Gallery/Detail';
 import PartnersScreen from '../Screens/Partners';
 import PartnersDetailScreen from '../Screens/Partners/Detail';
 import StoryScreen from '../Screens/Story';
@@ -40,6 +41,7 @@ export const GalleryStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Gallery" component={GalleryScreen} />
+      <Stack.Screen name="GalleryDetail" component={GalleryDetailScreen} />
     </Stack.Navigator>
   );
 };

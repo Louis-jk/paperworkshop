@@ -122,13 +122,13 @@ const Detail = (props) => {
                   height: '100%',
                 }}>
                 <Image
-                  source={require('../../src/images/prevBtn.png')}
+                  source={require('../../src/assets/slide_arr02.png')}
                   resizeMode="contain"
-                  style={{ width: 20, height: 15 }}
+                  style={{ width: 22, height: 20 }}
                 />
               </View>
             </TouchableWithoutFeedback>
-            <View style={{ borderWidth: 0.5, height: 15, borderColor: '#fff' }} />
+            <View style={{ borderWidth: 0.2, height: 15, borderColor: '#D4D4D4' }} />
             <TouchableWithoutFeedback
               onPress={() => {
                 carouselRef.current.snapToNext();
@@ -136,9 +136,9 @@ const Detail = (props) => {
               <View
                 style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                 <Image
-                  source={require('../../src/images/nextBtn.png')}
+                  source={require('../../src/assets/slide_arr01.png')}
                   resizeMode="contain"
-                  style={{ width: 20, height: 15 }}
+                  style={{ width: 22, height: 20 }}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -204,12 +204,12 @@ const Detail = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  paddingVertical: 15,
+                  paddingVertical: 12,
                 }}>
                 <Image
-                  source={require('../../src/images/phone-call.png')}
-                  resizeMode="contain"
-                  style={{ width: 20, height: 20 }}
+                  source={require('../../src/assets/call01.png')}
+                  resizeMode="cover"
+                  style={{ width: 24, height: 24 }}
                 />
                 <Text
                   style={{
@@ -229,12 +229,12 @@ const Detail = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  paddingVertical: 15,
+                  paddingVertical: 12,
                 }}>
                 <Image
-                  source={require('../../src/images/mail.png')}
-                  resizeMode="contain"
-                  style={{ width: 20, height: 20 }}
+                  source={require('../../src/assets/msm01.png')}
+                  resizeMode="cover"
+                  style={{ width: 24, height: 24 }}
                 />
                 <Text
                   style={{
