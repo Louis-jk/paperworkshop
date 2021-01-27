@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.paper_workshop"
+        applicationId "com.dmonster.paperworkshop"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
