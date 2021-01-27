@@ -114,7 +114,7 @@ const index = (props) => {
             <TextInput
               placeholder="업체명을 입력하세요."
               placeholderTextColor="#BEBEBE"
-              autoFocus={true}
+              autoFocus={false}
             />
             <TouchableOpacity>
               <Image
