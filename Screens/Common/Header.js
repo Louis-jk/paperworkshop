@@ -124,10 +124,11 @@ const styles = StyleSheet.create({
     // backgroundColor: '#ffaaee',
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     letterSpacing: -1,
     lineHeight: 50,
+    marginBottom: 2,
   },
   icons: {
     flexDirection: 'row',
