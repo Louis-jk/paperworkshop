@@ -137,13 +137,13 @@ const Login = (props) => {
               width: Dimensions.get('window').width - 100,
               backgroundColor: '#27D34A',
               borderRadius: 4,
-              paddingVertical: 10,
+              paddingVertical: 14,
               marginBottom: 10,
             }}>
             <Image
-              source={require('../../../src/assets/naver.png')}
+              source={require('../../../src/assets/icon_n.png')}
               resizeMode="contain"
-              style={{ width: 30, height: 30 }}
+              style={{ width: 30, height: 18 }}
             />
             <Text style={{ fontSize: 16, color: '#fff' }}>네이버로 로그인</Text>
           </TouchableOpacity>
@@ -179,12 +179,12 @@ const Login = (props) => {
               borderColor: '#333333',
               backgroundColor: '#fff',
               borderRadius: 4,
-              paddingVertical: 10,
+              paddingVertical: 4,
             }}>
             <Image
               source={require('../../../src/assets/gg.png')}
               resizeMode="contain"
-              style={{ width: 30, height: 30 }}
+              style={{ width: 38, height: 40 }}
             />
             <Text style={{ fontSize: 16, color: '#333333' }}>구글로 로그인</Text>
           </TouchableOpacity>

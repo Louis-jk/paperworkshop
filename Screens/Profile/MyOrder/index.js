@@ -128,7 +128,9 @@ const index = (props) => {
 
         {/* 입찰중 */}
         <View style={{ paddingHorizontal: 20 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('OrderEdit')} activeOpacity={0.8}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('MyOrderReqDetailList')}
+            activeOpacity={0.8}>
             <View
               style={{
                 flexDirection: 'row',
@@ -162,9 +164,11 @@ const index = (props) => {
         <View style={styles.line} />
         {/* // 입찰중 */}
 
-        {/* 파트너 선정 */}
+        {/* 파트너 선정 - 선금 입금 요청 대기 */}
         <View style={{ paddingHorizontal: 20 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('OrderEdit')} activeOpacity={0.8}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SelectPartnerStep01')}
+            activeOpacity={0.8}>
             <View
               style={{
                 flexDirection: 'row',
@@ -197,11 +201,126 @@ const index = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.line} />
-        {/* // 파트너 선정 */}
+        {/* // 파트너 선정 - 선금 입금 요청 대기 */}
+
+        {/* 파트너 선정 - 계약금 입금 대기 */}
+        <View style={{ paddingHorizontal: 20 }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SelectPartnerStep02')}
+            activeOpacity={0.8}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={styles.listWrap}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}>
+                  <View style={styles.listStep02BadgePayReq}>
+                    <Text style={[styles.listStep02BadgeText, { color: '#275696' }]}>
+                      계약금 입금 대기
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text>
+                </View>
+                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+              </View>
+              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+                <Text style={styles.listStep02}>파트너 선정</Text>
+                <Text style={styles.listDday02}>20.11.10</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.line} />
+        {/* // 파트너 선정 - 계약금 입금 대기 */}
+
+        {/* 파트너 선정 - 계약금 입금 완료 */}
+        <View style={{ paddingHorizontal: 20 }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SelectPartnerStep03')}
+            activeOpacity={0.8}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={styles.listWrap}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}>
+                  <View style={styles.listStep02BadgePayComplete}>
+                    <Text style={[styles.listStep02BadgeText, { color: '#000000' }]}>
+                      계약금 입금 완료
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text>
+                </View>
+                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+              </View>
+              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+                <Text style={styles.listStep02}>파트너 선정</Text>
+                <Text style={styles.listDday02}>20.11.10</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.line} />
+        {/* // 파트너 선정 - 계약금 입금 완료 */}
+
+        {/* 납품 완료 */}
+        <View style={{ paddingHorizontal: 20 }}>
+          <TouchableOpacity onPress={() => navigation.navigate('Receive')} activeOpacity={0.8}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={styles.listWrap}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}>
+                  <View style={styles.listStep02BadgePayComplete}>
+                    <Text style={[styles.listStep02BadgeText, { color: '#000000' }]}>
+                      납품 완료
+                    </Text>
+                  </View>
+                  {/* <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text> */}
+                </View>
+                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+              </View>
+              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+                <Text style={[styles.listStep02, { color: '#000' }]}>납품 완료</Text>
+                <Text style={styles.listDday02}>20.11.10</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.line} />
+        {/* // 납품 완료 */}
 
         {/* 마감 */}
         <View style={{ paddingHorizontal: 20 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('OrderEdit')} activeOpacity={0.8}>
+          <TouchableOpacity onPress={() => navigation.navigate('Done')} activeOpacity={0.8}>
             <View
               style={{
                 flexDirection: 'row',
@@ -227,7 +346,7 @@ const index = (props) => {
                 <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
               </View>
               <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                <Text style={styles.listStep02}>파트너 선정</Text>
+                <Text style={[styles.listStep02, { color: '#000' }]}>마감</Text>
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
@@ -397,6 +516,15 @@ const styles = StyleSheet.create({
     borderColor: '#EFF6FF',
     borderRadius: 2,
     backgroundColor: '#EFF6FF',
+    alignSelf: 'flex-start',
+  },
+  listStep02BadgePayComplete: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#F5F5F5',
+    borderRadius: 2,
+    backgroundColor: '#F5F5F5',
     alignSelf: 'flex-start',
   },
   listStep02BadgeTimeOver: {

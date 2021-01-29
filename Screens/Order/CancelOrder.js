@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image } from 'rea
 
 import DetailHeader from '../Common/DetailHeader';
 
-const easyOrderComplete = (props) => {
+const CancelOrder = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
@@ -20,41 +20,21 @@ const easyOrderComplete = (props) => {
           paddingVertical: 20,
           backgroundColor: '#fff',
         }}>
-        <View style={{ marginTop: 50, marginBottom: 25 }}>
+        <View style={{ marginTop: 60, marginBottom: 25 }}>
           <Image
             source={require('../../src/assets/icon04.png')}
             resizeMode="cover"
             style={{ width: 65, height: 65, marginBottom: 25 }}
           />
-          <Text style={{ fontSize: 22, color: '#000000', fontWeight: 'bold', marginBottom: 2 }}>
-            비교 견적 신청이
-          </Text>
           <Text style={{ fontSize: 22, color: '#000000', fontWeight: 'bold', marginBottom: 20 }}>
-            정상적으로 완료되었습니다.
+            견적 요청이 종료되었습니다.
           </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              marginBottom: 3,
-            }}>
-            <Text style={{ fontSize: 15, color: '#000000' }}>파트너스 회원이 견적을 제시하면</Text>
-            <Text style={{ fontSize: 15, color: '#275696' }}> 카카오 알림톡</Text>
-            <Text style={{ fontSize: 15, color: '#000000' }}>과</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              marginBottom: 10,
-            }}>
-            <Text style={{ fontSize: 15, color: '#275696' }}>PUSH 알림</Text>
-            <Text style={{ fontSize: 15, color: '#000000' }}>으로 고객님에게 알려드립니다.</Text>
-          </View>
-          <Text style={{ fontSize: 13, color: '#A2A2A2' }}>
-            신청한 내용은 "나의 견적 의뢰 건" 에서 확인하실 수 있습니다.
+
+          <Text style={{ fontSize: 15, color: '#111111', marginBottom: 2 }}>
+            기존 정보는 모두 삭제되었으므로
+          </Text>
+          <Text style={{ fontSize: 15, color: '#111111' }}>
+            견적 요청을 원하신다면 신규로 작성해주세요.
           </Text>
         </View>
 
@@ -67,9 +47,9 @@ const easyOrderComplete = (props) => {
               <Text style={styles.goHomeBtnText}>홈으로</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('MyOrder')} activeOpacity={0.8}>
+          <TouchableOpacity onPress={() => navigation.navigate('Order')} activeOpacity={0.8}>
             <View style={[styles.submitBtn, { marginBottom: 10 }]}>
-              <Text style={styles.submitBtnText}>나의 견적 의뢰건</Text>
+              <Text style={styles.submitBtnText}>비교 견적 신청</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -110,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default easyOrderComplete;
+export default CancelOrder;

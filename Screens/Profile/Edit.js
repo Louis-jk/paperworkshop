@@ -91,7 +91,7 @@ const Edit = (props) => {
               style={{
                 borderWidth: 1,
                 borderColor: '#E3E3E3',
-                borderRadius: 2,
+                borderRadius: 4,
                 paddingHorizontal: 10,
                 marginBottom: 5,
               }}
@@ -104,7 +104,7 @@ const Edit = (props) => {
               style={{
                 borderWidth: 1,
                 borderColor: '#E3E3E3',
-                borderRadius: 2,
+                borderRadius: 4,
                 paddingHorizontal: 10,
               }}
               autoCapitalize="none"
@@ -123,7 +123,7 @@ const Edit = (props) => {
               style={{
                 borderWidth: 1,
                 borderColor: '#E3E3E3',
-                borderRadius: 2,
+                borderRadius: 4,
                 paddingHorizontal: 10,
               }}
               autoCapitalize="none"
@@ -149,7 +149,7 @@ const Edit = (props) => {
                   flex: 1,
                   borderWidth: 1,
                   borderColor: '#E3E3E3',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   paddingHorizontal: 10,
                   marginRight: 10,
                 }}
@@ -162,7 +162,7 @@ const Edit = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   backgroundColor: '#275696',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
@@ -184,7 +184,7 @@ const Edit = (props) => {
                   flex: 1,
                   borderWidth: 1,
                   borderColor: '#E3E3E3',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   paddingHorizontal: 10,
                   marginRight: 10,
                 }}
@@ -197,7 +197,7 @@ const Edit = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   backgroundColor: '#275696',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
@@ -217,7 +217,7 @@ const Edit = (props) => {
               style={{
                 borderWidth: 1,
                 borderColor: '#E3E3E3',
-                borderRadius: 2,
+                borderRadius: 4,
                 paddingHorizontal: 10,
               }}
               autoCapitalize="none"
@@ -236,7 +236,7 @@ const Edit = (props) => {
               style={{
                 borderWidth: 1,
                 borderColor: '#E3E3E3',
-                borderRadius: 2,
+                borderRadius: 4,
                 paddingHorizontal: 10,
               }}
               autoCapitalize="none"

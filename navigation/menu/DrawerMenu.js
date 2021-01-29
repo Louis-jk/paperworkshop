@@ -256,7 +256,7 @@ const DrawerMenu = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert('hey')}>
+            <TouchableWithoutFeedback>
               <View
                 style={{
                   flex: 1,

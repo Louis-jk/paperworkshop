@@ -80,6 +80,36 @@ const DetailHeader = (props) => {
       case 'MyOrder':
         setTitle('나의 견적 의뢰');
         break;
+      case 'MyOrderReqDetailList':
+        setTitle('나의 견적 의뢰');
+        break;
+      case 'SelectPartnerStep01':
+        setTitle('나의 견적 의뢰');
+        break;
+      case 'SelectPartnerStep02':
+        setTitle('나의 견적 의뢰');
+        break;
+      case 'SelectPartnerStep03':
+        setTitle('나의 견적 의뢰');
+        break;
+      case 'Receive':
+        setTitle('나의 견적 의뢰');
+        break;
+      case 'Done':
+        setTitle('나의 견적 의뢰');
+        break;
+      case 'CancelOrder':
+        setTitle('최종 선택 포기');
+        break;
+      case 'CopyOrder':
+        setTitle('복사 후 재등록');
+        break;
+      case 'OrderDetail':
+        setTitle('견적의뢰 상세보기');
+        break;
+      case 'Review':
+        setTitle('후기작성');
+        break;
       default:
         return false;
     }

@@ -10,6 +10,7 @@ import {
   StoryStackNavigator,
   CCenterStackNavigator,
   PaperInfoStackNavigator,
+  PartnersDetailStackNavigator,
   LoginStackNavigator,
   RegisterStackNavigator,
   SignedStackNavigator,
@@ -17,8 +18,10 @@ import {
   FindPwdStackNavigator,
   ProfileEditStackNavigator,
   MessageStackNavigator,
+  MessageDetailStackNavigator,
   OrderStackNavigator,
   MyOrderStackNavigator,
+  ReviewStackNavigator,
 } from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
@@ -116,12 +119,23 @@ const TabNavigator = () => {
       <Stack.Screen name="FindId" component={FindIdStackNavigator} />
       <Stack.Screen name="FindPwd" component={FindPwdStackNavigator} />
       <Stack.Screen name="Message" component={MessageStackNavigator} />
-      <Stack.Screen name="MessageDetail" component={MessageStackNavigator} />
+      <Stack.Screen name="MessageDetail" component={MessageDetailStackNavigator} />
       <Stack.Screen name="Order" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep02" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep03" component={OrderStackNavigator} />
       <Stack.Screen name="easyOrderComplete" component={OrderStackNavigator} />
+      <Stack.Screen name="CancelOrder" component={MyOrderStackNavigator} />
       <Stack.Screen name="MyOrder" component={MyOrderStackNavigator} />
+      <Stack.Screen name="MyOrderReqDetailList" component={MyOrderStackNavigator} />
+      <Stack.Screen name="SelectPartnerStep01" component={MyOrderStackNavigator} />
+      <Stack.Screen name="SelectPartnerStep02" component={MyOrderStackNavigator} />
+      <Stack.Screen name="SelectPartnerStep03" component={MyOrderStackNavigator} />
+      <Stack.Screen name="Receive" component={MyOrderStackNavigator} />
+      <Stack.Screen name="Done" component={MyOrderStackNavigator} />
+      <Stack.Screen name="CopyOrder" component={MyOrderStackNavigator} />
+      <Stack.Screen name="OrderDetail" component={MyOrderStackNavigator} />
+      <Stack.Screen name="Review" component={ReviewStackNavigator} />
+      <Stack.Screen name="PartnersDetail" component={PartnersDetailStackNavigator} />
     </Stack.Navigator>
   );
 };

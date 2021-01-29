@@ -22,6 +22,11 @@ const Detail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
+  const [like, setLike] = React.useState(false);
+  const onLikeBtn = () => {
+    setLike((prev) => !prev);
+  };
+
   const phoneNumber = '01012345678';
   const emailAddress = 'paper_workshop@paperworkshop.com';
 
@@ -67,27 +72,6 @@ const Detail = (props) => {
             justifyContent: 'flex-start',
             marginBottom: 20,
           }}>
-          {/* <Swiper
-            ref={swiperRef}
-            style={{ height: 400, opacity: 0.85, backgroundColor: '#000' }}
-            showsButtons={false}
-            showsPagination={false}
-            // onIndexChanged={(index) => {
-            //   console.log('swipe index', index);
-            // }}
-          >
-            <Image
-              source={require('../../src/images/p01.jpg')}
-              resizeMode="cover"
-              style={{ width: Dimensions.get('window').width, height: 400 }}
-            />
-            <Image
-              source={require('../../src/images/p01.jpg')}
-              resizeMode="cover"
-              style={{ width: Dimensions.get('window').width, height: 400 }}
-            />
-          </Swiper> */}
-
           <Carousel
             ref={carouselRef}
             data={entries}
@@ -222,7 +206,7 @@ const Detail = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => Linking.openURL(`mailto:${emailAddress}`)}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('MessageDetail')}>
               <View
                 style={{
                   flex: 1,
@@ -299,7 +283,8 @@ const Detail = (props) => {
             <Text style={{ fontSize: 16, color: '#275696' }}>총 리뷰수 26</Text>
           </View>
           {/* 고객후기 리스트 박스 */}
-          <View style={{ borderWidth: 1, borderColor: '#E3E3E3', marginBottom: 10 }}>
+          <View
+            style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -386,7 +371,8 @@ const Detail = (props) => {
           </View>
           {/* // 고객후기 리스트 박스 */}
           {/* 고객후기 리스트 박스 */}
-          <View style={{ borderWidth: 1, borderColor: '#E3E3E3', marginBottom: 10 }}>
+          <View
+            style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -472,7 +458,8 @@ const Detail = (props) => {
           </View>
           {/* // 고객후기 리스트 박스 */}
           {/* 고객후기 리스트 박스 */}
-          <View style={{ borderWidth: 1, borderColor: '#E3E3E3', marginBottom: 10 }}>
+          <View
+            style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -569,6 +556,7 @@ const Detail = (props) => {
               backgroundColor: '#fff',
               borderWidth: 1,
               borderColor: '#E3E3E3',
+              borderRadius: 5,
               marginTop: 20,
             }}>
             <Text
@@ -581,7 +569,61 @@ const Detail = (props) => {
         {/* // 고객후기 */}
 
         <Footer navigation={navigation} />
+        <View style={{ marginBottom: 50 }} />
       </ScrollView>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: Dimensions.get('window').width,
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          backgroundColor: '#fff',
+          zIndex: 5,
+          shadowRadius: 4,
+          shadowOffset: {
+            width: 8,
+            height: 16,
+          },
+          shadowColor: '#000000',
+          shadowOpacity: 0.3,
+          elevation: 10,
+        }}>
+        <View
+          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => navigation.navigate('Order')}
+            style={{ width: '85%' }}>
+            <View style={[styles.submitBtn]}>
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
+                  견적 신청하기
+                </Text>
+                <Image
+                  source={require('../../src/assets/chat_fileupload.png')}
+                  resizeMode="contain"
+                  style={{ width: 18, height: 18, marginLeft: 10 }}
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={1} onPress={onLikeBtn}>
+            <View>
+              <Image
+                source={
+                  !like
+                    ? require('../../src/assets/Dibson_off.png')
+                    : require('../../src/assets/Dibson_on.png')
+                }
+                resizeMode="contain"
+                style={{ width: 50, height: 50, marginLeft: 10 }}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   );
 };
@@ -589,6 +631,19 @@ const Detail = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+  },
+  submitBtn: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#275696',
+    backgroundColor: '#275696',
+    width: '100%',
+    paddingVertical: 15,
+  },
+  submitBtnText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    textAlign: 'center',
   },
 });
 

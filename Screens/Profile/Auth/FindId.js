@@ -40,7 +40,7 @@ const FindId = (props) => {
               style={{
                 borderWidth: 1,
                 borderColor: '#E3E3E3',
-                borderRadius: 2,
+                borderRadius: 4,
                 paddingHorizontal: 10,
               }}
               autoCapitalize="none"
@@ -66,7 +66,7 @@ const FindId = (props) => {
                   flex: 1,
                   borderWidth: 1,
                   borderColor: '#E3E3E3',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   paddingHorizontal: 10,
                   marginRight: 10,
                 }}
@@ -79,7 +79,7 @@ const FindId = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   backgroundColor: '#275696',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
@@ -101,7 +101,7 @@ const FindId = (props) => {
                   flex: 1,
                   borderWidth: 1,
                   borderColor: '#E3E3E3',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   paddingHorizontal: 10,
                   marginRight: 10,
                 }}
@@ -114,7 +114,7 @@ const FindId = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   backgroundColor: '#275696',
-                  borderRadius: 2,
+                  borderRadius: 4,
                   height: 50,
                   paddingHorizontal: 20,
                 }}>

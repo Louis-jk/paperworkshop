@@ -390,7 +390,6 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 100,
-    backgroundColor: '#DFE6EF',
   },
   categoryItemImgHover: {
     position: 'absolute',

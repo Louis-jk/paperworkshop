@@ -1192,19 +1192,19 @@ const index = (props) => {
                 width: 100,
                 height: 100,
                 borderRadius: 100,
-                backgroundColor: '#F5F5F5',
                 marginBottom: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
               <Image
-                source={require('../../src/images/shopping-bag.png')}
+                source={require('../../src/images/icon06.png')}
                 resizeMode="contain"
                 style={{
                   position: 'absolute',
-                  width: 35,
-                  height: 35,
-                  zIndex: 1,
+                  width: 100,
+                  height: 100,
+                  borderRadius: 100,
+                  marginBottom: 10,
                 }}
               />
             </View>
@@ -1226,7 +1226,7 @@ const index = (props) => {
               }}>
               단상자/싸바리/쇼핑백 등
             </Text>
-            <TouchableWithoutFeedback onPress={onPress}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Order')}>
               <View style={{ backgroundColor: '#275696', borderRadius: 20 }}>
                 <Text
                   style={{
@@ -1245,20 +1245,20 @@ const index = (props) => {
               style={{
                 width: 100,
                 height: 100,
-                borderRadius: 140,
-                backgroundColor: '#F5F5F5',
+                borderRadius: 100,
                 marginBottom: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
               <Image
-                source={require('../../src/images/flyer.png')}
+                source={require('../../src/images/icon07.png')}
                 resizeMode="contain"
                 style={{
                   position: 'absolute',
-                  width: 35,
-                  height: 35,
-                  zIndex: 1,
+                  width: 100,
+                  height: 100,
+                  borderRadius: 100,
+                  marginBottom: 10,
                 }}
               />
             </View>
@@ -1280,7 +1280,7 @@ const index = (props) => {
               }}>
               리플렛/브로슈어/포스터 등
             </Text>
-            <TouchableWithoutFeedback onPress={onPress}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Order')}>
               <View style={{ backgroundColor: '#275696', borderRadius: 20 }}>
                 <Text
                   style={{
@@ -1543,43 +1543,55 @@ const index = (props) => {
               }}>
               <View
                 style={{
-                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                  borderRadius: 5,
-                  marginRight: 15,
-                }}>
-                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
+                  backgroundColor: '#FFF',
                 }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    marginBottom: 7,
+                    backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                    borderRadius: 5,
+                    marginRight: 15,
                   }}>
-                  <Text
+                  <View
+                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexShrink: 2,
+                    marginRight: 35,
+                  }}>
+                  <View
                     style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                    }}
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 7,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#000',
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                      }}
+                      numberOfLines={1}>
+                      중소기업 선물용 쇼핑백 제작요청
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 14, color: '#979797' }}
                     numberOfLines={1}>
-                    중소기업 선물용 쇼핑백 제작요청
+                    단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
-                <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                  단상자, 선물세트 / 견적 3건
-                </Text>
               </View>
+
               <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                 <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
                 <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
@@ -1593,7 +1605,6 @@ const index = (props) => {
               dashThickness={1}
             />
             {/* // 실시간 견적현황 리스트(list) */}
-
             {/* 실시간 견적현황 리스트(list) */}
             <View
               style={{
@@ -1605,43 +1616,55 @@ const index = (props) => {
               }}>
               <View
                 style={{
-                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                  borderRadius: 5,
-                  marginRight: 15,
-                }}>
-                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
+                  backgroundColor: '#FFF',
                 }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    marginBottom: 7,
+                    backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                    borderRadius: 5,
+                    marginRight: 15,
                   }}>
-                  <Text
+                  <View
+                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexShrink: 2,
+                    marginRight: 35,
+                  }}>
+                  <View
                     style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                    }}
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 7,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#000',
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                      }}
+                      numberOfLines={1}>
+                      중소기업 선물용 쇼핑백 제작요청
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 14, color: '#979797' }}
                     numberOfLines={1}>
-                    중소기업 선물용 쇼핑백 제작요청
+                    단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
-                <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                  단상자, 선물세트 / 견적 3건
-                </Text>
               </View>
+
               <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                 <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
                 <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
@@ -1655,7 +1678,6 @@ const index = (props) => {
               dashThickness={1}
             />
             {/* // 실시간 견적현황 리스트(list) */}
-
             {/* 실시간 견적현황 리스트(list) */}
             <View
               style={{
@@ -1667,43 +1689,55 @@ const index = (props) => {
               }}>
               <View
                 style={{
-                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                  borderRadius: 5,
-                  marginRight: 15,
-                }}>
-                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
+                  backgroundColor: '#FFF',
                 }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    marginBottom: 7,
+                    backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                    borderRadius: 5,
+                    marginRight: 15,
                   }}>
-                  <Text
+                  <View
+                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexShrink: 2,
+                    marginRight: 35,
+                  }}>
+                  <View
                     style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                    }}
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 7,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#000',
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                      }}
+                      numberOfLines={1}>
+                      중소기업 선물용 쇼핑백 제작요청
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 14, color: '#979797' }}
                     numberOfLines={1}>
-                    중소기업 선물용 쇼핑백 제작요청
+                    단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
-                <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                  단상자, 선물세트 / 견적 3건
-                </Text>
               </View>
+
               <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                 <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
                 <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
@@ -1717,7 +1751,6 @@ const index = (props) => {
               dashThickness={1}
             />
             {/* // 실시간 견적현황 리스트(list) */}
-
             {/* 실시간 견적현황 리스트(list) */}
             <View
               style={{
@@ -1729,43 +1762,55 @@ const index = (props) => {
               }}>
               <View
                 style={{
-                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                  borderRadius: 5,
-                  marginRight: 15,
-                }}>
-                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
+                  backgroundColor: '#FFF',
                 }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    marginBottom: 7,
+                    backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                    borderRadius: 5,
+                    marginRight: 15,
                   }}>
-                  <Text
+                  <View
+                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexShrink: 2,
+                    marginRight: 35,
+                  }}>
+                  <View
                     style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                    }}
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 7,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#000',
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                      }}
+                      numberOfLines={1}>
+                      중소기업 선물용 쇼핑백 제작요청
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 14, color: '#979797' }}
                     numberOfLines={1}>
-                    중소기업 선물용 쇼핑백 제작요청
+                    단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
-                <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                  단상자, 선물세트 / 견적 3건
-                </Text>
               </View>
+
               <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                 <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
                 <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
@@ -1779,7 +1824,6 @@ const index = (props) => {
               dashThickness={1}
             />
             {/* // 실시간 견적현황 리스트(list) */}
-
             {/* 실시간 견적현황 리스트(list) */}
             <View
               style={{
@@ -1791,43 +1835,55 @@ const index = (props) => {
               }}>
               <View
                 style={{
-                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                  borderRadius: 5,
-                  marginRight: 15,
-                }}>
-                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                  <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
+                  backgroundColor: '#FFF',
                 }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    marginBottom: 7,
+                    backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                    borderRadius: 5,
+                    marginRight: 15,
                   }}>
-                  <Text
+                  <View
+                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
+                    <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexShrink: 2,
+                    marginRight: 35,
+                  }}>
+                  <View
                     style={{
-                      color: '#000',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                    }}
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 7,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#000',
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                      }}
+                      numberOfLines={1}>
+                      중소기업 선물용 쇼핑백 제작요청
+                    </Text>
+                  </View>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 14, color: '#979797' }}
                     numberOfLines={1}>
-                    중소기업 선물용 쇼핑백 제작요청
+                    단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
-                <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                  단상자, 선물세트 / 견적 3건
-                </Text>
               </View>
+
               <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                 <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
                 <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
@@ -1844,11 +1900,13 @@ const index = (props) => {
 
             <TouchableOpacity
               activeOpacity={0.8}
+              onPress={() => navigation.navigate('Order')}
               style={{
                 width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: '#275696',
+                borderRadius: 5,
                 marginTop: 40,
               }}>
               <Text

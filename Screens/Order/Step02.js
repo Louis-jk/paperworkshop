@@ -348,8 +348,8 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 }}>
                 <TextInput
-                  value={moment(arriveDate).format('YYYY-MM-DD')}
-                  placeholder="0000-00-00"
+                  value={moment(arriveDate).format('YY-MM-DD')}
+                  placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
                   style={{
                     paddingHorizontal: 10,
@@ -399,8 +399,8 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 }}>
                 <TextInput
-                  value={moment(dDayDate).format('YYYY-MM-DD')}
-                  placeholder="0000-00-00"
+                  value={moment(dDayDate).format('YY-MM-DD')}
+                  placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
                   style={{
                     paddingHorizontal: 10,
