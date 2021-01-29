@@ -1015,7 +1015,9 @@ const index = (props) => {
               }}
             />
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.openDrawer('right')}
+            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
             <Image
               source={require('../../src/assets/menu.png')}
               resizeMode="contain"
@@ -1027,7 +1029,7 @@ const index = (props) => {
           </TouchableWithoutFeedback>
         </View>
       </View>
-      <ScrollView style={{ backgroundColor: '#fff' }}>
+      <ScrollView style={{ backgroundColor: '#fff' }} showsVerticalScrollIndicator={false}>
         {/* 메인 상단 슬라이더 section */}
         <View
           style={{
@@ -1135,6 +1137,7 @@ const index = (props) => {
                 <View>
                   <TouchableOpacity
                     activeOpacity={0.8}
+                    onPress={() => navigation.navigate('Order')}
                     style={{
                       borderWidth: 2,
                       borderColor: '#fff',
@@ -1149,13 +1152,13 @@ const index = (props) => {
                         paddingVertical: 12,
                       }}>
                       <Image
-                        source={require('../../src/images/clipboard.png')}
+                        source={require('../../src/assets/icon02_m.png')}
                         resizeMode="contain"
                         style={{
-                          width: 12,
-                          height: 12,
-                          marginRight: 5,
-                          marginTop: 3,
+                          width: 20,
+                          height: 20,
+                          marginRight: 2,
+                          marginTop: 2,
                         }}
                       />
                       <Text
@@ -1436,8 +1439,7 @@ const index = (props) => {
             backgroundColor: '#fff',
             position: 'relative',
           }}>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('파트너스', { title: '파트너스 정보' })}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('Partners')}>
             <View
               style={{
                 flexDirection: 'row',
@@ -1480,47 +1482,6 @@ const index = (props) => {
               swipeEnabled={false}
             />
           </View>
-          {/* <View style={{ paddingHorizontal: 20 }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                marginBottom: 20,
-              }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  letterSpacing: -1,
-                  color: '#275696',
-                  marginRight: 25,
-                }}>
-                성실파트너스
-              </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  letterSpacing: -1,
-                  color: '#B5B5B5',
-                  marginRight: 25,
-                }}>
-                인기파트너스
-              </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  letterSpacing: -1,
-                  color: '#B5B5B5',
-                }}>
-                지역파트너스
-              </Text>
-            </View>
-           
-          </View>
-         */}
         </View>
         {/* // 파트너스 section */}
 
@@ -1562,7 +1523,7 @@ const index = (props) => {
                     견적 더보기
                   </Text>
                   <Image
-                    source={require('../../src/images/plus.png')}
+                    source={require('../../src/assets/plus.png')}
                     resizeMode="contain"
                     style={{ width: 14, height: 14 }}
                   />

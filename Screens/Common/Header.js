@@ -50,6 +50,15 @@ const Header = (props) => {
       case 'PartnersDetail':
         setTitle('파트너스 정보');
         break;
+      case 'ProfileEdit':
+        setTitle('회원 정보 수정');
+        break;
+      case 'Signed':
+        setTitle('회원가입 완료');
+        break;
+      case 'Message':
+        setTitle('페이퍼공작소');
+        break;
       default:
         return false;
     }
@@ -58,22 +67,10 @@ const Header = (props) => {
   return (
     <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <View style={container}>
-        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-          <View style={headerCtrl}>
-            <View style={{ paddingVertical: 10, paddingRight: 10 }}>
-              <Image
-                source={require('../../src/images/left-chevron.png')}
-                resizeMode="contain"
-                style={{
-                  width: 16,
-                  height: 22,
-                }}
-              />
-            </View>
+        <View style={headerCtrl}>
+          <Text style={headerTitle}>{title}</Text>
+        </View>
 
-            <Text style={headerTitle}>{title}</Text>
-          </View>
-        </TouchableWithoutFeedback>
         <View style={icons}>
           <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
             <View>

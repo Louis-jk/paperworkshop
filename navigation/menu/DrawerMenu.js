@@ -13,6 +13,14 @@ import {
 } from 'react-native';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+// import {
+//   Collapse,
+//   CollapseHeader,
+//   CollapseBody,
+//   AccordionList,
+// } from 'accordion-collapse-react-native';
+
+import Collapsible from 'react-native-collapsible';
 
 const DrawerMenu = (props) => {
   const navigation = props.navigation;
@@ -63,8 +71,26 @@ const DrawerMenu = (props) => {
     );
   };
 
+  const [collapseArrow01, setCollapseArrow01] = React.useState(false);
+  const [collapseArrow02, setCollapseArrow02] = React.useState(false);
+  const [collapseArrow03, setCollapseArrow03] = React.useState(false);
+  const [collapseArrow04, setCollapseArrow04] = React.useState(false);
+
+  const setCollapseArrowFunc01 = () => {
+    setCollapseArrow01((prev) => !prev);
+  };
+  const setCollapseArrowFunc02 = () => {
+    setCollapseArrow02((prev) => !prev);
+  };
+  const setCollapseArrowFunc03 = () => {
+    setCollapseArrow03((prev) => !prev);
+  };
+  const setCollapseArrowFunc04 = () => {
+    setCollapseArrow04((prev) => !prev);
+  };
+
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View>
         <View
           style={{
@@ -144,7 +170,9 @@ const DrawerMenu = (props) => {
                     </Text>
                   </View>
                   <Text style={{ color: '#fff', fontSize: 18 }}>페이퍼님</Text>
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => Alert.alert('Setting? ')}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate('ProfileEdit')}>
                     <View
                       style={{
                         paddingHorizontal: 10,
@@ -179,7 +207,7 @@ const DrawerMenu = (props) => {
               backgroundColor: '#fff',
               marginBottom: 20,
             }}>
-            <TouchableWithoutFeedback onPress={() => Linking.openURL(`tel:${phoneNumber}`)}>
+            <TouchableWithoutFeedback onPress={() => Alert.alert('hey')}>
               <View
                 style={{
                   flex: 1,
@@ -205,7 +233,7 @@ const DrawerMenu = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => Linking.openURL(`mailto:${emailAddress}`)}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Message')}>
               <View
                 style={{
                   flex: 1,
@@ -228,7 +256,7 @@ const DrawerMenu = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => Linking.openURL(`mailto:${emailAddress}`)}>
+            <TouchableWithoutFeedback onPress={() => Alert.alert('hey')}>
               <View
                 style={{
                   flex: 1,
@@ -253,6 +281,8 @@ const DrawerMenu = (props) => {
           </View>
 
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => navigation.navigate('Order')}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -274,75 +304,170 @@ const DrawerMenu = (props) => {
           </TouchableOpacity>
         </View>
         <View>
-          <View style={[styles.categoryTitle, styles.mV10]}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>인쇄/패키지 갤러리</Text>
-          </View>
-          <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>패키지(단상자, 싸바리 등)</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>일반인쇄(서적,카달로그 등)</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>기타 인쇄물</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.categoryTitle, styles.mV10]}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>파트너스</Text>
-          </View>
-          <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>성실 파트너스</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>인기 파트너스</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>지역 파트너스</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.categoryTitle, styles.mV10]}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>제작스토리</Text>
-          </View>
-          <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>고객 후기</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>유용한 정보</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.categoryText}>인쇄/패키지 제작 정보</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={[styles.categoryTitle, styles.mV10]}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>이벤트</Text>
-        </View>
-        <View
-          style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
-        />
-        <View style={[styles.categoryTitle, styles.mV10]}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>고객센터</Text>
-        </View>
-        <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-          <TouchableOpacity>
-            <Text style={styles.categoryText}>공지사항</Text>
+          <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc01}>
+            <View
+              style={[
+                styles.categoryTitle,
+                styles.mV10,
+                { flexDirection: 'row', justifyContent: 'space-between' },
+              ]}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>인쇄/패키지 갤러리</Text>
+              <Image
+                source={
+                  collapseArrow01
+                    ? require('../../src/assets/arr03.png')
+                    : require('../../src/assets/arr01.png')
+                }
+                resizeMode="contain"
+                style={{ width: 30, height: 20 }}
+              />
+            </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.categoryText}>FAQ</Text>
+          <Collapsible collapsed={collapseArrow01}>
+            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>패키지(단상자, 싸바리 등)</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>일반인쇄(서적,카달로그 등)</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>기타 인쇄물</Text>
+              </TouchableOpacity>
+            </View>
+          </Collapsible>
+
+          <View
+            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+          />
+
+          <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc02}>
+            <View
+              style={[
+                styles.categoryTitle,
+                styles.mV10,
+                { flexDirection: 'row', justifyContent: 'space-between' },
+              ]}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>파트너스</Text>
+              <Image
+                source={
+                  collapseArrow02
+                    ? require('../../src/assets/arr03.png')
+                    : require('../../src/assets/arr01.png')
+                }
+                resizeMode="contain"
+                style={{ width: 30, height: 20 }}
+              />
+            </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.categoryText}>1:1 문의</Text>
+          <Collapsible collapsed={collapseArrow02}>
+            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>성실 파트너스</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>인기 파트너스</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>지역 파트너스</Text>
+              </TouchableOpacity>
+            </View>
+          </Collapsible>
+
+          <View
+            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+          />
+
+          <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc03}>
+            <View
+              style={[
+                styles.categoryTitle,
+                styles.mV10,
+                { flexDirection: 'row', justifyContent: 'space-between' },
+              ]}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>제작스토리</Text>
+              <Image
+                source={
+                  collapseArrow03
+                    ? require('../../src/assets/arr03.png')
+                    : require('../../src/assets/arr01.png')
+                }
+                resizeMode="contain"
+                style={{ width: 30, height: 20 }}
+              />
+            </View>
           </TouchableOpacity>
+          <Collapsible collapsed={collapseArrow03}>
+            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>고객 후기</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>유용한 정보</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>인쇄/패키지 제작 정보</Text>
+              </TouchableOpacity>
+            </View>
+          </Collapsible>
+
+          <View
+            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+          />
+
+          <View style={[styles.categoryTitle, styles.mV10]}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>이벤트</Text>
+          </View>
+
+          <View
+            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+          />
+
+          <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc04}>
+            <View
+              style={[
+                styles.categoryTitle,
+                styles.mV10,
+                { flexDirection: 'row', justifyContent: 'space-between' },
+              ]}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>고객센터</Text>
+              <Image
+                source={
+                  collapseArrow04
+                    ? require('../../src/assets/arr03.png')
+                    : require('../../src/assets/arr01.png')
+                }
+                resizeMode="contain"
+                style={{ width: 30, height: 20 }}
+              />
+            </View>
+          </TouchableOpacity>
+          <Collapsible collapsed={collapseArrow04}>
+            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>공지사항</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>FAQ</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.categoryText}>1:1 문의</Text>
+              </TouchableOpacity>
+            </View>
+          </Collapsible>
+
+          <View
+            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+          />
+
+          <View style={[styles.categoryTitle, styles.mV10]}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>회사소개</Text>
+          </View>
+
+          <View
+            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+          />
         </View>
-        <View style={[styles.categoryTitle, styles.mV10]}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>회사소개</Text>
-        </View>
-        <View
-          style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
-        />
 
         {/* 배너 광고 section */}
         <View

@@ -18,7 +18,7 @@ const Estimate = (props) => {
   return (
     <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <Header title={routeName} navigation={navigation} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ paddingHorizontal: 20, marginBottom: 100 }}>
           {/* 실시간 견적현황 리스트(list) */}
           <View

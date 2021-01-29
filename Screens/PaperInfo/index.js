@@ -9,7 +9,7 @@ const index = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={{ paddingHorizontal: 20 }}>
           <Text>지류정보</Text>
         </View>

@@ -3,8 +3,7 @@ import { Dimensions } from 'react-native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import { GalleryStackNavigator } from './StackNavigator';
-import { BottomTabNavigator } from './TabNavigator';
+import TabNavigator, { BottomTabNavigator } from './TabNavigator';
 
 import DrawerMenu from './menu/DrawerMenu';
 
@@ -21,8 +20,7 @@ const DrawerNavigator = () => {
         width: Dimensions.get('window').width,
       }}
       drawerContent={(props) => <DrawerMenu {...props} />}>
-      <Drawer.Screen name="Home" component={BottomTabNavigator} />
-      <Drawer.Screen name="Gallery" component={GalleryStackNavigator} />
+      <Drawer.Screen name="Home" component={TabNavigator} />
     </Drawer.Navigator>
   );
 };
