@@ -207,7 +207,7 @@ const DrawerMenu = (props) => {
               backgroundColor: '#fff',
               marginBottom: 20,
             }}>
-            <TouchableWithoutFeedback onPress={() => Alert.alert('hey')}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('MyOrder')}>
               <View
                 style={{
                   flex: 1,

@@ -158,6 +158,13 @@ export const OrderStackNavigator = () => {
       <Stack.Screen name="OrderStep03" component={OrderStep03Screen} />
       <Stack.Screen name="OrderStep04" component={OrderStep04Screen} />
       <Stack.Screen name="easyOrderComplete" component={easyOrderCompleteScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const MyOrderStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MyOrder" component={MyOrderScreen} />
     </Stack.Navigator>
   );

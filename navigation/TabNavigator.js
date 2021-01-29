@@ -18,6 +18,7 @@ import {
   ProfileEditStackNavigator,
   MessageStackNavigator,
   OrderStackNavigator,
+  MyOrderStackNavigator,
 } from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
@@ -120,7 +121,7 @@ const TabNavigator = () => {
       <Stack.Screen name="OrderStep02" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep03" component={OrderStackNavigator} />
       <Stack.Screen name="easyOrderComplete" component={OrderStackNavigator} />
-      <Stack.Screen name="MyOrder" component={OrderStackNavigator} />
+      <Stack.Screen name="MyOrder" component={MyOrderStackNavigator} />
     </Stack.Navigator>
   );
 };

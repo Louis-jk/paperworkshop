@@ -105,7 +105,9 @@ const DetailHeader = (props) => {
           </View>
         </TouchableWithoutFeedback>
         <View style={icons}>
-          <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.openDrawer('right')}
+            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
             <View>
               <Image
                 source={require('../../src/assets/top_seach02.png')}
@@ -118,7 +120,9 @@ const DetailHeader = (props) => {
               />
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.openDrawer('right')}
+            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
             <View>
               <Image
                 source={require('../../src/assets/menu.png')}
