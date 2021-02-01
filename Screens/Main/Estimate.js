@@ -31,46 +31,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -81,7 +101,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -93,46 +112,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -143,7 +182,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -155,46 +193,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -205,7 +263,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -217,46 +274,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -267,7 +344,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -279,46 +355,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -329,7 +425,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -341,46 +436,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -391,7 +506,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -403,46 +517,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -453,7 +587,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -465,46 +598,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -515,7 +668,6 @@ const Estimate = (props) => {
             dashThickness={1}
           />
           {/* // 실시간 견적현황 리스트(list) */}
-
           {/* 실시간 견적현황 리스트(list) */}
           <View
             style={{
@@ -527,46 +679,66 @@ const Estimate = (props) => {
             }}>
             <View
               style={{
-                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'rgba(54, 109, 229, 0.07)',
-                borderRadius: 5,
-                marginRight: 15,
-              }}>
-              <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>입찰중</Text>
-                <Text style={{ fontSize: 12, color: '#366DE5' }}>12건</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexShrink: 2,
-                marginRight: 35,
+                backgroundColor: '#FFF',
               }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: 7,
+                  backgroundColor: 'rgba(54, 109, 229, 0.07)',
+                  borderRadius: 5,
+                  marginRight: 15,
                 }}>
-                <Text
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    입찰중
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>12건</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexShrink: 2,
+                  marginRight: 35,
+                }}>
+                <View
                   style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 7,
+                  }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {
+                        color: '#000',
+                        fontSize: 14,
+                      },
+                    ]}
+                    numberOfLines={1}>
+                    중소기업 선물용 쇼핑백 제작요청
+                  </Text>
+                </View>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
                   numberOfLines={1}>
-                  중소기업 선물용 쇼핑백 제작요청
+                  단상자, 선물세트 / 견적 3건
                 </Text>
               </View>
-              <Text style={{ fontSize: 13, lineHeight: 14, color: '#979797' }} numberOfLines={1}>
-                단상자, 선물세트 / 견적 3건
-              </Text>
             </View>
+
             <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#979797', marginBottom: 5 }}>홍**</Text>
-              <Text style={{ fontSize: 13, color: '#979797' }}>2021.01.25</Text>
+              <Text
+                style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                홍**
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                2021.01.25
+              </Text>
             </View>
           </View>
           <Dash
@@ -586,8 +758,13 @@ const Estimate = (props) => {
               alignItems: 'center',
               backgroundColor: '#275696',
               marginTop: 40,
+              borderRadius: 5,
             }}>
-            <Text style={{ textAlign: 'center', fontSize: 16, color: '#fff', paddingVertical: 15 }}>
+            <Text
+              style={[
+                styles.mediumText,
+                { textAlign: 'center', fontSize: 16, color: '#fff', paddingVertical: 15 },
+              ]}>
               견적 신청하기
             </Text>
           </TouchableOpacity>
@@ -608,6 +785,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ff00aa',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -48,8 +48,8 @@ const index = (props) => {
                   }}
                 />
                 <View style={{ flex: 2 }}>
-                  <Text style={styles.msgInfoName}>삼보인쇄</Text>
-                  <Text style={styles.msgInfoContent} numberOfLines={1}>
+                  <Text style={[styles.msgInfoName, styles.normalText]}>삼보인쇄</Text>
+                  <Text style={[styles.msgInfoContent, styles.normalText]} numberOfLines={1}>
                     안녕하세요. 박스견적 문의 드릴게 있어요 ...
                   </Text>
                 </View>
@@ -85,8 +85,8 @@ const index = (props) => {
                   }}
                 />
                 <View style={{ flex: 2 }}>
-                  <Text style={styles.msgInfoName}>업체명</Text>
-                  <Text style={styles.msgInfoContent} numberOfLines={1}>
+                  <Text style={[styles.msgInfoName, styles.normalText]}>업체명</Text>
+                  <Text style={[styles.msgInfoContent, styles.normalText]} numberOfLines={1}>
                     안녕하세요. 박스견적 문의 드릴게 있어요 ...
                   </Text>
                 </View>
@@ -122,8 +122,8 @@ const index = (props) => {
                   }}
                 />
                 <View style={{ flex: 2 }}>
-                  <Text style={styles.msgInfoName}>업체명</Text>
-                  <Text style={styles.msgInfoContent} numberOfLines={1}>
+                  <Text style={[styles.msgInfoName, styles.normalText]}>업체명</Text>
+                  <Text style={[styles.msgInfoContent, styles.normalText]} numberOfLines={1}>
                     안녕하세요. 박스견적 문의 드릴게 있어요 ...
                   </Text>
                 </View>
@@ -175,6 +175,15 @@ const styles = StyleSheet.create({
   msgInfoContent: {
     fontSize: 13,
     color: '#000000',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

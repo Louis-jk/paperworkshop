@@ -24,43 +24,64 @@ const index = (props) => {
         <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ position: 'relative' }}>
+              <Text
+                style={[
+                  styles.boldText,
+                  {
+                    fontSize: 16,
+                    marginBottom: 20,
+                    marginRight: 23,
+                  },
+                ]}>
+                전체
+              </Text>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: -1,
+                  right: 15,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 6,
+                  backgroundColor: '#275696',
+                }}
+              />
+            </View>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-                marginBottom: 20,
-              }}>
-              전체
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-                marginBottom: 20,
-                color: '#707070',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 16,
+                  marginBottom: 20,
+                  marginRight: 20,
+                  color: '#707070',
+                },
+              ]}>
               성실파트너스
             </Text>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-                marginBottom: 20,
-                color: '#707070',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 16,
+                  marginBottom: 20,
+                  marginRight: 20,
+                  color: '#707070',
+                },
+              ]}>
               인기파트너스
             </Text>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-                marginBottom: 20,
-                color: '#707070',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 16,
+                  marginBottom: 20,
+                  marginRight: 20,
+                  color: '#707070',
+                },
+              ]}>
               지역파트너스
             </Text>
           </View>
@@ -72,31 +93,36 @@ const index = (props) => {
               marginBottom: 20,
             }}>
             <Text
-              style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-                marginRight: 27,
-                color: '#275696',
-              }}>
+              style={[
+                styles.boldText,
+                {
+                  fontSize: 14,
+                  marginRight: 27,
+                  color: '#275696',
+                },
+              ]}>
               전체
             </Text>
             <Text
-              style={{
-                fontSize: 15,
-                letterSpacing: -2,
-                marginRight: 27,
-                color: '#BEBEBE',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 15,
+                  marginRight: 27,
+                  color: '#BEBEBE',
+                },
+              ]}>
               패키지
             </Text>
             <Text
-              style={{
-                fontSize: 15,
-                letterSpacing: -2,
-                marginRight: 20,
-                color: '#BEBEBE',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 15,
+                  marginRight: 20,
+                  color: '#BEBEBE',
+                },
+              ]}>
               일반인쇄
             </Text>
           </View>
@@ -115,6 +141,7 @@ const index = (props) => {
               placeholder="업체명을 입력하세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
+              style={[styles.normalText, { width: '80%' }]}
             />
             <TouchableOpacity>
               <Image
@@ -168,12 +195,15 @@ const index = (props) => {
                       borderRadius: 2,
                     }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
                       패키지
                     </Text>
                   </View>
@@ -184,27 +214,34 @@ const index = (props) => {
                       marginLeft: 5,
                     }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
                       일반인쇄
                     </Text>
                   </View>
                 </View>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    marginBottom: 5,
-                  }}>
+                  style={[
+                    styles.boldText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                      marginBottom: 5,
+                    },
+                  ]}>
                   삼보인쇄
                 </Text>
 
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
               </View>
@@ -240,49 +277,40 @@ const index = (props) => {
                     alignItems: 'center',
                     marginBottom: 5,
                   }}>
-                  {/* <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
-                      패키지
-                    </Text>
-                  </View> */}
                   <View
                     style={{
                       backgroundColor: '#275696',
                       borderRadius: 2,
-                      marginLeft: 5,
                     }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
                       일반인쇄
                     </Text>
                   </View>
                 </View>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    marginBottom: 5,
-                  }}>
+                  style={[
+                    styles.boldText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                      marginBottom: 5,
+                    },
+                  ]}>
                   애드프린트
                 </Text>
 
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
               </View>
@@ -324,12 +352,15 @@ const index = (props) => {
                       borderRadius: 2,
                     }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
                       패키지
                     </Text>
                   </View>
@@ -340,27 +371,34 @@ const index = (props) => {
                       marginLeft: 5,
                     }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
                       일반인쇄
                     </Text>
                   </View>
                 </View>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    marginBottom: 5,
-                  }}>
+                  style={[
+                    styles.boldText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                      marginBottom: 5,
+                    },
+                  ]}>
                   동천문화인쇄
                 </Text>
 
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
               </View>
@@ -402,43 +440,34 @@ const index = (props) => {
                       borderRadius: 2,
                     }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
                       패키지
                     </Text>
                   </View>
-                  {/* <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 11,
-                        paddingHorizontal: 5,
-                        paddingVertical: 2,
-                      }}>
-                      일반인쇄
-                    </Text>
-                  </View> */}
                 </View>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    marginBottom: 5,
-                  }}>
+                  style={[
+                    styles.boldText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                      marginBottom: 5,
+                    },
+                  ]}>
                   미래엔인쇄서비스
                 </Text>
 
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
               </View>
@@ -456,6 +485,15 @@ const index = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

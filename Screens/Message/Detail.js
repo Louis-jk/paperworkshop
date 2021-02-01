@@ -41,7 +41,7 @@ const Detail = (props) => {
               alignItems: 'center',
             }}>
             <Text style={{ marginRight: 10 }}>- - - - - - - -</Text>
-            <Text>2021.01.28 (목)</Text>
+            <Text style={styles.normalText}>2021.01.28 (목)</Text>
             <Text style={{ marginLeft: 10 }}>- - - - - - - -</Text>
           </View>
           <View
@@ -60,9 +60,17 @@ const Detail = (props) => {
                 width: '70%',
               }}>
               <View style={styles.msgBubbleP}>
-                <Text style={styles.msgTextP}>안녕하세요! 문의드릴게 있습니다. </Text>
+                <Text style={[styles.msgTextP, styles.normalText]}>
+                  안녕하세요! 문의드릴게 있습니다.{' '}
+                </Text>
               </View>
-              <Text style={{ alignSelf: 'flex-end', fontSize: 12, color: '#000000' }}>14:01</Text>
+              <Text
+                style={[
+                  styles.normalText,
+                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                ]}>
+                14:01
+              </Text>
             </View>
             {/* // 파트너스 회원 답변 Area */}
 
@@ -77,9 +85,17 @@ const Detail = (props) => {
                 width: '70%',
               }}>
               <View style={styles.msgBubbleP}>
-                <Text style={styles.msgTextP}>이런 패키지를 만들고 싶습니다.</Text>
+                <Text style={[styles.msgTextP, styles.normalText]}>
+                  이런 패키지를 만들고 싶습니다.
+                </Text>
               </View>
-              <Text style={{ alignSelf: 'flex-end', fontSize: 12, color: '#000000' }}>14:02</Text>
+              <Text
+                style={[
+                  styles.normalText,
+                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                ]}>
+                14:02
+              </Text>
             </View>
             {/* // 파트너스 회원 답변 Area */}
 
@@ -106,7 +122,13 @@ const Detail = (props) => {
                   style={{ width: 120, height: 120, borderRadius: 5 }}
                 />
               </View>
-              <Text style={{ alignSelf: 'flex-end', fontSize: 12, color: '#000000' }}>14:02</Text>
+              <Text
+                style={[
+                  styles.normalText,
+                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                ]}>
+                14:02
+              </Text>
             </View>
             {/* // 파트너스 회원 답변 - 파일 다운로드 Area */}
 
@@ -133,9 +155,17 @@ const Detail = (props) => {
                 }}
               />
               <View style={styles.msgBubble}>
-                <Text style={styles.msgText}>안녕하세요. 보내주신 패키지의 경우는</Text>
+                <Text style={[styles.msgText, styles.normalText]}>
+                  안녕하세요. 보내주신 패키지의 경우는
+                </Text>
               </View>
-              <Text style={{ alignSelf: 'flex-end', fontSize: 12, color: '#000000' }}>14:03</Text>
+              <Text
+                style={[
+                  styles.normalText,
+                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                ]}>
+                14:03
+              </Text>
             </View>
             {/* // 일반회원 문의 Area */}
             {/* 일반회원 문의 Area */}
@@ -159,9 +189,17 @@ const Detail = (props) => {
                 }}
               />
               <View style={styles.msgBubble}>
-                <Text style={styles.msgText}>우리 회사의 경우 견적이 아래와 같습니다.</Text>
+                <Text style={[styles.msgText, styles.normalText]}>
+                  우리 회사의 경우 견적이 아래와 같습니다.
+                </Text>
               </View>
-              <Text style={{ alignSelf: 'flex-end', fontSize: 12, color: '#000000' }}>14:03</Text>
+              <Text
+                style={[
+                  styles.normalText,
+                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                ]}>
+                14:03
+              </Text>
             </View>
             {/* // 일반회원 문의 Area */}
             {/* 파트너스 회원 답변 - 사진첩부 Area */}
@@ -201,10 +239,16 @@ const Detail = (props) => {
                     style={{ width: 30, height: 30, marginRight: 10 }}
                   />
                 </TouchableOpacity>
-                <Text>abcdefg.pdf</Text>
+                <Text style={styles.normalText}>abcdefg.pdf</Text>
               </View>
 
-              <Text style={{ alignSelf: 'flex-end', fontSize: 12, color: '#000000' }}>14:15</Text>
+              <Text
+                style={[
+                  styles.normalText,
+                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                ]}>
+                14:15
+              </Text>
             </View>
             {/* // 파트너스 회원 답변 - 사진첩부 Area */}
           </View>
@@ -213,6 +257,7 @@ const Detail = (props) => {
             style={{
               alignSelf: 'center',
               marginTop: 80,
+              marginBottom: 50,
             }}>
             <TouchableOpacity activeOpacity={0.8} onPress={exitMsgRoom}>
               <View
@@ -222,12 +267,15 @@ const Detail = (props) => {
                   backgroundColor: 'rgba(68, 68, 68, 0.2)',
                 }}>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: '#000',
-                    paddingHorizontal: 30,
-                    paddingVertical: 10,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      color: '#000',
+                      paddingHorizontal: 30,
+                      paddingVertical: 10,
+                    },
+                  ]}>
                   채팅방 나가기
                 </Text>
               </View>
@@ -265,7 +313,7 @@ const Detail = (props) => {
             placeholderTextColor="#FFFFFF"
             multiline={true}
             autoCapitalize="none"
-            style={{ color: '#fff', fontSize: 14 }}
+            style={[styles.normalText, { color: '#fff', fontSize: 14, width: '75%' }]}
           />
         </View>
         <TouchableOpacity activeOpacity={0.8} onPress={() => Alert.alert('메세지 전송!')}>
@@ -298,7 +346,7 @@ const styles = StyleSheet.create({
   },
   msgText: {
     fontSize: 14,
-    lineHeight: 18,
+    lineHeight: 20,
     color: '#000000',
   },
   msgBubbleP: {
@@ -316,8 +364,17 @@ const styles = StyleSheet.create({
   },
   msgTextP: {
     fontSize: 14,
-    lineHeight: 18,
+    lineHeight: 20,
     color: '#fff',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

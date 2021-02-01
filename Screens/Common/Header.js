@@ -26,9 +26,7 @@ const Header = (props) => {
       case 'Gallery':
         setTitle('인쇄/패키지 갤러리');
         break;
-      case 'GalleryDetail':
-        setTitle('게시물 상세');
-        break;
+
       case 'Story':
         setTitle('제작스토리');
         break;
@@ -68,7 +66,7 @@ const Header = (props) => {
     <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <View style={container}>
         <View style={headerCtrl}>
-          <Text style={headerTitle}>{title}</Text>
+          <Text style={[styles.mediumText, headerTitle]}>{title}</Text>
         </View>
 
         <View style={icons}>
@@ -126,15 +124,21 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    letterSpacing: -1,
     lineHeight: 50,
-    marginBottom: 2,
   },
   icons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

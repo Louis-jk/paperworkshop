@@ -404,6 +404,15 @@ const styles = StyleSheet.create({
     color: '#000',
     marginTop: 10,
   },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
+  },
 });
 
 export default index;

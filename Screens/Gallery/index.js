@@ -25,13 +25,14 @@ const index = (props) => {
             style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
             <View style={{ position: 'relative' }}>
               <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  letterSpacing: -2,
-                  marginBottom: 20,
-                  marginRight: 23,
-                }}>
+                style={[
+                  styles.boldText,
+                  {
+                    fontSize: 16,
+                    marginBottom: 20,
+                    marginRight: 23,
+                  },
+                ]}>
                 전체
               </Text>
               <View
@@ -47,35 +48,44 @@ const index = (props) => {
               />
             </View>
             <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '400',
-                letterSpacing: -2,
-                marginBottom: 20,
-                marginRight: 20,
-                color: '#707070',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 16,
+                  fontWeight: '400',
+                  letterSpacing: -2,
+                  marginBottom: 20,
+                  marginRight: 20,
+                  color: '#707070',
+                },
+              ]}>
               패키지
             </Text>
             <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '400',
-                letterSpacing: -2,
-                marginBottom: 20,
-                marginRight: 20,
-                color: '#707070',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 16,
+                  fontWeight: '400',
+                  letterSpacing: -2,
+                  marginBottom: 20,
+                  marginRight: 20,
+                  color: '#707070',
+                },
+              ]}>
               일반인쇄
             </Text>
             <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '400',
-                letterSpacing: -2,
-                marginBottom: 20,
-                color: '#707070',
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 16,
+                  fontWeight: '400',
+                  letterSpacing: -2,
+                  marginBottom: 20,
+                  color: '#707070',
+                },
+              ]}>
               기타 인쇄물
             </Text>
           </View>
@@ -94,6 +104,7 @@ const index = (props) => {
               placeholder="업체명을 입력하세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
+              style={[styles.normalText, { width: '80%' }]}
             />
             <TouchableOpacity>
               <Image
@@ -133,28 +144,34 @@ const index = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 5,
+                  marginBottom: 10,
                 }}>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                    },
+                  ]}>
                   삼보인쇄
                 </Text>
                 <Text
-                  style={{
-                    color: '#275696',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    paddingHorizontal: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#275696',
+                      fontSize: 14,
+                      paddingHorizontal: 5,
+                    },
+                  ]}>
                   NEW
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 14, lineHeight: 18 }} numberOfLines={1}>
+                <Text
+                  style={[styles.mediumText, { fontSize: 14, lineHeight: 18 }]}
+                  numberOfLines={1}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
               </View>
@@ -192,28 +209,34 @@ const index = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 5,
+                  marginBottom: 10,
                 }}>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                    },
+                  ]}>
                   동천문화인쇄
                 </Text>
                 <Text
-                  style={{
-                    color: '#275696',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    paddingHorizontal: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#275696',
+                      fontSize: 14,
+                      paddingHorizontal: 5,
+                    },
+                  ]}>
                   NEW
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 14, lineHeight: 18 }} numberOfLines={1}>
+                <Text
+                  style={[styles.mediumText, { fontSize: 14, lineHeight: 18 }]}
+                  numberOfLines={1}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
               </View>
@@ -251,28 +274,34 @@ const index = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 5,
+                  marginBottom: 10,
                 }}>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                    },
+                  ]}>
                   미래엔인쇄서비스
                 </Text>
                 <Text
-                  style={{
-                    color: '#275696',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    paddingHorizontal: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#275696',
+                      fontSize: 14,
+                      paddingHorizontal: 5,
+                    },
+                  ]}>
                   NEW
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 14, lineHeight: 18 }} numberOfLines={1}>
+                <Text
+                  style={[styles.mediumText, { fontSize: 14, lineHeight: 18 }]}
+                  numberOfLines={1}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
               </View>
@@ -310,28 +339,34 @@ const index = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 5,
+                  marginBottom: 10,
                 }}>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                    },
+                  ]}>
                   삼보인쇄
                 </Text>
                 <Text
-                  style={{
-                    color: '#275696',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    paddingHorizontal: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#275696',
+                      fontSize: 14,
+                      paddingHorizontal: 5,
+                    },
+                  ]}>
                   NEW
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 14, lineHeight: 18 }} numberOfLines={1}>
+                <Text
+                  style={[styles.mediumText, { fontSize: 14, lineHeight: 18 }]}
+                  numberOfLines={1}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
               </View>
@@ -369,28 +404,34 @@ const index = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 5,
+                  marginBottom: 10,
                 }}>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                    },
+                  ]}>
                   동천문화인쇄
                 </Text>
                 <Text
-                  style={{
-                    color: '#275696',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    paddingHorizontal: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#275696',
+                      fontSize: 14,
+                      paddingHorizontal: 5,
+                    },
+                  ]}>
                   NEW
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 14, lineHeight: 18 }} numberOfLines={1}>
+                <Text
+                  style={[styles.mediumText, { fontSize: 14, lineHeight: 18 }]}
+                  numberOfLines={1}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
               </View>
@@ -428,28 +469,34 @@ const index = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 5,
+                  marginBottom: 10,
                 }}>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                    },
+                  ]}>
                   미래엔인쇄서비스
                 </Text>
                 <Text
-                  style={{
-                    color: '#275696',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    paddingHorizontal: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#275696',
+                      fontSize: 14,
+                      paddingHorizontal: 5,
+                    },
+                  ]}>
                   NEW
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 14, lineHeight: 18 }} numberOfLines={1}>
+                <Text
+                  style={[styles.mediumText, { fontSize: 14, lineHeight: 18 }]}
+                  numberOfLines={1}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
               </View>
@@ -475,6 +522,15 @@ const index = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

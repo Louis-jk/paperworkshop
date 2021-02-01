@@ -15,7 +15,7 @@ import {
 import Swiper from 'react-native-swiper';
 import Carousel from 'react-native-snap-carousel';
 
-import Header from '../Common/Header';
+import DetailHeader from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
 
 const Detail = (props) => {
@@ -55,7 +55,7 @@ const Detail = (props) => {
 
   return (
     <>
-      <Header title={routeName} navigation={navigation} />
+      <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View
           style={{
@@ -70,11 +70,11 @@ const Detail = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text>삼보인쇄</Text>
-            <Text>2020.11.01</Text>
+            <Text style={[styles.normalText, { fontSize: 14, color: '#333333' }]}>삼보인쇄</Text>
+            <Text style={[styles.normalText, { color: '#A2A2A2' }]}>2020.11.01</Text>
           </View>
           <View>
-            <Text style={{ fontSize: 18, lineHeight: 24 }}>
+            <Text style={[styles.mediumText, { fontSize: 18, lineHeight: 26 }]}>
               [패키지] 병원/의약품/건강/케어/헬스 관련패키지 디자인입니다.
             </Text>
           </View>
@@ -88,7 +88,7 @@ const Detail = (props) => {
             resizeMode="cover"
             style={{ width: '100%', height: 370, marginBottom: 20 }}
           />
-          <Text style={{ fontSize: 15, color: '#333333', lineHeight: 24 }}>
+          <Text style={[styles.normalText, { fontSize: 15, color: '#333333', lineHeight: 26 }]}>
             내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다
           </Text>
         </View>
@@ -102,6 +102,15 @@ const Detail = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -146,14 +146,11 @@ const DrawerMenu = (props) => {
                   marginRight: 20,
                 }}>
                 <View>
-                  <Text
-                    style={{ color: '#275696', fontSize: 12, fontWeight: 'bold', lineHeight: 14 }}>
-                    페이퍼
-                  </Text>
-                  <Text
-                    style={{ color: '#275696', fontSize: 12, fontWeight: 'bold', lineHeight: 14 }}>
-                    공작소
-                  </Text>
+                  <Image
+                    source={require('../../src/assets/photo.png')}
+                    resizeMode="cover"
+                    style={{ width: 80, height: 80 }}
+                  />
                 </View>
               </View>
               <View>
@@ -165,11 +162,15 @@ const DrawerMenu = (props) => {
                     marginBottom: 5,
                   }}>
                   <View style={{ backgroundColor: '#fff', borderRadius: 20, marginRight: 5 }}>
-                    <Text style={{ color: '#275696', paddingHorizontal: 10, paddingVertical: 5 }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        { color: '#275696', paddingHorizontal: 10, paddingVertical: 5 },
+                      ]}>
                       일반회원
                     </Text>
                   </View>
-                  <Text style={{ color: '#fff', fontSize: 18 }}>페이퍼님</Text>
+                  <Text style={[styles.normalText, { color: '#fff', fontSize: 18 }]}>페이퍼님</Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigation.navigate('ProfileEdit')}>
@@ -190,7 +191,7 @@ const DrawerMenu = (props) => {
                     </View>
                   </TouchableOpacity>
                 </View>
-                <Text style={styles.whiteFont}>paper@naver.com</Text>
+                <Text style={[styles.normalText, styles.whiteFont]}>paper@naver.com</Text>
               </View>
             </View>
           </View>
@@ -215,20 +216,26 @@ const DrawerMenu = (props) => {
                   alignItems: 'center',
                 }}>
                 <Text
-                  style={{
-                    fontSize: 24,
-                    color: '#275696',
-                    letterSpacing: -1.5,
-                    marginBottom: 5,
-                  }}>
+                  style={[
+                    styles.mediumText,
+                    {
+                      fontSize: 24,
+                      color: '#275696',
+                      letterSpacing: -1.5,
+                      marginBottom: 7,
+                    },
+                  ]}>
                   12
                 </Text>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1.5,
-                  }}>
-                  MY 견적 의뢰 건
+                  style={[
+                    styles.mediumText,
+                    {
+                      fontSize: 14,
+                      letterSpacing: -1.5,
+                    },
+                  ]}>
+                  나의 견적 의뢰 건
                 </Text>
               </View>
             </TouchableWithoutFeedback>
@@ -247,10 +254,13 @@ const DrawerMenu = (props) => {
                   style={{ width: 35, height: 30, marginBottom: 10 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1,
-                  }}>
+                  style={[
+                    styles.mediumText,
+                    {
+                      fontSize: 14,
+                      letterSpacing: -1,
+                    },
+                  ]}>
                   메세지
                 </Text>
               </View>
@@ -270,11 +280,14 @@ const DrawerMenu = (props) => {
                   style={{ width: 35, height: 30, marginBottom: 10 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1,
-                  }}>
-                  MY파트너스
+                  style={[
+                    styles.mediumText,
+                    {
+                      fontSize: 14,
+                      letterSpacing: -1,
+                    },
+                  ]}>
+                  나의 파트너스
                 </Text>
               </View>
             </TouchableWithoutFeedback>
@@ -290,7 +303,7 @@ const DrawerMenu = (props) => {
               backgroundColor: '#275696',
               justifyContent: 'center',
               alignItems: 'center',
-              paddingVertical: 7,
+              paddingVertical: 10,
               borderRadius: 5,
             }}>
             <Image
@@ -298,7 +311,7 @@ const DrawerMenu = (props) => {
               resizeMode="contain"
               style={{ width: 35, height: 30 }}
             />
-            <Text style={[styles.whiteFont, { fontSize: 16, fontWeight: 'bold' }]}>
+            <Text style={[styles.whiteFont, styles.mediumText, { fontSize: 16 }]}>
               비교 견적 신청
             </Text>
           </TouchableOpacity>
@@ -311,7 +324,7 @@ const DrawerMenu = (props) => {
                 styles.mV10,
                 { flexDirection: 'row', justifyContent: 'space-between' },
               ]}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>인쇄/패키지 갤러리</Text>
+              <Text style={[styles.mediumText, { fontSize: 16 }]}>인쇄/패키지 갤러리</Text>
               <Image
                 source={
                   collapseArrow01
@@ -326,13 +339,17 @@ const DrawerMenu = (props) => {
           <Collapsible collapsed={collapseArrow01}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>패키지(단상자, 싸바리 등)</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  패키지(단상자, 싸바리 등)
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>일반인쇄(서적,카달로그 등)</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  일반인쇄(서적,카달로그 등)
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>기타 인쇄물</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>기타 인쇄물</Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
@@ -348,7 +365,7 @@ const DrawerMenu = (props) => {
                 styles.mV10,
                 { flexDirection: 'row', justifyContent: 'space-between' },
               ]}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>파트너스</Text>
+              <Text style={[styles.mediumText, { fontSize: 16 }]}>파트너스</Text>
               <Image
                 source={
                   collapseArrow02
@@ -363,13 +380,13 @@ const DrawerMenu = (props) => {
           <Collapsible collapsed={collapseArrow02}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>성실 파트너스</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>성실 파트너스</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>인기 파트너스</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>인기 파트너스</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>지역 파트너스</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>지역 파트너스</Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
@@ -385,7 +402,7 @@ const DrawerMenu = (props) => {
                 styles.mV10,
                 { flexDirection: 'row', justifyContent: 'space-between' },
               ]}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>제작스토리</Text>
+              <Text style={[styles.mediumText, { fontSize: 16 }]}>제작스토리</Text>
               <Image
                 source={
                   collapseArrow03
@@ -400,13 +417,13 @@ const DrawerMenu = (props) => {
           <Collapsible collapsed={collapseArrow03}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>고객 후기</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>고객 후기</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>유용한 정보</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>유용한 정보</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>인쇄/패키지 제작 정보</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>인쇄/패키지 제작 정보</Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
@@ -416,7 +433,7 @@ const DrawerMenu = (props) => {
           />
 
           <View style={[styles.categoryTitle, styles.mV10]}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>이벤트</Text>
+            <Text style={[styles.mediumText, { fontSize: 16 }]}>이벤트</Text>
           </View>
 
           <View
@@ -430,7 +447,7 @@ const DrawerMenu = (props) => {
                 styles.mV10,
                 { flexDirection: 'row', justifyContent: 'space-between' },
               ]}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>고객센터</Text>
+              <Text style={[styles.mediumText, { fontSize: 16 }]}>고객센터</Text>
               <Image
                 source={
                   collapseArrow04
@@ -445,13 +462,13 @@ const DrawerMenu = (props) => {
           <Collapsible collapsed={collapseArrow04}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>공지사항</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>공지사항</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>FAQ</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>FAQ</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.categoryText}>1:1 문의</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>1:1 문의</Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
@@ -461,7 +478,7 @@ const DrawerMenu = (props) => {
           />
 
           <View style={[styles.categoryTitle, styles.mV10]}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>회사소개</Text>
+            <Text style={[styles.mediumText, { fontSize: 16 }]}>회사소개</Text>
           </View>
 
           <View
@@ -537,7 +554,7 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     paddingHorizontal: 20,
-    paddingVertical: 2,
+    paddingVertical: 5,
   },
   pdH20: {
     paddingHorizontal: 20,
@@ -550,6 +567,15 @@ const styles = StyleSheet.create({
   },
   mV10: {
     marginVertical: 10,
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

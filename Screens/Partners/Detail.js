@@ -148,10 +148,13 @@ const Detail = (props) => {
                 resizeMode="cover"
                 style={{ width: 55, height: 15, marginBottom: 5 }}
               />
-              <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 5 }}>
+              <Text style={[styles.mediumText, { fontSize: 20, marginBottom: 5 }]}>
                 삼보인쇄(주)
               </Text>
-              <Text style={{ fontSize: 12, marginBottom: 12 }}>담당자 김성준</Text>
+              <Text
+                style={[styles.mediumText, { fontSize: 12, marginBottom: 12, color: '#707070' }]}>
+                담당자 김성준
+              </Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -163,7 +166,7 @@ const Detail = (props) => {
                   resizeMode="cover"
                   style={{ width: 65, height: 15, marginRight: 5 }}
                 />
-                <Text style={{ fontSize: 12 }}>4.0</Text>
+                <Text style={[styles.normalText, { fontSize: 12 }]}>4.0</Text>
               </View>
             </View>
           </View>
@@ -196,11 +199,13 @@ const Detail = (props) => {
                   style={{ width: 24, height: 24 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1,
-                    marginLeft: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      marginLeft: 5,
+                    },
+                  ]}>
                   전화하기
                 </Text>
               </View>
@@ -221,11 +226,13 @@ const Detail = (props) => {
                   style={{ width: 24, height: 24 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1,
-                    marginLeft: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      marginLeft: 5,
+                    },
+                  ]}>
                   메세지보내기
                 </Text>
               </View>
@@ -234,16 +241,22 @@ const Detail = (props) => {
 
           {/* 업체소개 */}
           <View style={{ marginTop: 20 }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>업체소개</Text>
-            <Text style={{ fontSize: 14 }}>
+            <Text style={[styles.mediumText, { fontSize: 16, marginBottom: 15 }]}>업체소개</Text>
+            <Text style={[styles.normalText, { fontSize: 14, marginBottom: 5 }]}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
             </Text>
-            <Text>최신형 보유장비로 최고의 품질을 가동합니다.</Text>
-            <Text>당일 오후 4시 이전에 견적문의 주시면 당일 견적가능!</Text>
+            <Text style={[styles.normalText, { fontSize: 14, marginBottom: 5 }]}>
+              최신형 보유장비로 최고의 품질을 가동합니다.
+            </Text>
+            <Text style={[styles.normalText, { fontSize: 14, marginBottom: 5 }]}>
+              당일 오후 4시 이전에 견적문의 주시면 당일 견적가능!
+            </Text>
 
             <View style={{ paddingVertical: 20, paddingLeft: 7 }}>
-              <Text>* 업무시간 : 평일 09:00 ~ 18:00</Text>
-              <Text>* 토, 일, 공휴일 휴무</Text>
+              <Text style={[styles.normalText, { fontSize: 14, marginBottom: 5 }]}>
+                * 업무시간 : 평일 09:00 ~ 18:00
+              </Text>
+              <Text style={[styles.normalText, { fontSize: 14 }]}>* 토, 일, 공휴일 휴무</Text>
             </View>
           </View>
           {/* // 업체소개 */}
@@ -257,9 +270,13 @@ const Detail = (props) => {
             backgroundColor: '#F5F5F5',
             width: Dimensions.get('screen').width,
           }}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>영업품목</Text>
-          <Text style={{ fontSize: 14 }}>- 패키지 : 단상자/싸바리/~~</Text>
-          <Text style={{ fontSize: 14 }}>- 일반인쇄 : 카달로그/화보집/도록/~~</Text>
+          <Text style={[styles.mediumText, { fontSize: 16, marginBottom: 10 }]}>영업품목</Text>
+          <Text style={[styles.normalText, { fontSize: 14, marginBottom: 5 }]}>
+            - 패키지 : 단상자/싸바리/~~
+          </Text>
+          <Text style={[styles.normalText, { fontSize: 14 }]}>
+            - 일반인쇄 : 카달로그/화보집/도록/~~
+          </Text>
         </View>
         {/* // 영업품목 */}
 
@@ -279,8 +296,10 @@ const Detail = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 12 }}>고객후기</Text>
-            <Text style={{ fontSize: 16, color: '#275696' }}>총 리뷰수 26</Text>
+            <Text style={[styles.mediumText, { fontSize: 16, marginRight: 12 }]}>고객후기</Text>
+            <Text style={[styles.normalText, { fontSize: 14, color: '#275696' }]}>
+              총 리뷰수 26
+            </Text>
           </View>
           {/* 고객후기 리스트 박스 */}
           <View
@@ -298,25 +317,28 @@ const Detail = (props) => {
               <ImageBackground
                 source={require('../../src/images/w01.jpg')}
                 resizeMode="cover"
-                style={{ width: 72, height: 65, position: 'relative' }}>
+                style={{ width: 75, height: 70, position: 'relative' }}>
                 <Text
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    fontSize: 10,
-                    backgroundColor: 'rgba(0,0,0,0.45)',
-                    color: '#fff',
-                    padding: 5,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                      fontSize: 10,
+                      backgroundColor: 'rgba(0,0,0,0.45)',
+                      color: '#fff',
+                      padding: 5,
+                    },
+                  ]}>
                   +6
                 </Text>
               </ImageBackground>
               <View style={{ flexShrink: 2, marginLeft: 20 }}>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>
+                <Text style={[styles.boldText, { fontSize: 14, marginBottom: 10 }]}>
                   하나로세상(김*미 고객님)
                 </Text>
-                <Text style={{ fontSize: 14, lineHeight: 20 }}>
+                <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22 }]}>
                   배송도 빠르고 프린트 퀄리티도 너무 좋아요 배송도 빠르고 프린트 퀄리티도 너무
                   좋아요
                 </Text>
@@ -332,7 +354,10 @@ const Detail = (props) => {
                 paddingVertical: 10,
               }}>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>소통만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  소통만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -340,11 +365,14 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>4.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
                 </View>
               </View>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>품질만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  품질만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -352,11 +380,14 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>5.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
                 </View>
               </View>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>납기만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  납기만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -364,7 +395,7 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>5.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
                 </View>
               </View>
             </View>
@@ -386,7 +417,7 @@ const Detail = (props) => {
               <ImageBackground
                 source={require('../../src/images/w02.jpg')}
                 resizeMode="cover"
-                style={{ width: 72, height: 65, position: 'relative' }}>
+                style={{ width: 75, height: 70, position: 'relative' }}>
                 <Text
                   style={{
                     position: 'absolute',
@@ -401,10 +432,10 @@ const Detail = (props) => {
                 </Text>
               </ImageBackground>
               <View style={{ flexShrink: 2, marginLeft: 20 }}>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>
+                <Text style={[styles.boldText, { fontSize: 14, marginBottom: 10 }]}>
                   신세계세상(정*주 고객님)
                 </Text>
-                <Text style={{ fontSize: 14, lineHeight: 20 }}>
+                <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22 }]}>
                   퀄리티 하나는 정말 끝내줍니다. 믿고 맡기는 업체로 선정한 지 꽤 됩니다.
                 </Text>
               </View>
@@ -419,7 +450,10 @@ const Detail = (props) => {
                 paddingVertical: 10,
               }}>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>소통만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  소통만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -427,11 +461,14 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>4.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
                 </View>
               </View>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>품질만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  품질만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -439,11 +476,14 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>5.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
                 </View>
               </View>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>납기만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  납기만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -451,7 +491,7 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>4.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
                 </View>
               </View>
             </View>
@@ -473,7 +513,7 @@ const Detail = (props) => {
               <ImageBackground
                 source={require('../../src/images/w03.jpg')}
                 resizeMode="cover"
-                style={{ width: 72, height: 65, position: 'relative' }}>
+                style={{ width: 75, height: 70, position: 'relative' }}>
                 <Text
                   style={{
                     position: 'absolute',
@@ -488,10 +528,10 @@ const Detail = (props) => {
                 </Text>
               </ImageBackground>
               <View style={{ flexShrink: 2, marginLeft: 20 }}>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10 }}>
+                <Text style={[styles.boldText, { fontSize: 14, marginBottom: 10 }]}>
                   내안에바다(전*리 고객님)
                 </Text>
-                <Text style={{ fontSize: 14, lineHeight: 20 }}>
+                <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22 }]}>
                   명함은 항상 여기서 주문해요. 고급지도 종류별로 다양하고 디지털로 찍어도 오프셋
                   뺨치게 잘나옵니다.
                 </Text>
@@ -507,7 +547,10 @@ const Detail = (props) => {
                 paddingVertical: 10,
               }}>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>소통만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  소통만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -515,11 +558,14 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>5.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
                 </View>
               </View>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>품질만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  품질만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -527,11 +573,14 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>5.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
                 </View>
               </View>
               <View>
-                <Text style={{ fontSize: 12, color: '#707070', marginBottom: 7 }}>납기만족도</Text>
+                <Text
+                  style={[styles.normalText, { fontSize: 12, color: '#707070', marginBottom: 7 }]}>
+                  납기만족도
+                </Text>
                 <View
                   style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Image
@@ -539,7 +588,7 @@ const Detail = (props) => {
                     resizeMode="cover"
                     style={{ width: 55, height: 15, marginRight: 5 }}
                   />
-                  <Text style={{ fontSize: 10 }}>4.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
                 </View>
               </View>
             </View>
@@ -560,7 +609,10 @@ const Detail = (props) => {
               marginTop: 20,
             }}>
             <Text
-              style={{ textAlign: 'center', fontSize: 16, color: '#444444', paddingVertical: 15 }}>
+              style={[
+                styles.normalText,
+                { textAlign: 'center', fontSize: 16, color: '#444444', paddingVertical: 15 },
+              ]}>
               고객후기 전체보기
             </Text>
           </TouchableOpacity>
@@ -598,7 +650,7 @@ const Detail = (props) => {
             <View style={[styles.submitBtn]}>
               <View
                 style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
+                <Text style={[styles.mediumText, { fontSize: 18, color: '#fff' }]}>
                   견적 신청하기
                 </Text>
                 <Image
@@ -644,6 +696,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

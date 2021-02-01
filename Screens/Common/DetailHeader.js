@@ -131,7 +131,7 @@ const DetailHeader = (props) => {
               />
             </View>
 
-            <Text style={headerTitle}>{title}</Text>
+            <Text style={[styles.mediumText, headerTitle]}>{title}</Text>
           </View>
         </TouchableWithoutFeedback>
         <View style={icons}>
@@ -189,15 +189,21 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    letterSpacing: -1,
     lineHeight: 50,
-    marginBottom: 2,
   },
   icons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 
