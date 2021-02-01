@@ -144,7 +144,7 @@ const index = (props) => {
               }}>
               <View style={{ marginBottom: 10 }}>
                 <Image
-                  source={require('../../src/images/p01.jpg')}
+                  source={require('../../src/images/p012.jpg')}
                   resizeMode="cover"
                   style={{ width: '100%', height: 130, borderRadius: 5 }}
                 />

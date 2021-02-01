@@ -35,7 +35,7 @@ const Detail = (props) => {
   const entries = [
     {
       id: 1,
-      image: require('../../src/images/p01.jpg'),
+      image: require('../../src/images/p012.jpg'),
     },
     {
       id: 2,
