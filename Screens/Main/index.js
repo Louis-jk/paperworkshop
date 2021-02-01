@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Alert,
+  StyleSheet,
 } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import { SliderBox } from 'react-native-image-slider-box';
@@ -189,11 +190,13 @@ const index = (props) => {
               marginBottom: 7,
             }}>
             <Text
-              style={{
-                color: '#000',
-                fontSize: 14,
-                fontWeight: 'bold',
-              }}>
+              style={[
+                styles.mediumText,
+                {
+                  color: '#000',
+                  fontSize: 14,
+                },
+              ]}>
               삼보인쇄
             </Text>
             <View
@@ -203,12 +206,15 @@ const index = (props) => {
                 marginLeft: 5,
               }}>
               <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 11,
-                  paddingHorizontal: 5,
-                  paddingVertical: 2,
-                }}>
+                style={[
+                  styles.normalText,
+                  {
+                    color: '#fff',
+                    fontSize: 11,
+                    paddingHorizontal: 5,
+                    paddingVertical: 2,
+                  },
+                ]}>
                 패키지
               </Text>
             </View>
@@ -219,17 +225,20 @@ const index = (props) => {
                 marginLeft: 5,
               }}>
               <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 11,
-                  paddingHorizontal: 5,
-                  paddingVertical: 2,
-                }}>
+                style={[
+                  styles.normalText,
+                  {
+                    color: '#fff',
+                    fontSize: 11,
+                    paddingHorizontal: 5,
+                    paddingVertical: 2,
+                  },
+                ]}>
                 일반인쇄
               </Text>
             </View>
           </View>
-          <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 20 }]} numberOfLines={2}>
             카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
           </Text>
         </View>
@@ -909,12 +918,14 @@ const index = (props) => {
               await setTabIndex('first');
             }}>
             <Text
-              style={{
-                paddingVertical: 12,
-                fontSize: 14,
-                fontWeight: 'bold',
-                color: tabIndex === 'first' && index === 0 ? '#275696' : '#B5B5B5',
-              }}>
+              style={[
+                tabIndex === 'first' && index === 0 ? styles.boldText : styles.mediumText,
+                {
+                  paddingVertical: 12,
+                  fontSize: 14,
+                  color: tabIndex === 'first' && index === 0 ? '#275696' : '#B5B5B5',
+                },
+              ]}>
               성실파트너스
             </Text>
           </TouchableOpacity>
@@ -934,12 +945,14 @@ const index = (props) => {
               await setTabIndex('second');
             }}>
             <Text
-              style={{
-                paddingVertical: 12,
-                fontSize: 14,
-                fontWeight: 'bold',
-                color: tabIndex === 'second' || index === 1 ? '#275696' : '#B5B5B5',
-              }}>
+              style={[
+                tabIndex === 'second' || index === 1 ? styles.boldText : styles.mediumText,
+                {
+                  paddingVertical: 12,
+                  fontSize: 14,
+                  color: tabIndex === 'second' || index === 1 ? '#275696' : '#B5B5B5',
+                },
+              ]}>
               인기파트너스
             </Text>
           </TouchableOpacity>
@@ -959,12 +972,14 @@ const index = (props) => {
               await setTabIndex('third');
             }}>
             <Text
-              style={{
-                paddingVertical: 12,
-                fontSize: 14,
-                fontWeight: 'bold',
-                color: tabIndex === 'third' || index === 2 ? '#275696' : '#B5B5B5',
-              }}>
+              style={[
+                tabIndex === 'third' || index === 2 ? styles.boldText : styles.mediumText,
+                {
+                  paddingVertical: 12,
+                  fontSize: 14,
+                  color: tabIndex === 'third' || index === 2 ? '#275696' : '#B5B5B5',
+                },
+              ]}>
               지역파트너스
             </Text>
           </TouchableOpacity>
@@ -995,11 +1010,13 @@ const index = (props) => {
         }}>
         <View>
           <Text
-            style={{
-              fontSize: 22,
-              fontWeight: 'bold',
-              letterSpacing: -2,
-            }}>
+            style={[
+              styles.boldText,
+              {
+                fontSize: 20,
+                letterSpacing: -2,
+              },
+            ]}>
             페이퍼공작소
           </Text>
         </View>
@@ -1066,7 +1083,7 @@ const index = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#275696' }}>
+                <Text style={[styles.mediumText, { fontSize: 14, color: '#275696' }]}>
                   0{mainActiveSlide + 1}
                   {/* //총 이미지 갯수중 현재 index가 몇인지를 나타낸다 */}
                 </Text>
@@ -1089,7 +1106,7 @@ const index = (props) => {
                     }}
                   />
                 </View>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C1C1C1' }}>
+                <Text style={[styles.mediumText, { fontSize: 14, color: '#C1C1C1' }]}>
                   0{mainBanners.length}
                 </Text>
               </View>
@@ -1115,23 +1132,35 @@ const index = (props) => {
                 }}>
                 <View>
                   <Text
-                    style={{
-                      color: '#fff',
-                      fontSize: 12,
-                    }}>
+                    style={[
+                      styles.normalText,
+                      {
+                        color: '#fff',
+                        fontSize: 12,
+                      },
+                    ]}>
                     총 누적 견적
                   </Text>
                   <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                     <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 24,
-                        fontWeight: 'bold',
-                        marginRight: 5,
-                      }}>
+                      style={[
+                        styles.mediumText,
+                        {
+                          color: '#fff',
+                          fontSize: 24,
+                          fontWeight: 'bold',
+                          marginRight: 5,
+                        },
+                      ]}>
                       252,154
                     </Text>
-                    <Text style={{ color: '#fff', fontSize: 20, fontWeight: '100' }}>건</Text>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        { color: '#fff', fontSize: 17, fontWeight: '100' },
+                      ]}>
+                      건
+                    </Text>
                   </View>
                 </View>
                 <View>
@@ -1156,16 +1185,18 @@ const index = (props) => {
                         resizeMode="contain"
                         style={{
                           width: 20,
-                          height: 20,
+                          height: 22,
                           marginRight: 2,
-                          marginTop: 2,
                         }}
                       />
                       <Text
-                        style={{
-                          fontSize: 14,
-                          color: '#fff',
-                        }}>
+                        style={[
+                          styles.normalText,
+                          {
+                            fontSize: 14,
+                            color: '#fff',
+                          },
+                        ]}>
                         견적받기
                       </Text>
                     </View>
@@ -1209,32 +1240,40 @@ const index = (props) => {
               />
             </View>
             <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-                marginBottom: 3,
-              }}>
+              style={[
+                styles.mediumText,
+                {
+                  fontSize: 16,
+                  letterSpacing: -1,
+                  marginBottom: 3,
+                },
+              ]}>
               패키지
             </Text>
             <Text
-              style={{
-                fontSize: 12,
-                color: '#979797',
-                letterSpacing: -1,
-                marginBottom: 10,
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 12,
+                  color: '#979797',
+                  letterSpacing: -1,
+                  marginBottom: 10,
+                },
+              ]}>
               단상자/싸바리/쇼핑백 등
             </Text>
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Order')}>
               <View style={{ backgroundColor: '#275696', borderRadius: 20 }}>
                 <Text
-                  style={{
-                    fontSize: 13,
-                    color: '#fff',
-                    paddingVertical: 7,
-                    paddingHorizontal: 13,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 13,
+                      color: '#fff',
+                      paddingVertical: 7,
+                      paddingHorizontal: 13,
+                    },
+                  ]}>
                   견적 바로가기
                 </Text>
               </View>
@@ -1263,32 +1302,40 @@ const index = (props) => {
               />
             </View>
             <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                letterSpacing: -2,
-                marginBottom: 3,
-              }}>
+              style={[
+                styles.mediumText,
+                {
+                  fontSize: 16,
+                  letterSpacing: -1,
+                  marginBottom: 3,
+                },
+              ]}>
               일반인쇄
             </Text>
             <Text
-              style={{
-                fontSize: 12,
-                color: '#979797',
-                letterSpacing: -1,
-                marginBottom: 10,
-              }}>
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 12,
+                  color: '#979797',
+                  letterSpacing: -1,
+                  marginBottom: 10,
+                },
+              ]}>
               리플렛/브로슈어/포스터 등
             </Text>
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Order')}>
               <View style={{ backgroundColor: '#275696', borderRadius: 20 }}>
                 <Text
-                  style={{
-                    fontSize: 13,
-                    color: '#fff',
-                    paddingVertical: 7,
-                    paddingHorizontal: 13,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 13,
+                      color: '#fff',
+                      paddingVertical: 7,
+                      paddingHorizontal: 13,
+                    },
+                  ]}>
                   견적 바로가기
                 </Text>
               </View>
@@ -1314,11 +1361,13 @@ const index = (props) => {
               paddingHorizontal: 20,
             }}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                letterSpacing: -1,
-              }}>
+              style={[
+                styles.boldText,
+                {
+                  fontSize: 18,
+                  letterSpacing: -1,
+                },
+              ]}>
               페이퍼공작소의 제작 과정
             </Text>
             <View
@@ -1327,7 +1376,7 @@ const index = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#275696' }}>
+              <Text style={[styles.mediumText, { fontSize: 14, color: '#275696' }]}>
                 {/* 0{currentRqIndex} */}0{stepActiveSlide + 1}
                 {/* //총 이미지 갯수중 현재 index가 몇인지를 나타낸다 */}
               </Text>
@@ -1350,7 +1399,7 @@ const index = (props) => {
                   }}
                 />
               </View>
-              <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#C1C1C1' }}>
+              <Text style={[styles.mediumText, { fontSize: 14, color: '#C1C1C1' }]}>
                 0{steps.length}
               </Text>
             </View>
@@ -1449,11 +1498,12 @@ const index = (props) => {
                 paddingHorizontal: 20,
               }}>
               <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                  letterSpacing: -1,
-                }}>
+                style={[
+                  styles.boldText,
+                  {
+                    fontSize: 18,
+                  },
+                ]}>
                 파트너스
               </Text>
 
@@ -1502,11 +1552,12 @@ const index = (props) => {
                 paddingHorizontal: 20,
               }}>
               <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                  letterSpacing: -2,
-                }}>
+                style={[
+                  styles.boldText,
+                  {
+                    fontSize: 18,
+                  },
+                ]}>
                 실시간 견적 처리 현황
               </Text>
 
@@ -1922,5 +1973,17 @@ const index = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
+  },
+});
 
 export default index;
