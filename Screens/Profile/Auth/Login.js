@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,11 @@ import {
 
 const Login = (props) => {
   const navigation = props.navigation;
+
+  const [autoLogin, setAutoLogin] = React.useState(false);
+  const toggleCheck = () => {
+    setAutoLogin((prev) => !prev);
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -46,25 +51,33 @@ const Login = (props) => {
                 style={[styles.textInput, styles.normalText]}
                 editable={false}
               />
-              <View
+
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={toggleCheck}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
                   alignItems: 'center',
-                }}>
+                }}
+                hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
                 <Text
                   style={[{ fontSize: 14, color: '#111111', marginRight: 5 }, styles.normalText]}>
                   자동 로그인
                 </Text>
                 <Image
-                  source={require('../../../src/assets/radio_on.png')}
+                  source={
+                    autoLogin
+                      ? require('../../../src/assets/radio_on.png')
+                      : require('../../../src/assets/radio_off.png')
+                  }
                   resizeMode="cover"
                   style={{
                     width: 17,
                     height: 17,
                   }}
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={{ marginBottom: 20 }}>

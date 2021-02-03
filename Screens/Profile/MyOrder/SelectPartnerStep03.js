@@ -68,11 +68,14 @@ const SelectPartnerStep03 = (props) => {
                 onPress={() => navigation.navigate('OrderDetail')}
                 style={{ alignSelf: 'flex-end' }}>
                 <Text
-                  style={{
-                    fontSize: 12,
-                    textDecorationLine: 'underline',
-                    color: '#A2A2A2',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 12,
+                      textDecorationLine: 'underline',
+                      color: '#A2A2A2',
+                    },
+                  ]}>
                   세부 내용 보기
                 </Text>
               </TouchableOpacity>
@@ -152,15 +155,22 @@ const SelectPartnerStep03 = (props) => {
                     }}
                   />
                   <View>
-                    <Text style={{ fontSize: 14, color: '#000000', fontWeight: 'bold' }}>
+                    <Text
+                      style={[
+                        styles.mediumText,
+                        { fontSize: 14, color: '#000000', marginBottom: 2 },
+                      ]}>
                       삼보인쇄
                     </Text>
-                    <Text style={{ fontSize: 14, color: '#000000' }}>010-1234-5678</Text>
+                    <Text style={[styles.normalText, { fontSize: 14, color: '#000000' }]}>
+                      010-1234-5678
+                    </Text>
                   </View>
                 </View>
               </View>
               <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
-                <Text style={{ fontSize: 14, color: '#111111', lineHeight: 20 }}>
+                <Text
+                  style={[styles.normalText, { fontSize: 14, color: '#111111', lineHeight: 20 }]}>
                   안녕하세요. 20년 인쇄업체 전통을 자랑하는 삼보인쇄입니다. 제작 요청하신 중소기업
                   선물용 쇼핑백 30건 이상 진행했습니다. 선물세트 추가 비용 5만원입니다.
                 </Text>
@@ -180,8 +190,16 @@ const SelectPartnerStep03 = (props) => {
                     justifyContent: 'flex-start',
                     alignItems: 'center',
                   }}>
-                  <Text style={{ fontSize: 14, color: '#111111', marginRight: 10 }}>견적 금액</Text>
-                  <Text style={{ fontSize: 14, color: '#366DE5' }}>200,000원</Text>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                    ]}>
+                    견적 금액
+                  </Text>
+                  <Text style={[styles.normalText, { fontSize: 14, color: '#366DE5' }]}>
+                    200,000원
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -189,10 +207,14 @@ const SelectPartnerStep03 = (props) => {
                     justifyContent: 'flex-start',
                     alignItems: 'center',
                   }}>
-                  <Text style={{ fontSize: 14, color: '#111111', marginRight: 10 }}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                    ]}>
                     계약금(선금)
                   </Text>
-                  <Text style={{ fontSize: 14, color: '#A2A2A2' }}>10%</Text>
+                  <Text style={[styles.normalText, { fontSize: 14, color: '#A2A2A2' }]}>10%</Text>
                 </View>
               </View>
             </View>
@@ -253,11 +275,14 @@ const SelectPartnerStep03 = (props) => {
                     style={{ width: 24, height: 24 }}
                   />
                   <Text
-                    style={{
-                      fontSize: 14,
-                      letterSpacing: -1,
-                      marginLeft: 5,
-                    }}>
+                    style={[
+                      styles.normalText,
+                      {
+                        fontSize: 14,
+                        letterSpacing: -1,
+                        marginLeft: 5,
+                      },
+                    ]}>
                     메세지보내기
                   </Text>
                 </View>
@@ -268,7 +293,7 @@ const SelectPartnerStep03 = (props) => {
           {/* // 최종 선정 업체 */}
 
           {/* 진행 현황 */}
-          <View>
+          <View style={{ marginBottom: 10 }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -290,10 +315,13 @@ const SelectPartnerStep03 = (props) => {
                 marginBottom: 10,
               }}>
               <Text
-                style={{
-                  fontSize: 14,
-                  color: '#000000',
-                }}>
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 14,
+                    color: '#000',
+                  },
+                ]}>
                 계약금 입금 완료
               </Text>
             </View>
@@ -332,12 +360,14 @@ const SelectPartnerStep03 = (props) => {
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                 }}>
-                <Text style={{ fontSize: 14, lineHeight: 20 }}>파트너스로부터 받은</Text>
-                <Text style={{ fontSize: 14, fontWeight: 'bold', lineHeight: 20 }}>
+                <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22, marginRight: 5 }]}>
+                  파트너스로부터 받은
+                </Text>
+                <Text style={[styles.mediumText, { fontSize: 14, lineHeight: 22, marginRight: 5 }]}>
                   인쇄/패키지 제작 시안 확인 후,
                 </Text>
               </View>
-              <Text style={{ fontSize: 14, lineHeight: 20 }}>
+              <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22 }]}>
                 이상이 없다면 인쇄 제작 요청버튼을 눌러주세요.
               </Text>
             </View>
@@ -408,11 +438,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   detailsTitle: {
+    fontFamily: 'SCDream4',
     width: 100,
     fontSize: 14,
     color: '#A2A2A2',
   },
   detailsDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000',
   },
@@ -422,7 +454,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#000000',
     marginTop: 20,
@@ -469,6 +501,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   orderInfoContentRow: {
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

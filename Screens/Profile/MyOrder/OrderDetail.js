@@ -115,7 +115,7 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
             타입 선택
           </Text>
           <View
@@ -147,7 +147,7 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
             제작 정보
           </Text>
           <View style={[styles.infoBox, { marginBottom: 10 }]}>
@@ -184,7 +184,7 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
             지류 선택
           </Text>
           <View
@@ -218,7 +218,7 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
             인쇄도수/교정/감리 선택
           </Text>
           <View style={[styles.infoBox, { marginBottom: 10 }]}>
@@ -255,7 +255,7 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
             후가공
           </Text>
           <View style={[styles.infoBox, { marginBottom: 10 }]}>
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     lineHeight: 23,
   },
   infoStepTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#000000',
   },

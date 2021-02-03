@@ -37,7 +37,11 @@ const Signed = (props) => {
             paddingHorizontal: 20,
             paddingVertical: 20,
           }}>
-          <Text style={{ fontSize: 18, color: '#275696', marginTop: 20, marginBottom: 30 }}>
+          <Text
+            style={[
+              styles.mediumText,
+              { fontSize: 18, color: '#275696', marginTop: 20, marginBottom: 30 },
+            ]}>
             회원가입이 정상적으로 완료되었습니다.
           </Text>
 
@@ -68,9 +72,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

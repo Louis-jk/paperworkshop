@@ -514,16 +514,19 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   details: {
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   detailsTitle: {
+    fontFamily: 'SCDream4',
     width: 70,
     fontSize: 14,
     color: '#979797',
   },
   detailsDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000',
   },
@@ -546,6 +549,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   cancelBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#111',
     textAlign: 'center',
@@ -587,6 +591,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
+    fontFamily: 'SCDream4',
     width: 100,
     textAlign: 'center',
     fontSize: 14,

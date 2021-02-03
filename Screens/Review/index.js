@@ -23,10 +23,10 @@ const index = (props) => {
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={[styles.wrap, { marginTop: 20 }]}>
-          <Text style={{ fontSize: 22, color: '#000000', fontWeight: 'bold', marginBottom: 2 }}>
+          <Text style={[styles.boldText, { fontSize: 22, color: '#000000', marginBottom: 7 }]}>
             고객님의 소중한 후기를
           </Text>
-          <Text style={{ fontSize: 22, color: '#000000', fontWeight: 'bold', marginBottom: 20 }}>
+          <Text style={[styles.boldText, { fontSize: 22, color: '#000000', marginBottom: 20 }]}>
             남겨주세요.
           </Text>
           <View
@@ -54,11 +54,13 @@ const index = (props) => {
                   marginBottom: 7,
                 }}>
                 <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                  }}>
+                  style={[
+                    styles.mediumText,
+                    {
+                      color: '#000',
+                      fontSize: 14,
+                    },
+                  ]}>
                   삼보인쇄
                 </Text>
                 <View
@@ -68,12 +70,15 @@ const index = (props) => {
                     marginLeft: 5,
                   }}>
                   <Text
-                    style={{
-                      color: '#fff',
-                      fontSize: 11,
-                      paddingHorizontal: 5,
-                      paddingVertical: 2,
-                    }}>
+                    style={[
+                      styles.normalText,
+                      {
+                        color: '#fff',
+                        fontSize: 11,
+                        paddingHorizontal: 5,
+                        paddingVertical: 2,
+                      },
+                    ]}>
                     패키지
                   </Text>
                 </View>
@@ -84,18 +89,23 @@ const index = (props) => {
                     marginLeft: 5,
                   }}>
                   <Text
-                    style={{
-                      color: '#fff',
-                      fontSize: 11,
-                      paddingHorizontal: 5,
-                      paddingVertical: 2,
-                    }}>
+                    style={[
+                      styles.normalText,
+                      {
+                        color: '#fff',
+                        fontSize: 11,
+                        paddingHorizontal: 5,
+                        paddingVertical: 2,
+                      },
+                    ]}>
                     일반인쇄
                   </Text>
                 </View>
               </View>
               <View style={{ width: '100%' }}>
-                <Text style={{ fontSize: 13, lineHeight: 18 }} numberOfLines={2}>
+                <Text
+                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
               </View>
@@ -152,7 +162,9 @@ const index = (props) => {
                     resizeMode="contain"
                     style={{ width: 20, height: 20 }}
                   />
-                  <Text style={{ fontSize: 14, color: '#000', marginLeft: 5 }}>4.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 14, color: '#000', marginLeft: 5 }]}>
+                    4.0
+                  </Text>
                 </View>
               </View>
               <View
@@ -192,7 +204,9 @@ const index = (props) => {
                     resizeMode="contain"
                     style={{ width: 20, height: 20 }}
                   />
-                  <Text style={{ fontSize: 14, color: '#000', marginLeft: 5 }}>4.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 14, color: '#000', marginLeft: 5 }]}>
+                    4.0
+                  </Text>
                 </View>
               </View>
               <View
@@ -232,7 +246,9 @@ const index = (props) => {
                     resizeMode="contain"
                     style={{ width: 20, height: 20 }}
                   />
-                  <Text style={{ fontSize: 14, color: '#000', marginLeft: 5 }}>4.0</Text>
+                  <Text style={[styles.normalText, { fontSize: 14, color: '#000', marginLeft: 5 }]}>
+                    4.0
+                  </Text>
                 </View>
               </View>
             </View>
@@ -257,17 +273,20 @@ const index = (props) => {
             <TextInput
               placeholder="후기 내용을 입력해주세요"
               placeholderTextColor="#A2A2A2"
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 5,
-                backgroundColor: '#fff',
-                height: 120,
-                flex: 1,
-                textAlignVertical: 'top',
-                paddingLeft: 10,
-                paddingVertical: 10,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 5,
+                  backgroundColor: '#fff',
+                  height: 120,
+                  flex: 1,
+                  textAlignVertical: 'top',
+                  paddingLeft: 10,
+                  paddingVertical: 10,
+                },
+              ]}
               multiline={true}
             />
           </View>
@@ -294,15 +313,18 @@ const index = (props) => {
                 </Text>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#275696',
-                    borderRadius: 4,
-                    backgroundColor: '#fff',
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                  }}>
-                  <Text style={{ color: '#275696' }}>사진 선택</Text>
+                  style={[
+                    styles.normalText,
+                    {
+                      borderWidth: 1,
+                      borderColor: '#275696',
+                      borderRadius: 4,
+                      backgroundColor: '#fff',
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
+                    },
+                  ]}>
+                  <Text style={[styles.normalText, { color: '#275696' }]}>사진 선택</Text>
                 </TouchableOpacity>
               </View>
 
@@ -326,7 +348,9 @@ const index = (props) => {
                     resizeMode="cover"
                     style={{ width: 50, height: 50, borderRadius: 4, marginRight: 10 }}
                   />
-                  <Text style={{ fontSize: 14, color: '#000' }}>paper12456.jpg</Text>
+                  <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>
+                    paper12456.jpg
+                  </Text>
                 </View>
                 <TouchableOpacity activeOpacity={0.8}>
                   <Image
@@ -356,7 +380,9 @@ const index = (props) => {
                     resizeMode="cover"
                     style={{ width: 50, height: 50, borderRadius: 4, marginRight: 10 }}
                   />
-                  <Text style={{ fontSize: 14, color: '#000' }}>paper12456.jpg</Text>
+                  <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>
+                    paper12456.jpg
+                  </Text>
                 </View>
                 <TouchableOpacity activeOpacity={0.8}>
                   <Image
@@ -379,7 +405,8 @@ const index = (props) => {
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              marginBottom: 10,
+              marginTop: 20,
+              marginBottom: 50,
             }}>
             <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
               <View
@@ -396,10 +423,13 @@ const index = (props) => {
                   borderBottomLeftRadius: 5,
                 }}>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: '#000000',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      color: '#000000',
+                    },
+                  ]}>
                   작성 취소
                 </Text>
               </View>
@@ -420,10 +450,13 @@ const index = (props) => {
                   borderBottomRightRadius: 5,
                 }}>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: '#fff',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      color: '#fff',
+                    },
+                  ]}>
                   작성 완료
                 </Text>
               </View>
@@ -456,17 +489,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#275696',
     lineHeight: 23,
   },
   infoStepTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#000000',
   },
   bankInfoTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 14,
-    fontWeight: 'bold',
     marginBottom: 15,
   },
   line: {
@@ -476,17 +511,20 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   details: {
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: 5,
   },
   detailsTitle: {
+    fontFamily: 'SCDream4',
     width: 100,
     fontSize: 14,
     color: '#A2A2A2',
   },
   detailsDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000',
   },
@@ -496,21 +534,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 16,
-    fontWeight: 'bold',
     color: '#000000',
     marginTop: 20,
   },
   orderInfoTitleRow: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     marginTop: 20,
   },
   orderInfoDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#000',
     marginBottom: 10,
   },
   textInput: {
+    fontFamily: 'SCDream4',
     borderWidth: 1,
     borderColor: '#E3E3E3',
     borderRadius: 4,
@@ -540,15 +581,18 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   orderInfoContentRow: {
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   orderInfoContentTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#111',
   },
   orderInfoContentDetail: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#707070',
   },
@@ -561,6 +605,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   goHomeBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
@@ -572,6 +617,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
@@ -585,9 +631,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnBorderText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

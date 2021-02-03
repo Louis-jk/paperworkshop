@@ -37,12 +37,15 @@ const FindId = (props) => {
               value=""
               placeholder="성함을 입력해주세요."
               placeholderTextColor="#A2A2A2"
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                paddingHorizontal: 10,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  paddingHorizontal: 10,
+                },
+              ]}
               autoCapitalize="none"
             />
           </View>
@@ -62,14 +65,17 @@ const FindId = (props) => {
                 value=""
                 placeholder="휴대전화번호를 입력해주세요."
                 placeholderTextColor="#A2A2A2"
-                style={{
-                  flex: 1,
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  paddingHorizontal: 10,
-                  marginRight: 10,
-                }}
+                style={[
+                  styles.normalText,
+                  {
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    paddingHorizontal: 10,
+                    marginRight: 10,
+                  },
+                ]}
                 keyboardType="number-pad"
                 autoCapitalize="none"
               />
@@ -83,7 +89,9 @@ const FindId = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={{ color: '#fff', textAlign: 'center' }}>인증번호 전송</Text>
+                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                  인증번호 전송
+                </Text>
               </TouchableOpacity>
             </View>
             <View
@@ -97,14 +105,17 @@ const FindId = (props) => {
                 value=""
                 placeholder="인증번호를 입력해주세요."
                 placeholderTextColor="#A2A2A2"
-                style={{
-                  flex: 1,
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  paddingHorizontal: 10,
-                  marginRight: 10,
-                }}
+                style={[
+                  styles.normalText,
+                  {
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    paddingHorizontal: 10,
+                    marginRight: 10,
+                  },
+                ]}
                 keyboardType="number-pad"
                 autoCapitalize="none"
               />
@@ -118,7 +129,9 @@ const FindId = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={{ color: '#fff', textAlign: 'center' }}>인증번호 확인</Text>
+                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                  인증번호 확인
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -163,12 +176,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   profileTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 15,
-    fontWeight: 'bold',
     lineHeight: 19,
     marginBottom: 7,
   },
   profileDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 15,
     lineHeight: 16,
     color: '#111',
@@ -180,6 +194,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
@@ -191,6 +206,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   cancelBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#111',
     textAlign: 'center',
@@ -202,11 +218,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   listTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 19,
     marginBottom: 5,
   },
   listDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 12,
     lineHeight: 16,
     color: '#A2A2A2',
@@ -224,6 +242,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 1,
     backgroundColor: '#E3E3E3',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

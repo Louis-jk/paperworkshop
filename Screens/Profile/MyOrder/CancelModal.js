@@ -41,7 +41,7 @@ const CancelModal = ({ toggleModal, isVisible, goCopyOrder, goCancelOrder }) => 
                 position: 'relative',
                 height: 30,
               }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#000' }}>
+              <Text style={[styles.mediumText, { fontSize: 16, color: '#000' }]}>
                 계약 포기 요청
               </Text>
               <TouchableOpacity
@@ -109,13 +109,15 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   partnerInfoTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   partnerInfoDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 22,
     color: '#000000',
   },
   goHomeBtn: {
@@ -127,6 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   goHomeBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
@@ -140,9 +143,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

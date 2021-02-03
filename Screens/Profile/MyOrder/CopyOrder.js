@@ -116,10 +116,10 @@ const CopyOrder = (props) => {
             resizeMode="contain"
             style={{ width: 30, height: 30, marginBottom: 12 }}
           />
-          <Text style={{ fontSize: 14, color: '#275696', marginBottom: 2 }}>
+          <Text style={[styles.normalText, { fontSize: 14, color: '#275696', marginBottom: 2 }]}>
             견적 내용을 확인 하신 후, 변경하실 정보를 입력해주세요.
           </Text>
-          <Text style={{ fontSize: 14, color: '#275696' }}>
+          <Text style={[styles.normalText, { fontSize: 14, color: '#275696' }]}>
             재접수를 하시면 기존 입찰 업체는 모두 사라집니다.
           </Text>
         </View>
@@ -167,11 +167,14 @@ const CopyOrder = (props) => {
                 onPress={() => navigation.navigate('OrderDetail')}
                 style={{ alignSelf: 'flex-end' }}>
                 <Text
-                  style={{
-                    fontSize: 12,
-                    textDecorationLine: 'underline',
-                    color: '#A2A2A2',
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 12,
+                      textDecorationLine: 'underline',
+                      color: '#A2A2A2',
+                    },
+                  ]}>
                   세부 내용 보기
                 </Text>
               </TouchableOpacity>
@@ -183,13 +186,16 @@ const CopyOrder = (props) => {
               <TextInput
                 placeholder="중소기업 선물용 쇼핑백 제작 요청합니다."
                 placeholderTextColor="#000000"
-                style={{
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  paddingHorizontal: 10,
-                  marginBottom: 5,
-                }}
+                style={[
+                  styles.normalText,
+                  {
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    paddingHorizontal: 10,
+                    marginBottom: 5,
+                  },
+                ]}
                 autoCapitalize="none"
               />
             </View>
@@ -201,13 +207,16 @@ const CopyOrder = (props) => {
               <TextInput
                 placeholder="단상자/선물세트/쇼핑백"
                 placeholderTextColor="#000000"
-                style={{
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  paddingHorizontal: 10,
-                  marginBottom: 5,
-                }}
+                style={[
+                  styles.normalText,
+                  {
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    paddingHorizontal: 10,
+                    marginBottom: 5,
+                  },
+                ]}
                 autoCapitalize="none"
               />
             </View>
@@ -241,10 +250,13 @@ const CopyOrder = (props) => {
                   value={moment(arriveDate).format('YY-MM-DD')}
                   placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
-                  style={{
-                    paddingHorizontal: 10,
-                    width: '70%',
-                  }}
+                  style={[
+                    styles.normalText,
+                    {
+                      paddingHorizontal: 10,
+                      width: '70%',
+                    },
+                  ]}
                   autoCapitalize="none"
                   editable={false}
                 />
@@ -254,7 +266,8 @@ const CopyOrder = (props) => {
                   style={{ width: 30, height: 30, marginRight: 10 }}
                 />
               </TouchableOpacity>
-              <Text style={[styles.profileRequired]}>
+              <Text
+                style={[styles.profileRequired, { fontSize: 13, marginTop: 5, marginBottom: 5 }]}>
                 * 납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.
               </Text>
               {show01 && (
@@ -298,10 +311,13 @@ const CopyOrder = (props) => {
                   value={moment(dDayDate).format('YY-MM-DD')}
                   placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
-                  style={{
-                    paddingHorizontal: 10,
-                    width: '70%',
-                  }}
+                  style={[
+                    styles.normalText,
+                    {
+                      paddingHorizontal: 10,
+                      width: '70%',
+                    },
+                  ]}
                   autoCapitalize="none"
                   editable={false}
                 />
@@ -352,11 +368,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   profileTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 15,
-    fontWeight: 'bold',
     color: '#111',
   },
   profileRequired: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
   },
@@ -367,11 +384,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#275696',
     lineHeight: 23,
   },
   infoStepTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#000000',
   },
@@ -382,17 +401,20 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   details: {
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: 5,
   },
   detailsTitle: {
+    fontFamily: 'SCDream4',
     width: 100,
     fontSize: 14,
     color: '#A2A2A2',
   },
   detailsDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000',
   },
@@ -402,21 +424,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 16,
-    fontWeight: 'bold',
     color: '#000000',
     marginTop: 20,
   },
   orderInfoTitleRow: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     marginTop: 20,
   },
   orderInfoDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#000',
     marginBottom: 10,
   },
   textInput: {
+    fontFamily: 'SCDream4',
     borderWidth: 1,
     borderColor: '#E3E3E3',
     borderRadius: 4,
@@ -446,15 +471,18 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   orderInfoContentRow: {
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   orderInfoContentTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#111',
   },
   orderInfoContentDetail: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#707070',
   },
@@ -467,6 +495,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   cancelBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
@@ -480,6 +509,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
@@ -493,9 +523,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnBorderText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 
