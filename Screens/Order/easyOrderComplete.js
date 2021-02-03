@@ -26,10 +26,10 @@ const easyOrderComplete = (props) => {
             resizeMode="cover"
             style={{ width: 65, height: 65, marginBottom: 25 }}
           />
-          <Text style={{ fontSize: 22, color: '#000000', fontWeight: 'bold', marginBottom: 2 }}>
+          <Text style={[styles.boldText, { fontSize: 22, color: '#000000', marginBottom: 7 }]}>
             비교 견적 신청이
           </Text>
-          <Text style={{ fontSize: 22, color: '#000000', fontWeight: 'bold', marginBottom: 20 }}>
+          <Text style={[styles.boldText, { fontSize: 22, color: '#000000', marginBottom: 20 }]}>
             정상적으로 완료되었습니다.
           </Text>
           <View
@@ -39,9 +39,14 @@ const easyOrderComplete = (props) => {
               alignItems: 'center',
               marginBottom: 3,
             }}>
-            <Text style={{ fontSize: 15, color: '#000000' }}>파트너스 회원이 견적을 제시하면</Text>
-            <Text style={{ fontSize: 15, color: '#275696' }}> 카카오 알림톡</Text>
-            <Text style={{ fontSize: 15, color: '#000000' }}>과</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000' }]}>
+              파트너스 회원이 견적을 제시하면
+            </Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#275696' }]}>
+              {' '}
+              카카오 알림톡
+            </Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000' }]}>과</Text>
           </View>
           <View
             style={{
@@ -50,10 +55,12 @@ const easyOrderComplete = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={{ fontSize: 15, color: '#275696' }}>PUSH 알림</Text>
-            <Text style={{ fontSize: 15, color: '#000000' }}>으로 고객님에게 알려드립니다.</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#275696' }]}>PUSH 알림</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000' }]}>
+              으로 고객님에게 알려드립니다.
+            </Text>
           </View>
-          <Text style={{ fontSize: 13, color: '#A2A2A2' }}>
+          <Text style={[styles.mediumText, { fontSize: 13, color: '#A2A2A2' }]}>
             신청한 내용은 "나의 견적 의뢰 건" 에서 확인하실 수 있습니다.
           </Text>
         </View>
@@ -91,6 +98,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   goHomeBtnText: {
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
@@ -104,9 +112,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

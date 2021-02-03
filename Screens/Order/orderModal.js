@@ -33,7 +33,7 @@ const orderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
               paddingVertical: 20,
               paddingHorizontal: 20,
             }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#000' }}>간단 견적 제출</Text>
+            <Text style={[styles.boldText, { fontSize: 16, color: '#000' }]}>간단 견적 제출</Text>
 
             {/* 컨텐츠 */}
             <View style={styles.container}>
@@ -77,10 +77,13 @@ const orderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
                         borderBottomLeftRadius: 5,
                       }}>
                       <Text
-                        style={{
-                          fontSize: 14,
-                          color: '#707070',
-                        }}>
+                        style={[
+                          styles.normalText,
+                          {
+                            fontSize: 14,
+                            color: '#707070',
+                          },
+                        ]}>
                         취소
                       </Text>
                     </View>
@@ -101,10 +104,13 @@ const orderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
                         borderBottomRightRadius: 5,
                       }}>
                       <Text
-                        style={{
-                          fontSize: 14,
-                          color: '#fff',
-                        }}>
+                        style={[
+                          styles.normalText,
+                          {
+                            fontSize: 14,
+                            color: '#fff',
+                          },
+                        ]}>
                         신청완료
                       </Text>
                     </View>
@@ -130,14 +136,25 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   partnerInfoTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
     marginBottom: 10,
   },
   partnerInfoDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 20,
     color: '#000000',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -44,8 +44,11 @@ const Step03 = (props) => {
         <View style={styles.wrap}>
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#000000', marginBottom: 10 }}>박스 타입 선택</Text>
+            <Text style={[styles.boldText, { fontSize: 16, color: '#000000' }]}>
+              박스 타입 선택
+            </Text>
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={toggleModal}
               style={{
                 flexDirection: 'row',
@@ -61,7 +64,9 @@ const Step03 = (props) => {
                 resizeMode="contain"
                 style={{ width: 17, height: 17, marginRight: 5 }}
               />
-              <Text style={{ fontSize: 13, color: '#fff' }}>세부 정보 안내</Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#fff' }]}>
+                세부 정보 안내
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -74,8 +79,12 @@ const Step03 = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={{ fontSize: 15, color: '#000000', marginRight: 10 }}>1. 선택형</Text>
-            <Text style={{ fontSize: 14, color: '#366DE5' }}>원하는 박스 타입을 선택해주세요.</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 10 }]}>
+              1. 선택형
+            </Text>
+            <Text style={[styles.normalText, { fontSize: 14, color: '#366DE5' }]}>
+              원하는 박스 타입을 선택해주세요.
+            </Text>
           </View>
 
           {/* 타입 부분 */}
@@ -98,7 +107,10 @@ const Step03 = (props) => {
                   )}
                 </ImageBackground>
 
-                <Text style={styles.categoryItemText}>B형 십자</Text>
+                <Text
+                  style={[styles.categoryItemText, { color: type === 0 ? '#275696' : '#000000' }]}>
+                  B형 십자
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -117,7 +129,10 @@ const Step03 = (props) => {
                   )}
                 </ImageBackground>
 
-                <Text style={styles.categoryItemText}>B형 삼면접착</Text>
+                <Text
+                  style={[styles.categoryItemText, { color: type === 1 ? '#275696' : '#000000' }]}>
+                  B형 삼면접착
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -136,7 +151,10 @@ const Step03 = (props) => {
                   )}
                 </ImageBackground>
 
-                <Text style={styles.categoryItemText}>B형 맞뚜껑</Text>
+                <Text
+                  style={[styles.categoryItemText, { color: type === 2 ? '#275696' : '#000000' }]}>
+                  B형 맞뚜껑
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -155,7 +173,10 @@ const Step03 = (props) => {
                   )}
                 </ImageBackground>
 
-                <Text style={styles.categoryItemText}>Y형 상하짝</Text>
+                <Text
+                  style={[styles.categoryItemText, { color: type === 3 ? '#275696' : '#000000' }]}>
+                  Y형 상하짝
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -174,7 +195,10 @@ const Step03 = (props) => {
                   )}
                 </ImageBackground>
 
-                <Text style={styles.categoryItemText}>S형 슬리브, 하짝</Text>
+                <Text
+                  style={[styles.categoryItemText, { color: type === 4 ? '#275696' : '#000000' }]}>
+                  S형 슬리브, 하짝
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -193,7 +217,10 @@ const Step03 = (props) => {
                   )}
                 </ImageBackground>
 
-                <Text style={styles.categoryItemText}>기타</Text>
+                <Text
+                  style={[styles.categoryItemText, { color: type === 5 ? '#275696' : '#000000' }]}>
+                  기타
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -206,18 +233,24 @@ const Step03 = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={{ fontSize: 15, color: '#000000', marginRight: 10 }}>2. 직접입력</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 10 }]}>
+              2. 직접입력
+            </Text>
           </View>
           <TextInput
             value=""
             placeholder="원하는 박스 타입을 직접 입력해주세요."
             placeholderTextColor="#A2A2A2"
-            style={{
-              borderWidth: 1,
-              borderColor: '#E3E3E3',
-              borderRadius: 4,
-              paddingHorizontal: 10,
-            }}
+            onFocus={() => setType(5)}
+            style={[
+              styles.normalText,
+              {
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 4,
+                paddingHorizontal: 10,
+              },
+            ]}
             autoCapitalize="none"
           />
         </View>
@@ -251,11 +284,14 @@ const Step03 = (props) => {
                   style={{ width: 16, height: 16, marginRight: 7 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: '#707070',
-                    letterSpacing: -1,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      color: '#707070',
+                      letterSpacing: -1,
+                    },
+                  ]}>
                   이전
                 </Text>
               </View>
@@ -276,10 +312,13 @@ const Step03 = (props) => {
                   style={{ width: 16, height: 16, marginLeft: 7 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      letterSpacing: -1,
+                    },
+                  ]}>
                   다음
                 </Text>
               </View>
@@ -400,12 +439,22 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
-    width: 100,
+    fontFamily: 'SCDream5',
+    width: 120,
     textAlign: 'center',
     fontSize: 14,
     lineHeight: 18,
     color: '#000',
     marginTop: 10,
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

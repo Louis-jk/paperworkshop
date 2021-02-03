@@ -65,12 +65,14 @@ const Step04 = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={{ fontSize: 16, color: '#000000' }}>제작 정보</Text>
+            <Text style={[styles.boldText, { fontSize: 16, color: '#000000' }]}>제작 정보</Text>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={toggleModal}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-              <Text style={{ fontSize: 13, color: '#366DE5' }}>*이전 단계 입력 내용 자동 저장</Text>
+              <Text style={[styles.normalText, { fontSize: 13, color: '#366DE5' }]}>
+                *이전 단계 입력 내용 자동 저장
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -84,19 +86,24 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={{ fontSize: 15, color: '#000000', marginRight: 5 }}>가로 규격</Text>
-            <Text style={{ fontSize: 14, color: '#000000' }}>(mm)</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+              가로 규격
+            </Text>
+            <Text style={[styles.normalText, { fontSize: 14, color: '#000000' }]}>(mm)</Text>
           </View>
           <TextInput
             value=""
             placeholder="예) 10"
             placeholderTextColor="#A2A2A2"
-            style={{
-              borderWidth: 1,
-              borderColor: '#E3E3E3',
-              borderRadius: 4,
-              paddingHorizontal: 10,
-            }}
+            style={[
+              styles.normalText,
+              {
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 4,
+                paddingHorizontal: 10,
+              },
+            ]}
             autoCapitalize="none"
           />
         </View>
@@ -111,19 +118,24 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={{ fontSize: 15, color: '#000000', marginRight: 5 }}>세로 규격</Text>
-            <Text style={{ fontSize: 14, color: '#000000' }}>(mm)</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+              세로 규격
+            </Text>
+            <Text style={[styles.normalText, { fontSize: 14, color: '#000000' }]}>(mm)</Text>
           </View>
           <TextInput
             value=""
             placeholder="예) 10"
             placeholderTextColor="#A2A2A2"
-            style={{
-              borderWidth: 1,
-              borderColor: '#E3E3E3',
-              borderRadius: 4,
-              paddingHorizontal: 10,
-            }}
+            style={[
+              styles.normalText,
+              {
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 4,
+                paddingHorizontal: 10,
+              },
+            ]}
             autoCapitalize="none"
           />
         </View>
@@ -138,19 +150,24 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={{ fontSize: 15, color: '#000000', marginRight: 5 }}>높이 규격</Text>
-            <Text style={{ fontSize: 14, color: '#000000' }}>(mm)</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+              높이 규격
+            </Text>
+            <Text style={[styles.normalText, { fontSize: 14, color: '#000000' }]}>(mm)</Text>
           </View>
           <TextInput
             value=""
             placeholder="예) 10"
             placeholderTextColor="#A2A2A2"
-            style={{
-              borderWidth: 1,
-              borderColor: '#E3E3E3',
-              borderRadius: 4,
-              paddingHorizontal: 10,
-            }}
+            style={[
+              styles.normalText,
+              {
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 4,
+                paddingHorizontal: 10,
+              },
+            ]}
             autoCapitalize="none"
           />
         </View>
@@ -165,7 +182,9 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={{ fontSize: 15, color: '#000000' }}>수량</Text>
+            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+              수량
+            </Text>
           </View>
 
           <View
@@ -194,7 +213,7 @@ const Step04 = (props) => {
                 resizeMode="contain"
                 style={{ width: 20, height: 20, marginRight: 5 }}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>500</Text>
+              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>500</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={1}
@@ -215,7 +234,7 @@ const Step04 = (props) => {
                 resizeMode="contain"
                 style={{ width: 20, height: 20, marginRight: 5 }}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>1,000</Text>
+              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>1,000</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={1}
@@ -236,7 +255,7 @@ const Step04 = (props) => {
                 resizeMode="contain"
                 style={{ width: 20, height: 20, marginRight: 5 }}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>2,000</Text>
+              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>2,000</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={1}
@@ -252,7 +271,7 @@ const Step04 = (props) => {
                 resizeMode="contain"
                 style={{ width: 20, height: 20, marginRight: 5 }}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>3,000</Text>
+              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>3,000</Text>
             </TouchableOpacity>
           </View>
           <View>
@@ -275,19 +294,25 @@ const Step04 = (props) => {
                 resizeMode="contain"
                 style={{ width: 20, height: 20, marginRight: 5 }}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>직접 입력</Text>
+              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>직접 입력</Text>
             </TouchableOpacity>
             <TextInput
               value={quantityDirect}
               placeholder="직접 입력해주세요."
               placeholderTextColor="#A2A2A2"
               onChangeText={(text) => setQuantityDirect(text)}
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                paddingHorizontal: 10,
+              onFocus={() => {
+                setQuantity('direct');
               }}
+              style={[
+                styles.normalText,
+                {
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  paddingHorizontal: 10,
+                },
+              ]}
               autoCapitalize="none"
               keyboardType="number-pad"
             />
@@ -315,18 +340,20 @@ const Step04 = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderWidth: 1,
-                borderColor: pattern ? '#275696' : '#A2A2A2',
+                borderColor: pattern ? '#275696' : '#E3E3E3',
                 borderRadius: 4,
                 backgroundColor: '#fff',
                 width: '49%',
                 paddingVertical: 15,
               }}>
               <Text
-                style={{
-                  fontSize: 14,
-                  color: pattern ? '#275696' : '#A2A2A2',
-                  fontWeight: pattern ? 'bold' : 'normal',
-                }}>
+                style={[
+                  pattern ? styles.mediumText : styles.normalText,
+                  {
+                    fontSize: 14,
+                    color: pattern ? '#275696' : '#A2A2A2',
+                  },
+                ]}>
                 있음
               </Text>
             </TouchableOpacity>
@@ -337,18 +364,20 @@ const Step04 = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderWidth: 1,
-                borderColor: !pattern ? '#275696' : '#A2A2A2',
+                borderColor: !pattern ? '#275696' : '#E3E3E3',
                 borderRadius: 4,
                 backgroundColor: '#fff',
                 width: '49%',
                 paddingVertical: 15,
               }}>
               <Text
-                style={{
-                  fontSize: 14,
-                  color: !pattern ? '#275696' : '#A2A2A2',
-                  fontWeight: !pattern ? 'bold' : 'normal',
-                }}>
+                style={[
+                  !pattern ? styles.mediumText : styles.normalText,
+                  {
+                    fontSize: 14,
+                    color: !pattern ? '#275696' : '#A2A2A2',
+                  },
+                ]}>
                 없음
               </Text>
             </TouchableOpacity>
@@ -375,7 +404,7 @@ const Step04 = (props) => {
               borderColor: '#E3E3E3',
               borderRadius: 5,
               backgroundColor: '#fff',
-              marginBottom: 20,
+              marginBottom: 35,
             }}>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
             <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -393,11 +422,14 @@ const Step04 = (props) => {
                   style={{ width: 16, height: 16, marginRight: 7 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: '#707070',
-                    letterSpacing: -1,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      color: '#707070',
+                      letterSpacing: -1,
+                    },
+                  ]}>
                   이전
                 </Text>
               </View>
@@ -418,16 +450,42 @@ const Step04 = (props) => {
                   style={{ width: 16, height: 16, marginLeft: 7 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1,
-                  }}>
-                  다음
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      letterSpacing: -1,
+                    },
+                  ]}>
+                  세부 견적 작성
                 </Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
         </View>
+        {/* 간단 견적 제출시 안내 멘트 - 하단 */}
+        <View style={{ backgroundColor: '#F5F5F5' }}>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              paddingVertical: 30,
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+            }}>
+            <Text
+              style={[
+                styles.normalText,
+                { fontSize: 12, color: '#707070', lineHeight: 18, marginRight: 5 },
+              ]}>
+              -
+            </Text>
+            <Text style={[styles.normalText, { fontSize: 12, color: '#707070', lineHeight: 18 }]}>
+              간단 견적 제출 시, 최고관리자가 확인 및 추가 입력 후, 입찰할 파트너스 회원들을 지정
+            </Text>
+          </View>
+        </View>
+        {/* // 간단 견적 제출시 안내 멘트 - 하단 */}
         {/* // 이전, 다음 버튼 부분 (Prev, Next) */}
       </ScrollView>
     </>
@@ -476,6 +534,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
@@ -534,6 +593,15 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: '#000',
     marginTop: 10,
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

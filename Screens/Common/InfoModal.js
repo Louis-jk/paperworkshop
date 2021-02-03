@@ -40,11 +40,10 @@ const InfoModal = ({ toggleModal, isVisible }) => {
                 alignItems: 'center',
                 position: 'relative',
                 height: 35,
-                marginBottom: 20,
+                marginBottom: 15,
+                marginTop: 10,
               }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#000' }}>
-                세부 정보 안내
-              </Text>
+              <Text style={[styles.boldText, { fontSize: 16, color: '#000' }]}>세부 정보 안내</Text>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={toggleModal}
@@ -108,14 +107,25 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   partnerInfoTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 15,
     color: '#275696',
     marginBottom: 10,
   },
   partnerInfoDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 13,
     lineHeight: 20,
     color: '#000000',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

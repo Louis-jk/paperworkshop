@@ -104,7 +104,7 @@ const Step02 = (props) => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
           <View style={styles.profileBox}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 20 }}>기본 정보</Text>
+            <Text style={[styles.boldText, { fontSize: 16, marginBottom: 20 }]}>기본 정보</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -243,7 +243,7 @@ const Step02 = (props) => {
                   resizeMode="contain"
                   style={{ width: 20, height: 20, marginRight: 5 }}
                 />
-                <Text style={{ fontSize: 14 }}>인쇄만 의뢰</Text>
+                <Text style={[styles.normalText, { fontSize: 14 }]}>인쇄만 의뢰</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={1}
@@ -263,7 +263,7 @@ const Step02 = (props) => {
                   resizeMode="contain"
                   style={{ width: 20, height: 20, marginRight: 5 }}
                 />
-                <Text style={{ fontSize: 14 }}>인쇄 + 디자인 의뢰</Text>
+                <Text style={[styles.normalText, { fontSize: 14 }]}>인쇄 + 디자인 의뢰</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -351,10 +351,13 @@ const Step02 = (props) => {
                   value={moment(arriveDate).format('YY-MM-DD')}
                   placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
-                  style={{
-                    paddingHorizontal: 10,
-                    width: '70%',
-                  }}
+                  style={[
+                    styles.normalText,
+                    {
+                      paddingHorizontal: 10,
+                      width: '70%',
+                    },
+                  ]}
                   autoCapitalize="none"
                   editable={false}
                 />
@@ -402,10 +405,13 @@ const Step02 = (props) => {
                   value={moment(dDayDate).format('YY-MM-DD')}
                   placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
-                  style={{
-                    paddingHorizontal: 10,
-                    width: '70%',
-                  }}
+                  style={[
+                    styles.normalText,
+                    {
+                      paddingHorizontal: 10,
+                      width: '70%',
+                    },
+                  ]}
                   autoCapitalize="none"
                   editable={false}
                 />
@@ -452,14 +458,17 @@ const Step02 = (props) => {
                 value=""
                 placeholder="파일을 선택해주세요."
                 placeholderTextColor="#A2A2A2"
-                style={{
-                  flex: 1,
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  paddingHorizontal: 10,
-                  marginRight: 10,
-                }}
+                style={[
+                  styles.normalText,
+                  {
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    paddingHorizontal: 10,
+                    marginRight: 10,
+                  },
+                ]}
                 editable={false}
               />
               <TouchableOpacity
@@ -472,10 +481,12 @@ const Step02 = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={{ color: '#fff', textAlign: 'center' }}>파일 선택</Text>
+                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                  파일 선택
+                </Text>
               </TouchableOpacity>
             </View>
-            <Text style={{ fontSize: 13, color: '#366DE5' }}>
+            <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
               * 인쇄/패키지 제작에 참고 할 수 있는 자료가 있다면 첨부해주세요.
             </Text>
           </View>
@@ -496,15 +507,18 @@ const Step02 = (props) => {
             <TextInput
               placeholder="메모를 입력해주세요."
               placeholderTextColor="#A2A2A2"
-              style={{
-                borderRadius: 5,
-                backgroundColor: '#F5F5F5',
-                height: 120,
-                flex: 1,
-                textAlignVertical: 'top',
-                paddingLeft: 10,
-                paddingVertical: 10,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  borderRadius: 5,
+                  backgroundColor: '#F5F5F5',
+                  height: 120,
+                  flex: 1,
+                  textAlignVertical: 'top',
+                  paddingLeft: 10,
+                  paddingVertical: 10,
+                },
+              ]}
               multiline={true}
             />
           </View>
@@ -540,11 +554,14 @@ const Step02 = (props) => {
                   style={{ width: 16, height: 16, marginRight: 7 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: '#707070',
-                    letterSpacing: -1,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      color: '#707070',
+                      letterSpacing: -1,
+                    },
+                  ]}>
                   이전
                 </Text>
               </View>
@@ -565,10 +582,13 @@ const Step02 = (props) => {
                   style={{ width: 16, height: 16, marginLeft: 7 }}
                 />
                 <Text
-                  style={{
-                    fontSize: 14,
-                    letterSpacing: -1,
-                  }}>
+                  style={[
+                    styles.normalText,
+                    {
+                      fontSize: 14,
+                      letterSpacing: -1,
+                    },
+                  ]}>
                   다음
                 </Text>
               </View>
@@ -594,11 +614,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   profileTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 15,
-    fontWeight: 'bold',
     color: '#111',
   },
   profileRequired: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
   },
@@ -673,6 +694,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 1,
     backgroundColor: '#E3E3E3',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -217,12 +217,14 @@ const index = (props) => {
               await setTabIndex('first');
             }}>
             <Text
-              style={{
-                paddingVertical: 12,
-                fontSize: 14,
-                fontWeight: 'bold',
-                color: tabIndex === 'first' && index === 0 ? '#275696' : '#C1C1C1',
-              }}>
+              style={[
+                tabIndex === 'first' && index === 0 ? styles.boldText : styles.normalText,
+                {
+                  paddingVertical: 12,
+                  fontSize: 14,
+                  color: tabIndex === 'first' && index === 0 ? '#275696' : '#C1C1C1',
+                },
+              ]}>
               패키지
             </Text>
           </TouchableOpacity>
@@ -239,12 +241,14 @@ const index = (props) => {
               await setTabIndex('second');
             }}>
             <Text
-              style={{
-                paddingVertical: 12,
-                fontSize: 14,
-                fontWeight: 'bold',
-                color: tabIndex === 'second' || index === 1 ? '#275696' : '#C1C1C1',
-              }}>
+              style={[
+                tabIndex === 'second' || index === 1 ? styles.boldText : styles.normalText,
+                {
+                  paddingVertical: 12,
+                  fontSize: 14,
+                  color: tabIndex === 'second' || index === 1 ? '#275696' : '#C1C1C1',
+                },
+              ]}>
               일반 인쇄물
             </Text>
           </TouchableOpacity>
@@ -259,21 +263,23 @@ const index = (props) => {
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
-          <Text style={{ fontSize: 16, color: '#000000', marginBottom: 10 }}>기본 정보</Text>
+          <Text style={[styles.boldText, { fontSize: 16, color: '#000000', marginBottom: 10 }]}>
+            견적 신청 대상
+          </Text>
           <View style={[styles.infoBox, { marginBottom: 10 }]}>
             <View style={styles.details}>
-              <Text style={styles.detailsTitle}>업체명</Text>
-              <Text style={styles.detailsDesc}>삼보인쇄(주)</Text>
+              <Text style={[styles.normalText, styles.detailsTitle]}>업체명</Text>
+              <Text style={[styles.normalText, styles.detailsDesc]}>삼보인쇄(주)</Text>
             </View>
             <View style={styles.details}>
-              <Text style={styles.detailsTitle}>담당자</Text>
-              <Text style={styles.detailsDesc}>김성준</Text>
+              <Text style={[styles.normalText, styles.detailsTitle]}>담당자</Text>
+              <Text style={[styles.normalText, styles.detailsDesc]}>김성준</Text>
             </View>
           </View>
         </View>
 
         <View style={styles.wrap}>
-          <Text style={{ fontSize: 16, color: '#000000', marginBottom: 10 }}>
+          <Text style={[styles.boldText, { fontSize: 16, color: '#000000', marginBottom: 10 }]}>
             비교 견적 대상을 선택해주세요.
           </Text>
           <View>
@@ -397,7 +403,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
-    width: 100,
+    fontFamily: 'SCDream5',
+    width: 120,
     textAlign: 'center',
     fontSize: 14,
     lineHeight: 18,

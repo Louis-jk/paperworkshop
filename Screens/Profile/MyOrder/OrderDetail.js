@@ -27,8 +27,10 @@ const OrderDetail = (props) => {
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
-          <Text style={{ fontSize: 16, color: '#275696', marginBottom: 10 }}>기본 정보</Text>
-          <View style={[styles.infoBox, { marginBottom: 10 }]}>
+          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+            기본 정보
+          </Text>
+          <View style={[styles.infoBox, { marginBottom: 20 }]}>
             <Text style={styles.infoStepDesc}>제목</Text>
             <Text style={styles.infoStepTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
             <View style={styles.line} />
@@ -53,7 +55,9 @@ const OrderDetail = (props) => {
               <Text style={styles.detailsDesc}>서울</Text>
             </View>
           </View>
-          <Text style={{ fontSize: 14, color: '#A2A2A2', marginBottom: 10 }}>첨부파일</Text>
+          <Text style={[styles.normalText, { fontSize: 14, color: '#A2A2A2', marginBottom: 10 }]}>
+            첨부파일
+          </Text>
           <View
             style={{
               flexDirection: 'row',
@@ -111,15 +115,17 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={{ fontSize: 16, color: '#275696', marginBottom: 10 }}>타입 선택</Text>
+          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+            타입 선택
+          </Text>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{ fontSize: 16, color: '#000000' }}>박스 타입</Text>
-            <Text style={{ fontSize: 16, color: '#000000' }}>B형 십자</Text>
+            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>박스 타입</Text>
+            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>B형 십자</Text>
           </View>
         </View>
 
@@ -141,7 +147,9 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={{ fontSize: 16, color: '#275696', marginBottom: 10 }}>제작 정보</Text>
+          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+            제작 정보
+          </Text>
           <View style={[styles.infoBox, { marginBottom: 10 }]}>
             <View style={styles.details}>
               <Text style={styles.detailsTitle02}>가로/세로/높이 규격 (단위:mm)</Text>
@@ -176,15 +184,19 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={{ fontSize: 16, color: '#275696', marginBottom: 10 }}>지류 선택</Text>
+          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+            지류 선택
+          </Text>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{ fontSize: 16, color: '#000000' }}>구분</Text>
-            <Text style={{ fontSize: 16, color: '#000000' }}>일반(백판지,마닐라류)</Text>
+            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>구분</Text>
+            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>
+              일반(백판지,마닐라류)
+            </Text>
           </View>
         </View>
 
@@ -206,7 +218,7 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={{ fontSize: 16, color: '#275696', marginBottom: 10 }}>
+          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
             인쇄도수/교정/감리 선택
           </Text>
           <View style={[styles.infoBox, { marginBottom: 10 }]}>
@@ -243,7 +255,9 @@ const OrderDetail = (props) => {
         {/* // 경계 라인 */}
 
         <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={{ fontSize: 16, color: '#275696', marginBottom: 10 }}>후가공</Text>
+          <Text style={[styles.normalText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+            후가공
+          </Text>
           <View style={[styles.infoBox, { marginBottom: 10 }]}>
             <View style={styles.details}>
               <Text style={styles.detailsTitle02}>박가공</Text>
@@ -290,11 +304,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#A2A2A2',
     lineHeight: 23,
   },
   infoStepTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#000000',
   },
@@ -311,15 +327,18 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   detailsTitle: {
+    fontFamily: 'SCDream4',
     width: 150,
     fontSize: 14,
     color: '#A2A2A2',
   },
   detailsDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000',
   },
   detailsTitle02: {
+    fontFamily: 'SCDream4',
     width: 200,
     fontSize: 14,
     color: '#A2A2A2',
@@ -330,17 +349,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 18,
     color: '#000000',
     marginTop: 20,
     marginBottom: 25,
   },
   orderInfoDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#000',
     marginBottom: 10,
   },
   textInput: {
+    fontFamily: 'SCDream4',
     borderWidth: 1,
     borderColor: '#E3E3E3',
     borderRadius: 4,
@@ -375,10 +397,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoContentTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#111',
   },
   orderInfoContentDetail: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#707070',
   },
@@ -407,6 +431,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 

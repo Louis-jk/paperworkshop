@@ -98,15 +98,18 @@ const index = (props) => {
             }}>
             <TextInput
               placeholder="제목을 입력하세요."
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                backgroundColor: '#fff',
-                paddingHorizontal: 10,
-                width: '81%',
-                marginRight: 5,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  backgroundColor: '#fff',
+                  paddingHorizontal: 10,
+                  width: '81%',
+                  marginRight: 5,
+                },
+              ]}
             />
             <TouchableWithoutFeedback>
               <View
@@ -116,7 +119,9 @@ const index = (props) => {
                   backgroundColor: '#275696',
                   borderRadius: 4,
                 }}>
-                <Text style={{ color: '#fff', paddingHorizontal: 20 }}>검색</Text>
+                <Text style={[styles.normalText, { color: '#fff', paddingHorizontal: 20 }]}>
+                  검색
+                </Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -148,8 +153,14 @@ const index = (props) => {
                   <View style={styles.listStep02Badge}>
                     <Text style={[styles.listStep02BadgeText, { color: '#275696' }]}>견적진행</Text>
                   </View>
-                  <Text style={{ fontSize: 13, marginLeft: 5, color: '#000000' }}>3건</Text>
-                  <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text>
+                  <Text
+                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#000000' }]}>
+                    3건
+                  </Text>
+                  <Text
+                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    NEW
+                  </Text>
                 </View>
                 <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
                 <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
@@ -188,7 +199,10 @@ const index = (props) => {
                       선금 입금 요청 대기
                     </Text>
                   </View>
-                  <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text>
+                  <Text
+                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    NEW
+                  </Text>
                 </View>
                 <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
                 <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
@@ -227,7 +241,10 @@ const index = (props) => {
                       계약금 입금 대기
                     </Text>
                   </View>
-                  <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text>
+                  <Text
+                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    NEW
+                  </Text>
                 </View>
                 <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
                 <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
@@ -266,7 +283,10 @@ const index = (props) => {
                       계약금 입금 완료
                     </Text>
                   </View>
-                  <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text>
+                  <Text
+                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    NEW
+                  </Text>
                 </View>
                 <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
                 <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
@@ -469,11 +489,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   listTitle: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 19,
     marginBottom: 5,
   },
   listDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 12,
     lineHeight: 16,
     color: '#A2A2A2',
@@ -488,16 +510,19 @@ const styles = StyleSheet.create({
     color: '#A2A2A2',
   },
   listStep02: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#275696',
     marginBottom: 2,
   },
   listDday02: {
+    fontFamily: 'SCDream4',
     alignSelf: 'flex-end',
     fontSize: 14,
     color: '#000000',
   },
   listStep03: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000000',
   },
@@ -537,6 +562,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep02BadgeText: {
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
@@ -551,10 +577,20 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep03BadgeText: {
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
     paddingHorizontal: 5,
+  },
+  normalText: {
+    fontFamily: 'SCDream4',
+  },
+  mediumText: {
+    fontFamily: 'SCDream5',
+  },
+  boldText: {
+    fontFamily: 'SCDream6',
   },
 });
 
