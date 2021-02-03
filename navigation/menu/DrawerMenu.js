@@ -8,17 +8,12 @@ import {
   Image,
   Linking,
   StyleSheet,
-  ScrollView,
   Alert,
 } from 'react-native';
 
+import { ScrollView } from 'react-native-gesture-handler';
+
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-// import {
-//   Collapse,
-//   CollapseHeader,
-//   CollapseBody,
-//   AccordionList,
-// } from 'accordion-collapse-react-native';
 
 import Collapsible from 'react-native-collapsible';
 
@@ -503,7 +498,7 @@ const DrawerMenu = (props) => {
               layout="default"
               autoplay={true}
               autoplayDelay={1000}
-              autoplayInterval={5000}
+              autoplayInterval={1000}
               loop={true}
               onSnapToItem={(index) => {
                 // console.log('C index', index);

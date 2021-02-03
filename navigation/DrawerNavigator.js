@@ -13,8 +13,9 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
-      drawerPosition="left"
+      drawerPosition="right"
       drawerType="front"
+      detachInactiveScreens={false}
       drawerStyle={{
         backgroundColor: '#fff',
         width: Dimensions.get('window').width,
