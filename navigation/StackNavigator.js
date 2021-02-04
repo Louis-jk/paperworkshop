@@ -6,6 +6,9 @@ import MainScreen from '../Screens/Main';
 import EstimateScreen from '../Screens/Main/Estimate';
 import GalleryScreen from '../Screens/Gallery';
 import GalleryDetailScreen from '../Screens/Gallery/Detail';
+import GalleryPackageScreen from '../Screens/Gallery/Package';
+import GalleryGeneralScreen from '../Screens/Gallery/General';
+import GalleryEtcScreen from '../Screens/Gallery/Etc';
 import PartnersScreen from '../Screens/Partners';
 import PartnersDetailScreen from '../Screens/Partners/Detail';
 import StoryScreen from '../Screens/Story';
@@ -31,6 +34,7 @@ import ReceiveScreen from '../Screens/Profile/MyOrder/Receive';
 import DoneScreen from '../Screens/Profile/MyOrder/Done';
 import CopyOrderScreen from '../Screens/Profile/MyOrder/CopyOrder';
 import OrderDetailScreen from '../Screens/Profile/MyOrder/OrderDetail';
+import FeedBackScreen from '../Screens/Profile/MyOrder/FeedBack';
 
 import MessageScreen from '../Screens/Message';
 import MessageDetailScreen from '../Screens/Message/Detail';
@@ -42,6 +46,7 @@ import easyOrderCompleteScreen from '../Screens/Order/easyOrderComplete';
 import CancelOrderScreen from '../Screens/Order/CancelOrder';
 
 import ReviewScreen from '../Screens/Review';
+import ReviewDetailScreen from '../Screens/Review/Detail';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +74,9 @@ export const GalleryStackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Gallery" component={GalleryScreen} />
       <Stack.Screen name="GalleryDetail" component={GalleryDetailScreen} />
+      <Stack.Screen name="GalleryPackage" component={GalleryPackageScreen} />
+      <Stack.Screen name="GalleryGeneral" component={GalleryGeneralScreen} />
+      <Stack.Screen name="GalleryEtc" component={GalleryEtcScreen} />
     </Stack.Navigator>
   );
 };
@@ -199,6 +207,7 @@ export const MyOrderStackNavigator = () => {
       <Stack.Screen name="CancelOrder" component={CancelOrderScreen} />
       <Stack.Screen name="CopyOrder" component={CopyOrderScreen} />
       <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
+      <Stack.Screen name="FeedBack" component={FeedBackScreen} />
     </Stack.Navigator>
   );
 };
@@ -207,6 +216,15 @@ export const ReviewStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Review" component={ReviewScreen} />
+      <Stack.Screen name="ReviewDetail" component={ReviewDetailScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const ReviewDetailStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="ReviewDetail" component={ReviewDetailScreen} />
     </Stack.Navigator>
   );
 };

@@ -107,8 +107,14 @@ const DetailHeader = (props) => {
       case 'OrderDetail':
         setTitle('견적의뢰 상세보기');
         break;
+      case 'FeedBack':
+        setTitle('견적의뢰 피드백');
+        break;
       case 'Review':
         setTitle('후기작성');
+        break;
+      case 'ReviewDetail':
+        setTitle('고객후기');
         break;
       default:
         return false;
@@ -137,7 +143,7 @@ const DetailHeader = (props) => {
         <View style={icons}>
           <TouchableWithoutFeedback
             onPress={() => navigation.openDrawer('right')}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
+            hitSlop={{ top: 5, bottom: 5, left: 5, right: -15 }}>
             <View>
               <Image
                 source={require('../../src/assets/top_seach02.png')}

@@ -27,7 +27,7 @@ const index = (props) => {
             <View style={{ position: 'relative' }}>
               <Text
                 style={[
-                  styles.boldText,
+                  styles.mediumText,
                   {
                     fontSize: 16,
                     marginBottom: 20,
@@ -36,11 +36,12 @@ const index = (props) => {
                 ]}>
                 전체
               </Text>
+
               <View
                 style={{
                   position: 'absolute',
                   top: -1,
-                  right: 15,
+                  right: 16,
                   width: 6,
                   height: 6,
                   borderRadius: 6,
@@ -48,47 +49,57 @@ const index = (props) => {
                 }}
               />
             </View>
-            <Text
-              style={[
-                styles.normalText,
-                {
-                  fontSize: 16,
-                  fontWeight: '400',
-                  letterSpacing: -2,
-                  marginBottom: 20,
-                  marginRight: 20,
-                  color: '#707070',
-                },
-              ]}>
-              패키지
-            </Text>
-            <Text
-              style={[
-                styles.normalText,
-                {
-                  fontSize: 16,
-                  fontWeight: '400',
-                  letterSpacing: -2,
-                  marginBottom: 20,
-                  marginRight: 20,
-                  color: '#707070',
-                },
-              ]}>
-              일반인쇄
-            </Text>
-            <Text
-              style={[
-                styles.normalText,
-                {
-                  fontSize: 16,
-                  fontWeight: '400',
-                  letterSpacing: -2,
-                  marginBottom: 20,
-                  color: '#707070',
-                },
-              ]}>
-              기타 인쇄물
-            </Text>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('GalleryPackage')}>
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 16,
+                    fontWeight: '400',
+                    letterSpacing: -2,
+                    marginBottom: 20,
+                    marginRight: 20,
+                    color: '#707070',
+                  },
+                ]}>
+                패키지
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('GalleryGeneral')}>
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 16,
+                    fontWeight: '400',
+                    letterSpacing: -2,
+                    marginBottom: 20,
+                    marginRight: 20,
+                    color: '#707070',
+                  },
+                ]}>
+                일반인쇄
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('GalleryEtc')}>
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 16,
+                    fontWeight: '400',
+                    letterSpacing: -2,
+                    marginBottom: 20,
+                    color: '#707070',
+                  },
+                ]}>
+                기타 인쇄물
+              </Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{

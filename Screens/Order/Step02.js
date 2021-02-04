@@ -14,7 +14,8 @@ import {
   Alert,
 } from 'react-native';
 
-import { Picker } from '@react-native-community/picker';
+// import { Picker } from '@react-native-community/picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -43,6 +44,8 @@ const Step02 = (props) => {
   const [mode02, setMode02] = React.useState('date');
   const [show01, setShow01] = React.useState(false);
   const [show02, setShow02] = React.useState(false);
+
+  const [ca, setCa] = React.useState('');
 
   const onChange01 = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -118,13 +121,17 @@ const Step02 = (props) => {
             <TextInput
               placeholder="제작명을 입력해주세요."
               placeholderTextColor="#A2A2A2"
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                paddingHorizontal: 10,
-                marginBottom: 5,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 14,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  paddingHorizontal: 10,
+                  marginBottom: 5,
+                },
+              ]}
               autoCapitalize="none"
             />
           </View>
@@ -144,13 +151,17 @@ const Step02 = (props) => {
             <TextInput
               placeholder="고객명을 입력해주세요."
               placeholderTextColor="#A2A2A2"
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                paddingHorizontal: 10,
-                marginBottom: 5,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 14,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  paddingHorizontal: 10,
+                  marginBottom: 5,
+                },
+              ]}
               autoCapitalize="none"
             />
           </View>
@@ -171,13 +182,17 @@ const Step02 = (props) => {
             <TextInput
               placeholder="휴대폰 번호를 입력해주세요."
               placeholderTextColor="#A2A2A2"
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                paddingHorizontal: 10,
-                marginBottom: 5,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 14,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  paddingHorizontal: 10,
+                  marginBottom: 5,
+                },
+              ]}
               autoCapitalize="none"
             />
           </View>
@@ -198,13 +213,17 @@ const Step02 = (props) => {
             <TextInput
               placeholder="회사명을 입력해주세요."
               placeholderTextColor="#A2A2A2"
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                paddingHorizontal: 10,
-                marginBottom: 5,
-              }}
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 14,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  paddingHorizontal: 10,
+                  marginBottom: 5,
+                },
+              ]}
               autoCapitalize="none"
             />
           </View>
@@ -281,38 +300,59 @@ const Step02 = (props) => {
               <Text style={[styles.profileTitle, { marginRight: 5 }]}>입쇄 업체 선호 지역</Text>
               <Text style={[styles.profileRequired]}>(필수)</Text>
             </View>
-            <View
+            <DropDownPicker
+              placeholder={'선호지역을 입력해주세요.'}
+              placeholderStyle={{ fontSize: 14, color: '#A2A2A2', fontWeight: '400' }}
+              activeLabelStyle={{ color: '#000' }}
+              activeItemStyle={{ color: '#000' }}
+              selectedLabelStyle={{ color: '#000' }}
+              items={[
+                { label: '서울', value: '서울' },
+                { label: '부산', value: '부산' },
+                { label: '대구', value: '대구' },
+                { label: '인천', value: '인천' },
+                { label: '광주', value: '광주' },
+                { label: '세종/대전/청주', value: '세종/대전/청주' },
+                { label: '울산', value: '울산' },
+                { label: '경기', value: '경기' },
+                { label: '강원', value: '강원' },
+                { label: '충청', value: '충청' },
+                { label: '전라북도', value: '전라북도' },
+                { label: '전라남도', value: '전라남도' },
+                { label: '경상북도', value: '경상북도' },
+                { label: '경상남도', value: '경상남도' },
+                { label: '제주', value: '제주' },
+              ]}
+              containerStyle={{ height: 50 }}
               style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
                 backgroundColor: '#fff',
-              }}>
-              <Picker
-                selectedValue={category01} //제일 위 선택란에 누른 아이템이 표시된다
-                onValueChange={(itemValue, itemIndex) => {
-                  setCategory01(itemValue);
-                }}
-                style={{ color: '#A2A2A2' }}
-                mode="dialog">
-                <Picker.Item label="선호지역을 입력해주세요." value="" />
-                <Picker.Item label="서울" value="1" />
-                <Picker.Item label="부산" value="2" />
-                <Picker.Item label="대구" value="3" />
-                <Picker.Item label="인천" value="4" />
-                <Picker.Item label="광주" value="5" />
-                <Picker.Item label="세종/대전/청주" value="6" />
-                <Picker.Item label="울산" value="7" />
-                <Picker.Item label="경기" value="8" />
-                <Picker.Item label="강원" value="9" />
-                <Picker.Item label="충청" value="10" />
-                <Picker.Item label="전라북도" value="11" />
-                <Picker.Item label="전라남도" value="12" />
-                <Picker.Item label="경상북도" value="13" />
-                <Picker.Item label="경상남도" value="14" />
-                <Picker.Item label="제주" value="15" />
-              </Picker>
-            </View>
+                borderTopRightRadius: 4,
+                borderTopLeftRadius: 4,
+                borderBottomRightRadius: 4,
+                borderBottomLeftRadius: 4,
+              }}
+              itemStyle={{
+                justifyContent: 'flex-start',
+                paddingVertical: 10,
+              }}
+              labelStyle={{ fontFamily: 'SCDream4', color: '#A2A2A2' }}
+              dropDownStyle={{ backgroundColor: '#fff' }}
+              onChangeItem={(item) => setCa(item.value)}
+              customArrowDown={() => (
+                <Image
+                  source={require('../../src/assets/arr01.png')}
+                  style={{ width: 25, height: 25 }}
+                  resizeMode="contain"
+                />
+              )}
+              customArrowUp={() => (
+                <Image
+                  source={require('../../src/assets/arr01_top.png')}
+                  style={{ width: 25, height: 25 }}
+                  resizeMode="contain"
+                />
+              )}
+            />
           </View>
           {/* // 입쇄 업체 선호 지역  */}
 
@@ -323,6 +363,7 @@ const Step02 = (props) => {
               justifyContent: 'space-between',
               alignItems: 'center',
               marginBottom: 20,
+              zIndex: -10,
             }}>
             <View style={{ width: '50%', paddingRight: 5 }}>
               <View
@@ -356,6 +397,7 @@ const Step02 = (props) => {
                     {
                       paddingHorizontal: 10,
                       width: '70%',
+                      color: arriveDate ? '#111' : '#A2A2A2',
                     },
                   ]}
                   autoCapitalize="none"
@@ -410,6 +452,7 @@ const Step02 = (props) => {
                     {
                       paddingHorizontal: 10,
                       width: '70%',
+                      color: dDayDate ? '#111' : '#A2A2A2',
                     },
                   ]}
                   autoCapitalize="none"
@@ -436,7 +479,7 @@ const Step02 = (props) => {
           {/* // 납품 희망일, 견적 마감일  */}
 
           {/* 파일 첨부  */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{ marginBottom: 20, zIndex: -10 }}>
             <View
               style={{
                 flexDirection: 'row',

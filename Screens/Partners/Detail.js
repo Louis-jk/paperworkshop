@@ -302,7 +302,9 @@ const Detail = (props) => {
             </Text>
           </View>
           {/* 고객후기 리스트 박스 */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('ReviewDetail')}
             style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
             <View
               style={{
@@ -399,10 +401,12 @@ const Detail = (props) => {
                 </View>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 고객후기 리스트 박스 */}
           {/* 고객후기 리스트 박스 */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('ReviewDetail')}
             style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
             <View
               style={{
@@ -495,10 +499,12 @@ const Detail = (props) => {
                 </View>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 고객후기 리스트 박스 */}
           {/* 고객후기 리스트 박스 */}
-          <View
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('ReviewDetail')}
             style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
             <View
               style={{
@@ -592,7 +598,7 @@ const Detail = (props) => {
                 </View>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
           {/* // 고객후기 리스트 박스 */}
 
           {/* 고객후기 전체보기 버튼 */}
@@ -654,9 +660,9 @@ const Detail = (props) => {
                   견적 신청하기
                 </Text>
                 <Image
-                  source={require('../../src/assets/chat_fileupload.png')}
-                  resizeMode="contain"
-                  style={{ width: 18, height: 18, marginLeft: 10 }}
+                  source={require('../../src/assets/orderbtn_plus.png')}
+                  resizeMode="cover"
+                  style={{ width: 22, height: 22, marginLeft: 10 }}
                 />
               </View>
             </View>

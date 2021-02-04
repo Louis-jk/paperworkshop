@@ -26,7 +26,15 @@ const Header = (props) => {
       case 'Gallery':
         setTitle('인쇄/패키지 갤러리');
         break;
-
+      case 'GalleryPackage':
+        setTitle('인쇄/패키지 갤러리');
+        break;
+      case 'GalleryGeneral':
+        setTitle('인쇄/패키지 갤러리');
+        break;
+      case 'GalleryEtc':
+        setTitle('인쇄/패키지 갤러리');
+        break;
       case 'Story':
         setTitle('제작스토리');
         break;
@@ -72,7 +80,7 @@ const Header = (props) => {
         <View style={icons}>
           <TouchableWithoutFeedback
             onPress={() => navigation.openDrawer('right')}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
+            hitSlop={{ top: 5, bottom: 5, left: 5, right: -15 }}>
             <View>
               <Image
                 source={require('../../src/assets/top_seach02.png')}

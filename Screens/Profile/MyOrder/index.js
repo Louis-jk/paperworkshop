@@ -12,8 +12,10 @@ import {
   Button,
   Image,
   Alert,
+  Platform,
 } from 'react-native';
-import { Picker } from '@react-native-community/picker';
+
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import DetailHeader from '../../Common/DetailHeader';
 
@@ -22,6 +24,31 @@ const index = (props) => {
   const routeName = props.route.name;
 
   const [category01, setCategory01] = React.useState(null);
+
+  let data = [
+    {
+      value: 'Banana',
+    },
+    {
+      value: 'Mango',
+    },
+    {
+      value: 'Pear',
+    },
+  ];
+
+  const [visibleStep01, setVisibleStep01] = React.useState(false);
+  const [visibleStep02, setVisibleStep02] = React.useState(false);
+  const [step01, setStep01] = React.useState('');
+  const [step02, setStep02] = React.useState('');
+
+  const toggleMenu01 = () => {
+    setVisibleStep01((prev) => !prev);
+  };
+
+  const toggleMenu02 = () => {
+    setVisibleStep02((prev) => !prev);
+  };
 
   return (
     <>
@@ -33,6 +60,7 @@ const index = (props) => {
           backgroundColor: '#F5F5F5',
           paddingHorizontal: 20,
           paddingVertical: 20,
+          zIndex: 999,
         }}>
         <View
           style={{
@@ -43,47 +71,83 @@ const index = (props) => {
           }}>
           <View
             style={{
+              zIndex: 2000,
+              position: 'relative',
+              width: '49%',
               borderWidth: 1,
               borderColor: '#E3E3E3',
-              borderRadius: 4,
+              borderTopRightRadius: 4,
+              borderTopLeftRadius: 4,
+              borderBottomRightRadius: visibleStep01 ? 0 : 4,
+              borderBottomLeftRadius: visibleStep01 ? 0 : 4,
+              paddingHorizontal: 10,
               backgroundColor: '#fff',
-              width: '49.5%',
             }}>
-            <Picker
-              selectedValue={category01} //제일 위 선택란에 누른 아이템이 표시된다
-              onValueChange={(itemValue, itemIndex) => {
-                setCategory01(itemValue);
-              }}
-              style={{ color: '#A2A2A2' }}
-              mode="dialog">
-              <Picker.Item label="진행현황 선택" value="" />
-              <Picker.Item label="입찰중" value="bidding" />
-              <Picker.Item label="파트너선정" value="selected" />
-              <Picker.Item label="마감" value="timeover" />
-              <Picker.Item label="제작요청" value="request" />
-              <Picker.Item label="납품완료" value="delivery" />
-              <Picker.Item label="수령완료" value="receive" />
-            </Picker>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={toggleMenu01}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                value={step01}
+                placeholder="진행현황 선택"
+                style={{ fontFamily: 'SCDream4', width: '80%', color: step01 ? '#000' : '#A2A2A2' }}
+                editable={false}
+                collapsable={true}
+              />
+              <Image
+                source={
+                  visibleStep01
+                    ? require('../../../src/assets/arr01_top.png')
+                    : require('../../../src/assets/arr01.png')
+                }
+                style={{ width: 25, height: 25 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
           </View>
+
           <View
             style={{
+              zIndex: 2000,
+              position: 'relative',
+              width: '49%',
               borderWidth: 1,
               borderColor: '#E3E3E3',
-              borderRadius: 4,
+              borderTopRightRadius: 4,
+              borderTopLeftRadius: 4,
+              borderBottomRightRadius: visibleStep01 ? 0 : 4,
+              borderBottomLeftRadius: visibleStep01 ? 0 : 4,
+              paddingHorizontal: 10,
               backgroundColor: '#fff',
-              width: '49.5%',
             }}>
-            <Picker
-              selectedValue={category01} //제일 위 선택란에 누른 아이템이 표시된다
-              onValueChange={(itemValue, itemIndex) => {
-                setCategory01(itemValue);
-              }}
-              style={{ color: '#A2A2A2' }}
-              mode="dialog">
-              <Picker.Item label="분류 선택" value="" />
-              <Picker.Item label="패키지" value="package" />
-              <Picker.Item label="일반인쇄물" value="printing" />
-            </Picker>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={toggleMenu02}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                value={step02}
+                placeholder="분류 선택"
+                style={{ fontFamily: 'SCDream4', width: '80%', color: step02 ? '#000' : '#A2A2A2' }}
+                editable={false}
+              />
+              <Image
+                source={
+                  visibleStep02
+                    ? require('../../../src/assets/arr01_top.png')
+                    : require('../../../src/assets/arr01.png')
+                }
+                style={{ width: 25, height: 25 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -105,8 +169,8 @@ const index = (props) => {
                   borderColor: '#E3E3E3',
                   borderRadius: 4,
                   backgroundColor: '#fff',
-                  paddingHorizontal: 10,
-                  width: '81%',
+                  paddingHorizontal: 15,
+                  flex: 2,
                   marginRight: 5,
                 },
               ]}
@@ -128,12 +192,17 @@ const index = (props) => {
         </View>
       </View>
       {/* // 카테고리 선택 및 검색 부분 */}
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ zIndex: -1000 }}>
         {/* 리스트 출력 부분 */}
 
         {/* 입찰중 */}
         <View style={{ paddingHorizontal: 20 }}>
           <TouchableOpacity
+            activeOpacity={1}
             onPress={() => navigation.navigate('MyOrderReqDetailList')}
             activeOpacity={0.8}>
             <View
@@ -178,6 +247,7 @@ const index = (props) => {
         {/* 파트너 선정 - 선금 입금 요청 대기 */}
         <View style={{ paddingHorizontal: 20 }}>
           <TouchableOpacity
+            activeOpacity={1}
             onPress={() => navigation.navigate('SelectPartnerStep01')}
             activeOpacity={0.8}>
             <View
@@ -220,6 +290,7 @@ const index = (props) => {
         {/* 파트너 선정 - 계약금 입금 대기 */}
         <View style={{ paddingHorizontal: 20 }}>
           <TouchableOpacity
+            activeOpacity={1}
             onPress={() => navigation.navigate('SelectPartnerStep02')}
             activeOpacity={0.8}>
             <View
@@ -262,6 +333,7 @@ const index = (props) => {
         {/* 파트너 선정 - 계약금 입금 완료 */}
         <View style={{ paddingHorizontal: 20 }}>
           <TouchableOpacity
+            activeOpacity={1}
             onPress={() => navigation.navigate('SelectPartnerStep03')}
             activeOpacity={0.8}>
             <View
@@ -303,7 +375,10 @@ const index = (props) => {
 
         {/* 납품 완료 */}
         <View style={{ paddingHorizontal: 20 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Receive')} activeOpacity={0.8}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate('Receive')}
+            activeOpacity={0.8}>
             <View
               style={{
                 flexDirection: 'row',
@@ -340,7 +415,10 @@ const index = (props) => {
 
         {/* 마감 */}
         <View style={{ paddingHorizontal: 20 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Done')} activeOpacity={0.8}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate('Done')}
+            activeOpacity={0.8}>
             <View
               style={{
                 flexDirection: 'row',
@@ -377,6 +455,154 @@ const index = (props) => {
 
         {/* // 리스트 출력 부분 */}
       </ScrollView>
+
+      {visibleStep01 && (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ zIndex: 1000 }}
+          style={{
+            position: 'absolute',
+            top: 126,
+            left: 20,
+            backgroundColor: '#fff',
+            width: '44.25%',
+            zIndex: 1000,
+            borderWidth: 1,
+            borderColor: '#E3E3E3',
+            paddingVertical: 10,
+            borderBottomRightRadius: 4,
+            borderBottomLeftRadius: 4,
+          }}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('입찰중');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>입찰중</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('파트너선정');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>파트너선정</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('마감');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>마감</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('제작요청');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>제작요청</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('납품완료');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>납품완료</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('수령완료');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>수령완료</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
+
+      {visibleStep02 && (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ zIndex: 1000 }}
+          style={{
+            position: 'absolute',
+            top: 126,
+            right: 20,
+            backgroundColor: '#fff',
+            width: '44.25%',
+            zIndex: 1000,
+            borderWidth: 1,
+            borderColor: '#E3E3E3',
+            paddingVertical: 10,
+            borderBottomRightRadius: 4,
+            borderBottomLeftRadius: 4,
+          }}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep02('패키지');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep02('일반인쇄물');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄물</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep02('기타인쇄물');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄물</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
     </>
   );
 };

@@ -9,12 +9,10 @@ import {
   Linking,
   StyleSheet,
   Alert,
+  ScrollView,
 } from 'react-native';
 
-import { ScrollView } from 'react-native-gesture-handler';
-
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-
 import Collapsible from 'react-native-collapsible';
 
 const DrawerMenu = (props) => {
@@ -106,7 +104,7 @@ const DrawerMenu = (props) => {
               <Image
                 source={require('../../src/assets/home.png')}
                 resizeMode="cover"
-                style={{ width: 20, height: 20, marginRight: 10 }}
+                style={{ width: 20, height: 20, marginRight: 13 }}
               />
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.closeDrawer('right')}>
@@ -333,17 +331,26 @@ const DrawerMenu = (props) => {
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow01}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                style={styles.subCategory}
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('GalleryPackage')}>
                 <Text style={[styles.categoryText, styles.normalText]}>
                   패키지(단상자, 싸바리 등)
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                style={styles.subCategory}
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('GalleryGeneral')}>
                 <Text style={[styles.categoryText, styles.normalText]}>
                   일반인쇄(서적,카달로그 등)
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                style={styles.subCategory}
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('GalleryEtc')}>
                 <Text style={[styles.categoryText, styles.normalText]}>기타 인쇄물</Text>
               </TouchableOpacity>
             </View>
@@ -374,13 +381,13 @@ const DrawerMenu = (props) => {
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow02}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>성실 파트너스</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>인기 파트너스</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>지역 파트너스</Text>
               </TouchableOpacity>
             </View>
@@ -411,13 +418,13 @@ const DrawerMenu = (props) => {
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow03}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>고객 후기</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>유용한 정보</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>인쇄/패키지 제작 정보</Text>
               </TouchableOpacity>
             </View>
@@ -456,13 +463,13 @@ const DrawerMenu = (props) => {
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow04}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>공지사항</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>FAQ</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
                 <Text style={[styles.categoryText, styles.normalText]}>1:1 문의</Text>
               </TouchableOpacity>
             </View>
@@ -497,7 +504,7 @@ const DrawerMenu = (props) => {
               itemWidth={itemWidth}
               layout="default"
               autoplay={true}
-              autoplayDelay={1000}
+              autoplayDelay={3000}
               autoplayInterval={1000}
               loop={true}
               onSnapToItem={(index) => {
@@ -550,6 +557,9 @@ const styles = StyleSheet.create({
   categoryTitle: {
     paddingHorizontal: 20,
     paddingVertical: 5,
+  },
+  subCategory: {
+    marginVertical: 7,
   },
   pdH20: {
     paddingHorizontal: 20,

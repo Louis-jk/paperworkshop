@@ -4,17 +4,13 @@ import {
   Text,
   Image,
   Dimensions,
-  ImageBackground,
   StatusBar,
   TouchableOpacity,
-  ScrollView,
   TouchableWithoutFeedback,
   Alert,
   StyleSheet,
+  Animated,
 } from 'react-native';
-import AutoHeightImage from 'react-native-auto-height-image';
-import { SliderBox } from 'react-native-image-slider-box';
-import Slider from '@react-native-community/slider';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
 import { TabView, SceneMap } from 'react-native-tab-view';
@@ -1036,10 +1032,35 @@ const index = (props) => {
 
   // 파트너스 탭 end
 
+  const offset = React.useRef(new Animated.Value(0)).current;
+  // const [animation] = React.useState(new Animated.Value(1));
+
+  const headerOpacity = offset.interpolate({
+    inputRange: [0, 200],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  // Animated.timing(animation, {
+  //   toValue: 0,
+  //   duration: 2000,
+  // }).start();
+
+  // const animationStyles = {
+  //   opacity: animation,
+  // };
+
+  const [offsetY, setOffsetY] = React.useState(0);
+
+  const handleScroll = (e) => {
+    console.log('scroll event', e.nativeEvent.contentOffset.y);
+    setOffsetY(e.nativeEvent.contentOffset.y);
+  };
+
   return (
     <View style={{ position: 'relative' }}>
       <StatusBar hidden={true} />
-      <View
+      <Animated.View
         style={{
           position: 'absolute',
           top: 0,
@@ -1052,7 +1073,8 @@ const index = (props) => {
           width: Dimensions.get('window').width,
           paddingVertical: 15,
           paddingHorizontal: 25,
-          // backgroundColor: 'rgba(255,255,255,0.9)',
+          // backgroundColor: offsetY > 50 ? 'rgba(255,255,255,0.9)' : 'transparent',
+          opacity: headerOpacity,
         }}>
         <View>
           <Text
@@ -1091,8 +1113,16 @@ const index = (props) => {
             />
           </TouchableWithoutFeedback>
         </View>
-      </View>
-      <ScrollView style={{ backgroundColor: '#fff' }} showsVerticalScrollIndicator={false}>
+      </Animated.View>
+
+      <Animated.ScrollView
+        style={{ backgroundColor: '#fff' }}
+        showsVerticalScrollIndicator={false}
+        // onScroll={handleScroll}
+        scrollEventThrottle={16}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } } }], {
+          useNativeDriver: true,
+        })}>
         {/* 메인 상단 슬라이더 section */}
         <View
           style={{
@@ -2074,7 +2104,7 @@ const index = (props) => {
         </View>
         {/* // 실시간 견적 처리 현황 section */}
         <Footer navigation={navigation} />
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };

@@ -28,6 +28,7 @@ const Login = (props) => {
           justifyContent: 'space-around',
           alignItems: 'center',
           paddingTop: 70,
+          zIndex: -100,
         }}>
         <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -56,6 +57,7 @@ const Login = (props) => {
                 activeOpacity={1}
                 onPress={toggleCheck}
                 style={{
+                  alignSelf: 'flex-end',
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
                   alignItems: 'center',

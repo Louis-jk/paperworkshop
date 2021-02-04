@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TextInput,
   Alert,
   Dimensions,
   Image,
@@ -153,26 +152,58 @@ const ReqDetailList = (props) => {
                     삼보인쇄
                   </Text>
                 </View>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => Alert.alert('파트너스 선정됨')}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#275696',
-                    borderRadius: 20,
-                    paddingVertical: 7,
-                    paddingHorizontal: 15,
-                  }}>
-                  <Text style={[styles.normalText, { color: '#275696' }]}>파트너 선정</Text>
-                </TouchableOpacity>
               </View>
-              <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
+              <View style={{ paddingHorizontal: 20 }}>
                 <Text
                   style={[styles.normalText, { fontSize: 14, color: '#111111', lineHeight: 20 }]}>
                   안녕하세요. 20년 인쇄업체 전통을 자랑하는 삼보인쇄입니다. 제작 요청하신 중소기업
                   선물용 쇼핑백 30건 이상 진행했습니다. 선물세트 추가 비용 5만원입니다.
                 </Text>
               </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginTop: 15,
+                  marginBottom: 20,
+                  paddingHorizontal: 20,
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate('FeedBack')}
+                  style={{
+                    borderWidth: 0.5,
+                    borderColor: '#275696',
+                    borderRadius: 20,
+                    paddingVertical: 12,
+                    width: '49%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#275696' }]}>
+                    견적제안보기
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => Alert.alert('파트너스 선정됨')}
+                  style={{
+                    borderWidth: 0.5,
+                    borderColor: '#275696',
+                    borderRadius: 20,
+                    backgroundColor: '#275696',
+                    paddingVertical: 12,
+                    width: '49%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#fff' }]}>
+                    파트너 선정
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
               <View
                 style={{
@@ -255,24 +286,58 @@ const ReqDetailList = (props) => {
                     경주인쇄
                   </Text>
                 </View>
-                <TouchableOpacity
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#275696',
-                    borderRadius: 20,
-                    paddingVertical: 7,
-                    paddingHorizontal: 15,
-                  }}>
-                  <Text style={[styles.normalText, { color: '#275696' }]}>파트너 선정</Text>
-                </TouchableOpacity>
               </View>
-              <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
+              <View style={{ paddingHorizontal: 20 }}>
                 <Text
                   style={[styles.normalText, { fontSize: 14, color: '#111111', lineHeight: 20 }]}>
                   안녕하세요. 100년 인쇄업체 전통을 자랑하는 경주인쇄입니다. 제작 요청하신 중소기업
                   선물용 쇼핑백 30건 이상 진행했습니다. 선물세트 추가 비용 5만원입니다.
                 </Text>
               </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginTop: 15,
+                  marginBottom: 20,
+                  paddingHorizontal: 20,
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate('FeedBack')}
+                  style={{
+                    borderWidth: 0.5,
+                    borderColor: '#275696',
+                    borderRadius: 20,
+                    paddingVertical: 12,
+                    width: '49%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#275696' }]}>
+                    견적제안보기
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => Alert.alert('파트너스 선정됨')}
+                  style={{
+                    borderWidth: 0.5,
+                    borderColor: '#275696',
+                    borderRadius: 20,
+                    backgroundColor: '#275696',
+                    paddingVertical: 12,
+                    width: '49%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#fff' }]}>
+                    파트너 선정
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
               <View
                 style={{
@@ -355,24 +420,58 @@ const ReqDetailList = (props) => {
                     미래엔인쇄서비스
                   </Text>
                 </View>
-                <TouchableOpacity
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#275696',
-                    borderRadius: 20,
-                    paddingVertical: 7,
-                    paddingHorizontal: 15,
-                  }}>
-                  <Text style={[styles.normalText, { color: '#275696' }]}>파트너 선정</Text>
-                </TouchableOpacity>
               </View>
-              <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
+              <View style={{ paddingHorizontal: 20 }}>
                 <Text
                   style={[styles.normalText, { fontSize: 14, color: '#111111', lineHeight: 20 }]}>
                   안녕하세요. 미래엔인쇄서비스입니다. 중소기업 선물용 쇼핑백 제작 전문
                   인쇄업체입니다. 믿고 맡겨주세요. 제작 의뢰 컴플레인 0건을 자랑합니다.
                 </Text>
               </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginTop: 15,
+                  marginBottom: 20,
+                  paddingHorizontal: 20,
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate('FeedBack')}
+                  style={{
+                    borderWidth: 0.5,
+                    borderColor: '#275696',
+                    borderRadius: 20,
+                    paddingVertical: 12,
+                    width: '49%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#275696' }]}>
+                    견적제안보기
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => Alert.alert('파트너스 선정됨')}
+                  style={{
+                    borderWidth: 0.5,
+                    borderColor: '#275696',
+                    borderRadius: 20,
+                    backgroundColor: '#275696',
+                    paddingVertical: 12,
+                    width: '49%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.normalText, { fontSize: 12, color: '#fff' }]}>
+                    파트너 선정
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
               <View
                 style={{

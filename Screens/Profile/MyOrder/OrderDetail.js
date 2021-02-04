@@ -1,26 +1,10 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  Alert,
-  Dimensions,
-  Image,
-} from 'react-native';
-import { Picker } from '@react-native-community/picker';
+import { View, Text, ScrollView, StyleSheet, Dimensions, Image } from 'react-native';
 import DetailHeader from '../../Common/DetailHeader';
 
 const OrderDetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-
-  const phoneNumber = '01012345678';
-  const emailAddress = 'paper_workshop@paperworkshop.com';
-
-  const [category01, setCategory01] = React.useState(null);
-  const [textInputHeight, setTextInputHeight] = React.useState(0);
 
   return (
     <>
