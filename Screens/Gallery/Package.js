@@ -131,7 +131,7 @@ const Package = (props) => {
               justifyContent: 'flex-start',
               alignItems: 'center',
               flexWrap: 'wrap',
-              marginVertical: 5,
+              marginBottom: 5,
             }}>
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity

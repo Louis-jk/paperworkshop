@@ -25,6 +25,7 @@ import FindPwdScreen from '../Screens/Profile/Auth/FindPwd';
 import SetPwdScreen from '../Screens/Profile/Auth/SetPwd';
 import SetPwdCompleteScreen from '../Screens/Profile/Auth/SetPwdComplete';
 import ProfileEditScreen from '../Screens/Profile/Edit';
+import MyPartnersScreen from '../Screens/Profile/MyPartners';
 import MyOrderScreen from '../Screens/Profile/MyOrder';
 import ReqDetailListScreen from '../Screens/Profile/MyOrder/ReqDetailList';
 import SelectPartnerStep01Screen from '../Screens/Profile/MyOrder/SelectPartnerStep01';
@@ -48,6 +49,9 @@ import CancelOrderScreen from '../Screens/Order/CancelOrder';
 import ReviewScreen from '../Screens/Review';
 import ReviewDetailScreen from '../Screens/Review/Detail';
 
+import CompanyInfoScreen from '../Screens/Common/CompanyInfo';
+import EventScreen from '../Screens/Event';
+
 const Stack = createStackNavigator();
 
 export const MainStackNavigator = () => {
@@ -69,6 +73,22 @@ export const MainStackNavigator = () => {
   );
 };
 
+export const CompanyInfoStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="CompanyInfo" component={CompanyInfoScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const EventStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Event" component={EventScreen} />
+    </Stack.Navigator>
+  );
+};
+
 export const GalleryStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -80,13 +100,24 @@ export const GalleryStackNavigator = () => {
     </Stack.Navigator>
   );
 };
+
 export const PartnersStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Partners" component={PartnersScreen} />
+      <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
     </Stack.Navigator>
   );
 };
+
+export const MyPartnersStackNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
+    </Stack.Navigator>
+  );
+};
+
 export const PartnersDetailStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

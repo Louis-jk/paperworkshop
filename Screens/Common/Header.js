@@ -20,8 +20,17 @@ const Header = (props) => {
       case 'Main':
         setTitle('페이퍼공작소');
         break;
+      case 'CompanyInfo':
+        setTitle('회사소개');
+        break;
+      case 'Event':
+        setTitle('이벤트');
+        break;
       case 'Partners':
         setTitle('파트너스');
+        break;
+      case 'MyPartners':
+        setTitle('나의파트너스');
         break;
       case 'Gallery':
         setTitle('인쇄/패키지 갤러리');

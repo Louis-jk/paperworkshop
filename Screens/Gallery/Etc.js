@@ -24,32 +24,20 @@ const Etc = (props) => {
         <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
           <View
             style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <View style={{ position: 'relative' }}>
-              <TouchableOpacity onPress={() => navigation.navigate('Gallery')} activeOpacity={0.8}>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {
-                      fontSize: 16,
-                      marginBottom: 20,
-                      marginRight: 23,
-                    },
-                  ]}>
-                  전체
-                </Text>
-              </TouchableOpacity>
-              <View
-                style={{
-                  position: 'absolute',
-                  top: -1,
-                  right: 15,
-                  width: 6,
-                  height: 6,
-                  borderRadius: 6,
-                  backgroundColor: '#275696',
-                }}
-              />
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('Gallery')} activeOpacity={0.8}>
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 16,
+                    marginBottom: 20,
+                    marginRight: 23,
+                  },
+                ]}>
+                전체
+              </Text>
+            </TouchableOpacity>
+
             <TouchableOpacity
               onPress={() => navigation.navigate('GalleryPackage')}
               activeOpacity={0.8}>
@@ -86,20 +74,32 @@ const Etc = (props) => {
                 일반인쇄
               </Text>
             </TouchableOpacity>
-
-            <Text
-              style={[
-                styles.boldText,
-                {
-                  fontSize: 16,
-                  fontWeight: '400',
-                  letterSpacing: -2,
-                  marginBottom: 20,
-                  color: '#707070',
-                },
-              ]}>
-              기타 인쇄물
-            </Text>
+            <View style={{ position: 'relative' }}>
+              <Text
+                style={[
+                  styles.mediumText,
+                  {
+                    fontSize: 16,
+                    fontWeight: '400',
+                    letterSpacing: -2,
+                    marginBottom: 20,
+                    marginRight: 20,
+                  },
+                ]}>
+                기타 인쇄물
+              </Text>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: -1,
+                  right: 12,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 6,
+                  backgroundColor: '#275696',
+                }}
+              />
+            </View>
           </View>
           <View
             style={{
@@ -134,7 +134,7 @@ const Etc = (props) => {
               justifyContent: 'flex-start',
               alignItems: 'center',
               flexWrap: 'wrap',
-              marginVertical: 5,
+              marginBottom: 5,
             }}>
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity

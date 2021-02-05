@@ -174,12 +174,88 @@ const index = (props) => {
     </View>
   );
 
+  const ThirdRoute = (props) => (
+    <View>
+      {/* 파트너스 리스트(list) */}
+      <View style={styles.categoryWrap}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('OrderStep02')}
+          style={styles.categoryItem}>
+          <Image
+            source={require('../../src/images/icon14.png')}
+            resizeMode="cover"
+            style={styles.categoryItemImg}
+          />
+          <Text style={styles.categoryItemText}>카달로그/브로슈어/팜플렛</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('OrderStep02')}
+          style={styles.categoryItem}>
+          <Image
+            source={require('../../src/images/icon15.png')}
+            resizeMode="cover"
+            style={styles.categoryItemImg}
+          />
+          <Text style={styles.categoryItemText}>책자/서적류</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('OrderStep02')}
+          style={styles.categoryItem}>
+          <Image
+            source={require('../../src/images/icon16.png')}
+            resizeMode="cover"
+            style={styles.categoryItemImg}
+          />
+          <Text style={styles.categoryItemText}>전단/포스터/안내장</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('OrderStep02')}
+          style={styles.categoryItem}>
+          <Image
+            source={require('../../src/images/icon17.png')}
+            resizeMode="cover"
+            style={styles.categoryItemImg}
+          />
+          <Text style={styles.categoryItemText}>스티커/라벨</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('OrderStep02')}
+          style={styles.categoryItem}>
+          <Image
+            source={require('../../src/images/icon18.png')}
+            resizeMode="cover"
+            style={styles.categoryItemImg}
+          />
+          <Text style={styles.categoryItemText}>봉투/명함</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('OrderStep02')}
+          style={styles.categoryItem}>
+          <Image
+            source={require('../../src/images/icon19.png')}
+            resizeMode="cover"
+            style={styles.categoryItemImg}
+          />
+          <Text style={styles.categoryItemText}>기타 인쇄물</Text>
+        </TouchableOpacity>
+      </View>
+      {/* // 파트너스 리스트(list) */}
+    </View>
+  );
+
   const initialLayout = { width: Dimensions.get('window').width };
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'first', title: '패키지' },
     { key: 'second', title: '일반 인쇄물' },
+    { key: 'third', title: '기타 인쇄물' },
   ]);
 
   const renderScene = ({ route }) => {
@@ -188,6 +264,8 @@ const index = (props) => {
         return <FirstRoute />;
       case 'second':
         return <SecondRoute />;
+      case 'third':
+        return <ThirdRoute />;
     }
   };
 
@@ -247,9 +325,34 @@ const index = (props) => {
                   paddingVertical: 12,
                   fontSize: 14,
                   color: tabIndex === 'second' || index === 1 ? '#275696' : '#C1C1C1',
+                  marginRight: 20,
                 },
               ]}>
               일반 인쇄물
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={async () => {
+              await jumpTo('third');
+              await setTabIndex('third');
+            }}>
+            <Text
+              style={[
+                tabIndex === 'third' || index === 2 ? styles.boldText : styles.normalText,
+                {
+                  paddingVertical: 12,
+                  fontSize: 14,
+                  color: tabIndex === 'third' || index === 2 ? '#275696' : '#C1C1C1',
+                },
+              ]}>
+              기타 인쇄물
             </Text>
           </TouchableOpacity>
         </View>

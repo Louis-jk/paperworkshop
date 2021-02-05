@@ -259,7 +259,12 @@ const DrawerMenu = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() =>
+                navigation.navigate('Home', {
+                  screen: 'MyPartners',
+                })
+              }>
               <View
                 style={{
                   flex: 1,
@@ -334,7 +339,12 @@ const DrawerMenu = (props) => {
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('GalleryPackage')}>
+                onPress={() =>
+                  navigation.navigate('Root', {
+                    screen: 'Gallery',
+                    params: { screen: 'GalleryPackage' },
+                  })
+                }>
                 <Text style={[styles.categoryText, styles.normalText]}>
                   패키지(단상자, 싸바리 등)
                 </Text>
@@ -342,7 +352,12 @@ const DrawerMenu = (props) => {
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('GalleryGeneral')}>
+                onPress={() =>
+                  navigation.navigate('Root', {
+                    screen: 'Gallery',
+                    params: { screen: 'GalleryGeneral' },
+                  })
+                }>
                 <Text style={[styles.categoryText, styles.normalText]}>
                   일반인쇄(서적,카달로그 등)
                 </Text>
@@ -350,7 +365,12 @@ const DrawerMenu = (props) => {
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('GalleryEtc')}>
+                onPress={() =>
+                  navigation.navigate('Root', {
+                    screen: 'Gallery',
+                    params: { screen: 'GalleryEtc' },
+                  })
+                }>
                 <Text style={[styles.categoryText, styles.normalText]}>기타 인쇄물</Text>
               </TouchableOpacity>
             </View>
@@ -418,7 +438,10 @@ const DrawerMenu = (props) => {
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow03}>
             <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
-              <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
+              <TouchableOpacity
+                style={styles.subCategory}
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('Story')}>
                 <Text style={[styles.categoryText, styles.normalText]}>고객 후기</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.subCategory} activeOpacity={0.8}>
@@ -435,7 +458,9 @@ const DrawerMenu = (props) => {
           />
 
           <View style={[styles.categoryTitle, styles.mV10]}>
-            <Text style={[styles.mediumText, { fontSize: 16 }]}>이벤트</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Event')} activeOpacity={0.8}>
+              <Text style={[styles.mediumText, { fontSize: 16 }]}>이벤트</Text>
+            </TouchableOpacity>
           </View>
 
           <View
@@ -480,7 +505,11 @@ const DrawerMenu = (props) => {
           />
 
           <View style={[styles.categoryTitle, styles.mV10]}>
-            <Text style={[styles.mediumText, { fontSize: 16 }]}>회사소개</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CompanyInfo')}
+              activeOpacity={0.8}>
+              <Text style={[styles.mediumText, { fontSize: 16 }]}>회사소개</Text>
+            </TouchableOpacity>
           </View>
 
           <View

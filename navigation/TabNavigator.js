@@ -23,6 +23,9 @@ import {
   MyOrderStackNavigator,
   ReviewStackNavigator,
   ReviewDetailStackNavigator,
+  CompanyInfoStackNavigator,
+  EventStackNavigator,
+  MyPartnersStackNavigator,
 } from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
@@ -139,6 +142,9 @@ const TabNavigator = () => {
       <Stack.Screen name="Review" component={ReviewStackNavigator} />
       <Stack.Screen name="ReviewDetail" component={ReviewDetailStackNavigator} />
       <Stack.Screen name="PartnersDetail" component={PartnersDetailStackNavigator} />
+      <Stack.Screen name="CompanyInfo" component={CompanyInfoStackNavigator} />
+      <Stack.Screen name="Event" component={EventStackNavigator} />
+      <Stack.Screen name="MyPartners" component={MyPartnersStackNavigator} />
     </Stack.Navigator>
   );
 };

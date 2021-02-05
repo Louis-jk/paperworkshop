@@ -22,6 +22,7 @@ const DrawerNavigator = () => {
       }}
       drawerContent={(props) => <DrawerMenu {...props} />}>
       <Drawer.Screen name="Home" component={TabNavigator} />
+      <Drawer.Screen name="Root" component={BottomTabNavigator} />
     </Drawer.Navigator>
   );
 };
