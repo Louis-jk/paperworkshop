@@ -95,6 +95,9 @@ const DetailHeader = (props) => {
       case 'OrderStep06':
         setTitle('세부 견적 작성');
         break;
+      case 'OrderComplete':
+        setTitle('세부 견적 신청');
+        break;
       case 'MyOrder':
         setTitle('나의 견적 의뢰');
         break;

@@ -107,6 +107,9 @@ import easyOrderCompleteScreen from '../Screens/Order/easyOrderComplete';
 // 비교 견적 견적 취소
 import CancelOrderScreen from '../Screens/Order/CancelOrder';
 
+// 세부 견적 완료
+import OrderCompleteScreen from '../Screens/Order/OrderComplete';
+
 // 리뷰 SCREEN
 import ReviewScreen from '../Screens/Review';
 import ReviewDetailScreen from '../Screens/Review/Detail';
@@ -311,6 +314,7 @@ export const OrderStackNavigator = () => {
       <Stack.Screen name="OrderStep05" component={OrderStep05Screen} />
       <Stack.Screen name="OrderStep06" component={OrderStep06Screen} />
       <Stack.Screen name="easyOrderComplete" component={easyOrderCompleteScreen} />
+      <Stack.Screen name="OrderComplete" component={OrderCompleteScreen} />
     </Stack.Navigator>
   );
 };

@@ -14,7 +14,7 @@ import {
 
 import Modal from 'react-native-modal';
 
-const orderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
+const easyOrderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
   return (
     <View>
       <Modal isVisible={isVisible}>
@@ -158,4 +158,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default orderModal;
+export default easyOrderModal;

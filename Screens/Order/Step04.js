@@ -18,7 +18,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 
 import DetailHeader from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
-import Modal from './orderModal';
+import Modal from './easyOrderModal';
 
 const Step04 = (props) => {
   const navigation = props.navigation;
@@ -66,14 +66,14 @@ const Step04 = (props) => {
               marginBottom: 10,
             }}>
             <Text style={[styles.boldText, { fontSize: 16, color: '#000000' }]}>제작 정보</Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               activeOpacity={0.8}
               onPress={toggleModal}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
               <Text style={[styles.normalText, { fontSize: 13, color: '#366DE5' }]}>
                 *이전 단계 입력 내용 자동 저장
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
 
