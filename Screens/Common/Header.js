@@ -62,11 +62,24 @@ const Header = (props) => {
       case 'StoryCreateInfo':
         setTitle('인쇄/패키지 제작정보');
         break;
+
       case 'CCenter':
-        setTitle('고객센터');
+        setTitle('FAQ');
+        break;
+      case 'CCenterNotice':
+        setTitle('공지사항');
+        break;
+      case 'CCenterQnA':
+        setTitle('1:1문의');
+        break;
+      case 'CCenterDetail':
+        setTitle('FAQ');
         break;
       case 'PaperInfo':
         setTitle('지류정보');
+        break;
+      case 'PaperPrice':
+        setTitle('지류고시가');
         break;
       case 'Estimate':
         setTitle('실시간 견적 처리 현황');

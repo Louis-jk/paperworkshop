@@ -12,7 +12,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import Header from '../Common/HeaderNotSearch';
+import Header from '../Common/Header';
 
 const Notice = (props) => {
   const navigation = props.navigation;
@@ -36,17 +36,30 @@ const Notice = (props) => {
             alignItems: 'center',
             paddingVertical: 20,
           }}>
-          <Text
-            style={[
-              styles.boldText,
-              {
-                fontSize: 16,
-                marginRight: 20,
-                color: '#000000',
-              },
-            ]}>
-            공지사항
-          </Text>
+          <View style={{ position: 'relative' }}>
+            <Text
+              style={[
+                styles.mediumText,
+                {
+                  fontSize: 16,
+                  marginRight: 20,
+                  color: '#000000',
+                },
+              ]}>
+              공지사항
+            </Text>
+            <View
+              style={{
+                position: 'absolute',
+                top: -1,
+                right: 13,
+                width: 6,
+                height: 6,
+                borderRadius: 6,
+                backgroundColor: '#275696',
+              }}
+            />
+          </View>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('CCenter')}

@@ -26,7 +26,7 @@ const CompanyInfo = (props) => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           {/* <WebView source={{ uri: 'https://reactnative.dev/' }} /> */}
-          <Text>회사소개</Text>
+          <Text style={styles.normalText}>회사소개</Text>
         </View>
         <Footer navigation={navigation} />
       </ScrollView>

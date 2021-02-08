@@ -435,7 +435,7 @@ const Step04 = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('OrderStep04')}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('OrderStep05')}>
               <View
                 style={{
                   flex: 1,

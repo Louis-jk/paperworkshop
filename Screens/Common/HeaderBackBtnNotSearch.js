@@ -17,21 +17,10 @@ const HeaderBackBtnNotSearch = (props) => {
 
   React.useEffect(() => {
     switch (props.title) {
-      case 'CCenter':
-        setTitle('FAQ');
-        break;
-      case 'CCenterNotice':
-        setTitle('공지사항');
-        break;
-      case 'CCenterQnA':
+      case 'CCenterQnAwrite':
         setTitle('1:1문의');
         break;
-      case 'CCenterDetail':
-        setTitle('FAQ');
-        break;
-      case 'CCenterNoticeDetail':
-        setTitle('공지사항');
-        break;
+
       default:
         return false;
     }

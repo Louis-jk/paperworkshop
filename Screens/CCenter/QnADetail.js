@@ -18,9 +18,11 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import Header from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
 
-const NoticeDetail = (props) => {
+const QnADetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const status = props.route.params.status;
+  // console.log('QnA Props', props);
 
   return (
     <>
@@ -35,20 +37,13 @@ const NoticeDetail = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                {/* <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text> */}
-              </View>
+              <Text style={styles.new}>NEW</Text>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>공지사항 제목입니다. 공지사항 제목입니다.</Text>
+            <Text style={styles.categoryTitle}>
+              문의제목 문의제목 문의제목 문의제목 문의제목 문 의제목문의제목 문의제목 문의제목
+              입니다.
+            </Text>
           </View>
         </View>
 
@@ -61,9 +56,14 @@ const NoticeDetail = (props) => {
           }}
         />
 
+        {/* 1:1 문의 내용 */}
         <View style={{ paddingHorizontal: 20 }}>
-          {/* 이벤트 내용 */}
           <View style={{ marginTop: 15 }}>
+            <AutoHeightImage
+              source={require('../../src/images/inline_cImg.png')}
+              width={Dimensions.get('window').width - 40}
+              style={{ marginBottom: 20 }}
+            />
             <Text
               style={[
                 styles.normalText,
@@ -72,8 +72,61 @@ const NoticeDetail = (props) => {
               내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다
             </Text>
           </View>
-          {/* // 이벤트 내용 */}
         </View>
+        {/* // 1:1 문의 내용 */}
+
+        <View
+          style={{
+            height: 1,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#D7D7D7',
+            marginBottom: 10,
+          }}
+        />
+
+        {/* 답변 내용 */}
+
+        <View style={{ paddingHorizontal: 20 }}>
+          <View style={{ marginTop: 15 }}>
+            <Text
+              style={[
+                styles.boldText,
+                { fontSize: 16, color: '#000', lineHeight: 28, width: '100%', marginBottom: 5 },
+              ]}>
+              답변
+            </Text>
+            {status === 'done' ? (
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 15,
+                    color: '#333333',
+                    lineHeight: 28,
+                    width: '100%',
+                    marginBottom: 20,
+                  },
+                ]}>
+                답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다.
+              </Text>
+            ) : (
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 15,
+                    color: '#333333',
+                    lineHeight: 28,
+                    width: '100%',
+                    marginBottom: 20,
+                  },
+                ]}>
+                아직 답변이 없습니다.
+              </Text>
+            )}
+          </View>
+        </View>
+        {/* // 답변 내용 */}
       </ScrollView>
     </>
   );
@@ -139,4 +192,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoticeDetail;
+export default QnADetail;

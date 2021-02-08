@@ -12,7 +12,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import Header from '../Common/HeaderBackBtnNotSearch';
+import Header from '../Common/Header';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -53,17 +53,30 @@ const index = (props) => {
             </Text>
           </TouchableOpacity>
 
-          <Text
-            style={[
-              styles.boldText,
-              {
-                fontSize: 16,
-                marginRight: 20,
-                color: '#000000',
-              },
-            ]}>
-            FAQ
-          </Text>
+          <View style={{ position: 'relative' }}>
+            <Text
+              style={[
+                styles.mediumText,
+                {
+                  fontSize: 16,
+                  marginRight: 20,
+                  color: '#000000',
+                },
+              ]}>
+              FAQ
+            </Text>
+            <View
+              style={{
+                position: 'absolute',
+                top: -1,
+                right: 13,
+                width: 6,
+                height: 6,
+                borderRadius: 6,
+                backgroundColor: '#275696',
+              }}
+            />
+          </View>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('CCenterQnA')}

@@ -32,7 +32,7 @@ const index = (props) => {
                   {
                     fontSize: 16,
                     marginBottom: 20,
-                    marginRight: 23,
+                    marginRight: 20,
                   },
                 ]}>
                 전체
@@ -42,7 +42,7 @@ const index = (props) => {
                 style={{
                   position: 'absolute',
                   top: -1,
-                  right: 16,
+                  right: 13,
                   width: 6,
                   height: 6,
                   borderRadius: 6,

@@ -1914,7 +1914,7 @@ const index = (props) => {
                 style={{
                   position: 'absolute',
                   top: -1,
-                  right: 15,
+                  right: 13,
                   width: 6,
                   height: 6,
                   borderRadius: 6,

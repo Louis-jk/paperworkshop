@@ -12,7 +12,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import Header from './Header';
+import Header from '../Common/Header';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -36,18 +36,30 @@ const index = (props) => {
             alignItems: 'center',
             paddingVertical: 20,
           }}>
-          <Text
-            style={[
-              styles.boldText,
-              {
-                fontSize: 14,
-                marginRight: 20,
-                color: '#275696',
-              },
-            ]}>
-            고객후기
-          </Text>
-
+          <View style={{ position: 'relative' }}>
+            <Text
+              style={[
+                styles.mediumText,
+                {
+                  fontSize: 16,
+                  marginBottom: 20,
+                  marginRight: 20,
+                },
+              ]}>
+              고객후기
+            </Text>
+            <View
+              style={{
+                position: 'absolute',
+                top: -1,
+                right: 13,
+                width: 6,
+                height: 6,
+                borderRadius: 6,
+                backgroundColor: '#275696',
+              }}
+            />
+          </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('StoryTips')}
             activeOpacity={0.8}
@@ -56,9 +68,10 @@ const index = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 14,
+                  fontSize: 16,
+                  marginBottom: 20,
                   marginRight: 20,
-                  color: '#B5B5B5',
+                  color: '#707070',
                 },
               ]}>
               유용한정보
@@ -72,9 +85,10 @@ const index = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 14,
+                  fontSize: 16,
+                  marginBottom: 20,
                   marginRight: 20,
-                  color: '#B5B5B5',
+                  color: '#707070',
                 },
               ]}>
               인쇄/패키지 제작정보

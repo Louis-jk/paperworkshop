@@ -12,7 +12,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import Header from './Header';
+import Header from '../Common/Header';
 
 const Tips = (props) => {
   const navigation = props.navigation;
@@ -44,26 +44,38 @@ const Tips = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 14,
+                  fontSize: 16,
                   marginRight: 20,
-                  color: '#B5B5B5',
+                  color: '#707070',
                 },
               ]}>
               고객후기
             </Text>
           </TouchableOpacity>
 
-          <Text
-            style={[
-              styles.boldText,
-              {
-                fontSize: 14,
-                marginRight: 20,
-                color: '#275696',
-              },
-            ]}>
-            유용한정보
-          </Text>
+          <View style={{ position: 'relative' }}>
+            <Text
+              style={[
+                styles.mediumText,
+                {
+                  fontSize: 16,
+                  marginRight: 20,
+                },
+              ]}>
+              유용한정보
+            </Text>
+            <View
+              style={{
+                position: 'absolute',
+                top: -1,
+                right: 13,
+                width: 6,
+                height: 6,
+                borderRadius: 6,
+                backgroundColor: '#275696',
+              }}
+            />
+          </View>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('StoryCreateInfo')}
@@ -73,9 +85,9 @@ const Tips = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 14,
+                  fontSize: 16,
                   marginRight: 20,
-                  color: '#B5B5B5',
+                  color: '#707070',
                 },
               ]}>
               인쇄/패키지 제작정보

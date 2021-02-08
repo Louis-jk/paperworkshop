@@ -623,7 +623,7 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'PaperInfo',
-                    params: { screen: 'PaperInfo' },
+                    params: { screen: 'PaperPrice' },
                   })
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>지류고시가</Text>

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, Dimensions } from 'react-native';
 import Header from '../Common/Header';
 
-const index = (props) => {
+const Price = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
@@ -10,7 +10,7 @@ const index = (props) => {
     <SafeAreaView style={styles.container}>
       <Header title={routeName} navigation={navigation} />
       <View style={styles.content}>
-        <Text style={styles.normalText}>지류정보</Text>
+        <Text style={styles.normalText}>지류고시가</Text>
       </View>
     </SafeAreaView>
   );
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default index;
+export default Price;

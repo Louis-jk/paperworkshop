@@ -15,7 +15,7 @@ import {
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
-import Header from '../Common/HeaderBackBtnNotSearch';
+import Header from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
 
 const Detail = (props) => {

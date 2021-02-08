@@ -38,6 +38,15 @@ const DetailHeader = (props) => {
       case 'CCenter':
         setTitle('고객센터');
         break;
+      case 'CCenterDetail':
+        setTitle('FAQ');
+        break;
+      case 'CCenterNoticeDetail':
+        setTitle('공지사항');
+        break;
+      case 'CCenterQnADetail':
+        setTitle('1:1문의');
+        break;
       case 'PaperInfo':
         setTitle('지류정보');
         break;
@@ -79,6 +88,12 @@ const DetailHeader = (props) => {
         break;
       case 'easyOrderComplete':
         setTitle('비교 견적 신청');
+        break;
+      case 'OrderStep05':
+        setTitle('세부 견적 작성');
+        break;
+      case 'OrderStep06':
+        setTitle('세부 견적 작성');
         break;
       case 'MyOrder':
         setTitle('나의 견적 의뢰');

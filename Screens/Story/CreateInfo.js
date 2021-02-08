@@ -12,7 +12,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import Header from './Header';
+import Header from '../Common/Header';
 
 const CreateInfo = (props) => {
   const navigation = props.navigation;
@@ -44,9 +44,9 @@ const CreateInfo = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 14,
+                  fontSize: 16,
                   marginRight: 20,
-                  color: '#B5B5B5',
+                  color: '#707070',
                 },
               ]}>
               고객후기
@@ -61,26 +61,38 @@ const CreateInfo = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 14,
+                  fontSize: 16,
                   marginRight: 20,
-                  color: '#B5B5B5',
+                  color: '#707070',
                 },
               ]}>
               유용한정보
             </Text>
           </TouchableOpacity>
 
-          <Text
-            style={[
-              styles.boldText,
-              {
-                fontSize: 14,
-                marginRight: 20,
-                color: '#275696',
-              },
-            ]}>
-            인쇄/패키지 제작정보
-          </Text>
+          <View style={{ position: 'relative' }}>
+            <Text
+              style={[
+                styles.mediumText,
+                {
+                  fontSize: 16,
+                  marginRight: 20,
+                },
+              ]}>
+              인쇄/패키지 제작정보
+            </Text>
+            <View
+              style={{
+                position: 'absolute',
+                top: -1,
+                right: 13,
+                width: 6,
+                height: 6,
+                borderRadius: 6,
+                backgroundColor: '#275696',
+              }}
+            />
+          </View>
         </View>
       </View>
 
