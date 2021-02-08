@@ -1089,7 +1089,7 @@ const index = (props) => {
           </Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableWithoutFeedback onPress={() => navigation.openDrawer('right')}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
             <Image
               source={require('../../src/assets/top_seach02.png')}
               resizeMode="contain"
@@ -1704,7 +1704,7 @@ const index = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      marginBottom: 7,
+                      marginBottom: 5,
                     }}>
                     <Text
                       style={[
@@ -1719,7 +1719,7 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
+                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
@@ -1788,7 +1788,7 @@ const index = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      marginBottom: 7,
+                      marginBottom: 5,
                     }}>
                     <Text
                       style={[
@@ -1803,7 +1803,7 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
+                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
@@ -1872,7 +1872,7 @@ const index = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      marginBottom: 7,
+                      marginBottom: 5,
                     }}>
                     <Text
                       style={[
@@ -1887,7 +1887,7 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
+                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
@@ -1956,7 +1956,7 @@ const index = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      marginBottom: 7,
+                      marginBottom: 5,
                     }}>
                     <Text
                       style={[
@@ -1971,7 +1971,7 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
+                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
@@ -2040,7 +2040,7 @@ const index = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
-                      marginBottom: 7,
+                      marginBottom: 5,
                     }}>
                     <Text
                       style={[
@@ -2055,7 +2055,7 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, lineHeight: 14, color: '#979797' }]}
+                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>

@@ -26,6 +26,7 @@ import {
   CompanyInfoStackNavigator,
   EventStackNavigator,
   MyPartnersStackNavigator,
+  SearchStackNavigator,
 } from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
@@ -144,7 +145,9 @@ const TabNavigator = () => {
       <Stack.Screen name="PartnersDetail" component={PartnersDetailStackNavigator} />
       <Stack.Screen name="CompanyInfo" component={CompanyInfoStackNavigator} />
       <Stack.Screen name="Event" component={EventStackNavigator} />
+      <Stack.Screen name="EventDetail" component={EventStackNavigator} />
       <Stack.Screen name="MyPartners" component={MyPartnersStackNavigator} />
+      <Stack.Screen name="Search" component={SearchStackNavigator} />
     </Stack.Navigator>
   );
 };

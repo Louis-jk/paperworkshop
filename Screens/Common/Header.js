@@ -29,6 +29,15 @@ const Header = (props) => {
       case 'Partners':
         setTitle('파트너스');
         break;
+      case 'Partners01':
+        setTitle('성실파트너스');
+        break;
+      case 'Partners02':
+        setTitle('인기파트너스');
+        break;
+      case 'Partners03':
+        setTitle('지역파트너스');
+        break;
       case 'MyPartners':
         setTitle('나의파트너스');
         break;
@@ -45,7 +54,13 @@ const Header = (props) => {
         setTitle('인쇄/패키지 갤러리');
         break;
       case 'Story':
-        setTitle('제작스토리');
+        setTitle('고객후기');
+        break;
+      case 'StoryTips':
+        setTitle('유용한정보');
+        break;
+      case 'StoryCreateInfo':
+        setTitle('인쇄/패키지 제작정보');
         break;
       case 'CCenter':
         setTitle('고객센터');
@@ -83,12 +98,12 @@ const Header = (props) => {
     <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <View style={container}>
         <View style={headerCtrl}>
-          <Text style={[styles.mediumText, headerTitle]}>{title}</Text>
+          <Text style={[styles.boldText, headerTitle]}>{title}</Text>
         </View>
 
         <View style={icons}>
           <TouchableWithoutFeedback
-            onPress={() => navigation.openDrawer('right')}
+            onPress={() => navigation.navigate('Search')}
             hitSlop={{ top: 5, bottom: 5, left: 5, right: -15 }}>
             <View>
               <Image

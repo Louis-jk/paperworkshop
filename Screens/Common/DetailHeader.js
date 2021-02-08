@@ -32,6 +32,9 @@ const DetailHeader = (props) => {
       case 'Story':
         setTitle('제작스토리');
         break;
+      case 'StoryTipsDetail':
+        setTitle('유용한 정보');
+        break;
       case 'CCenter':
         setTitle('고객센터');
         break;
@@ -116,6 +119,9 @@ const DetailHeader = (props) => {
       case 'ReviewDetail':
         setTitle('고객후기');
         break;
+      case 'Event':
+        setTitle('이벤트');
+        break;
       default:
         return false;
     }
@@ -126,23 +132,23 @@ const DetailHeader = (props) => {
       <View style={container}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={headerCtrl}>
-            <View style={{ paddingVertical: 10, paddingRight: 10 }}>
+            <View style={{ paddingVertical: 10, paddingRight: 3 }}>
               <Image
-                source={require('../../src/images/left-chevron.png')}
-                resizeMode="contain"
+                source={require('../../src/assets/arr02.png')}
+                resizeMode="cover"
                 style={{
-                  width: 16,
-                  height: 22,
+                  width: 20,
+                  height: 30,
                 }}
               />
             </View>
 
-            <Text style={[styles.mediumText, headerTitle]}>{title}</Text>
+            <Text style={[styles.boldText, headerTitle]}>{title}</Text>
           </View>
         </TouchableWithoutFeedback>
         <View style={icons}>
           <TouchableWithoutFeedback
-            onPress={() => navigation.openDrawer('right')}
+            onPress={() => navigation.navigate('Search')}
             hitSlop={{ top: 5, bottom: 5, left: 5, right: -15 }}>
             <View>
               <Image

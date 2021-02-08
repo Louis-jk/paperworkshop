@@ -12,9 +12,9 @@ import {
   TextInput,
 } from 'react-native';
 
-import Header from '../Common/HeaderBackBtnNotSearch';
+import Header from './Header';
 
-const index = (props) => {
+const Tips = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
@@ -37,19 +37,19 @@ const index = (props) => {
             paddingVertical: 20,
           }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('CCenterNotice')}
+            onPress={() => navigation.navigate('Story')}
             activeOpacity={0.8}
             hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
             <Text
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 14,
                   marginRight: 20,
-                  color: '#707070',
+                  color: '#B5B5B5',
                 },
               ]}>
-              공지사항
+              고객후기
             </Text>
           </TouchableOpacity>
 
@@ -57,28 +57,28 @@ const index = (props) => {
             style={[
               styles.boldText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginRight: 20,
-                color: '#000000',
+                color: '#275696',
               },
             ]}>
-            FAQ
+            유용한정보
           </Text>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('CCenterQnA')}
+            onPress={() => navigation.navigate('StoryCreateInfo')}
             activeOpacity={0.8}
             hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
             <Text
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 14,
                   marginRight: 20,
-                  color: '#707070',
+                  color: '#B5B5B5',
                 },
               ]}>
-              1:1문의
+              인쇄/패키지 제작정보
             </Text>
           </TouchableOpacity>
         </View>
@@ -124,25 +124,29 @@ const index = (props) => {
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
+                </View>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
+            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
           </View>
         </TouchableOpacity>
         <View
@@ -153,25 +157,29 @@ const index = (props) => {
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
+                </View>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
+            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
           </View>
         </TouchableOpacity>
         <View
@@ -182,25 +190,29 @@ const index = (props) => {
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
+                </View>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
+            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
           </View>
         </TouchableOpacity>
         <View
@@ -211,25 +223,29 @@ const index = (props) => {
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
+                </View>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
+            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
           </View>
         </TouchableOpacity>
         <View
@@ -240,25 +256,29 @@ const index = (props) => {
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
+                </View>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
+            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
           </View>
         </TouchableOpacity>
         <View
@@ -269,25 +289,29 @@ const index = (props) => {
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
+                </View>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
+            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
           </View>
         </TouchableOpacity>
         <View
@@ -298,25 +322,29 @@ const index = (props) => {
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
               }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
+                </View>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
+            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
           </View>
         </TouchableOpacity>
         <View
@@ -405,7 +433,6 @@ const styles = StyleSheet.create({
     fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#366DE5',
-    marginLeft: 10,
   },
   categoryTitle: {
     fontFamily: 'SCDream5',
@@ -428,4 +455,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default index;
+export default Tips;

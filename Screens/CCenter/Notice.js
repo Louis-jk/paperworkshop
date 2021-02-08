@@ -12,9 +12,9 @@ import {
   TextInput,
 } from 'react-native';
 
-import Header from '../Common/HeaderBackBtnNotSearch';
+import Header from '../Common/HeaderNotSearch';
 
-const index = (props) => {
+const Notice = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
@@ -36,8 +36,20 @@ const index = (props) => {
             alignItems: 'center',
             paddingVertical: 20,
           }}>
+          <Text
+            style={[
+              styles.boldText,
+              {
+                fontSize: 16,
+                marginRight: 20,
+                color: '#000000',
+              },
+            ]}>
+            공지사항
+          </Text>
+
           <TouchableOpacity
-            onPress={() => navigation.navigate('CCenterNotice')}
+            onPress={() => navigation.navigate('CCenter')}
             activeOpacity={0.8}
             hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
             <Text
@@ -49,21 +61,9 @@ const index = (props) => {
                   color: '#707070',
                 },
               ]}>
-              공지사항
+              FAQ
             </Text>
           </TouchableOpacity>
-
-          <Text
-            style={[
-              styles.boldText,
-              {
-                fontSize: 16,
-                marginRight: 20,
-                color: '#000000',
-              },
-            ]}>
-            FAQ
-          </Text>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('CCenterQnA')}
@@ -120,11 +120,11 @@ const index = (props) => {
       </View>
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* 카테고리 리스트 */}
+        {/* 공지사항 리스트 */}
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -138,7 +138,7 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -148,12 +148,12 @@ const index = (props) => {
         <View
           style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
         />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
+        {/* // 공지사항 리스트 */}
+        {/* 공지사항 리스트 */}
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -167,7 +167,7 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -177,12 +177,12 @@ const index = (props) => {
         <View
           style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
         />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
+        {/* // 공지사항 리스트 */}
+        {/* 공지사항 리스트 */}
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -196,7 +196,7 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -206,12 +206,12 @@ const index = (props) => {
         <View
           style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
         />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
+        {/* // 공지사항 리스트 */}
+        {/* 공지사항 리스트 */}
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -225,7 +225,7 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -235,12 +235,12 @@ const index = (props) => {
         <View
           style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
         />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
+        {/* // 공지사항 리스트 */}
+        {/* 공지사항 리스트 */}
         <TouchableOpacity
           style={{ paddingHorizontal: 20 }}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
+          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -254,7 +254,7 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -264,65 +264,7 @@ const index = (props) => {
         <View
           style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
         />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
-        />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
-        />
-        {/* // 카테고리 리스트 */}
+        {/* // 공지사항 리스트 */}
       </ScrollView>
       {visibleStep01 && (
         <ScrollView
@@ -428,4 +370,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default index;
+export default Notice;

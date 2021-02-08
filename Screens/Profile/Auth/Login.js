@@ -168,7 +168,7 @@ const Login = (props) => {
               width: Dimensions.get('window').width - 100,
               backgroundColor: '#27D34A',
               borderRadius: 4,
-              paddingVertical: 14,
+              paddingVertical: 16,
               marginBottom: 10,
             }}>
             <Image

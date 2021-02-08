@@ -9,16 +9,155 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
+  TextInput,
 } from 'react-native';
-import Header from '../Common/Header';
+
+import Header from './Header';
 
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
+  const [visibleStep01, setVisibleStep01] = React.useState(false);
+  const [step01, setStep01] = React.useState('');
+
+  const toggleMenu01 = () => {
+    setVisibleStep01((prev) => !prev);
+  };
+
   return (
     <>
       <Header title={routeName} navigation={navigation} />
+      <View style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            paddingVertical: 20,
+          }}>
+          <Text
+            style={[
+              styles.boldText,
+              {
+                fontSize: 14,
+                marginRight: 20,
+                color: '#275696',
+              },
+            ]}>
+            고객후기
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('StoryTips')}
+            activeOpacity={0.8}
+            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            <Text
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 14,
+                  marginRight: 20,
+                  color: '#B5B5B5',
+                },
+              ]}>
+              유용한정보
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('StoryCreateInfo')}
+            activeOpacity={0.8}
+            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            <Text
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 14,
+                  marginRight: 20,
+                  color: '#B5B5B5',
+                },
+              ]}>
+              인쇄/패키지 제작정보
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 10,
+            backgroundColor: '#fff',
+          }}>
+          <View
+            style={{
+              zIndex: 2000,
+              position: 'relative',
+              width: '30%',
+              borderWidth: 1,
+              borderColor: '#E3E3E3',
+              borderTopRightRadius: 4,
+              borderTopLeftRadius: 4,
+              borderBottomRightRadius: visibleStep01 ? 0 : 4,
+              borderBottomLeftRadius: visibleStep01 ? 0 : 4,
+              paddingHorizontal: 10,
+              backgroundColor: '#fff',
+            }}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={toggleMenu01}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                value={step01}
+                placeholder="인쇄종류"
+                style={{ fontFamily: 'SCDream4', width: '80%', color: step01 ? '#000' : '#A2A2A2' }}
+                editable={false}
+                collapsable={true}
+              />
+              <Image
+                source={
+                  visibleStep01
+                    ? require('../../src/assets/arr01_top.png')
+                    : require('../../src/assets/arr01.png')
+                }
+                style={{ width: 25, height: 25 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: '#DEDEDE',
+              borderRadius: 5,
+              paddingHorizontal: 10,
+              backgroundColor: '#fff',
+              width: '69%',
+            }}>
+            <TextInput
+              placeholder="업체명을 입력해주세요."
+              placeholderTextColor="#BEBEBE"
+              autoFocus={false}
+              style={[styles.normalText, { width: '80%' }]}
+            />
+            <TouchableOpacity>
+              <Image
+                source={require('../../src/assets/top_seach.png')}
+                resizeMode="contain"
+                style={{ width: 30, height: 30 }}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View>
           {/* 고객후기 */}
@@ -29,7 +168,7 @@ const index = (props) => {
               backgroundColor: '#fff',
               width: Dimensions.get('screen').width,
             }}>
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
@@ -40,7 +179,8 @@ const index = (props) => {
               <Text style={[styles.normalText, { fontSize: 14, color: '#275696' }]}>
                 총 리뷰수 26
               </Text>
-            </View>
+            </View> */}
+
             {/* 고객후기 리스트 박스 */}
             <TouchableOpacity
               activeOpacity={0.8}
@@ -50,14 +190,49 @@ const index = (props) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  marginBottom: 20,
+                  alignItems: 'center',
+                  paddingHorizontal: 20,
                   paddingTop: 20,
+                }}>
+                <Text style={{ fontFamily: 'SCDream6', marginRight: 5 }}>패키지나라</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: '#3CD7C8',
+                      borderRadius: 2,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
+                      패키지
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  marginTop: 10,
                   paddingHorizontal: 20,
                   paddingBottom: 10,
                 }}>
                 <ImageBackground
-                  source={require('../../src/images/w01.jpg')}
+                  source={require('../../src/images/packages/package06.jpg')}
                   resizeMode="cover"
                   style={{ width: 75, height: 70, position: 'relative' }}>
                   <Text
@@ -173,14 +348,49 @@ const index = (props) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  marginBottom: 20,
+                  alignItems: 'center',
+                  paddingHorizontal: 20,
                   paddingTop: 20,
+                }}>
+                <Text style={{ fontFamily: 'SCDream6', marginRight: 5 }}>성원애드피아</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: '#ACACAC',
+                      borderRadius: 2,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
+                      기타인쇄
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  marginBottom: 10,
+                  marginTop: 10,
                   paddingHorizontal: 20,
                   paddingBottom: 10,
                 }}>
                 <ImageBackground
-                  source={require('../../src/images/w02.jpg')}
+                  source={require('../../src/images/etc/etc01.jpg')}
                   resizeMode="cover"
                   style={{ width: 75, height: 70, position: 'relative' }}>
                   <Text
@@ -292,9 +502,44 @@ const index = (props) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  marginBottom: 20,
+                  alignItems: 'center',
+                  paddingHorizontal: 20,
                   paddingTop: 20,
+                }}>
+                <Text style={{ fontFamily: 'SCDream6', marginRight: 5 }}>교보인쇄</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: '#275696',
+                      borderRadius: 2,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          color: '#fff',
+                          fontSize: 11,
+                          paddingHorizontal: 5,
+                          paddingVertical: 2,
+                        },
+                      ]}>
+                      일반인쇄
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  marginBottom: 10,
+                  marginTop: 10,
                   paddingHorizontal: 20,
                   paddingBottom: 10,
                 }}>
@@ -430,6 +675,72 @@ const index = (props) => {
           {/* // 고객후기 */}
         </View>
       </ScrollView>
+      {visibleStep01 && (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ zIndex: 1000 }}
+          style={{
+            position: 'absolute',
+            top: 164,
+            left: 20,
+            backgroundColor: '#fff',
+            width: '27.1%',
+            zIndex: 1000,
+            borderWidth: 1,
+            borderColor: '#E3E3E3',
+            borderBottomRightRadius: 4,
+            borderBottomLeftRadius: 4,
+          }}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('전체');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('일반인쇄');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('패키지');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('기타인쇄');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
     </>
   );
 };

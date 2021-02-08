@@ -15,7 +15,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import Header from '../Common/Header';
 import Footer from '../Common/Footer';
 
-const index = (props) => {
+const Partner02 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
@@ -41,11 +41,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/packages/package06.jpg')}
+              source={require('../../src/images/packages/package01.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -110,7 +109,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -163,9 +161,9 @@ const index = (props) => {
               애드프린트
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -178,7 +176,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -231,9 +228,9 @@ const index = (props) => {
               삼보인쇄
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -246,7 +243,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -315,7 +311,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -383,7 +378,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -436,9 +430,9 @@ const index = (props) => {
               미래엔인쇄서비스
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -452,7 +446,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -520,7 +513,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -573,9 +565,9 @@ const index = (props) => {
               미래엔인쇄서비스
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -589,7 +581,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -642,9 +633,9 @@ const index = (props) => {
               동천문화인쇄
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -724,7 +715,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -792,7 +782,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -874,11 +863,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/packages/package06.jpg')}
+              source={require('../../src/images/packages/package01.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -942,11 +930,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/packages/package02.jpg')}
+              source={require('../../src/images/packages/package06.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1010,11 +997,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/packages/package05.jpg')}
+              source={require('../../src/images/packages/package08.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1063,9 +1049,9 @@ const index = (props) => {
               동천문화인쇄
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -1078,7 +1064,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -1131,9 +1116,9 @@ const index = (props) => {
               미래엔인쇄서비스
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -1160,11 +1145,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/general/general06.jpg')}
+              source={require('../../src/images/general/general01.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1213,9 +1197,9 @@ const index = (props) => {
               삼보인쇄
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -1228,11 +1212,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/general/general07.jpg')}
+              source={require('../../src/images/general/general05.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1296,11 +1279,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/general/general03.jpg')}
+              source={require('../../src/images/general/general07.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1364,7 +1346,6 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
@@ -1446,11 +1427,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/etc/etc05.jpg')}
+              source={require('../../src/images/etc/etc01.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1499,9 +1479,9 @@ const index = (props) => {
               삼보인쇄
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -1514,11 +1494,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/etc/etc02.jpg')}
+              source={require('../../src/images/etc/etc03.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1582,11 +1561,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingRight: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/etc/etc04.jpg')}
+              source={require('../../src/images/etc/etc07.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1635,9 +1613,9 @@ const index = (props) => {
               동천문화인쇄
             </Text>
 
-            {/* <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+            <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
               카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text> */}
+            </Text>
           </View>
         </TouchableOpacity>
         {/* // 파트너스 리스트(list) */}
@@ -1650,11 +1628,10 @@ const index = (props) => {
             borderRadius: 5,
             marginBottom: 20,
             paddingLeft: 5,
-            height: 220,
           }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('../../src/images/etc/etc06.jpg')}
+              source={require('../../src/images/etc/etc02.jpg')}
               resizeMode="cover"
               style={{ width: '100%', height: 130, borderRadius: 5 }}
             />
@@ -1898,30 +1875,20 @@ const index = (props) => {
         <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <View style={{ position: 'relative' }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Partners')} activeOpacity={0.8}>
               <Text
                 style={[
-                  styles.mediumText,
+                  styles.normalText,
                   {
                     fontSize: 16,
                     marginBottom: 20,
                     marginRight: 20,
+                    color: '#707070',
                   },
                 ]}>
                 전체
               </Text>
-              <View
-                style={{
-                  position: 'absolute',
-                  top: -1,
-                  right: 15,
-                  width: 6,
-                  height: 6,
-                  borderRadius: 6,
-                  backgroundColor: '#275696',
-                }}
-              />
-            </View>
+            </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('Partners01')} activeOpacity={0.8}>
               <Text
@@ -1938,20 +1905,31 @@ const index = (props) => {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Partners02')} activeOpacity={0.8}>
+            <View style={{ position: 'relative' }}>
               <Text
                 style={[
-                  styles.normalText,
+                  styles.mediumText,
                   {
                     fontSize: 16,
                     marginBottom: 20,
                     marginRight: 20,
-                    color: '#707070',
                   },
                 ]}>
                 인기파트너스
               </Text>
-            </TouchableOpacity>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: -1,
+                  right: 15,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 6,
+                  backgroundColor: '#275696',
+                }}
+              />
+            </View>
+
             <TouchableOpacity onPress={() => navigation.navigate('Partners03')} activeOpacity={0.8}>
               <Text
                 style={[
@@ -2011,4 +1989,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default index;
+export default Partner02;
