@@ -118,7 +118,7 @@ export const data = [
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
     category: ['general'],
-    location: 'seoul',
+    location: 'busan',
     description: '방수스티커, UV스티커, 소형스티커까지 가능!',
     popularPart: '빠른인쇄! 빈틈없는 색상! 에밀리몰에서 제작하세요!',
     profileImg: [
@@ -223,7 +223,7 @@ export const data = [
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
     category: ['general'],
-    location: 'seoul',
+    location: 'jeju',
     description: '심플하면서 럭셔리한 명함인쇄 전물몰입니다.',
     popularPart: '심플하면서 럭셔리한 명함인쇄 전물몰입니다.',
     profileImg: [
