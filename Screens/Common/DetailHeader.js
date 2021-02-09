@@ -13,7 +13,7 @@ const DetailHeader = (props) => {
   const navigation = props.navigation;
 
   const [title, setTitle] = React.useState('');
-  const { container, headerCtrl, headerTitle, icons } = styles;
+  const {container, headerCtrl, headerTitle, icons} = styles;
 
   React.useEffect(() => {
     switch (props.title) {
@@ -146,11 +146,11 @@ const DetailHeader = (props) => {
   }, [title]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#fff' }}>
+    <SafeAreaView style={{backgroundColor: '#fff'}}>
       <View style={container}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={headerCtrl}>
-            <View style={{ paddingVertical: 10, paddingRight: 3 }}>
+            <View style={{paddingVertical: 10, paddingRight: 3}}>
               <Image
                 source={require('../../src/assets/arr02.png')}
                 resizeMode="cover"
@@ -167,7 +167,7 @@ const DetailHeader = (props) => {
         <View style={icons}>
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate('Search')}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: -15 }}>
+            hitSlop={{top: 5, bottom: 5, left: 5, right: -15}}>
             <View>
               <Image
                 source={require('../../src/assets/top_seach02.png')}
@@ -182,7 +182,7 @@ const DetailHeader = (props) => {
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
             onPress={() => navigation.openDrawer('right')}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
+            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
             <View>
               <Image
                 source={require('../../src/assets/menu.png')}

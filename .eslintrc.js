@@ -1,22 +1,18 @@
 module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
   env: {
-    browser: true,
-    es2021: true,
-  },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+    production: {
+      plugins: ['react-native-paper/babel'],
     },
-    ecmaVersion: 12,
-    sourceType: 'module',
   },
-  plugins: ['react', 'react-hooks', 'prettier'],
+  root: true,
+  extends: '@react-native-community',
   rules: {
-    indent: ['error', 4],
-    'linebreak-style': ['error', 'windows'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 };

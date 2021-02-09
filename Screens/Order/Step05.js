@@ -197,6 +197,7 @@ const Step05 = (props) => {
                       activeItemStyle={{ color: '#000' }}
                       selectedLabelStyle={{ color: '#000' }}
                       value={paperType}
+                      dropDownMaxHeight={500}
                       items={[
                         { label: 'CCP지', value: 'CCP지' },
                         { label: '친환경 용지', value: '친환경 용지' },
@@ -244,6 +245,7 @@ const Step05 = (props) => {
                       activeItemStyle={{ color: '#000' }}
                       selectedLabelStyle={{ color: '#000' }}
                       value={paperType === 'direct' ? '없음' : paperTypeDetail}
+                      dropDownMaxHeight={500}
                       items={[
                         { label: '세부 선택01', value: '세부 선택01' },
                         { label: '세부 선택02', value: '세부 선택02' },
