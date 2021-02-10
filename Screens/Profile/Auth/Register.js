@@ -4,35 +4,24 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard,
-  Dimensions,
   TextInput,
-  Button,
-  Image,
-  Alert,
 } from 'react-native';
 
 // import RNPickerSelect from 'react-native-picker-select';
 // import {Picker} from '@react-native-community/picker';
 
 import DetailHeader from '../../Common/DetailHeader';
-import Footer from '../../Common/Footer';
 
 const Register = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  const [category01, setCategory01] = React.useState(null);
-  const [category02, setCategory02] = React.useState(null);
-  const [value, setValue] = React.useState(null);
-
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
+        <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
           <View style={styles.profileBox}>
             <Text style={styles.profileTitle}>아이디</Text>
             <TextInput
@@ -53,8 +42,10 @@ const Register = (props) => {
           </View>
 
           {/* 비밀번호  */}
-          <View style={{ marginBottom: 20 }}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>비밀번호 </Text>
+          <View style={{marginBottom: 20}}>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              비밀번호{' '}
+            </Text>
             <TextInput
               placeholder="비밀번호를 입력해주세요."
               placeholderTextColor="#A2A2A2"
@@ -91,8 +82,8 @@ const Register = (props) => {
           {/* // 비밀번호  */}
 
           {/* 성함  */}
-          <View style={{ marginBottom: 20 }}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>성함</Text>
+          <View style={{marginBottom: 20}}>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>성함</Text>
             <TextInput
               value="김성준"
               placeholder="비밀번호를 입력해주세요."
@@ -113,8 +104,10 @@ const Register = (props) => {
           {/* // 성함  */}
 
           {/* 휴대폰 번호  */}
-          <View style={{ marginBottom: 20 }}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>휴대폰 번호</Text>
+          <View style={{marginBottom: 20}}>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              휴대폰 번호
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -150,7 +143,11 @@ const Register = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {color: '#fff', textAlign: 'center'},
+                  ]}>
                   인증번호 전송
                 </Text>
               </TouchableOpacity>
@@ -190,7 +187,11 @@ const Register = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {color: '#fff', textAlign: 'center'},
+                  ]}>
                   인증번호 확인
                 </Text>
               </TouchableOpacity>
@@ -199,8 +200,10 @@ const Register = (props) => {
           {/* // 휴대폰 번호  */}
 
           {/* 이메일  */}
-          <View style={{ marginBottom: 20 }}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>이메일</Text>
+          <View style={{marginBottom: 20}}>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              이메일
+            </Text>
             <TextInput
               value=""
               placeholder="이메일을 입력해주세요."
@@ -221,8 +224,10 @@ const Register = (props) => {
           {/* // 이메일  */}
 
           {/* 회사명  */}
-          <View style={{ marginBottom: 20 }}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>회사명</Text>
+          <View style={{marginBottom: 20}}>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              회사명
+            </Text>
             <TextInput
               value=""
               placeholder="회사명을 입력해주세요."
@@ -242,13 +247,17 @@ const Register = (props) => {
           {/* // 회사명  */}
         </View>
 
-        <View style={{ paddingHorizontal: 20, marginBottom: 50 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Signed')} activeOpacity={0.8}>
-            <View style={[styles.submitBtn, { marginBottom: 10 }]}>
+        <View style={{paddingHorizontal: 20, marginBottom: 50}}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Signed')}
+            activeOpacity={0.8}>
+            <View style={[styles.submitBtn, {marginBottom: 10}]}>
               <Text style={styles.submitBtnText}>회원가입</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.8}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            activeOpacity={0.8}>
             <View style={styles.cancelBtn}>
               <Text style={styles.cancelBtnText}>취소</Text>
             </View>

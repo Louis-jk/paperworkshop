@@ -238,7 +238,7 @@ const Partner03 = (props) => {
                 일반인쇄
               </Text>
 
-              <View
+              {/* <View
                 style={{
                   position: 'absolute',
                   top: 29,
@@ -283,7 +283,7 @@ const Partner03 = (props) => {
                 <TouchableOpacity>
                   <Text>기타인쇄물</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
             </TouchableOpacity>
 
             <TouchableOpacity
