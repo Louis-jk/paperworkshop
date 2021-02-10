@@ -18,7 +18,7 @@ const Detail = (props) => {
   const routeName = props.route.name;
 
   const exitMsgRoom = () => {
-    Alert.alert('채팅방을 나가시겠습니까?', '메세지는 삭제되지 않습니다.', [
+    Alert.alert('채팅방을 나가시겠습니까?', '메세지는 영구 삭제됩니다.', [
       {
         text: '확인',
         onPress: () => navigation.navigate('Message'),

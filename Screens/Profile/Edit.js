@@ -4,32 +4,23 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard,
-  Dimensions,
   TextInput,
-  Button,
   Image,
   Alert,
 } from 'react-native';
 
 import Header from '../Common/Header';
-import Footer from '../Common/Footer';
 
 const Edit = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  const [category01, setCategory01] = React.useState(null);
-  const [category02, setCategory02] = React.useState(null);
-  const [value, setValue] = React.useState(null);
-
   return (
     <>
       <Header title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{ backgroundColor: '#F5F5F5' }}>
+        <View style={{backgroundColor: '#F5F5F5'}}>
           <View
             style={{
               justifyContent: 'center',
@@ -69,7 +60,7 @@ const Edit = (props) => {
             </Text>
           </View>
         </View>
-        <View style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
+        <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
           <View style={styles.profileBox}>
             <Text style={styles.profileTitle}>이메일</Text>
             <Text style={styles.profileDesc}>abcd@naver.com</Text>
@@ -77,7 +68,9 @@ const Edit = (props) => {
 
           {/* 회원 등급 */}
           <View style={styles.profileBox}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>회원등급</Text>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              회원등급
+            </Text>
             <View style={styles.flexRowCenter}>
               <Text style={styles.profileDesc}>일반회원</Text>
             </View>
@@ -87,7 +80,9 @@ const Edit = (props) => {
 
           {/* 비밀번호 변경 */}
           <View style={styles.profileBox}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>비밀번호 변경</Text>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              비밀번호 변경
+            </Text>
             <TextInput
               placeholder="비밀번호를 입력해주세요."
               placeholderTextColor="#A2A2A2"
@@ -124,7 +119,7 @@ const Edit = (props) => {
 
           {/* 성함 변경 */}
           <View style={styles.profileBox}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>성함</Text>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>성함</Text>
             <TextInput
               value="김성준"
               placeholder="성함을 입력해주세요."
@@ -145,7 +140,9 @@ const Edit = (props) => {
 
           {/* 휴대폰 번호 변경 */}
           <View style={styles.profileBox}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>휴대폰 번호</Text>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              휴대폰 번호
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -181,7 +178,11 @@ const Edit = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {color: '#fff', textAlign: 'center'},
+                  ]}>
                   인증번호 전송
                 </Text>
               </TouchableOpacity>
@@ -221,7 +222,11 @@ const Edit = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {color: '#fff', textAlign: 'center'},
+                  ]}>
                   인증번호 확인
                 </Text>
               </TouchableOpacity>
@@ -231,7 +236,9 @@ const Edit = (props) => {
 
           {/* 이메일 변경 */}
           <View style={styles.profileBox}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>이메일</Text>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              이메일
+            </Text>
             <TextInput
               value="abcd@naver.com"
               placeholder="이메일을 입력해주세요."
@@ -253,7 +260,9 @@ const Edit = (props) => {
 
           {/* 회사명 변경 */}
           <View style={styles.profileBox}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>회사명</Text>
+            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+              회사명
+            </Text>
             <TextInput
               value="디몬스터"
               placeholder="회사명을 입력해주세요."
@@ -273,13 +282,17 @@ const Edit = (props) => {
           {/* // 회사명 변경 */}
         </View>
 
-        <View style={{ paddingHorizontal: 20, marginBottom: 50 }}>
-          <TouchableOpacity onPress={() => Alert.alert('수정 완료')} activeOpacity={0.8}>
-            <View style={[styles.submitBtn, { marginBottom: 10 }]}>
+        <View style={{paddingHorizontal: 20, marginBottom: 50}}>
+          <TouchableOpacity
+            onPress={() => Alert.alert('수정 완료')}
+            activeOpacity={0.8}>
+            <View style={[styles.submitBtn, {marginBottom: 10}]}>
               <Text style={styles.submitBtnText}>수정 완료</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.8}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            activeOpacity={0.8}>
             <View style={styles.cancelBtn}>
               <Text style={styles.cancelBtnText}>취소</Text>
             </View>

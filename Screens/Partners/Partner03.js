@@ -3,16 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   Image,
-  ScrollView,
   TouchableOpacity,
   TextInput,
   Dimensions,
-  FlatList,
-  Alert,
 } from 'react-native';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView} from 'react-native-tab-view';
 
 import axios from 'axios';
 import qs from 'qs';
