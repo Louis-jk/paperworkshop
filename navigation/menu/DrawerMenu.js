@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Collapsible from 'react-native-collapsible';
 
 const DrawerMenu = (props) => {
@@ -47,9 +47,9 @@ const DrawerMenu = (props) => {
   const sliderWidth = Dimensions.get('window').width;
   const itemWidth = Dimensions.get('window').width - 60;
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return (
-      <View style={{ borderRadius: 20, height: 120 }}>
+      <View style={{borderRadius: 20, height: 120}}>
         <Image
           key={index}
           source={item.image}
@@ -100,18 +100,22 @@ const DrawerMenu = (props) => {
               alignSelf: 'flex-end',
               marginBottom: 7,
             }}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Main')}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('Main')}>
               <Image
                 source={require('../../src/assets/home.png')}
                 resizeMode="cover"
-                style={{ width: 20, height: 20, marginRight: 13 }}
+                style={{width: 20, height: 20, marginRight: 13}}
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.closeDrawer('right')}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.closeDrawer('right')}>
               <Image
                 source={require('../../src/assets/icon_close02.png')}
                 resizeMode="cover"
-                style={{ width: 30, height: 30 }}
+                style={{width: 30, height: 30}}
               />
             </TouchableOpacity>
           </View>
@@ -142,7 +146,7 @@ const DrawerMenu = (props) => {
                   <Image
                     source={require('../../src/assets/photo.png')}
                     resizeMode="cover"
-                    style={{ width: 80, height: 80 }}
+                    style={{width: 80, height: 80}}
                   />
                 </View>
               </View>
@@ -154,16 +158,28 @@ const DrawerMenu = (props) => {
                     alignItems: 'center',
                     marginBottom: 5,
                   }}>
-                  <View style={{ backgroundColor: '#fff', borderRadius: 20, marginRight: 5 }}>
+                  <View
+                    style={{
+                      backgroundColor: '#fff',
+                      borderRadius: 20,
+                      marginRight: 5,
+                    }}>
                     <Text
                       style={[
                         styles.normalText,
-                        { color: '#275696', paddingHorizontal: 10, paddingVertical: 5 },
+                        {
+                          color: '#275696',
+                          paddingHorizontal: 10,
+                          paddingVertical: 5,
+                        },
                       ]}>
                       일반회원
                     </Text>
                   </View>
-                  <Text style={[styles.normalText, { color: '#fff', fontSize: 18 }]}>페이퍼님</Text>
+                  <Text
+                    style={[styles.normalText, {color: '#fff', fontSize: 18}]}>
+                    페이퍼님
+                  </Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigation.navigate('ProfileEdit')}>
@@ -184,7 +200,9 @@ const DrawerMenu = (props) => {
                     </View>
                   </TouchableOpacity>
                 </View>
-                <Text style={[styles.normalText, styles.whiteFont]}>paper@naver.com</Text>
+                <Text style={[styles.normalText, styles.whiteFont]}>
+                  paper@naver.com
+                </Text>
               </View>
             </View>
           </View>
@@ -201,7 +219,8 @@ const DrawerMenu = (props) => {
               backgroundColor: '#fff',
               marginBottom: 20,
             }}>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('MyOrder')}>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('MyOrder')}>
               <View
                 style={{
                   flex: 1,
@@ -232,8 +251,11 @@ const DrawerMenu = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Message')}>
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('Message')}>
               <View
                 style={{
                   flex: 1,
@@ -244,7 +266,7 @@ const DrawerMenu = (props) => {
                 <Image
                   source={require('../../src/assets/msm02.png')}
                   resizeMode="cover"
-                  style={{ width: 35, height: 30, marginBottom: 10 }}
+                  style={{width: 35, height: 30, marginBottom: 10}}
                 />
                 <Text
                   style={[
@@ -258,7 +280,9 @@ const DrawerMenu = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
             <TouchableWithoutFeedback
               onPress={() =>
                 navigation.navigate('Home', {
@@ -275,7 +299,7 @@ const DrawerMenu = (props) => {
                 <Image
                   source={require('../../src/assets/pticon01.png')}
                   resizeMode="cover"
-                  style={{ width: 35, height: 30, marginBottom: 10 }}
+                  style={{width: 35, height: 30, marginBottom: 10}}
                 />
                 <Text
                   style={[
@@ -307,9 +331,9 @@ const DrawerMenu = (props) => {
             <Image
               source={require('../../src/assets/icon02_s.png')}
               resizeMode="contain"
-              style={{ width: 35, height: 30 }}
+              style={{width: 35, height: 30}}
             />
-            <Text style={[styles.whiteFont, styles.mediumText, { fontSize: 16 }]}>
+            <Text style={[styles.whiteFont, styles.mediumText, {fontSize: 16}]}>
               비교 견적 신청
             </Text>
           </TouchableOpacity>
@@ -320,9 +344,11 @@ const DrawerMenu = (props) => {
               style={[
                 styles.categoryTitle,
                 styles.mV10,
-                { flexDirection: 'row', justifyContent: 'space-between' },
+                {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.mediumText, { fontSize: 16 }]}>인쇄/패키지 갤러리</Text>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>
+                인쇄/패키지 갤러리
+              </Text>
               <Image
                 source={
                   collapseArrow01
@@ -330,19 +356,24 @@ const DrawerMenu = (props) => {
                     : require('../../src/assets/arr01.png')
                 }
                 resizeMode="contain"
-                style={{ width: 30, height: 20 }}
+                style={{width: 30, height: 20}}
               />
             </View>
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow01}>
-            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+            <View
+              style={{
+                backgroundColor: '#F5F5F5',
+                paddingVertical: 10,
+                paddingLeft: 40,
+              }}>
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Gallery',
-                    params: { screen: 'GalleryPackage' },
+                    params: {screen: 'GalleryPackage'},
                   })
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
@@ -355,7 +386,7 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Gallery',
-                    params: { screen: 'GalleryGeneral' },
+                    params: {screen: 'GalleryGeneral'},
                   })
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
@@ -368,16 +399,22 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Gallery',
-                    params: { screen: 'GalleryEtc' },
+                    params: {screen: 'GalleryEtc'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>기타 인쇄물</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  기타 인쇄물
+                </Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
 
           <View
-            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
           />
 
           <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc02}>
@@ -385,9 +422,9 @@ const DrawerMenu = (props) => {
               style={[
                 styles.categoryTitle,
                 styles.mV10,
-                { flexDirection: 'row', justifyContent: 'space-between' },
+                {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.mediumText, { fontSize: 16 }]}>파트너스</Text>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>파트너스</Text>
               <Image
                 source={
                   collapseArrow02
@@ -395,22 +432,29 @@ const DrawerMenu = (props) => {
                     : require('../../src/assets/arr01.png')
                 }
                 resizeMode="contain"
-                style={{ width: 30, height: 20 }}
+                style={{width: 30, height: 20}}
               />
             </View>
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow02}>
-            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+            <View
+              style={{
+                backgroundColor: '#F5F5F5',
+                paddingVertical: 10,
+                paddingLeft: 40,
+              }}>
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Partners',
-                    params: { screen: 'Partners01' },
+                    params: {screen: 'Partners01'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>성실 파트너스</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  성실 파트너스
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.subCategory}
@@ -418,10 +462,12 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Partners',
-                    params: { screen: 'Partners02' },
+                    params: {screen: 'Partners02'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>인기 파트너스</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  인기 파트너스
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.subCategory}
@@ -429,16 +475,22 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Partners',
-                    params: { screen: 'Partners03' },
+                    params: {screen: 'Partners03'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>지역 파트너스</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  지역 파트너스
+                </Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
 
           <View
-            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
           />
 
           <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc03}>
@@ -446,9 +498,11 @@ const DrawerMenu = (props) => {
               style={[
                 styles.categoryTitle,
                 styles.mV10,
-                { flexDirection: 'row', justifyContent: 'space-between' },
+                {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.mediumText, { fontSize: 16 }]}>제작스토리</Text>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>
+                제작스토리
+              </Text>
               <Image
                 source={
                   collapseArrow03
@@ -456,22 +510,29 @@ const DrawerMenu = (props) => {
                     : require('../../src/assets/arr01.png')
                 }
                 resizeMode="contain"
-                style={{ width: 30, height: 20 }}
+                style={{width: 30, height: 20}}
               />
             </View>
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow03}>
-            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+            <View
+              style={{
+                backgroundColor: '#F5F5F5',
+                paddingVertical: 10,
+                paddingLeft: 40,
+              }}>
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Story',
-                    params: { screen: 'Story' },
+                    params: {screen: 'Story'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>고객 후기</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  고객 후기
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.subCategory}
@@ -479,10 +540,12 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Story',
-                    params: { screen: 'StoryTips' },
+                    params: {screen: 'StoryTips'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>유용한 정보</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  유용한 정보
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.subCategory}
@@ -490,26 +553,38 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Story',
-                    params: { screen: 'StoryCreateInfo' },
+                    params: {screen: 'StoryCreateInfo'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>인쇄/패키지 제작 정보</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  인쇄/패키지 제작 정보
+                </Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
 
           <View
-            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
           />
 
           <View style={[styles.categoryTitle, styles.mV10]}>
-            <TouchableOpacity onPress={() => navigation.navigate('Event')} activeOpacity={0.8}>
-              <Text style={[styles.mediumText, { fontSize: 16 }]}>이벤트</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Event')}
+              activeOpacity={0.8}>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>이벤트</Text>
             </TouchableOpacity>
           </View>
 
           <View
-            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
           />
 
           <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc04}>
@@ -517,9 +592,9 @@ const DrawerMenu = (props) => {
               style={[
                 styles.categoryTitle,
                 styles.mV10,
-                { flexDirection: 'row', justifyContent: 'space-between' },
+                {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.mediumText, { fontSize: 16 }]}>고객센터</Text>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>고객센터</Text>
               <Image
                 source={
                   collapseArrow04
@@ -527,22 +602,29 @@ const DrawerMenu = (props) => {
                     : require('../../src/assets/arr01.png')
                 }
                 resizeMode="contain"
-                style={{ width: 30, height: 20 }}
+                style={{width: 30, height: 20}}
               />
             </View>
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow04}>
-            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+            <View
+              style={{
+                backgroundColor: '#F5F5F5',
+                paddingVertical: 10,
+                paddingLeft: 40,
+              }}>
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Ccenter',
-                    params: { screen: 'CCenterNotice' },
+                    params: {screen: 'CCenterNotice'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>공지사항</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  공지사항
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.subCategory}
@@ -550,10 +632,12 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Ccenter',
-                    params: { screen: 'CCenter' },
+                    params: {screen: 'CCenter'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>FAQ</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  FAQ
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.subCategory}
@@ -561,28 +645,38 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Ccenter',
-                    params: { screen: 'CCenterQnA' },
+                    params: {screen: 'CCenterQnA'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>1:1 문의</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  1:1 문의
+                </Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
 
           <View
-            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
           />
 
           <View style={[styles.categoryTitle, styles.mV10]}>
             <TouchableOpacity
               onPress={() => navigation.navigate('CompanyInfo')}
               activeOpacity={0.8}>
-              <Text style={[styles.mediumText, { fontSize: 16 }]}>회사소개</Text>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>회사소개</Text>
             </TouchableOpacity>
           </View>
 
           <View
-            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
           />
 
           <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc04}>
@@ -590,9 +684,9 @@ const DrawerMenu = (props) => {
               style={[
                 styles.categoryTitle,
                 styles.mV10,
-                { flexDirection: 'row', justifyContent: 'space-between' },
+                {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.mediumText, { fontSize: 16 }]}>지류정보</Text>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>지류정보</Text>
               <Image
                 source={
                   collapseArrow04
@@ -600,22 +694,29 @@ const DrawerMenu = (props) => {
                     : require('../../src/assets/arr01.png')
                 }
                 resizeMode="contain"
-                style={{ width: 30, height: 20 }}
+                style={{width: 30, height: 20}}
               />
             </View>
           </TouchableOpacity>
           <Collapsible collapsed={collapseArrow04}>
-            <View style={{ backgroundColor: '#F5F5F5', paddingVertical: 10, paddingLeft: 40 }}>
+            <View
+              style={{
+                backgroundColor: '#F5F5F5',
+                paddingVertical: 10,
+                paddingLeft: 40,
+              }}>
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'PaperInfo',
-                    params: { screen: 'PaperInfo' },
+                    params: {screen: 'PaperInfo'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>지류소개</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  지류소개
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.subCategory}
@@ -623,16 +724,22 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'PaperInfo',
-                    params: { screen: 'PaperPrice' },
+                    params: {screen: 'PaperPrice'},
                   })
                 }>
-                <Text style={[styles.categoryText, styles.normalText]}>지류고시가</Text>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  지류고시가
+                </Text>
               </TouchableOpacity>
             </View>
           </Collapsible>
 
           <View
-            style={{ width: Dimensions.get('window').width, height: 1, backgroundColor: '#F5F5F5' }}
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
           />
         </View>
 
@@ -656,7 +763,6 @@ const DrawerMenu = (props) => {
               autoplayInterval={1000}
               loop={true}
               onSnapToItem={(index) => {
-                // console.log('C index', index);
                 setActiveSlide(index);
               }}
               // containerCustomStyle={{ marginHorizontal: 20 }}
@@ -664,7 +770,7 @@ const DrawerMenu = (props) => {
             <Pagination
               dotsLength={banners.length}
               activeDotIndex={activeSlide}
-              dotContainerStyle={{ margin: 0, padding: 0 }}
+              dotContainerStyle={{margin: 0, padding: 0}}
               dotStyle={{
                 width: 40,
                 height: 8,
@@ -684,7 +790,7 @@ const DrawerMenu = (props) => {
               inactiveDotScale={1}
               tappableDots={true}
               carouselRef={bannerCarouselRef}
-              containerStyle={{ paddingVertical: 20 }}
+              containerStyle={{paddingVertical: 20}}
             />
           </View>
         </View>

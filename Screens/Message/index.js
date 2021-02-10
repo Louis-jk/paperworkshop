@@ -20,12 +20,8 @@ const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  console.log('props :', props);
-
   const [category01, setCategory01] = React.useState(null);
   const [value, setValue] = React.useState(null);
-
-  console.log('category01 : ', category01);
 
   return (
     <>
@@ -47,13 +43,17 @@ const index = (props) => {
                     marginRight: 20,
                   }}
                 />
-                <View style={{ flex: 2 }}>
-                  <Text style={[styles.msgInfoName, styles.normalText]}>삼보인쇄</Text>
-                  <Text style={[styles.msgInfoContent, styles.normalText]} numberOfLines={1}>
+                <View style={{flex: 2}}>
+                  <Text style={[styles.msgInfoName, styles.normalText]}>
+                    삼보인쇄
+                  </Text>
+                  <Text
+                    style={[styles.msgInfoContent, styles.normalText]}
+                    numberOfLines={1}>
                     안녕하세요. 박스견적 문의 드릴게 있어요 ...
                   </Text>
                 </View>
-                <View style={{ position: 'relative' }}>
+                <View style={{position: 'relative'}}>
                   <TouchableOpacity activeOpacity={0.8}>
                     <Image
                       source={require('../../src/assets/icon_close01.png')}
@@ -84,13 +84,17 @@ const index = (props) => {
                     marginRight: 20,
                   }}
                 />
-                <View style={{ flex: 2 }}>
-                  <Text style={[styles.msgInfoName, styles.normalText]}>업체명</Text>
-                  <Text style={[styles.msgInfoContent, styles.normalText]} numberOfLines={1}>
+                <View style={{flex: 2}}>
+                  <Text style={[styles.msgInfoName, styles.normalText]}>
+                    업체명
+                  </Text>
+                  <Text
+                    style={[styles.msgInfoContent, styles.normalText]}
+                    numberOfLines={1}>
                     안녕하세요. 박스견적 문의 드릴게 있어요 ...
                   </Text>
                 </View>
-                <View style={{ position: 'relative' }}>
+                <View style={{position: 'relative'}}>
                   <TouchableOpacity activeOpacity={0.8}>
                     <Image
                       source={require('../../src/assets/icon_close01.png')}
@@ -121,13 +125,17 @@ const index = (props) => {
                     marginRight: 20,
                   }}
                 />
-                <View style={{ flex: 2 }}>
-                  <Text style={[styles.msgInfoName, styles.normalText]}>업체명</Text>
-                  <Text style={[styles.msgInfoContent, styles.normalText]} numberOfLines={1}>
+                <View style={{flex: 2}}>
+                  <Text style={[styles.msgInfoName, styles.normalText]}>
+                    업체명
+                  </Text>
+                  <Text
+                    style={[styles.msgInfoContent, styles.normalText]}
+                    numberOfLines={1}>
                     안녕하세요. 박스견적 문의 드릴게 있어요 ...
                   </Text>
                 </View>
-                <View style={{ position: 'relative' }}>
+                <View style={{position: 'relative'}}>
                   <TouchableOpacity activeOpacity={0.8}>
                     <Image
                       source={require('../../src/assets/icon_close01.png')}

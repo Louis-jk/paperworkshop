@@ -10,7 +10,7 @@ export const data = [
     businessName: '스리야',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '에어간판 전물 몰! 스리야에서 원하는 에어간판을 제작해보세요.',
     popularPart: '에어간판 전물 몰! 스리야에서 원하는 에어간판을 제작해보세요.',
@@ -36,7 +36,7 @@ export const data = [
     businessName: '딥포인트',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '부직포 인쇄 전물몰! 빠른 제작! 높은 품질! 낱개 주문 가능!',
     popularPart: '부직포 인쇄 전물몰! 빠른 제작! 높은 품질! 낱개 주문 가능!',
@@ -62,7 +62,7 @@ export const data = [
     businessName: '옐로우캐슬',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '커피 창업자 고민 끝! 갓성비 인쇄몰! 옐로우캐슬입니다.',
     popularPart: '커피 창업자 고민 끝! 갓성비 인쇄몰! 옐로우캐슬입니다.',
@@ -88,7 +88,7 @@ export const data = [
     businessName: '삼보인쇄',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general', 'etc'],
+    cate1: ['1', '0', '2'],
     location: 'seoul',
     description: '카타로그 제작부터 후가공까지 삼보인쇄에서 제작하세요.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
@@ -109,24 +109,24 @@ export const data = [
     popular: 'y',
     email: 'sambo@sambo.com',
     password: '123456789',
-    name: '이재훈',
+    name: '서덕민',
     mobile: '010-1234-5678',
-    businessName: '애드프린트',
+    businessName: '서면인쇄',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general', 'etc'],
+    cate1: ['1', '0', '2'],
     location: 'seoul',
-    description: '카타로그 제작부터 후가공까지 애드프린트에서 제작하세요.',
-    popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
+    description: '색감풍부, 재단밀림 최소화! 믿고 맡겨주세요.',
+    popularPart: '색감풍부, 재단밀림 최소화! 믿고 맡겨주세요.',
     profileImg: [
       'https://images.squarespace-cdn.com/content/v1/54297deae4b04053ed0cba0b/1513044884087-IASJHNBH3DCE7ILPCZNB/ke17ZwdGBToddI8pDm48kDUmZJPtjcvIHBJxs1Dy_oF7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0plef_PmwB6-3GP4qDbCUv9oJE4pa-KLtGr30--pRapK7ttJsC8W8Y1lJgpl17C6FA/JUNE_mockup.jpg',
-      'https://pro2-bar-s3-cdn-cf2.myportfolio.com/4226d45ee5297d0858649865152fa41e/328e492f-6559-4498-90ec-53c0891d1542_rw_1920.jpg?h=91a86919555a48fe56762ccdd15bd9c6',
-      'https://pro2-bar-s3-cdn-cf.myportfolio.com/4226d45ee5297d0858649865152fa41e/b0a315c1-220f-4d09-9152-a39301cafd55_rw_1920.jpg?h=49e304533cd520b6ce8156e04da8e8c2',
+      'https://pro2-bar-s3-cdn-cf2.myprofileImg.com/4226d45ee5297d0858649865152fa41e/328e492f-6559-4498-90ec-53c0891d1542_rw_1920.jpg?h=91a86919555a48fe56762ccdd15bd9c6',
+      'https://pro2-bar-s3-cdn-cf.myprofileImg.com/4226d45ee5297d0858649865152fa41e/b0a315c1-220f-4d09-9152-a39301cafd55_rw_1920.jpg?h=49e304533cd520b6ce8156e04da8e8c2',
     ],
     bank: {
       name: '기업은행',
       account: '9012-1234-5678-345',
-      depositor: '애드프린트',
+      depositor: '서면인쇄',
     },
     rating: 4.5,
   },
@@ -141,7 +141,7 @@ export const data = [
     businessName: 'WHY매니악',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['general', 'etc'],
+    cate1: ['0', '2'],
     location: 'seoul',
     description: '평범한 인쇄는 싫다하시는 분 대환영!',
     popularPart: '평범한 인쇄는 싫다하시는 분 대환영!',
@@ -169,7 +169,7 @@ export const data = [
     businessName: '플라스틱프렌즈',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '일회용 음료컵 인쇄 등 플라스틱 인쇄 가능합니다.',
     popularPart: '일회용 음료컵 인쇄 등 플라스틱 인쇄 가능합니다.',
@@ -196,7 +196,7 @@ export const data = [
     businessName: '마쿠마쿠',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '판촉물의 모든 것! 바로 여기 마쿠마쿠에서!',
     popularPart: '판촉물은 모두 다 제작하고 있습니다.',
@@ -222,7 +222,7 @@ export const data = [
     businessName: '동천문화인쇄',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general', 'etc'],
+    cate1: ['1', '0', '2'],
     location: 'seoul',
     description: '카타로그 제작부터 후가공까지 동천문화인쇄에서 제작하세요.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
@@ -248,7 +248,7 @@ export const data = [
     businessName: '판촉물천국',
     license:
       'https://www.creativeboom.com/uploads/articles/b1/b1173eff07774151993e042dc2210184174ff972_810.jpg',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'busan',
     description: '판촉물은 판촉물천국에서 제작하세요!',
     popularPart: '판촉물 하나만큼 제대로 제작하고 있습니다.',
@@ -275,7 +275,7 @@ export const data = [
     businessName: '에밀리몰',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['general', 'etc'],
+    cate1: ['0', '2'],
     location: 'seoul',
     description: '빠른인쇄! 빈틈없는 색상! 에밀리몰에서 제작하세요!',
     popularPart: '빠른인쇄! 빈틈없는 색상! 에밀리몰에서 제작하세요!',
@@ -301,7 +301,7 @@ export const data = [
     businessName: '마쿠마쿠',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '판촉물의 모든 것! 바로 여기 마쿠마쿠에서!',
     popularPart: '판촉물은 모두 다 제작하고 있습니다.',
@@ -327,7 +327,7 @@ export const data = [
     businessName: '판촉물천국',
     license:
       'https://www.creativeboom.com/uploads/articles/b1/b1173eff07774151993e042dc2210184174ff972_810.jpg',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'busan',
     description: '판촉물은 판촉물천국에서 제작하세요!',
     popularPart: '판촉물 하나만큼 제대로 제작하고 있습니다.',
@@ -353,7 +353,7 @@ export const data = [
     businessName: '성원애드피아',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description:
       '카타로그 제작부터 후가공까지 미래엔인쇄서비스에서 제작하세요.',

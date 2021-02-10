@@ -25,10 +25,8 @@ const Detail = (props) => {
   const name = props.route.params.name;
   const bName = props.route.params.bName;
   const rating = props.route.params.rating;
-  const portfolio = props.route.params.portfolio;
+  const profileImg = props.route.params.profileImg;
   const mobile = props.route.params.mobile;
-
-  console.log('Detail', props);
 
   const [like, setLike] = React.useState(false);
   const onLikeBtn = () => {
@@ -38,7 +36,6 @@ const Detail = (props) => {
   const carouselRef = React.useRef(null);
 
   const renderItem = ({item, index}) => {
-    console.log('test item ?', item);
     return (
       <Image
         key={index}
@@ -65,7 +62,7 @@ const Detail = (props) => {
           }}>
           <Carousel
             ref={carouselRef}
-            data={portfolio ? portfolio : null}
+            data={profileImg ? profileImg : null}
             renderItem={renderItem}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}

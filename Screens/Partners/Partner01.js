@@ -27,7 +27,7 @@ const All = (props) => {
   const navigation = props.navigation;
 
   const [partners, setPartners] = React.useState([]);
-  console.log('partnersData', partnersData);
+
   React.useEffect(() => {
     setPartners(partnersData.data);
   }, [partnersData]);
@@ -44,7 +44,7 @@ const All = (props) => {
               bName: item.businessName,
               name: item.name,
               rating: item.rating,
-              portfolio: item.profileImg,
+              profileImg: item.profileImg,
               mobile: item.mobile,
             },
           })
@@ -84,7 +84,7 @@ const All = (props) => {
               alignItems: 'center',
               marginBottom: 5,
             }}>
-            {item.category.includes('package') ? (
+            {item.cate1.includes('1') ? (
               <View
                 style={{
                   backgroundColor: '#3CD7C8',
@@ -104,12 +104,12 @@ const All = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('general') ? (
+            {item.cate1.includes('0') ? (
               <View
                 style={{
                   backgroundColor: '#275696',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('general') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('0') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -125,12 +125,12 @@ const All = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('etc') ? (
+            {item.cate1.includes('2') ? (
               <View
                 style={{
                   backgroundColor: '#ACACAC',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('etc') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('2') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -193,7 +193,6 @@ const Package = (props) => {
 
   const [packages, setPackages] = React.useState([]);
 
-  console.log('partnersPackageData', partnersPackageData);
   React.useEffect(() => {
     setPackages(partnersPackageData.data);
   }, [partnersPackageData]);
@@ -210,7 +209,7 @@ const Package = (props) => {
               bName: item.businessName,
               name: item.name,
               rating: item.rating,
-              portfolio: item.profileImg,
+              profileImg: item.profileImg,
               mobile: item.mobile,
             },
           })
@@ -250,7 +249,7 @@ const Package = (props) => {
               alignItems: 'center',
               marginBottom: 5,
             }}>
-            {item.category.includes('package') ? (
+            {item.cate1.includes('1') ? (
               <View
                 style={{
                   backgroundColor: '#3CD7C8',
@@ -270,12 +269,12 @@ const Package = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('general') ? (
+            {item.cate1.includes('0') ? (
               <View
                 style={{
                   backgroundColor: '#275696',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('general') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('0') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -291,12 +290,12 @@ const Package = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('etc') ? (
+            {item.cate1.includes('2') ? (
               <View
                 style={{
                   backgroundColor: '#ACACAC',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('etc') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('2') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -359,7 +358,6 @@ const General = (props) => {
 
   const [general, setGeneral] = React.useState([]);
 
-  console.log('partnersPackageData', partnersPackageData);
   React.useEffect(() => {
     setGeneral(partnersGeneralData.data);
   }, [partnersGeneralData]);
@@ -376,7 +374,7 @@ const General = (props) => {
               bName: item.businessName,
               name: item.name,
               rating: item.rating,
-              portfolio: item.profileImg,
+              profileImg: item.profileImg,
               mobile: item.mobile,
             },
           })
@@ -416,7 +414,7 @@ const General = (props) => {
               alignItems: 'center',
               marginBottom: 5,
             }}>
-            {item.category.includes('package') ? (
+            {item.cate1.includes('1') ? (
               <View
                 style={{
                   backgroundColor: '#3CD7C8',
@@ -436,12 +434,12 @@ const General = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('general') ? (
+            {item.cate1.includes('0') ? (
               <View
                 style={{
                   backgroundColor: '#275696',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('general') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('0') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -457,12 +455,12 @@ const General = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('etc') ? (
+            {item.cate1.includes('2') ? (
               <View
                 style={{
                   backgroundColor: '#ACACAC',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('etc') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('2') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -525,7 +523,6 @@ const Etc = (props) => {
 
   const [etc, setEtc] = React.useState([]);
 
-  console.log('partnersPackageData', partnersPackageData);
   React.useEffect(() => {
     setEtc(partnersEtcData.data);
   }, [partnersEtcData]);
@@ -542,7 +539,7 @@ const Etc = (props) => {
               bName: item.businessName,
               name: item.name,
               rating: item.rating,
-              portfolio: item.profileImg,
+              profileImg: item.profileImg,
               mobile: item.mobile,
             },
           })
@@ -582,7 +579,7 @@ const Etc = (props) => {
               alignItems: 'center',
               marginBottom: 5,
             }}>
-            {item.category.includes('package') ? (
+            {item.cate1.includes('1') ? (
               <View
                 style={{
                   backgroundColor: '#3CD7C8',
@@ -602,12 +599,12 @@ const Etc = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('general') ? (
+            {item.cate1.includes('0') ? (
               <View
                 style={{
                   backgroundColor: '#275696',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('general') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('0') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -623,12 +620,12 @@ const Etc = (props) => {
                 </Text>
               </View>
             ) : null}
-            {item.category.includes('etc') ? (
+            {item.cate1.includes('2') ? (
               <View
                 style={{
                   backgroundColor: '#ACACAC',
                   borderRadius: 2,
-                  marginLeft: item.category.indexOf('etc') !== 0 ? 5 : 0,
+                  marginLeft: item.cate1.indexOf('2') !== 0 ? 5 : 0,
                 }}>
                 <Text
                   style={[
@@ -890,7 +887,10 @@ const Partner01 = (props) => {
     );
   };
 
-  // 탭 - 전체/패키지/일반인쇄/기타인쇄물 end
+  const [isActiveLocation, setActiveLocation] = React.useState(false);
+  const toggleLocation = () => {
+    setActiveLocation(!isActiveLocation);
+  };
 
   return (
     <>
@@ -901,19 +901,38 @@ const Partner01 = (props) => {
         nestedScrollEnabled={true}> */}
       <View
         style={{
+          position: 'relative',
           flex: 1,
           paddingHorizontal: 20,
           paddingTop: 20,
           backgroundColor: '#fff',
         }}>
+        {isActiveLocation && (
+          <TouchableOpacity
+            onPress={toggleLocation}
+            style={{
+              position: 'absolute',
+              top: 50,
+              flex: 1,
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height,
+              backgroundColor: 'rgba(0,0,0,0.6)',
+              zIndex: 50,
+            }}
+          />
+        )}
         <View
           style={{
+            position: 'relative',
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Partners')}
+            onPress={() => {
+              navigation.navigate('Partners');
+              setActiveLocation(false);
+            }}
             activeOpacity={0.8}>
             <Text
               style={[
@@ -955,7 +974,10 @@ const Partner01 = (props) => {
           </View>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('Partners02')}
+            onPress={() => {
+              navigation.navigate('Partners02');
+              setActiveLocation(false);
+            }}
             activeOpacity={0.8}>
             <Text
               style={[
@@ -970,9 +992,7 @@ const Partner01 = (props) => {
               인기파트너스
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Partners03')}
-            activeOpacity={0.8}>
+          <TouchableOpacity onPress={toggleLocation} activeOpacity={0.8}>
             <Text
               style={[
                 styles.normalText,
@@ -986,6 +1006,237 @@ const Partner01 = (props) => {
               지역파트너스
             </Text>
           </TouchableOpacity>
+          {isActiveLocation && (
+            <View
+              style={{
+                position: 'absolute',
+                top: 29,
+                right: -20,
+                width: 130,
+                borderWidth: 1,
+                borderColor: '#fff',
+                borderBottomRightRadius: 5,
+                borderBottomLeftRadius: 5,
+                backgroundColor: '#fff',
+                zIndex: 100,
+                paddingLeft: 7,
+              }}>
+              <View style={{paddingVertical: 5}}>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'seoul'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    서울
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'busan'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    부산
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'daegu'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    대구
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'incheon'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    인천
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'gwangju'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    광주
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'sejong'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    세종/대전/청주
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'ulsan'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    울산
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'gyeongi'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    경기
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'gangwon'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    강원
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {
+                      location: 'choongcheong',
+                    });
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    충청
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'jeonra'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    전라
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {
+                      location: 'gyeongsang',
+                    });
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    경상
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingHorizontal: 10, paddingVertical: 10}}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    navigation.navigate('Partners03', {location: 'jeju'});
+                    setActiveLocation(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 14,
+                      color: '#707070',
+                    }}>
+                    제주
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
         </View>
 
         {/* TabView */}

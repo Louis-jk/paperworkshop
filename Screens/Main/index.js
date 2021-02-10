@@ -11,9 +11,9 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import {TabView, SceneMap} from 'react-native-tab-view';
 import Footer from '../Common/Footer';
 
 const index = (props) => {
@@ -98,9 +98,9 @@ const index = (props) => {
     },
   ];
 
-  const mainRenderItem = ({ item, index }) => {
+  const mainRenderItem = ({item, index}) => {
     return (
-      <View style={{ borderRadius: 20, height: 120 }}>
+      <View style={{borderRadius: 20, height: 120}}>
         <Image
           key={index}
           source={item.image}
@@ -114,9 +114,9 @@ const index = (props) => {
     );
   };
 
-  const stepRenderItem = ({ item, index }) => {
+  const stepRenderItem = ({item, index}) => {
     return (
-      <View style={{ borderRadius: 20, height: 120 }}>
+      <View style={{borderRadius: 20, height: 120}}>
         <Image
           key={index}
           source={item.image}
@@ -138,9 +138,9 @@ const index = (props) => {
   const [mainActiveSlide, setMainActiveSlide] = React.useState(0);
   const [stepActiveSlide, setStepActiveSlide] = React.useState(0);
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return (
-      <View style={{ borderRadius: 20, height: 120 }}>
+      <View style={{borderRadius: 20, height: 120}}>
         <Image
           key={index}
           source={item.image}
@@ -234,7 +234,9 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 20 }]} numberOfLines={2}>
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 20}]}
+            numberOfLines={2}>
             카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
           </Text>
         </View>
@@ -242,7 +244,7 @@ const index = (props) => {
           <Image
             source={require('../../src/images/p07.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -323,15 +325,18 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
-            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어 최고를 향해 달려...
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
+            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어
+            최고를 향해 달려...
           </Text>
         </View>
         <View>
           <Image
             source={require('../../src/images/p06.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -390,15 +395,18 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
-            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는 UP시키...
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
+            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는
+            UP시키...
           </Text>
         </View>
         <View>
           <Image
             source={require('../../src/images/p05.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -465,15 +473,18 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
-            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는 UP시키...
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
+            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는
+            UP시키...
           </Text>
         </View>
         <View>
           <Image
             source={require('../../src/images/p05.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -554,7 +565,9 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
             카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
           </Text>
         </View>
@@ -562,7 +575,7 @@ const index = (props) => {
           <Image
             source={require('../../src/images/p07.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -643,15 +656,18 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
-            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어 최고를 향해 달려...
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
+            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어
+            최고를 향해 달려...
           </Text>
         </View>
         <View>
           <Image
             source={require('../../src/images/p06.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -737,15 +753,18 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
-            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어 최고를 향해 달려...
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
+            대한민국 교육출판 No.1 다양한 지식 콘텐츠로 70년의 역사를 넘어
+            최고를 향해 달려...
           </Text>
         </View>
         <View>
           <Image
             source={require('../../src/images/p06.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -807,15 +826,18 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
-            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는 UP시키...
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
+            국내 유일 10,000 디지털을 인쇄하는 회사입니다. 가격은 DOWN, 퀄리티는
+            UP시키...
           </Text>
         </View>
         <View>
           <Image
             source={require('../../src/images/p05.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -896,7 +918,9 @@ const index = (props) => {
               </Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]} numberOfLines={2}>
+          <Text
+            style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
+            numberOfLines={2}>
             카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
           </Text>
         </View>
@@ -904,7 +928,7 @@ const index = (props) => {
           <Image
             source={require('../../src/images/p07.jpg')}
             resizeMode="cover"
-            style={{ width: 70, height: 70, borderRadius: 5 }}
+            style={{width: 70, height: 70, borderRadius: 5}}
           />
         </View>
       </TouchableOpacity>
@@ -912,16 +936,16 @@ const index = (props) => {
     </View>
   );
 
-  const initialLayout = { width: Dimensions.get('window').width };
+  const initialLayout = {width: Dimensions.get('window').width};
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: '성실파트너스' },
-    { key: 'second', title: '인기파트너스' },
-    { key: 'third', title: '지역파트너스' },
+    {key: 'first', title: '성실파트너스'},
+    {key: 'second', title: '인기파트너스'},
+    {key: 'third', title: '지역파트너스'},
   ]);
 
-  const renderScene = ({ route }) => {
+  const renderScene = ({route}) => {
     switch (route.key) {
       case 'first':
         return <FirstRoute />;
@@ -935,7 +959,7 @@ const index = (props) => {
   const [tabIndex, setTabIndex] = React.useState('first');
 
   const TabBar = (props) => {
-    const { tabIndex, jumpTo } = props;
+    const {tabIndex, jumpTo} = props;
 
     return (
       <View>
@@ -961,11 +985,14 @@ const index = (props) => {
             }}>
             <Text
               style={[
-                tabIndex === 'first' && index === 0 ? styles.boldText : styles.mediumText,
+                tabIndex === 'first' && index === 0
+                  ? styles.boldText
+                  : styles.mediumText,
                 {
                   paddingVertical: 12,
                   fontSize: 14,
-                  color: tabIndex === 'first' && index === 0 ? '#275696' : '#B5B5B5',
+                  color:
+                    tabIndex === 'first' && index === 0 ? '#275696' : '#B5B5B5',
                 },
               ]}>
               성실파트너스
@@ -988,11 +1015,16 @@ const index = (props) => {
             }}>
             <Text
               style={[
-                tabIndex === 'second' || index === 1 ? styles.boldText : styles.mediumText,
+                tabIndex === 'second' || index === 1
+                  ? styles.boldText
+                  : styles.mediumText,
                 {
                   paddingVertical: 12,
                   fontSize: 14,
-                  color: tabIndex === 'second' || index === 1 ? '#275696' : '#B5B5B5',
+                  color:
+                    tabIndex === 'second' || index === 1
+                      ? '#275696'
+                      : '#B5B5B5',
                 },
               ]}>
               인기파트너스
@@ -1015,11 +1047,14 @@ const index = (props) => {
             }}>
             <Text
               style={[
-                tabIndex === 'third' || index === 2 ? styles.boldText : styles.mediumText,
+                tabIndex === 'third' || index === 2
+                  ? styles.boldText
+                  : styles.mediumText,
                 {
                   paddingVertical: 12,
                   fontSize: 14,
-                  color: tabIndex === 'third' || index === 2 ? '#275696' : '#B5B5B5',
+                  color:
+                    tabIndex === 'third' || index === 2 ? '#275696' : '#B5B5B5',
                 },
               ]}>
               지역파트너스
@@ -1053,12 +1088,11 @@ const index = (props) => {
   const [offsetY, setOffsetY] = React.useState(0);
 
   const handleScroll = (e) => {
-    console.log('scroll event', e.nativeEvent.contentOffset.y);
     setOffsetY(e.nativeEvent.contentOffset.y);
   };
 
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={{position: 'relative'}}>
       <StatusBar hidden={true} />
       <Animated.View
         style={{
@@ -1088,8 +1122,14 @@ const index = (props) => {
             페이퍼공작소
           </Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('Search')}>
             <Image
               source={require('../../src/assets/top_seach02.png')}
               resizeMode="contain"
@@ -1102,7 +1142,7 @@ const index = (props) => {
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
             onPress={() => navigation.openDrawer('right')}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
+            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
             <Image
               source={require('../../src/assets/menu.png')}
               resizeMode="contain"
@@ -1116,19 +1156,22 @@ const index = (props) => {
       </Animated.View>
 
       <Animated.ScrollView
-        style={{ backgroundColor: '#fff' }}
+        style={{backgroundColor: '#fff'}}
         showsVerticalScrollIndicator={false}
         // onScroll={handleScroll}
         scrollEventThrottle={16}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } } }], {
-          useNativeDriver: true,
-        })}>
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: offset}}}],
+          {
+            useNativeDriver: true,
+          },
+        )}>
         {/* 메인 상단 슬라이더 section */}
         <View
           style={{
             width: Dimensions.get('window').width,
           }}>
-          <View style={{ position: 'relative', height: 400 }}>
+          <View style={{position: 'relative', height: 400}}>
             <Carousel
               ref={mainCarouselRef}
               data={mainBanners}
@@ -1145,7 +1188,7 @@ const index = (props) => {
                 let stepPer = (index + 1) / mainBanners.length;
                 setMainPercent(stepPer);
               }}
-              containerCustomStyle={{ height: 400 }}
+              containerCustomStyle={{height: 400}}
             />
             <View
               style={{
@@ -1159,7 +1202,8 @@ const index = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={[styles.mediumText, { fontSize: 14, color: '#275696' }]}>
+                <Text
+                  style={[styles.mediumText, {fontSize: 14, color: '#275696'}]}>
                   0{mainActiveSlide + 1}
                   {/* //총 이미지 갯수중 현재 index가 몇인지를 나타낸다 */}
                 </Text>
@@ -1176,13 +1220,15 @@ const index = (props) => {
                       position: 'absolute',
                       top: 0,
                       left: 0,
-                      width: mainPercent === 1 ? '100%' : `${mainPercent * 100}%`,
+                      width:
+                        mainPercent === 1 ? '100%' : `${mainPercent * 100}%`,
                       height: 2,
                       backgroundColor: '#275696',
                     }}
                   />
                 </View>
-                <Text style={[styles.mediumText, { fontSize: 14, color: '#C1C1C1' }]}>
+                <Text
+                  style={[styles.mediumText, {fontSize: 14, color: '#C1C1C1'}]}>
                   0{mainBanners.length}
                 </Text>
               </View>
@@ -1217,7 +1263,7 @@ const index = (props) => {
                     ]}>
                     총 누적 견적
                   </Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                  <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
                     <Text
                       style={[
                         styles.mediumText,
@@ -1233,7 +1279,7 @@ const index = (props) => {
                     <Text
                       style={[
                         styles.normalText,
-                        { color: '#fff', fontSize: 17, fontWeight: '100' },
+                        {color: '#fff', fontSize: 17, fontWeight: '100'},
                       ]}>
                       건
                     </Text>
@@ -1293,7 +1339,7 @@ const index = (props) => {
             backgroundColor: '#fff',
             paddingVertical: 40,
           }}>
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
                 width: 100,
@@ -1338,8 +1384,9 @@ const index = (props) => {
               ]}>
               단상자/싸바리/쇼핑백 등
             </Text>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Order')}>
-              <View style={{ backgroundColor: '#275696', borderRadius: 20 }}>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('Order')}>
+              <View style={{backgroundColor: '#275696', borderRadius: 20}}>
                 <Text
                   style={[
                     styles.normalText,
@@ -1355,7 +1402,7 @@ const index = (props) => {
               </View>
             </TouchableWithoutFeedback>
           </View>
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
                 width: 100,
@@ -1400,8 +1447,9 @@ const index = (props) => {
               ]}>
               리플렛/브로슈어/포스터 등
             </Text>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Order')}>
-              <View style={{ backgroundColor: '#275696', borderRadius: 20 }}>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('Order')}>
+              <View style={{backgroundColor: '#275696', borderRadius: 20}}>
                 <Text
                   style={[
                     styles.normalText,
@@ -1452,7 +1500,8 @@ const index = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.mediumText, { fontSize: 14, color: '#275696' }]}>
+              <Text
+                style={[styles.mediumText, {fontSize: 14, color: '#275696'}]}>
                 {/* 0{currentRqIndex} */}0{stepActiveSlide + 1}
                 {/* //총 이미지 갯수중 현재 index가 몇인지를 나타낸다 */}
               </Text>
@@ -1475,7 +1524,8 @@ const index = (props) => {
                   }}
                 />
               </View>
-              <Text style={[styles.mediumText, { fontSize: 14, color: '#C1C1C1' }]}>
+              <Text
+                style={[styles.mediumText, {fontSize: 14, color: '#C1C1C1'}]}>
                 0{steps.length}
               </Text>
             </View>
@@ -1490,13 +1540,12 @@ const index = (props) => {
               layout="default"
               loop={false}
               onSnapToItem={(index) => {
-                // console.log('C index', index);
                 setStepActiveSlide(index);
 
                 let stepPer = (index + 1) / steps.length;
                 setStepPercent(stepPer);
               }}
-              containerCustomStyle={{ height: 350 }}
+              containerCustomStyle={{height: 350}}
               // contentInset={{ marginHorizontal: 20 }}
             />
           </View>
@@ -1523,7 +1572,6 @@ const index = (props) => {
               // autoplayInterval={5000}
               loop={true}
               onSnapToItem={(index) => {
-                // console.log('C index', index);
                 setActiveSlide(index);
               }}
               // containerCustomStyle={{ marginHorizontal: 20 }}
@@ -1531,7 +1579,7 @@ const index = (props) => {
             <Pagination
               dotsLength={banners.length}
               activeDotIndex={activeSlide}
-              dotContainerStyle={{ margin: 0, padding: 0 }}
+              dotContainerStyle={{margin: 0, padding: 0}}
               dotStyle={{
                 width: 40,
                 height: 8,
@@ -1551,7 +1599,7 @@ const index = (props) => {
               inactiveDotScale={1}
               tappableDots={true}
               carouselRef={bannerCarouselRef}
-              containerStyle={{ paddingVertical: 20 }}
+              containerStyle={{paddingVertical: 20}}
             />
           </View>
         </View>
@@ -1564,7 +1612,8 @@ const index = (props) => {
             backgroundColor: '#fff',
             position: 'relative',
           }}>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('Partners')}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('Partners')}>
             <View
               style={{
                 flexDirection: 'row',
@@ -1586,11 +1635,11 @@ const index = (props) => {
               <Image
                 source={require('../../src/images/next.png')}
                 resizeMode="contain"
-                style={{ width: 14, height: 15 }}
+                style={{width: 14, height: 15}}
               />
             </View>
           </TouchableWithoutFeedback>
-          <View style={{ paddingHorizontal: 20 }}>
+          <View style={{paddingHorizontal: 20}}>
             <TabView
               renderTabBar={(props) => (
                 <TabBar
@@ -1601,7 +1650,7 @@ const index = (props) => {
                   onIndexChange={setIndex}
                 />
               )}
-              navigationState={{ index, routes }}
+              navigationState={{index, routes}}
               renderScene={renderScene}
               onIndexChange={setIndex}
               initialLayout={initialLayout}
@@ -1619,7 +1668,8 @@ const index = (props) => {
             backgroundColor: '#fff',
             position: 'relative',
           }}>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('Estimate')}>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('Estimate')}>
             <View
               style={{
                 flexDirection: 'row',
@@ -1637,7 +1687,8 @@ const index = (props) => {
                 실시간 견적 처리 현황
               </Text>
 
-              <TouchableWithoutFeedback onPress={() => navigation.navigate('Estimate')}>
+              <TouchableWithoutFeedback
+                onPress={() => navigation.navigate('Estimate')}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1647,19 +1698,22 @@ const index = (props) => {
                     paddingLeft: 10,
                   }}>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, color: '#275696', marginRight: 5 }]}>
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, color: '#275696', marginRight: 5},
+                    ]}>
                     견적 더보기
                   </Text>
                   <Image
                     source={require('../../src/assets/plus.png')}
                     resizeMode="contain"
-                    style={{ width: 14, height: 14 }}
+                    style={{width: 14, height: 14}}
                   />
                 </View>
               </TouchableWithoutFeedback>
             </View>
           </TouchableWithoutFeedback>
-          <View style={{ paddingHorizontal: 20 }}>
+          <View style={{paddingHorizontal: 20}}>
             {/* 실시간 견적현황 리스트(list) */}
             <View
               style={{
@@ -1685,11 +1739,23 @@ const index = (props) => {
                     marginRight: 15,
                   }}>
                   <View
-                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    style={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       입찰중
                     </Text>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       12건
                     </Text>
                   </View>
@@ -1719,25 +1785,33 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, color: '#979797'},
+                    ]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
               </View>
 
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                  style={[
+                    styles.normalText,
+                    {fontSize: 13, color: '#979797', marginBottom: 5},
+                  ]}>
                   홍**
                 </Text>
-                <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                <Text
+                  style={[styles.normalText, {fontSize: 13, color: '#979797'}]}>
                   2021.01.25
                 </Text>
               </View>
             </View>
             <Dash
-              style={{ width: '100%', height: 0.25 }}
+              style={{width: '100%', height: 0.25}}
               dashLength={1}
               dashColor="#ccc"
               dashGap={2}
@@ -1769,11 +1843,23 @@ const index = (props) => {
                     marginRight: 15,
                   }}>
                   <View
-                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    style={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       입찰중
                     </Text>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       12건
                     </Text>
                   </View>
@@ -1803,25 +1889,33 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, color: '#979797'},
+                    ]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
               </View>
 
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                  style={[
+                    styles.normalText,
+                    {fontSize: 13, color: '#979797', marginBottom: 5},
+                  ]}>
                   홍**
                 </Text>
-                <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                <Text
+                  style={[styles.normalText, {fontSize: 13, color: '#979797'}]}>
                   2021.01.25
                 </Text>
               </View>
             </View>
             <Dash
-              style={{ width: '100%', height: 0.25 }}
+              style={{width: '100%', height: 0.25}}
               dashLength={1}
               dashColor="#ccc"
               dashGap={2}
@@ -1853,11 +1947,23 @@ const index = (props) => {
                     marginRight: 15,
                   }}>
                   <View
-                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    style={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       입찰중
                     </Text>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       12건
                     </Text>
                   </View>
@@ -1887,25 +1993,33 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, color: '#979797'},
+                    ]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
               </View>
 
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                  style={[
+                    styles.normalText,
+                    {fontSize: 13, color: '#979797', marginBottom: 5},
+                  ]}>
                   홍**
                 </Text>
-                <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                <Text
+                  style={[styles.normalText, {fontSize: 13, color: '#979797'}]}>
                   2021.01.25
                 </Text>
               </View>
             </View>
             <Dash
-              style={{ width: '100%', height: 0.25 }}
+              style={{width: '100%', height: 0.25}}
               dashLength={1}
               dashColor="#ccc"
               dashGap={2}
@@ -1937,11 +2051,23 @@ const index = (props) => {
                     marginRight: 15,
                   }}>
                   <View
-                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    style={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       입찰중
                     </Text>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       12건
                     </Text>
                   </View>
@@ -1971,25 +2097,33 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, color: '#979797'},
+                    ]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
               </View>
 
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                  style={[
+                    styles.normalText,
+                    {fontSize: 13, color: '#979797', marginBottom: 5},
+                  ]}>
                   홍**
                 </Text>
-                <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                <Text
+                  style={[styles.normalText, {fontSize: 13, color: '#979797'}]}>
                   2021.01.25
                 </Text>
               </View>
             </View>
             <Dash
-              style={{ width: '100%', height: 0.25 }}
+              style={{width: '100%', height: 0.25}}
               dashLength={1}
               dashColor="#ccc"
               dashGap={2}
@@ -2021,11 +2155,23 @@ const index = (props) => {
                     marginRight: 15,
                   }}>
                   <View
-                    style={{ justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    style={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       입찰중
                     </Text>
-                    <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, color: '#366DE5'},
+                      ]}>
                       12건
                     </Text>
                   </View>
@@ -2055,25 +2201,33 @@ const index = (props) => {
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, color: '#979797' }]}
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, color: '#979797'},
+                    ]}
                     numberOfLines={1}>
                     단상자, 선물세트 / 견적 3건
                   </Text>
                 </View>
               </View>
 
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, color: '#979797', marginBottom: 5 }]}>
+                  style={[
+                    styles.normalText,
+                    {fontSize: 13, color: '#979797', marginBottom: 5},
+                  ]}>
                   홍**
                 </Text>
-                <Text style={[styles.normalText, { fontSize: 13, color: '#979797' }]}>
+                <Text
+                  style={[styles.normalText, {fontSize: 13, color: '#979797'}]}>
                   2021.01.25
                 </Text>
               </View>
             </View>
             <Dash
-              style={{ width: '100%', height: 0.25 }}
+              style={{width: '100%', height: 0.25}}
               dashLength={1}
               dashColor="#ccc"
               dashGap={2}
@@ -2095,7 +2249,12 @@ const index = (props) => {
               <Text
                 style={[
                   styles.mediumText,
-                  { textAlign: 'center', fontSize: 16, color: '#fff', paddingVertical: 15 },
+                  {
+                    textAlign: 'center',
+                    fontSize: 16,
+                    color: '#fff',
+                    paddingVertical: 15,
+                  },
                 ]}>
                 견적 신청하기
               </Text>

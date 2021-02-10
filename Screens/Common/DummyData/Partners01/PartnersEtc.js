@@ -10,7 +10,7 @@ export const data = [
     businessName: '옐로우캐슬',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '커피 창업자 고민 끝! 갓성비 인쇄몰! 옐로우캐슬입니다.',
     popularPart: '커피 창업자 고민 끝! 갓성비 인쇄몰! 옐로우캐슬입니다.',
@@ -36,7 +36,7 @@ export const data = [
     businessName: 'WHY매니악',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['general', 'etc'],
+    cate1: ['0', '2'],
     location: 'seoul',
     description: '평범한 인쇄는 싫다하시는 분 대환영!',
     popularPart: '평범한 인쇄는 싫다하시는 분 대환영!',
@@ -64,7 +64,7 @@ export const data = [
     businessName: '플라스틱프렌즈',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '일회용 음료컵 인쇄 등 플라스틱 인쇄 가능합니다.',
     popularPart: '일회용 음료컵 인쇄 등 플라스틱 인쇄 가능합니다.',
@@ -91,7 +91,7 @@ export const data = [
     businessName: '마쿠마쿠',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'seoul',
     description: '판촉물의 모든 것! 바로 여기 마쿠마쿠에서!',
     popularPart: '판촉물은 모두 다 제작하고 있습니다.',
@@ -117,7 +117,7 @@ export const data = [
     businessName: '판촉물천국',
     license:
       'https://www.creativeboom.com/uploads/articles/b1/b1173eff07774151993e042dc2210184174ff972_810.jpg',
-    category: ['etc'],
+    cate1: ['2'],
     location: 'busan',
     description: '판촉물은 판촉물천국에서 제작하세요!',
     popularPart: '판촉물 하나만큼 제대로 제작하고 있습니다.',
@@ -144,7 +144,7 @@ export const data = [
     businessName: '에밀리몰',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['general', 'etc'],
+    cate1: ['0', '2'],
     location: 'seoul',
     description: '빠른인쇄! 빈틈없는 색상! 에밀리몰에서 제작하세요!',
     popularPart: '빠른인쇄! 빈틈없는 색상! 에밀리몰에서 제작하세요!',

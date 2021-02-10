@@ -17,16 +17,18 @@ const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  console.log('myP', props);
-
   return (
     <>
       <Header title={routeName} navigation={navigation} />
       {/* <ScrollView style={styles.container} showsVerticalScrollIndicator={false}> */}
-      <View style={[styles.container, { paddingHorizontal: 20, paddingTop: 20 }]}>
+      <View style={[styles.container, {paddingHorizontal: 20, paddingTop: 20}]}>
         <View
-          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <View style={{ position: 'relative' }}>
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <View style={{position: 'relative'}}>
             <Text
               style={[
                 styles.boldText,
@@ -154,19 +156,19 @@ const index = (props) => {
             placeholder="업체명을 입력하세요."
             placeholderTextColor="#BEBEBE"
             autoFocus={false}
-            style={[styles.normalText, { width: '80%' }]}
+            style={[styles.normalText, {width: '80%'}]}
           />
           <TouchableOpacity>
             <Image
               source={require('../../../src/assets/top_seach.png')}
               resizeMode="contain"
-              style={{ width: 30, height: 30 }}
+              style={{width: 30, height: 30}}
             />
           </TouchableOpacity>
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{ padding: 0, margin: 0, marginBottom: 200 }}>
+          style={{padding: 0, margin: 0, marginBottom: 200}}>
           <View
             style={{
               flexDirection: 'row',
@@ -185,11 +187,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/general/general03.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -256,7 +258,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
@@ -273,11 +275,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/general/general08.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -325,7 +327,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
@@ -342,11 +344,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/packages/package01.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -413,7 +415,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
@@ -430,11 +432,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/packages/package06.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -482,7 +484,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
@@ -499,11 +501,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/general/general07.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -569,7 +571,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
@@ -586,11 +588,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/p08.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -638,7 +640,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
@@ -655,11 +657,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/etc/etc01.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -726,7 +728,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>
@@ -743,11 +745,11 @@ const index = (props) => {
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../../src/images/packages/package08.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -795,7 +797,7 @@ const index = (props) => {
                 </Text>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
                 </Text>

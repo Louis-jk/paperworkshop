@@ -1,0 +1,81 @@
+export const data = [
+  {
+    id: 1,
+    type: ['sincere'],
+    popular: 'y',
+    email: 'sambo@sambo.com',
+    password: '123456789',
+    name: '이재훈',
+    mobile: '010-1234-5678',
+    businessName: '플라스틱프렌즈',
+    license:
+      'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
+    cate1: ['2'],
+    location: 'seoul',
+    description: '일회용 음료컵 인쇄 등 플라스틱 인쇄 가능합니다.',
+    popularPart: '일회용 음료컵 인쇄 등 플라스틱 인쇄 가능합니다.',
+    profileImg: [
+      'https://i.pinimg.com/originals/ac/8a/7d/ac8a7d067a1eeba61676656dda87ac0a.jpg',
+      'https://nugget-design.com/wp-content/uploads/2017/08/Ole-Brand-Logo-Product-Visual-1.png',
+    ],
+    bank: {
+      name: '기업은행',
+      account: '9012-1234-5678-345',
+      depositor: '플라스틱프렌즈',
+    },
+    rating: 4.5,
+  },
+  {
+    id: 2,
+    type: ['sincere', 'popular'],
+    popular: 'y',
+    email: 'sambo@sambo.com',
+    password: '123456789',
+    name: '최용하',
+    mobile: '010-1234-5678',
+    businessName: '명함나라',
+    license:
+      'https://www.creativeboom.com/uploads/articles/b1/b1173eff07774151993e042dc2210184174ff972_810.jpg',
+    cate1: ['0'],
+    location: 'busan',
+    description: '명함은 명함나라에서 제작하세요!',
+    popularPart: '명함나라 하나만큼 제대로 제작하고 있습니다.',
+    profileImg: [
+      'https://blog.hubspot.com/hs-fs/hubfs/%5BAgency_Post%5D/aurora-cards.png?width=669&name=aurora-cards.png',
+      'https://www.thedailydesigns.com/wp-content/uploads/2018/10/business-card-tips.jpg',
+    ],
+    bank: {
+      name: '국민은행',
+      account: '9078-1234-12345',
+      depositor: '명함나라',
+    },
+    rating: 4.5,
+  },
+  {
+    id: 3,
+    type: ['sincere', 'popular'],
+    popular: 'y',
+    email: 'sambo@sambo.com',
+    password: '123456789',
+    name: '윤미래',
+    mobile: '010-1234-5678',
+    businessName: '성원애드피아',
+    license:
+      'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
+    cate1: ['0'],
+    location: 'seoul',
+    description:
+      '카타로그 제작부터 후가공까지 미래엔인쇄서비스에서 제작하세요.',
+    popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
+    profileImg: [
+      'https://www.joinprint.com/JoinPrint/js/ckfinder/userfiles/files/4.png',
+      'https://www.joinprint.com.au/JoinPrint/js/ckfinder/userfiles/files/1.png',
+    ],
+    bank: {
+      name: '농협',
+      account: '9078-1234-12345',
+      depositor: '성원애드피아',
+    },
+    rating: 4.5,
+  },
+];

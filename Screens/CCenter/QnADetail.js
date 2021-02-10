@@ -22,13 +22,12 @@ const QnADetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const status = props.route.params.status;
-  // console.log('QnA Props', props);
 
   return (
     <>
       <Header title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -41,8 +40,8 @@ const QnADetail = (props) => {
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
             <Text style={styles.categoryTitle}>
-              문의제목 문의제목 문의제목 문의제목 문의제목 문 의제목문의제목 문의제목 문의제목
-              입니다.
+              문의제목 문의제목 문의제목 문의제목 문의제목 문 의제목문의제목
+              문의제목 문의제목 입니다.
             </Text>
           </View>
         </View>
@@ -57,17 +56,23 @@ const QnADetail = (props) => {
         />
 
         {/* 1:1 문의 내용 */}
-        <View style={{ paddingHorizontal: 20 }}>
-          <View style={{ marginTop: 15 }}>
+        <View style={{paddingHorizontal: 20}}>
+          <View style={{marginTop: 15}}>
             <AutoHeightImage
               source={require('../../src/images/inline_cImg.png')}
               width={Dimensions.get('window').width - 40}
-              style={{ marginBottom: 20 }}
+              style={{marginBottom: 20}}
             />
             <Text
               style={[
                 styles.normalText,
-                { fontSize: 15, color: '#333333', lineHeight: 28, width: '100%', marginBottom: 20 },
+                {
+                  fontSize: 15,
+                  color: '#333333',
+                  lineHeight: 28,
+                  width: '100%',
+                  marginBottom: 20,
+                },
               ]}>
               내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다
             </Text>
@@ -86,12 +91,18 @@ const QnADetail = (props) => {
 
         {/* 답변 내용 */}
 
-        <View style={{ paddingHorizontal: 20 }}>
-          <View style={{ marginTop: 15 }}>
+        <View style={{paddingHorizontal: 20}}>
+          <View style={{marginTop: 15}}>
             <Text
               style={[
                 styles.boldText,
-                { fontSize: 16, color: '#000', lineHeight: 28, width: '100%', marginBottom: 5 },
+                {
+                  fontSize: 16,
+                  color: '#000',
+                  lineHeight: 28,
+                  width: '100%',
+                  marginBottom: 5,
+                },
               ]}>
               답변
             </Text>

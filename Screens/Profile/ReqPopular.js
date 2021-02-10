@@ -10,15 +10,13 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
-import { Picker } from '@react-native-community/picker';
+import {Picker} from '@react-native-community/picker';
 
 import DetailHeader from '../Common/DetailHeader';
 
 const ReqPopular = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-
-  console.log('Req', routeName);
 
   const [category01, setCategory01] = React.useState(null);
   const [oneMonth, setOneMonth] = React.useState(false);
@@ -37,10 +35,10 @@ const ReqPopular = (props) => {
             paddingVertical: 20,
             marginBottom: 10,
           }}>
-          <Text style={{ fontSize: 13, color: '#275696', marginBottom: 20 }}>
+          <Text style={{fontSize: 13, color: '#275696', marginBottom: 20}}>
             * 인기 파트너스 등록 신청 시, 아래 내용을 확인해주세요.
           </Text>
-          <Text style={[styles.orderInfoContentTitle, { marginBottom: 12 }]}>
+          <Text style={[styles.orderInfoContentTitle, {marginBottom: 12}]}>
             인기 파트너스 등록 비용
           </Text>
           <View
@@ -67,9 +65,11 @@ const ReqPopular = (props) => {
                     : require('../../src/assets/radio_off.png')
                 }
                 resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 7 }}
+                style={{width: 20, height: 20, marginRight: 7}}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>1개월 : 50,000원</Text>
+              <Text style={{fontSize: 14, color: '#000'}}>
+                1개월 : 50,000원
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -82,9 +82,11 @@ const ReqPopular = (props) => {
               <Image
                 source={require('../../src/assets/radio_off.png')}
                 resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 7 }}
+                style={{width: 20, height: 20, marginRight: 7}}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>3개월 : 70,000원</Text>
+              <Text style={{fontSize: 14, color: '#000'}}>
+                3개월 : 70,000원
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -97,9 +99,11 @@ const ReqPopular = (props) => {
               <Image
                 source={require('../../src/assets/radio_off.png')}
                 resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 7 }}
+                style={{width: 20, height: 20, marginRight: 7}}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>6개월 : 100,000원</Text>
+              <Text style={{fontSize: 14, color: '#000'}}>
+                6개월 : 100,000원
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -112,9 +116,11 @@ const ReqPopular = (props) => {
               <Image
                 source={require('../../src/assets/radio_off.png')}
                 resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 7 }}
+                style={{width: 20, height: 20, marginRight: 7}}
               />
-              <Text style={{ fontSize: 14, color: '#000' }}>12개월 : 130,000원</Text>
+              <Text style={{fontSize: 14, color: '#000'}}>
+                12개월 : 130,000원
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -137,8 +143,10 @@ const ReqPopular = (props) => {
         />
         {/* // 경계 라인 */}
 
-        <View style={{ paddingHorizontal: 20 }}>
-          <Text style={[styles.orderInfoContentTitle, styles.mgB10]}>입금 계좌 정보</Text>
+        <View style={{paddingHorizontal: 20}}>
+          <Text style={[styles.orderInfoContentTitle, styles.mgB10]}>
+            입금 계좌 정보
+          </Text>
         </View>
         <View
           style={{
@@ -147,23 +155,25 @@ const ReqPopular = (props) => {
             paddingVertical: 15,
             marginBottom: 20,
           }}>
-          <Text style={{ fontSize: 14, color: '#FFFFFF' }}>신한은행</Text>
+          <Text style={{fontSize: 14, color: '#FFFFFF'}}>신한은행</Text>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'flex-start',
               alignItems: 'center',
             }}>
-            <Text style={{ fontSize: 14, color: '#FFFFFF', marginRight: 10 }}>
+            <Text style={{fontSize: 14, color: '#FFFFFF', marginRight: 10}}>
               562-66312-4512644
             </Text>
-            <Text style={{ fontSize: 14, color: '#FFFFFF' }}>페이퍼공작소</Text>
+            <Text style={{fontSize: 14, color: '#FFFFFF'}}>페이퍼공작소</Text>
           </View>
         </View>
 
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           {/* 업체 소개 TextArea */}
-          <Text style={[styles.orderInfoContentTitle, styles.mgB10]}>업체 소개</Text>
+          <Text style={[styles.orderInfoContentTitle, styles.mgB10]}>
+            업체 소개
+          </Text>
           <View style={styles.mgB20}>
             <TextInput
               placeholder="내용을 적어주세요"
@@ -182,7 +192,9 @@ const ReqPopular = (props) => {
           </View>
           {/* 업체 소개 TextArea */}
           {/* 업체 소개 TextArea */}
-          <Text style={[styles.orderInfoContentTitle, styles.mgB10]}>영업 품목</Text>
+          <Text style={[styles.orderInfoContentTitle, styles.mgB10]}>
+            영업 품목
+          </Text>
           <View style={styles.mgB40}>
             <TextInput
               placeholder="내용을 적어주세요"
@@ -210,7 +222,7 @@ const ReqPopular = (props) => {
             backgroundColor: '#F5F5F5',
             marginBottom: 50,
           }}>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{flexDirection: 'row'}}>
             <Text
               style={{
                 fontSize: 12,
@@ -220,17 +232,20 @@ const ReqPopular = (props) => {
               ※
             </Text>
             <View>
-              <Text style={{ fontSize: 12, lineHeight: 18, color: '#707070' }}>
-                인기 파트너스 등록 완료 후, 안내드린 금액을 입금 해주시면 페이퍼공작소 매니저가 입금
-                확인 후, 인기 파트너스로 등록해드립니다. 신청 후, 일반회원에게 노출될 내용들과
-                관련하여 연락드리겠습니다.
+              <Text style={{fontSize: 12, lineHeight: 18, color: '#707070'}}>
+                인기 파트너스 등록 완료 후, 안내드린 금액을 입금 해주시면
+                페이퍼공작소 매니저가 입금 확인 후, 인기 파트너스로
+                등록해드립니다. 신청 후, 일반회원에게 노출될 내용들과 관련하여
+                연락드리겠습니다.
               </Text>
             </View>
           </View>
         </View>
         {/* // 내용안내 gray */}
-        <View style={{ paddingHorizontal: 20, marginBottom: 50 }}>
-          <TouchableOpacity onPress={() => Alert.alert('등록 신청!')} activeOpacity={0.8}>
+        <View style={{paddingHorizontal: 20, marginBottom: 50}}>
+          <TouchableOpacity
+            onPress={() => Alert.alert('등록 신청!')}
+            activeOpacity={0.8}>
             <View style={styles.submitBtn}>
               <Text style={styles.submitBtnText}>등록 신청</Text>
             </View>

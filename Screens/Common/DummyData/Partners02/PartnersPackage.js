@@ -5,15 +5,15 @@ export const data = [
     popular: 'y',
     email: 'sambo@sambo.com',
     password: '123456789',
-    name: '김성준',
+    name: '민경준',
     mobile: '010-1234-5678',
-    businessName: '삼보인쇄',
+    businessName: '인쇄믹스',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general', 'etc'],
+    cate1: ['1', '0', '2'],
     location: 'seoul',
-    description: '카타로그 제작부터 후가공까지 삼보인쇄에서 제작하세요.',
-    popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
+    description: '뭐든지 다 제작 가능한 인쇄믹스입니다!',
+    popularPart: '뭐든지 다 제작 가능한 인쇄믹스입니다!',
     profileImg: [
       'https://3.bp.blogspot.com/-fW5fWJzsc9c/XTVEtnOLBCI/AAAAAAAGEO8/h3_oLDJRkPATwoOCu2mZpyhWwPtbccfTwCLcBGAs/s1600/Maxines-Heavenly-0b.jpg',
       'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/78064c75106889.5c436d84d2982.jpg',
@@ -22,7 +22,7 @@ export const data = [
     bank: {
       name: '신한은행',
       account: '1234-5678-9012345',
-      depositor: '삼보인쇄',
+      depositor: '인쇄믹스',
     },
     rating: 4.5,
   },
@@ -37,14 +37,14 @@ export const data = [
     businessName: '애드프린트',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general', 'etc'],
+    cate1: ['1', '0', '2'],
     location: 'seoul',
     description: '카타로그 제작부터 후가공까지 애드프린트에서 제작하세요.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
     profileImg: [
       'https://www.confectioneryconference.com/wp-content/uploads/Dairy-Milk-UK_Packs-800x533-1-450x300.jpg',
-      'https://pro2-bar-s3-cdn-cf2.myportfolio.com/4226d45ee5297d0858649865152fa41e/328e492f-6559-4498-90ec-53c0891d1542_rw_1920.jpg?h=91a86919555a48fe56762ccdd15bd9c6',
-      'https://pro2-bar-s3-cdn-cf.myportfolio.com/4226d45ee5297d0858649865152fa41e/b0a315c1-220f-4d09-9152-a39301cafd55_rw_1920.jpg?h=49e304533cd520b6ce8156e04da8e8c2',
+      'https://pro2-bar-s3-cdn-cf2.myprofileImg.com/4226d45ee5297d0858649865152fa41e/328e492f-6559-4498-90ec-53c0891d1542_rw_1920.jpg?h=91a86919555a48fe56762ccdd15bd9c6',
+      'https://pro2-bar-s3-cdn-cf.myprofileImg.com/4226d45ee5297d0858649865152fa41e/b0a315c1-220f-4d09-9152-a39301cafd55_rw_1920.jpg?h=49e304533cd520b6ce8156e04da8e8c2',
     ],
     bank: {
       name: '기업은행',
@@ -64,7 +64,7 @@ export const data = [
     businessName: 'PACKAGES',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package'],
+    cate1: ['1'],
     location: 'seoul',
     description: 'POP한 느낌의 패키지 제작은 PACKAGE에서!',
     popularPart: '이때까지 본 적 없는 패키지 인쇄몰! 바로 주문하세요!',
@@ -90,7 +90,7 @@ export const data = [
     businessName: '동천문화인쇄',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general', 'etc'],
+    cate1: ['1', '0', '2'],
     location: 'seoul',
     description: '카타로그 제작부터 후가공까지 동천문화인쇄에서 제작하세요.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
@@ -116,7 +116,7 @@ export const data = [
     businessName: 'GIRLYGIRLY',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general'],
+    cate1: ['1', '0'],
     location: 'seoul',
     description: 'GIRLY풍의 패키지 인쇄는 GIRLYGIRLY에서 제작하세요.',
     popularPart:
@@ -143,7 +143,7 @@ export const data = [
     businessName: '헤이패키지',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package'],
+    cate1: ['1'],
     location: 'seoul',
     description: '오프셋인쇄, 디지털인쇄 모두 가능! 패키지는 헤이패키지',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
@@ -169,14 +169,14 @@ export const data = [
     businessName: '트러스트',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package'],
+    cate1: ['1'],
     location: 'seoul',
     description: '색감 풍부, 최고급용지 사용! 안심하고 믿고 맡기세요.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
     profileImg: [
       'https://sufio.com/content/media/images/creative-coffee-packaging-designs.width-800.jpg',
       'https://sufio.com/content/media/images/manta-coffee-packaging.width-1440.jpg',
-      'https://pro2-bar-s3-cdn-cf6.myportfolio.com/cd80d5587754a7b63234e27e21426f97/75a71a22-154a-4c0e-999d-0f923dcf37d4_rw_1920.jpg?h=2d4b2ff2e884ad6c98b8ec07e705e868',
+      'https://pro2-bar-s3-cdn-cf6.myprofileImg.com/cd80d5587754a7b63234e27e21426f97/75a71a22-154a-4c0e-999d-0f923dcf37d4_rw_1920.jpg?h=2d4b2ff2e884ad6c98b8ec07e705e868',
       'https://blog.pack.ly/wp-content/uploads/2019/03/coffee-packaging-design.jpg',
     ],
     bank: {
@@ -197,7 +197,7 @@ export const data = [
     businessName: '패키지천국',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package'],
+    cate1: ['1'],
     location: 'seoul',
     description: '카타로그 제작부터 후가공까지 한프린터에서 제작하세요.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
@@ -223,7 +223,7 @@ export const data = [
     businessName: '신메토리',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package'],
+    cate1: ['1'],
     location: 'seoul',
     description: '매출 상승 패키지 전문 제작 업체입니다.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
@@ -249,7 +249,7 @@ export const data = [
     businessName: '성원애드피아',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general'],
+    cate1: ['1', '0'],
     location: 'seoul',
     description:
       '카타로그 제작부터 후가공까지 미래엔인쇄서비스에서 제작하세요.',
@@ -276,7 +276,7 @@ export const data = [
     businessName: '하이팩아유오케이',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general'],
+    cate1: ['1', '0'],
     location: 'seoul',
     description: '심플, 깔끔, 세련! 이 세가지를 충족시켜드립니다.',
     popularPart: '패키지, 일반인쇄, 기타인쇄 모두다 제작하고 있습니다.',
@@ -302,7 +302,7 @@ export const data = [
     businessName: '디종드블랑',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package', 'general'],
+    cate1: ['1', '0'],
     location: 'seoul',
     description: '갓성비 패키지 전물 인쇄몰입니다.',
     popularPart: '갓성비 패키지 전물 인쇄몰입니다.',
@@ -328,7 +328,7 @@ export const data = [
     businessName: 'BON DE MASON',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package'],
+    cate1: ['1'],
     location: 'seoul',
     description: '굿 컬러! 굿 디자인을 위한 패키지 전물 인쇄몰!',
     popularPart: '굿 컬러! 굿 디자인을 위한 패키지 전물 인쇄몰!',
@@ -355,7 +355,7 @@ export const data = [
     businessName: '컬러팩토리',
     license:
       'https://lh3.googleusercontent.com/proxy/A4DgLHJqQ1_KaChC7EpdiVoX91s-LhV8t4H1UUsv_G6VlVYEJ7pmYHTfHGyhDpLzo16Sa7-iJX-wfGQQQfw1KHqNn8k6f-igCA2DIS4nyRwVAE-wwQQ8x0HmI2IyZgSL6F_gKSH5c_Ltv-oJWa26XcYEp5mwVOYFaexn1Cs5fsHo-XI',
-    category: ['package'],
+    cate1: ['1'],
     location: 'seoul',
     description: '원하는 색감 그대로 표현해드립니다! 컬러팩토리',
     popularPart: '원하는 색감 그대로 표현해드립니다! 컬러팩토리',

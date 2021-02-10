@@ -17,8 +17,6 @@ const Detail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  console.log('MSG ROON Props', props);
-
   const exitMsgRoom = () => {
     Alert.alert('채팅방을 나가시겠습니까?', '메세지는 삭제되지 않습니다.', [
       {
@@ -40,9 +38,9 @@ const Detail = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{ marginRight: 10 }}>- - - - - - - -</Text>
+            <Text style={{marginRight: 10}}>- - - - - - - -</Text>
             <Text style={styles.normalText}>2021.01.28 (목)</Text>
-            <Text style={{ marginLeft: 10 }}>- - - - - - - -</Text>
+            <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
           </View>
           <View
             style={{
@@ -67,7 +65,7 @@ const Detail = (props) => {
               <Text
                 style={[
                   styles.normalText,
-                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                  {alignSelf: 'flex-end', fontSize: 12, color: '#000000'},
                 ]}>
                 14:01
               </Text>
@@ -92,7 +90,7 @@ const Detail = (props) => {
               <Text
                 style={[
                   styles.normalText,
-                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                  {alignSelf: 'flex-end', fontSize: 12, color: '#000000'},
                 ]}>
                 14:02
               </Text>
@@ -119,20 +117,20 @@ const Detail = (props) => {
                 <Image
                   source={require('../../src/images/package01.jpg')}
                   resizeMode="cover"
-                  style={{ width: 120, height: 120, borderRadius: 5 }}
+                  style={{width: 120, height: 120, borderRadius: 5}}
                 />
               </View>
               <Text
                 style={[
                   styles.normalText,
-                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                  {alignSelf: 'flex-end', fontSize: 12, color: '#000000'},
                 ]}>
                 14:02
               </Text>
             </View>
             {/* // 파트너스 회원 답변 - 파일 다운로드 Area */}
 
-            <View style={{ marginBottom: 20 }} />
+            <View style={{marginBottom: 20}} />
 
             {/* 일반회원 문의 Area */}
             <View
@@ -162,7 +160,7 @@ const Detail = (props) => {
               <Text
                 style={[
                   styles.normalText,
-                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                  {alignSelf: 'flex-end', fontSize: 12, color: '#000000'},
                 ]}>
                 14:03
               </Text>
@@ -196,7 +194,7 @@ const Detail = (props) => {
               <Text
                 style={[
                   styles.normalText,
-                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                  {alignSelf: 'flex-end', fontSize: 12, color: '#000000'},
                 ]}>
                 14:03
               </Text>
@@ -236,7 +234,7 @@ const Detail = (props) => {
                   <Image
                     source={require('../../src/assets/down.png')}
                     resizeMode="cover"
-                    style={{ width: 30, height: 30, marginRight: 10 }}
+                    style={{width: 30, height: 30, marginRight: 10}}
                   />
                 </TouchableOpacity>
                 <Text style={styles.normalText}>abcdefg.pdf</Text>
@@ -245,7 +243,7 @@ const Detail = (props) => {
               <Text
                 style={[
                   styles.normalText,
-                  { alignSelf: 'flex-end', fontSize: 12, color: '#000000' },
+                  {alignSelf: 'flex-end', fontSize: 12, color: '#000000'},
                 ]}>
                 14:15
               </Text>
@@ -305,7 +303,7 @@ const Detail = (props) => {
             <Image
               source={require('../../src/assets/chat_fileupload.png')}
               resizeMode="contain"
-              style={{ width: 22, height: 22, marginRight: 20 }}
+              style={{width: 22, height: 22, marginRight: 20}}
             />
           </TouchableOpacity>
           <TextInput
@@ -313,14 +311,19 @@ const Detail = (props) => {
             placeholderTextColor="#FFFFFF"
             multiline={true}
             autoCapitalize="none"
-            style={[styles.normalText, { color: '#fff', fontSize: 14, width: '75%' }]}
+            style={[
+              styles.normalText,
+              {color: '#fff', fontSize: 14, width: '75%'},
+            ]}
           />
         </View>
-        <TouchableOpacity activeOpacity={0.8} onPress={() => Alert.alert('메세지 전송!')}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => Alert.alert('메세지 전송!')}>
           <Image
             source={require('../../src/assets/icon01.png')}
             resizeMode="contain"
-            style={{ width: 40, height: 30 }}
+            style={{width: 40, height: 30}}
           />
         </TouchableOpacity>
       </View>
