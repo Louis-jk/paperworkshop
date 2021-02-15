@@ -28,7 +28,7 @@ const index = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <View style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
+      <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
           style={{
             flexDirection: 'row',
@@ -39,7 +39,7 @@ const index = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('CCenterNotice')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
@@ -53,7 +53,7 @@ const index = (props) => {
             </Text>
           </TouchableOpacity>
 
-          <View style={{ position: 'relative' }}>
+          <View style={{position: 'relative'}}>
             <Text
               style={[
                 styles.mediumText,
@@ -81,7 +81,7 @@ const index = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('CCenterQnA')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
@@ -119,13 +119,13 @@ const index = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, { width: '80%' }]}
+              style={[styles.normalText, {width: '80%'}]}
             />
             <TouchableOpacity>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
-                style={{ width: 30, height: 30 }}
+                style={{width: 30, height: 30}}
               />
             </TouchableOpacity>
           </View>
@@ -135,7 +135,7 @@ const index = (props) => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('CCenterDetail')}>
           <View style={styles.categoryWrap}>
@@ -151,7 +151,9 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -159,12 +161,16 @@ const index = (props) => {
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('CCenterDetail')}>
           <View style={styles.categoryWrap}>
@@ -180,7 +186,9 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -188,12 +196,16 @@ const index = (props) => {
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('CCenterDetail')}>
           <View style={styles.categoryWrap}>
@@ -209,7 +221,9 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -217,12 +231,16 @@ const index = (props) => {
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('CCenterDetail')}>
           <View style={styles.categoryWrap}>
@@ -238,7 +256,9 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -246,12 +266,16 @@ const index = (props) => {
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('CCenterDetail')}>
           <View style={styles.categoryWrap}>
@@ -267,7 +291,9 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -275,12 +301,16 @@ const index = (props) => {
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('CCenterDetail')}>
           <View style={styles.categoryWrap}>
@@ -296,7 +326,9 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -304,12 +336,16 @@ const index = (props) => {
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('CCenterDetail')}>
           <View style={styles.categoryWrap}>
@@ -325,7 +361,9 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+                <Text style={styles.categoryTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
                 <Text style={styles.new}>NEW</Text>
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
@@ -333,14 +371,18 @@ const index = (props) => {
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
       </ScrollView>
       {visibleStep01 && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ zIndex: 1000 }}
+          contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
             top: 164,
@@ -363,7 +405,7 @@ const index = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -375,7 +417,7 @@ const index = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -387,7 +429,7 @@ const index = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}

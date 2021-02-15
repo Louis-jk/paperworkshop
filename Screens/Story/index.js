@@ -28,7 +28,7 @@ const index = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <View style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
+      <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
           style={{
             flexDirection: 'row',
@@ -36,7 +36,7 @@ const index = (props) => {
             alignItems: 'center',
             paddingVertical: 20,
           }}>
-          <View style={{ position: 'relative' }}>
+          <View style={{position: 'relative'}}>
             <Text
               style={[
                 styles.mediumText,
@@ -63,7 +63,7 @@ const index = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('StoryTips')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
@@ -80,7 +80,7 @@ const index = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('StoryCreateInfo')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
@@ -128,7 +128,11 @@ const index = (props) => {
               <TextInput
                 value={step01}
                 placeholder="인쇄종류"
-                style={{ fontFamily: 'SCDream4', width: '80%', color: step01 ? '#000' : '#A2A2A2' }}
+                style={{
+                  fontFamily: 'SCDream4',
+                  width: '80%',
+                  color: step01 ? '#000' : '#A2A2A2',
+                }}
                 editable={false}
                 collapsable={true}
               />
@@ -138,7 +142,7 @@ const index = (props) => {
                     ? require('../../src/assets/arr01_top.png')
                     : require('../../src/assets/arr01.png')
                 }
-                style={{ width: 25, height: 25 }}
+                style={{width: 25, height: 25}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -159,13 +163,13 @@ const index = (props) => {
               placeholder="업체명을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, { width: '80%' }]}
+              style={[styles.normalText, {width: '80%'}]}
             />
             <TouchableOpacity>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
-                style={{ width: 30, height: 30 }}
+                style={{width: 30, height: 30}}
               />
             </TouchableOpacity>
           </View>
@@ -199,7 +203,12 @@ const index = (props) => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('ReviewDetail')}
-              style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
+              style={{
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 5,
+                marginBottom: 10,
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -208,7 +217,9 @@ const index = (props) => {
                   paddingHorizontal: 20,
                   paddingTop: 20,
                 }}>
-                <Text style={{ fontFamily: 'SCDream6', marginRight: 5 }}>패키지나라</Text>
+                <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
+                  패키지나라
+                </Text>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -248,7 +259,7 @@ const index = (props) => {
                 <ImageBackground
                   source={require('../../src/images/packages/package06.jpg')}
                   resizeMode="cover"
-                  style={{ width: 75, height: 70, position: 'relative' }}>
+                  style={{width: 75, height: 70, position: 'relative'}}>
                   <Text
                     style={[
                       styles.normalText,
@@ -265,17 +276,21 @@ const index = (props) => {
                     +6
                   </Text>
                 </ImageBackground>
-                <View style={{ flexShrink: 2, marginLeft: 20 }}>
-                  <Text style={[styles.boldText, { fontSize: 14, marginBottom: 10 }]}>
+                <View style={{flexShrink: 2, marginLeft: 20}}>
+                  <Text
+                    style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
                     하나로세상(김*미 고객님)
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22 }]}>
-                    배송도 빠르고 프린트 퀄리티도 너무 좋아요 배송도 빠르고 프린트 퀄리티도 너무
-                    좋아요
+                  <Text
+                    style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
+                    배송도 빠르고 프린트 퀄리티도 너무 좋아요 배송도 빠르고
+                    프린트 퀄리티도 너무 좋아요
                   </Text>
                 </View>
               </View>
-              <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
+              <View
+                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
+              />
               <View
                 style={{
                   flexDirection: 'row',
@@ -288,7 +303,7 @@ const index = (props) => {
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     소통만족도
                   </Text>
@@ -301,16 +316,16 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating04.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
                   </View>
                 </View>
                 <View>
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     품질만족도
                   </Text>
@@ -323,16 +338,16 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
                   </View>
                 </View>
                 <View>
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     납기만족도
                   </Text>
@@ -345,9 +360,9 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
                   </View>
                 </View>
               </View>
@@ -357,7 +372,12 @@ const index = (props) => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('ReviewDetail')}
-              style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
+              style={{
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 5,
+                marginBottom: 10,
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -366,7 +386,9 @@ const index = (props) => {
                   paddingHorizontal: 20,
                   paddingTop: 20,
                 }}>
-                <Text style={{ fontFamily: 'SCDream6', marginRight: 5 }}>성원애드피아</Text>
+                <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
+                  성원애드피아
+                </Text>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -406,7 +428,7 @@ const index = (props) => {
                 <ImageBackground
                   source={require('../../src/images/etc/etc01.jpg')}
                   resizeMode="cover"
-                  style={{ width: 75, height: 70, position: 'relative' }}>
+                  style={{width: 75, height: 70, position: 'relative'}}>
                   <Text
                     style={{
                       position: 'absolute',
@@ -420,16 +442,21 @@ const index = (props) => {
                     +6
                   </Text>
                 </ImageBackground>
-                <View style={{ flexShrink: 2, marginLeft: 20 }}>
-                  <Text style={[styles.boldText, { fontSize: 14, marginBottom: 10 }]}>
+                <View style={{flexShrink: 2, marginLeft: 20}}>
+                  <Text
+                    style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
                     신세계세상(정*주 고객님)
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22 }]}>
-                    퀄리티 하나는 정말 끝내줍니다. 믿고 맡기는 업체로 선정한 지 꽤 됩니다.
+                  <Text
+                    style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
+                    퀄리티 하나는 정말 끝내줍니다. 믿고 맡기는 업체로 선정한 지
+                    꽤 됩니다.
                   </Text>
                 </View>
               </View>
-              <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
+              <View
+                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
+              />
               <View
                 style={{
                   flexDirection: 'row',
@@ -442,7 +469,7 @@ const index = (props) => {
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     소통만족도
                   </Text>
@@ -455,16 +482,16 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating04.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
                   </View>
                 </View>
                 <View>
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     품질만족도
                   </Text>
@@ -477,16 +504,16 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
                   </View>
                 </View>
                 <View>
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     납기만족도
                   </Text>
@@ -499,9 +526,9 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating04.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
                   </View>
                 </View>
               </View>
@@ -511,7 +538,12 @@ const index = (props) => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('ReviewDetail')}
-              style={{ borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, marginBottom: 10 }}>
+              style={{
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 5,
+                marginBottom: 10,
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -520,7 +552,9 @@ const index = (props) => {
                   paddingHorizontal: 20,
                   paddingTop: 20,
                 }}>
-                <Text style={{ fontFamily: 'SCDream6', marginRight: 5 }}>교보인쇄</Text>
+                <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
+                  교보인쇄
+                </Text>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -560,7 +594,7 @@ const index = (props) => {
                 <ImageBackground
                   source={require('../../src/images/w03.jpg')}
                   resizeMode="cover"
-                  style={{ width: 75, height: 70, position: 'relative' }}>
+                  style={{width: 75, height: 70, position: 'relative'}}>
                   <Text
                     style={{
                       position: 'absolute',
@@ -574,17 +608,21 @@ const index = (props) => {
                     +6
                   </Text>
                 </ImageBackground>
-                <View style={{ flexShrink: 2, marginLeft: 20 }}>
-                  <Text style={[styles.boldText, { fontSize: 14, marginBottom: 10 }]}>
+                <View style={{flexShrink: 2, marginLeft: 20}}>
+                  <Text
+                    style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
                     내안에바다(전*리 고객님)
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, lineHeight: 22 }]}>
-                    명함은 항상 여기서 주문해요. 고급지도 종류별로 다양하고 디지털로 찍어도 오프셋
-                    뺨치게 잘나옵니다.
+                  <Text
+                    style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
+                    명함은 항상 여기서 주문해요. 고급지도 종류별로 다양하고
+                    디지털로 찍어도 오프셋 뺨치게 잘나옵니다.
                   </Text>
                 </View>
               </View>
-              <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
+              <View
+                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
+              />
               <View
                 style={{
                   flexDirection: 'row',
@@ -597,7 +635,7 @@ const index = (props) => {
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     소통만족도
                   </Text>
@@ -610,16 +648,16 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
                   </View>
                 </View>
                 <View>
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     품질만족도
                   </Text>
@@ -632,16 +670,16 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>5.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
                   </View>
                 </View>
                 <View>
                   <Text
                     style={[
                       styles.normalText,
-                      { fontSize: 12, color: '#707070', marginBottom: 7 },
+                      {fontSize: 12, color: '#707070', marginBottom: 7},
                     ]}>
                     납기만족도
                   </Text>
@@ -654,9 +692,9 @@ const index = (props) => {
                     <Image
                       source={require('../../src/images/rating04.png')}
                       resizeMode="cover"
-                      style={{ width: 55, height: 15, marginRight: 5 }}
+                      style={{width: 55, height: 15, marginRight: 5}}
                     />
-                    <Text style={[styles.normalText, { fontSize: 10 }]}>4.0</Text>
+                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
                   </View>
                 </View>
               </View>
@@ -692,10 +730,10 @@ const index = (props) => {
       {visibleStep01 && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ zIndex: 1000 }}
+          contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
-            top: 164,
+            top: 186,
             left: 20,
             backgroundColor: '#fff',
             width: '27.1%',
@@ -715,7 +753,7 @@ const index = (props) => {
               setStep01('전체');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>전체</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -727,7 +765,7 @@ const index = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -739,7 +777,7 @@ const index = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -751,7 +789,7 @@ const index = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
