@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
+import StarRating from 'react-native-star-rating';
 
 import Header from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
@@ -25,8 +26,10 @@ const Detail = (props) => {
   const name = props.route.params.name;
   const bName = props.route.params.bName;
   const rating = props.route.params.rating;
-  const profileImg = props.route.params.profileImg;
+  const portfolioImg = props.route.params.portfolioImg;
   const mobile = props.route.params.mobile;
+  const description = props.route.params.description;
+  const used = props.route.params.used;
 
   const [like, setLike] = React.useState(false);
   const onLikeBtn = () => {
@@ -62,7 +65,7 @@ const Detail = (props) => {
           }}>
           <Carousel
             ref={carouselRef}
-            data={profileImg ? profileImg : null}
+            data={portfolioImg ? portfolioImg : null}
             renderItem={renderItem}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}
@@ -160,12 +163,16 @@ const Detail = (props) => {
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                 }}>
-                <Image
-                  source={require('../../src/images/rating04.png')}
-                  resizeMode="cover"
-                  style={{width: 65, height: 15, marginRight: 5}}
+                <StarRating
+                  disabled={false}
+                  emptyStar={require('../../src/assets/star_off.png')}
+                  fullStar={require('../../src/assets/star_on.png')}
+                  maxStars={5}
+                  rating={Math.floor(rating)}
+                  starSize={13}
                 />
-                <Text style={[styles.normalText, {fontSize: 12}]}>
+                <Text
+                  style={[styles.normalText, {fontSize: 12, marginLeft: 5}]}>
                   {rating}
                 </Text>
               </View>
@@ -249,14 +256,12 @@ const Detail = (props) => {
             <Text style={[styles.mediumText, {fontSize: 16, marginBottom: 15}]}>
               업체소개
             </Text>
-            <Text style={[styles.normalText, {fontSize: 14, marginBottom: 5}]}>
-              카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-            </Text>
-            <Text style={[styles.normalText, {fontSize: 14, marginBottom: 5}]}>
-              최신형 보유장비로 최고의 품질을 가동합니다.
-            </Text>
-            <Text style={[styles.normalText, {fontSize: 14, marginBottom: 5}]}>
-              당일 오후 4시 이전에 견적문의 주시면 당일 견적가능!
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 14, lineHeight: 22, marginBottom: 5},
+              ]}>
+              {description}
             </Text>
 
             <View style={{paddingVertical: 20, paddingLeft: 7}}>
@@ -283,11 +288,12 @@ const Detail = (props) => {
           <Text style={[styles.mediumText, {fontSize: 16, marginBottom: 10}]}>
             영업품목
           </Text>
-          <Text style={[styles.normalText, {fontSize: 14, marginBottom: 5}]}>
-            - 패키지 : 단상자/싸바리/~~
-          </Text>
-          <Text style={[styles.normalText, {fontSize: 14}]}>
-            - 일반인쇄 : 카달로그/화보집/도록/~~
+          <Text
+            style={[
+              styles.normalText,
+              {fontSize: 14, lineHeight: 24, marginBottom: 5},
+            ]}>
+            {used}
           </Text>
         </View>
         {/* // 영업품목 */}

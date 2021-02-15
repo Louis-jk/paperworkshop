@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Dimensions,
+  Alert,
 } from 'react-native';
 import {TabView} from 'react-native-tab-view';
 
@@ -36,11 +37,6 @@ const partnersDataJeonra = require('../Common/DummyData/Partners03/Jeonra/Partne
 const partnersDataGyeongsang = require('../Common/DummyData/Partners03/Gyeongsang/Partners');
 const partnersDataJeju = require('../Common/DummyData/Partners03/Jeju/Partners');
 
-const partnersAllData = require('../Common/DummyData/Partners02/Partners');
-// const partnersPackageData = require('../Common/DummyData/Partners02/PartnersPackage');
-// const partnersGeneralData = require('../Common/DummyData/Partners02/PartnersGeneral');
-// const partnersEtcData = require('../Common/DummyData/Partners02/PartnersEtc');
-
 const Partner03 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
@@ -50,6 +46,27 @@ const Partner03 = (props) => {
   const [partnersP, setPartnersP] = React.useState([]);
   const [partnersG, setPartnersG] = React.useState([]);
   const [partnersE, setPartnersE] = React.useState([]);
+
+  const [allPartners, setAllPartners] = React.useState([]);
+  React.useEffect(() => {
+    axios({
+      method: 'post',
+      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
+      data: qs.stringify({
+        method: 'proc_partner_list',
+        location,
+      }),
+    })
+      .then((res) => {
+        if (res.data.result === '1') {
+          setAllPartners(res.data.item);
+          // Alert.alert(res.data.message);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [location]);
+
+  // console.log('allPartners', allPartners);
 
   React.useEffect(() => {
     if (location === 'seoul') {
@@ -97,7 +114,7 @@ const Partner03 = (props) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'all':
-        return <All navigation={navigation} partners={partners} />;
+        return <All navigation={navigation} partners={allPartners} />;
       case 'package':
         return <Package navigation={navigation} partners={partnersP} />;
       case 'general':
