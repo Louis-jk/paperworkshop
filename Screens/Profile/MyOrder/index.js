@@ -94,7 +94,11 @@ const index = (props) => {
               <TextInput
                 value={step01}
                 placeholder="진행현황 선택"
-                style={{ fontFamily: 'SCDream4', width: '80%', color: step01 ? '#000' : '#A2A2A2' }}
+                style={{
+                  fontFamily: 'SCDream4',
+                  width: '80%',
+                  color: step01 ? '#000' : '#A2A2A2',
+                }}
                 editable={false}
                 collapsable={true}
               />
@@ -104,7 +108,7 @@ const index = (props) => {
                     ? require('../../../src/assets/arr01_top.png')
                     : require('../../../src/assets/arr01.png')
                 }
-                style={{ width: 25, height: 25 }}
+                style={{width: 25, height: 25}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -119,8 +123,8 @@ const index = (props) => {
               borderColor: '#E3E3E3',
               borderTopRightRadius: 4,
               borderTopLeftRadius: 4,
-              borderBottomRightRadius: visibleStep01 ? 0 : 4,
-              borderBottomLeftRadius: visibleStep01 ? 0 : 4,
+              borderBottomRightRadius: visibleStep02 ? 0 : 4,
+              borderBottomLeftRadius: visibleStep02 ? 0 : 4,
               paddingHorizontal: 10,
               backgroundColor: '#fff',
             }}>
@@ -135,7 +139,11 @@ const index = (props) => {
               <TextInput
                 value={step02}
                 placeholder="분류 선택"
-                style={{ fontFamily: 'SCDream4', width: '80%', color: step02 ? '#000' : '#A2A2A2' }}
+                style={{
+                  fontFamily: 'SCDream4',
+                  width: '80%',
+                  color: step02 ? '#000' : '#A2A2A2',
+                }}
                 editable={false}
               />
               <Image
@@ -144,7 +152,7 @@ const index = (props) => {
                     ? require('../../../src/assets/arr01_top.png')
                     : require('../../../src/assets/arr01.png')
                 }
-                style={{ width: 25, height: 25 }}
+                style={{width: 25, height: 25}}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -183,7 +191,11 @@ const index = (props) => {
                   backgroundColor: '#275696',
                   borderRadius: 4,
                 }}>
-                <Text style={[styles.normalText, { color: '#fff', paddingHorizontal: 20 }]}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {color: '#fff', paddingHorizontal: 20},
+                  ]}>
                   검색
                 </Text>
               </View>
@@ -196,11 +208,11 @@ const index = (props) => {
       <ScrollView
         style={styles.container}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ zIndex: -1000 }}>
+        contentContainerStyle={{zIndex: -1000}}>
         {/* 리스트 출력 부분 */}
 
         {/* 입찰중 */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.navigate('MyOrderReqDetailList')}
@@ -220,21 +232,35 @@ const index = (props) => {
                     marginBottom: 5,
                   }}>
                   <View style={styles.listStep02Badge}>
-                    <Text style={[styles.listStep02BadgeText, { color: '#275696' }]}>견적진행</Text>
+                    <Text
+                      style={[styles.listStep02BadgeText, {color: '#275696'}]}>
+                      견적진행
+                    </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#000000' }]}>
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, marginLeft: 5, color: '#000000'},
+                    ]}>
                     3건
                   </Text>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
+                    ]}>
                     NEW
                   </Text>
                 </View>
-                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+                <Text style={styles.listTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
+                <Text style={styles.listDesc}>
+                  칼라 박스 - B형 십자 (경기/김성규)
+                </Text>
               </View>
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text style={styles.listStep02}>입찰중</Text>
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
@@ -245,7 +271,7 @@ const index = (props) => {
         {/* // 입찰중 */}
 
         {/* 파트너 선정 - 선금 입금 요청 대기 */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.navigate('SelectPartnerStep01')}
@@ -265,19 +291,28 @@ const index = (props) => {
                     marginBottom: 5,
                   }}>
                   <View style={styles.listStep02BadgePayReq}>
-                    <Text style={[styles.listStep02BadgeText, { color: '#275696' }]}>
+                    <Text
+                      style={[styles.listStep02BadgeText, {color: '#275696'}]}>
                       선금 입금 요청 대기
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
+                    ]}>
                     NEW
                   </Text>
                 </View>
-                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+                <Text style={styles.listTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
+                <Text style={styles.listDesc}>
+                  칼라 박스 - B형 십자 (경기/김성규)
+                </Text>
               </View>
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text style={styles.listStep02}>파트너 선정</Text>
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
@@ -288,7 +323,7 @@ const index = (props) => {
         {/* // 파트너 선정 - 선금 입금 요청 대기 */}
 
         {/* 파트너 선정 - 계약금 입금 대기 */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.navigate('SelectPartnerStep02')}
@@ -308,19 +343,28 @@ const index = (props) => {
                     marginBottom: 5,
                   }}>
                   <View style={styles.listStep02BadgePayReq}>
-                    <Text style={[styles.listStep02BadgeText, { color: '#275696' }]}>
+                    <Text
+                      style={[styles.listStep02BadgeText, {color: '#275696'}]}>
                       계약금 입금 대기
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
+                    ]}>
                     NEW
                   </Text>
                 </View>
-                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+                <Text style={styles.listTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
+                <Text style={styles.listDesc}>
+                  칼라 박스 - B형 십자 (경기/김성규)
+                </Text>
               </View>
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text style={styles.listStep02}>파트너 선정</Text>
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
@@ -331,7 +375,7 @@ const index = (props) => {
         {/* // 파트너 선정 - 계약금 입금 대기 */}
 
         {/* 파트너 선정 - 계약금 입금 완료 */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.navigate('SelectPartnerStep03')}
@@ -351,19 +395,28 @@ const index = (props) => {
                     marginBottom: 5,
                   }}>
                   <View style={styles.listStep02BadgePayComplete}>
-                    <Text style={[styles.listStep02BadgeText, { color: '#000000' }]}>
+                    <Text
+                      style={[styles.listStep02BadgeText, {color: '#000000'}]}>
                       계약금 입금 완료
                     </Text>
                   </View>
                   <Text
-                    style={[styles.normalText, { fontSize: 13, marginLeft: 5, color: '#366DE5' }]}>
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
+                    ]}>
                     NEW
                   </Text>
                 </View>
-                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+                <Text style={styles.listTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
+                <Text style={styles.listDesc}>
+                  칼라 박스 - B형 십자 (경기/김성규)
+                </Text>
               </View>
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
                 <Text style={styles.listStep02}>파트너 선정</Text>
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
@@ -374,7 +427,7 @@ const index = (props) => {
         {/* // 파트너 선정 - 계약금 입금 완료 */}
 
         {/* 납품 완료 */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.navigate('Receive')}
@@ -394,17 +447,25 @@ const index = (props) => {
                     marginBottom: 5,
                   }}>
                   <View style={styles.listStep02BadgePayComplete}>
-                    <Text style={[styles.listStep02BadgeText, { color: '#000000' }]}>
+                    <Text
+                      style={[styles.listStep02BadgeText, {color: '#000000'}]}>
                       납품 완료
                     </Text>
                   </View>
                   {/* <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text> */}
                 </View>
-                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+                <Text style={styles.listTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
+                <Text style={styles.listDesc}>
+                  칼라 박스 - B형 십자 (경기/김성규)
+                </Text>
               </View>
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                <Text style={[styles.listStep02, { color: '#000' }]}>납품 완료</Text>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+                <Text style={[styles.listStep02, {color: '#000'}]}>
+                  납품 완료
+                </Text>
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
@@ -414,7 +475,7 @@ const index = (props) => {
         {/* // 납품 완료 */}
 
         {/* 마감 */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.navigate('Done')}
@@ -434,17 +495,23 @@ const index = (props) => {
                     marginBottom: 5,
                   }}>
                   <View style={styles.listStep02BadgeTimeOver}>
-                    <Text style={[styles.listStep02BadgeText, { color: '#000000' }]}>
+                    <Text
+                      style={[styles.listStep02BadgeText, {color: '#000000'}]}>
                       수령 완료
                     </Text>
                   </View>
                   {/* <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text> */}
                 </View>
-                <Text style={styles.listTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
-                <Text style={styles.listDesc}>칼라 박스 - B형 십자 (경기/김성규)</Text>
+                <Text style={styles.listTitle}>
+                  중소기업 선물용 쇼핑백 제작 요청합니다.
+                </Text>
+                <Text style={styles.listDesc}>
+                  칼라 박스 - B형 십자 (경기/김성규)
+                </Text>
               </View>
-              <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                <Text style={[styles.listStep02, { color: '#000' }]}>마감</Text>
+              <View
+                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+                <Text style={[styles.listStep02, {color: '#000'}]}>마감</Text>
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
@@ -459,7 +526,7 @@ const index = (props) => {
       {visibleStep01 && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ zIndex: 1000 }}
+          contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
             top: 126,
@@ -483,7 +550,7 @@ const index = (props) => {
               setStep01('입찰중');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>입찰중</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>입찰중</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -495,7 +562,9 @@ const index = (props) => {
               setStep01('파트너선정');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>파트너선정</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              파트너선정
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -507,7 +576,7 @@ const index = (props) => {
               setStep01('마감');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>마감</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>마감</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -519,7 +588,7 @@ const index = (props) => {
               setStep01('제작요청');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>제작요청</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>제작요청</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -531,7 +600,7 @@ const index = (props) => {
               setStep01('납품완료');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>납품완료</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>납품완료</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -543,7 +612,7 @@ const index = (props) => {
               setStep01('수령완료');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>수령완료</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>수령완료</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
@@ -551,7 +620,7 @@ const index = (props) => {
       {visibleStep02 && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ zIndex: 1000 }}
+          contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
             top: 126,
@@ -575,7 +644,7 @@ const index = (props) => {
               setStep02('패키지');
               setVisibleStep02(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -587,7 +656,9 @@ const index = (props) => {
               setStep02('일반인쇄물');
               setVisibleStep02(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄물</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              일반인쇄물
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -599,7 +670,9 @@ const index = (props) => {
               setStep02('기타인쇄물');
               setVisibleStep02(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄물</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              기타인쇄물
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       )}
