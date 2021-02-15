@@ -19,6 +19,7 @@ import All from './All';
 import Package from './Packages';
 import General from './General';
 import Etc from './Etc';
+import {getInputRangeFromIndexes} from 'react-native-snap-carousel';
 
 const partnersDataSeoul = require('../Common/DummyData/Partners03/Seoul/Partners');
 const partnersPackageDataSeoul = require('../Common/DummyData/Partners03/Seoul/PartnersPackage');
@@ -48,7 +49,15 @@ const Partner03 = (props) => {
   const [partnersE, setPartnersE] = React.useState([]);
 
   const [allPartners, setAllPartners] = React.useState([]);
-  React.useEffect(() => {
+  const [localPackages, setLocalPackages] = React.useState(null);
+  const [localGeneral, setLocalGeneral] = React.useState(null);
+
+  const [isActivePackages, setIsActivePackages] = React.useState(false);
+  const togglePackages = () => {
+    setIsActivePackages(!isActivePackages);
+  };
+
+  const getLocalPartners = () => {
     axios({
       method: 'post',
       url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
@@ -60,10 +69,61 @@ const Partner03 = (props) => {
       .then((res) => {
         if (res.data.result === '1') {
           setAllPartners(res.data.item);
-          // Alert.alert(res.data.message);
         }
       })
       .catch((err) => console.error(err));
+  };
+
+  const getLocalPackage = (cate1, ca_id) => {
+    axios({
+      method: 'post',
+      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
+      data: qs.stringify({
+        method: 'proc_partner_list',
+        location,
+        cate1,
+        ca_id,
+      }),
+    })
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setLocalPackages(res.data.item);
+        } else {
+          setLocalPackages(null);
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const getLocalGeneral = (cate1, ca_id) => {
+    axios({
+      method: 'post',
+      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
+      data: qs.stringify({
+        method: 'proc_partner_list',
+        location,
+        cate1,
+        ca_id,
+      }),
+    })
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setLocalPackages(res.data.item);
+        } else {
+          setLocalPackages(null);
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  React.useEffect(() => {
+    getLocalPartners();
+    getLocalPackage();
+
+    // return () => {
+    //   getLocalPartners();
+    //   getLocalPackage();
+    // };
   }, [location]);
 
   // console.log('allPartners', allPartners);
@@ -114,13 +174,37 @@ const Partner03 = (props) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'all':
-        return <All navigation={navigation} partners={allPartners} />;
+        return (
+          <All
+            navigation={navigation}
+            partners={allPartners}
+            location={location}
+          />
+        );
       case 'package':
-        return <Package navigation={navigation} partners={partnersP} />;
+        return (
+          <Package
+            navigation={navigation}
+            partners={localPackages}
+            location={location}
+          />
+        );
       case 'general':
-        return <General navigation={navigation} partners={partnersG} />;
+        return (
+          <General
+            navigation={navigation}
+            partners={partnersG}
+            location={location}
+          />
+        );
       case 'etc':
-        return <Etc navigation={navigation} partners={partnersE} />;
+        return (
+          <Etc
+            navigation={navigation}
+            partners={partnersE}
+            location={location}
+          />
+        );
     }
   };
 
@@ -132,16 +216,6 @@ const Partner03 = (props) => {
     return (
       <>
         <View>
-          {/* <View
-            style={{
-              position: 'absolute',
-              flex: 1,
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
-              backgroundColor: 'rgba(0,0,0,0.3)',
-              zIndex: 1,
-            }}
-          /> */}
           <View
             style={{
               flexDirection: 'row',
@@ -192,10 +266,12 @@ const Partner03 = (props) => {
                 paddingHorizontal: 10,
                 // backgroundColor: '#ffeeee',
               }}
-              onPress={async () => {
-                await jumpTo('package');
-                await setTabIndex('package');
-              }}>
+              // onPress={async () => {
+              //   await getLocalCate1('1');
+              //   // await jumpTo('package');
+              //   // await setTabIndex('package');
+              // }}
+              onPress={togglePackages}>
               <Text
                 style={[
                   tabIndex === 'package' || index === 1
@@ -217,6 +293,82 @@ const Partner03 = (props) => {
                 패키지
               </Text>
             </TouchableOpacity>
+
+            {isActivePackages && (
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 40,
+                  left: '12%',
+                  backgroundColor: '#fff',
+                  zIndex: 100,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  paddingVertical: 10,
+                }}>
+                <TouchableOpacity
+                  style={{paddingVertical: 10, paddingHorizontal: 10}}
+                  onPress={async () => {
+                    await getLocalPackage('1', '9');
+                    await setIsActivePackages(false);
+                    await jumpTo('package');
+                    await setTabIndex('package');
+                  }}>
+                  <Text style={{fontFamily: 'SCDream4'}}>칼라박스</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingVertical: 10, paddingHorizontal: 10}}
+                  onPress={async () => {
+                    await getLocalPackage('1', '10');
+                    await setIsActivePackages(false);
+                    await jumpTo('package');
+                    await setTabIndex('package');
+                  }}>
+                  <Text style={{fontFamily: 'SCDream4'}}>골판지박스</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingVertical: 10, paddingHorizontal: 10}}
+                  onPress={async () => {
+                    await getLocalPackage('1', '11');
+                    await setIsActivePackages(false);
+                    await jumpTo('package');
+                    await setTabIndex('package');
+                  }}>
+                  <Text style={{fontFamily: 'SCDream4'}}>합지골판지박스</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingVertical: 10, paddingHorizontal: 10}}
+                  onPress={async () => {
+                    await getLocalPackage('1', '12');
+                    await setIsActivePackages(false);
+                    await jumpTo('package');
+                    await setTabIndex('package');
+                  }}>
+                  <Text style={{fontFamily: 'SCDream4'}}>싸바리박스</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingVertical: 10, paddingHorizontal: 10}}
+                  onPress={async () => {
+                    await getLocalPackage('1', '13');
+                    await setIsActivePackages(false);
+                    await jumpTo('package');
+                    await setTabIndex('package');
+                  }}>
+                  <Text style={{fontFamily: 'SCDream4'}}>식품박스</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{paddingVertical: 10, paddingHorizontal: 10}}
+                  onPress={async () => {
+                    await getLocalPackage('1', '14');
+                    await setIsActivePackages(false);
+                    await jumpTo('package');
+                    await setTabIndex('package');
+                  }}>
+                  <Text style={{fontFamily: 'SCDream4'}}>쇼핑백</Text>
+                </TouchableOpacity>
+              </View>
+            )}
 
             <TouchableOpacity
               activeOpacity={0.8}

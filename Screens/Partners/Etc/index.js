@@ -18,7 +18,7 @@ const index = (props) => {
     setPartnersAll(partners);
   }, [partners]);
 
-  const renderRow = ({item}) => {
+  const renderRow = ({item, idx}) => {
     return (
       <TouchableOpacity
         key={item.id}
@@ -41,8 +41,8 @@ const index = (props) => {
           marginBottom: 25,
           height: 220,
           backgroundColor: '#fff',
-          marginRight: item.id % 2 === 0 ? 0 : '1%',
-          marginLeft: item.id % 2 !== 0 ? 0 : '1%',
+          marginRight: idx % 2 === 0 ? 0 : '1%',
+          marginLeft: idx % 2 !== 0 ? 0 : '1%',
         }}>
         <View style={{marginBottom: 10}}>
           {item.profileImg.length > 0 ? (

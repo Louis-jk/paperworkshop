@@ -11,14 +11,17 @@ import {
 const index = (props) => {
   const navigation = props.navigation;
   const partners = props.partners;
+  const location = props.location;
 
   const [partnersAll, setPartnersAll] = React.useState([]);
 
   React.useEffect(() => {
     setPartnersAll(partners);
-  }, [partners]);
+  }, [partners, location]);
 
-  const renderRow = ({item}) => {
+  console.log('partnersAll Package: ', partnersAll);
+
+  const renderRow = ({item, idx}) => {
     return (
       <TouchableOpacity
         key={item.id}
@@ -30,8 +33,10 @@ const index = (props) => {
               bName: item.businessName,
               name: item.name,
               rating: item.rating,
-              profileImg: item.profileImg,
+              portfolioImg: item.portfolioImg,
               mobile: item.mobile,
+              description: item.description,
+              used: item.used,
             },
           })
         }
@@ -41,17 +46,17 @@ const index = (props) => {
           marginBottom: 25,
           height: 220,
           backgroundColor: '#fff',
-          marginRight: item.id % 2 === 0 ? 0 : '1%',
-          marginLeft: item.id % 2 !== 0 ? 0 : '1%',
+          marginRight: idx % 2 === 0 ? 0 : '1%',
+          marginLeft: idx % 2 !== 0 ? 0 : '1%',
         }}>
         <View style={{marginBottom: 10}}>
-          {item.profileImg.length > 0 ? (
+          {item.portfolioImg.length > 0 ? (
             <Image
-              source={{uri: `${item.profileImg[0]}`}}
+              source={{uri: `${item.portfolioImg[0]}`}}
               resizeMode="cover"
               style={{width: '100%', height: 130, borderRadius: 5}}
             />
-          ) : item.profileImg.length === 0 || item.profileImg === null ? (
+          ) : item.portfolioImg.length === 0 || item.portfolioImg === null ? (
             <Image
               source={require('../../../src/assets/noImg.png')}
               resizeMode="cover"
@@ -158,7 +163,7 @@ const index = (props) => {
     );
   };
 
-  return (
+  return partnersAll ? (
     <FlatList
       data={partnersAll}
       renderItem={renderRow}
@@ -171,6 +176,10 @@ const index = (props) => {
       refreshing={true}
       // onEndReached={handleLoadMore}
     />
+  ) : (
+    <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+      <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
+    </View>
   );
 };
 
