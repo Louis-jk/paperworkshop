@@ -20,12 +20,14 @@ import Header from '../Common/Header';
 import CategoryNav from './CategoryNav';
 import PartnersNav from './PartnersNav';
 
-const index = (props) => {
+const Packages = (props) => {
   const navigation = props.navigation;
-  const routeName = props.route.name;
+  const routeName = props.route.params.routeName;
   const cateName = props.route.params.name;
+  const cate1 = props.route.params.cate1;
+  const ca_id = props.route.params.ca_id;
 
-  console.log('파트너스 전체 props', props);
+  console.log('Packages props', props);
 
   const [partners, setPartners] = React.useState([]);
 
@@ -35,6 +37,8 @@ const index = (props) => {
       url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
       data: qs.stringify({
         method: 'proc_partner_list',
+        cate1,
+        ca_id,
       }),
     })
       .then((res) => {
@@ -49,8 +53,7 @@ const index = (props) => {
 
   React.useEffect(() => {
     getApi();
-    return () => getApi();
-  }, []);
+  }, [cate1, ca_id]);
 
   console.log('partners:', partners);
 
@@ -210,22 +213,29 @@ const index = (props) => {
         <PartnersNav navigation={navigation} routeName={routeName} />
         <CategoryNav
           navigation={navigation}
-          routeName={routeName}
           cateName={cateName}
+          routeName={routeName}
+          getApi={getApi}
         />
-
-        <FlatList
-          data={partners}
-          renderItem={renderRow}
-          keyExtractor={(list, index) => index.toString()}
-          numColumns={2}
-          pagingEnabled={true}
-          persistentScrollbar={true}
-          showsVerticalScrollIndicator={false}
-          progressViewOffset={true}
-          refreshing={true}
-          // onEndReached={handleLoadMore}
-        />
+        {partners ? (
+          <FlatList
+            data={partners}
+            renderItem={renderRow}
+            keyExtractor={(list, index) => index.toString()}
+            numColumns={2}
+            pagingEnabled={true}
+            persistentScrollbar={true}
+            showsVerticalScrollIndicator={false}
+            progressViewOffset={true}
+            refreshing={true}
+            // onEndReached={handleLoadMore}
+          />
+        ) : (
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
+          </View>
+        )}
       </View>
 
       {/* <Footer navigation={navigation} /> */}
@@ -249,4 +259,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default index;
+export default Packages;

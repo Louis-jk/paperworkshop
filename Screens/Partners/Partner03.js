@@ -8,6 +8,7 @@ import {
   TextInput,
   Dimensions,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {TabView} from 'react-native-tab-view';
 
@@ -19,29 +20,15 @@ import All from './All';
 import Package from './Packages';
 import General from './General';
 import Etc from './Etc';
-import {getInputRangeFromIndexes} from 'react-native-snap-carousel';
 
-const partnersDataSeoul = require('../Common/DummyData/Partners03/Seoul/Partners');
-const partnersPackageDataSeoul = require('../Common/DummyData/Partners03/Seoul/PartnersPackage');
-const partnersGeneralDataSeoul = require('../Common/DummyData/Partners03/Seoul/PartnersGeneral');
-const partnersEtcDataSeoul = require('../Common/DummyData/Partners03/Seoul/PartnersEtc');
-const partnersDataBusan = require('../Common/DummyData/Partners03/Busan/Partners');
-const partnersDataDaegu = require('../Common/DummyData/Partners03/Daegu/Partners');
-const partnersDataIncheon = require('../Common/DummyData/Partners03/Incheon/Partners');
-const partnersDataGwangju = require('../Common/DummyData/Partners03/Gwangju/Partners');
-const partnersDataSejong = require('../Common/DummyData/Partners03/Sejong/Partners');
-const partnersDataUlsan = require('../Common/DummyData/Partners03/Ulsan/Partners');
-const partnersDataGyeongi = require('../Common/DummyData/Partners03/Gyeongi/Partners');
-const partnersDataGangwon = require('../Common/DummyData/Partners03/Gangwon/Partners');
-const partnersDataChoongcheong = require('../Common/DummyData/Partners03/Choongcheong/Partners');
-const partnersDataJeonra = require('../Common/DummyData/Partners03/Jeonra/Partners');
-const partnersDataGyeongsang = require('../Common/DummyData/Partners03/Gyeongsang/Partners');
-const partnersDataJeju = require('../Common/DummyData/Partners03/Jeju/Partners');
+import CategoryNav from './CategoryNav';
 
 const Partner03 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const location = props.route.params.location;
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [partners, setPartners] = React.useState([]);
   const [partnersP, setPartnersP] = React.useState([]);
@@ -67,8 +54,10 @@ const Partner03 = (props) => {
       }),
     })
       .then((res) => {
+        setIsLoading(true);
         if (res.data.result === '1') {
           setAllPartners(res.data.item);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.error(err));
@@ -127,39 +116,6 @@ const Partner03 = (props) => {
   }, [location]);
 
   // console.log('allPartners', allPartners);
-
-  React.useEffect(() => {
-    if (location === 'seoul') {
-      setPartners(partnersDataSeoul.data);
-      setPartnersP(partnersPackageDataSeoul.data);
-      setPartnersG(partnersGeneralDataSeoul.data);
-      setPartnersE(partnersEtcDataSeoul.data);
-    } else if (location === 'busan') {
-      setPartners(partnersDataBusan.data);
-    } else if (location === 'daegu') {
-      setPartners(partnersDataDaegu.data);
-    } else if (location === 'incheon') {
-      setPartners(partnersDataIncheon.data);
-    } else if (location === 'gwangju') {
-      setPartners(partnersDataGwangju.data);
-    } else if (location === 'sejong') {
-      setPartners(partnersDataSejong.data);
-    } else if (location === 'ulsan') {
-      setPartners(partnersDataUlsan.data);
-    } else if (location === 'gyeongi') {
-      setPartners(partnersDataGyeongi.data);
-    } else if (location === 'gangwon') {
-      setPartners(partnersDataGangwon.data);
-    } else if (location === 'choongcheong') {
-      setPartners(partnersDataChoongcheong.data);
-    } else if (location === 'jeonra') {
-      setPartners(partnersDataJeonra.data);
-    } else if (location === 'gyeongsang') {
-      setPartners(partnersDataGyeongsang.data);
-    } else {
-      setPartners(partnersDataJeju.data);
-    }
-  }, [location]);
 
   const initialLayout = {width: Dimensions.get('window').width};
 
@@ -406,53 +362,6 @@ const Partner03 = (props) => {
                 ]}>
                 일반인쇄
               </Text>
-
-              {/* <View
-                style={{
-                  position: 'absolute',
-                  top: 29,
-                  left: 0,
-                  width: 180,
-                  borderWidth: 1,
-                  borderColor: '#fff',
-                  borderBottomRightRadius: 5,
-                  borderBottomLeftRadius: 5,
-                  backgroundColor: '#fff',
-                  zIndex: 100,
-                  paddingLeft: 7,
-                }}>
-                <TouchableOpacity
-                  hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-                  style={{
-                    paddingVertical: 10,
-                  }}
-                  onPress={() => console.log('hey')}>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontFamily: 'SCDream4',
-                      paddingVertical: 10,
-                      backgroundColor: '#ffaeea',
-                    }}>
-                    카달로그,브로슈어,팜플렛
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>책자, 서적류</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>전단,포스터,안내장</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>스티커,라벨</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>봉투, 명함</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>기타인쇄물</Text>
-                </TouchableOpacity>
-              </View> */}
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -876,26 +785,31 @@ const Partner03 = (props) => {
             </View>
           )}
         </View>
-
+        <CategoryNav navigation={navigation} />
         {/* TabView */}
 
-        <TabView
-          renderTabBar={(props) => (
-            <TabBar
-              {...props}
-              navigation={navigation}
-              setTabIndex={setTabIndex}
-              tabIndex={tabIndex}
-              onIndexChange={setIndex}
-            />
-          )}
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={initialLayout}
-          swipeEnabled={false}
-        />
-
+        {isLoading ? (
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <ActivityIndicator size="large" color="#275696" />
+          </View>
+        ) : (
+          <TabView
+            renderTabBar={(props) => (
+              <TabBar
+                {...props}
+                navigation={navigation}
+                setTabIndex={setTabIndex}
+                tabIndex={tabIndex}
+                onIndexChange={setIndex}
+              />
+            )}
+            navigationState={{index, routes}}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={initialLayout}
+            swipeEnabled={false}
+          />
+        )}
         {/* // TabView */}
       </View>
 

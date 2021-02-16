@@ -10,6 +10,7 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
 
 const Login = (props) => {
   const navigation = props.navigation;
@@ -18,6 +19,14 @@ const Login = (props) => {
   const toggleCheck = () => {
     setAutoLogin((prev) => !prev);
   };
+
+  React.useEffect(() => {
+    messaging()
+      .getToken()
+      .then((token) => {
+        return console.log(token);
+      });
+  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -30,8 +39,13 @@ const Login = (props) => {
           paddingTop: 70,
           zIndex: -100,
         }}>
-        <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: 30,
+          }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image
               source={require('../../../src/assets/logo02.png')}
               resizeMode="contain"
@@ -41,7 +55,7 @@ const Login = (props) => {
                 marginBottom: 50,
               }}
             />
-            <View style={{ marginBottom: 30 }}>
+            <View style={{marginBottom: 30}}>
               <TextInput
                 placeholder="이메일"
                 style={[styles.textInput, styles.normalText]}
@@ -62,9 +76,12 @@ const Login = (props) => {
                   justifyContent: 'flex-end',
                   alignItems: 'center',
                 }}
-                hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
+                hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
                 <Text
-                  style={[{ fontSize: 14, color: '#111111', marginRight: 5 }, styles.normalText]}>
+                  style={[
+                    {fontSize: 14, color: '#111111', marginRight: 5},
+                    styles.normalText,
+                  ]}>
                   자동 로그인
                 </Text>
                 <Image
@@ -82,7 +99,7 @@ const Login = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ marginBottom: 20 }}>
+          <View style={{marginBottom: 20}}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('Stack')}
@@ -94,7 +111,9 @@ const Login = (props) => {
                 borderRadius: 4,
                 paddingVertical: 15,
               }}>
-              <Text style={[{ fontSize: 16, color: '#fff' }, styles.normalText]}>로그인</Text>
+              <Text style={[{fontSize: 16, color: '#fff'}, styles.normalText]}>
+                로그인
+              </Text>
             </TouchableOpacity>
           </View>
           <View
@@ -107,14 +126,16 @@ const Login = (props) => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('FindId')}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
               <Text style={styles.normalText}>아이디 찾기</Text>
             </TouchableOpacity>
-            <View style={{ height: '90%', width: 1, backgroundColor: '#E3E3E3' }} />
+            <View
+              style={{height: '90%', width: 1, backgroundColor: '#E3E3E3'}}
+            />
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('FindPwd')}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
               <Text style={styles.normalText}>비밀번호 찾기</Text>
             </TouchableOpacity>
           </View>
@@ -127,15 +148,18 @@ const Login = (props) => {
             alignItems: 'center',
             marginBottom: 20,
           }}>
-          <View style={{ width: 100, height: 1, backgroundColor: '#E3E3E3' }} />
+          <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
           <Text
-            style={[{ fontSize: 16, color: '#111111', marginHorizontal: 16 }, styles.mediumText]}>
+            style={[
+              {fontSize: 16, color: '#111111', marginHorizontal: 16},
+              styles.mediumText,
+            ]}>
             소셜 로그인
           </Text>
-          <View style={{ width: 100, height: 1, backgroundColor: '#E3E3E3' }} />
+          <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
         </View>
 
-        <View style={{ marginBottom: 10 }}>
+        <View style={{marginBottom: 10}}>
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => Alert.alert('카카오 로그인')}
@@ -152,9 +176,9 @@ const Login = (props) => {
             <Image
               source={require('../../../src/assets/kakao.png')}
               resizeMode="contain"
-              style={{ width: 30, height: 30 }}
+              style={{width: 30, height: 30}}
             />
-            <Text style={[{ fontSize: 14, color: '#2A1617' }, styles.normalText]}>
+            <Text style={[{fontSize: 14, color: '#2A1617'}, styles.normalText]}>
               카카오로 로그인
             </Text>
           </TouchableOpacity>
@@ -174,9 +198,9 @@ const Login = (props) => {
             <Image
               source={require('../../../src/assets/icon_n.png')}
               resizeMode="contain"
-              style={{ width: 30, height: 18 }}
+              style={{width: 30, height: 18}}
             />
-            <Text style={[{ fontSize: 14, color: '#fff' }, styles.normalText]}>
+            <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
               네이버로 로그인
             </Text>
           </TouchableOpacity>
@@ -196,9 +220,11 @@ const Login = (props) => {
             <Image
               source={require('../../../src/assets/apple.png')}
               resizeMode="contain"
-              style={{ width: 30, height: 30 }}
+              style={{width: 30, height: 30}}
             />
-            <Text style={[{ fontSize: 14, color: '#fff' }, styles.normalText]}>애플로 로그인</Text>
+            <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
+              애플로 로그인
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -217,9 +243,9 @@ const Login = (props) => {
             <Image
               source={require('../../../src/assets/gg.png')}
               resizeMode="contain"
-              style={{ width: 38, height: 40 }}
+              style={{width: 38, height: 40}}
             />
-            <Text style={[{ fontSize: 14, color: '#333333' }, styles.normalText]}>
+            <Text style={[{fontSize: 14, color: '#333333'}, styles.normalText]}>
               구글로 로그인
             </Text>
           </TouchableOpacity>
@@ -231,7 +257,11 @@ const Login = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={[styles.normalText, { fontSize: 14, color: '#ADADAD', marginRight: 10 }]}>
+          <Text
+            style={[
+              styles.normalText,
+              {fontSize: 14, color: '#ADADAD', marginRight: 10},
+            ]}>
             아직 가입되지 않은 회원입니까?
           </Text>
           <TouchableOpacity
@@ -241,7 +271,9 @@ const Login = (props) => {
               paddingHorizontal: 10,
               paddingVertical: 10,
             }}>
-            <Text style={[styles.normalText, { fontSize: 14, color: '#275696' }]}>회원가입</Text>
+            <Text style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
+              회원가입
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

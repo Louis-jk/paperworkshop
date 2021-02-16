@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Text, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {View, Text, StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 
 import DrawerNavigator from './navigation/DrawerNavigator';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {View, Text} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import MainScreen from '../Screens/Main';
 import EstimateScreen from '../Screens/Main/Estimate';
@@ -15,6 +15,7 @@ import GalleryEtcScreen from '../Screens/Gallery/Etc';
 // 파트너스(성실,인기,지역) SCREEN
 // 메인
 import PartnersScreen from '../Screens/Partners';
+import PackagesScreen from '../Screens/Partners/Packages';
 // 성실 파트너스 SCREEN
 import Partners01Screen from '../Screens/Partners/Partner01';
 // 인기 파트너스 SCREEN
@@ -144,7 +145,7 @@ export const MainStackNavigator = () => {
 
 export const SearchStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>
   );
@@ -152,7 +153,7 @@ export const SearchStackNavigator = () => {
 
 export const CompanyInfoStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="CompanyInfo" component={CompanyInfoScreen} />
     </Stack.Navigator>
   );
@@ -160,7 +161,7 @@ export const CompanyInfoStackNavigator = () => {
 
 export const EventStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Event" component={EventScreen} />
       <Stack.Screen name="EventDetail" component={EventDetailScreen} />
     </Stack.Navigator>
@@ -169,7 +170,7 @@ export const EventStackNavigator = () => {
 
 export const GalleryStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Gallery" component={GalleryScreen} />
       <Stack.Screen name="GalleryDetail" component={GalleryDetailScreen} />
       <Stack.Screen name="GalleryPackage" component={GalleryPackageScreen} />
@@ -181,8 +182,9 @@ export const GalleryStackNavigator = () => {
 
 export const PartnersStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Partners" component={PartnersScreen} />
+      <Stack.Screen name="Packages" component={PackagesScreen} />
       <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
       <Stack.Screen name="Partners01" component={Partners01Screen} />
       <Stack.Screen name="Partners02" component={Partners02Screen} />
@@ -193,7 +195,7 @@ export const PartnersStackNavigator = () => {
 
 export const MyPartnersStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
     </Stack.Navigator>
   );
@@ -201,14 +203,14 @@ export const MyPartnersStackNavigator = () => {
 
 export const PartnersDetailStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="PartnersDetail" component={PartnersDetailScreen} />
     </Stack.Navigator>
   );
 };
 export const StoryStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Story" component={StoryScreen} />
       <Stack.Screen name="StoryTips" component={StoryTipsScreen} />
       <Stack.Screen name="StoryTipsDetail" component={StoryTipsDetailScreen} />
@@ -218,20 +220,26 @@ export const StoryStackNavigator = () => {
 };
 export const CCenterStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="CCenter" component={CCenterScreen} />
       <Stack.Screen name="CCenterNotice" component={CCenterNoticeScreen} />
       <Stack.Screen name="CCenterQnA" component={CCenterQnAScreen} />
       <Stack.Screen name="CCenterDetail" component={CCenterDetailScreen} />
-      <Stack.Screen name="CCenterNoticeDetail" component={CCenterNoticeDetailScreen} />
-      <Stack.Screen name="CCenterQnADetail" component={CCenterQnADetailScreen} />
+      <Stack.Screen
+        name="CCenterNoticeDetail"
+        component={CCenterNoticeDetailScreen}
+      />
+      <Stack.Screen
+        name="CCenterQnADetail"
+        component={CCenterQnADetailScreen}
+      />
       <Stack.Screen name="CCenterQnAwrite" component={CCenterQnAwriteScreen} />
     </Stack.Navigator>
   );
 };
 export const PaperInfoStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="PaperInfo" component={PaperInfoScreen} />
       <Stack.Screen name="PaperPrice" component={PaperPriceScreen} />
     </Stack.Navigator>
@@ -240,7 +248,7 @@ export const PaperInfoStackNavigator = () => {
 
 export const ProfileEditStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
     </Stack.Navigator>
   );
@@ -248,7 +256,7 @@ export const ProfileEditStackNavigator = () => {
 
 export const LoginStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
@@ -256,7 +264,7 @@ export const LoginStackNavigator = () => {
 
 export const RegisterStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   );
@@ -264,7 +272,7 @@ export const RegisterStackNavigator = () => {
 
 export const SignedStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Signed" component={SignedScreen} />
     </Stack.Navigator>
   );
@@ -272,7 +280,7 @@ export const SignedStackNavigator = () => {
 
 export const FindIdStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="FindId" component={FindIdScreen} />
     </Stack.Navigator>
   );
@@ -280,7 +288,7 @@ export const FindIdStackNavigator = () => {
 
 export const FindPwdStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="FindPwd" component={FindPwdScreen} />
       <Stack.Screen name="SetPwd" component={SetPwdScreen} />
       <Stack.Screen name="SetPwdComplete" component={SetPwdCompleteScreen} />
@@ -290,7 +298,7 @@ export const FindPwdStackNavigator = () => {
 
 export const MessageStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Message" component={MessageScreen} />
     </Stack.Navigator>
   );
@@ -298,7 +306,7 @@ export const MessageStackNavigator = () => {
 
 export const MessageDetailStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="MessageDetail" component={MessageDetailScreen} />
     </Stack.Navigator>
   );
@@ -306,14 +314,17 @@ export const MessageDetailStackNavigator = () => {
 
 export const OrderStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Order" component={OrderStep01Screen} />
       <Stack.Screen name="OrderStep02" component={OrderStep02Screen} />
       <Stack.Screen name="OrderStep03" component={OrderStep03Screen} />
       <Stack.Screen name="OrderStep04" component={OrderStep04Screen} />
       <Stack.Screen name="OrderStep05" component={OrderStep05Screen} />
       <Stack.Screen name="OrderStep06" component={OrderStep06Screen} />
-      <Stack.Screen name="easyOrderComplete" component={easyOrderCompleteScreen} />
+      <Stack.Screen
+        name="easyOrderComplete"
+        component={easyOrderCompleteScreen}
+      />
       <Stack.Screen name="OrderComplete" component={OrderCompleteScreen} />
     </Stack.Navigator>
   );
@@ -321,12 +332,24 @@ export const OrderStackNavigator = () => {
 
 export const MyOrderStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="MyOrder" component={MyOrderScreen} />
-      <Stack.Screen name="MyOrderReqDetailList" component={ReqDetailListScreen} />
-      <Stack.Screen name="SelectPartnerStep01" component={SelectPartnerStep01Screen} />
-      <Stack.Screen name="SelectPartnerStep02" component={SelectPartnerStep02Screen} />
-      <Stack.Screen name="SelectPartnerStep03" component={SelectPartnerStep03Screen} />
+      <Stack.Screen
+        name="MyOrderReqDetailList"
+        component={ReqDetailListScreen}
+      />
+      <Stack.Screen
+        name="SelectPartnerStep01"
+        component={SelectPartnerStep01Screen}
+      />
+      <Stack.Screen
+        name="SelectPartnerStep02"
+        component={SelectPartnerStep02Screen}
+      />
+      <Stack.Screen
+        name="SelectPartnerStep03"
+        component={SelectPartnerStep03Screen}
+      />
       <Stack.Screen name="Receive" component={ReceiveScreen} />
       <Stack.Screen name="Done" component={DoneScreen} />
       <Stack.Screen name="CancelOrder" component={CancelOrderScreen} />
@@ -339,7 +362,7 @@ export const MyOrderStackNavigator = () => {
 
 export const ReviewStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Review" component={ReviewScreen} />
       <Stack.Screen name="ReviewDetail" component={ReviewDetailScreen} />
     </Stack.Navigator>
@@ -348,7 +371,7 @@ export const ReviewStackNavigator = () => {
 
 export const ReviewDetailStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="ReviewDetail" component={ReviewDetailScreen} />
     </Stack.Navigator>
   );

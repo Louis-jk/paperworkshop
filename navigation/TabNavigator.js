@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { View, Text, Image } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {View, Text, Image} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {
   MainStackNavigator,
@@ -50,8 +50,8 @@ export const BottomTabNavigator = () => {
         },
         showLabel: false,
       }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
           if (route.name === 'Home') {
@@ -80,34 +80,49 @@ export const BottomTabNavigator = () => {
               : require('../src/assets/micon06.png');
           }
 
-          return <Image source={iconName} resizeMode="contain" style={{ width: 50, height: 70 }} />;
+          return (
+            <Image
+              source={iconName}
+              resizeMode="contain"
+              style={{width: 50, height: 70}}
+            />
+          );
         },
       })}>
-      <Tab.Screen name="Home" component={MainStackNavigator} options={{ tabBarLabel: '홈' }} />
+      <Tab.Screen
+        name="Home"
+        component={MainStackNavigator}
+        options={{tabBarLabel: '홈'}}
+      />
       <Tab.Screen
         name="Gallery"
         component={GalleryStackNavigator}
-        options={{ tabBarLabel: '갤러리' }}
+        options={{tabBarLabel: '갤러리'}}
       />
       <Tab.Screen
         name="Partners"
         component={PartnersStackNavigator}
-        options={{ tabBarLabel: '파트너스' }}
+        options={{tabBarLabel: '파트너스'}}
+        initialParams={{
+          name: 'Partners',
+          screen: 'Partners',
+          params: {name: 'All'},
+        }}
       />
       <Tab.Screen
         name="Story"
         component={StoryStackNavigator}
-        options={{ tabBarLabel: '제작스토리' }}
+        options={{tabBarLabel: '제작스토리'}}
       />
       <Tab.Screen
         name="Ccenter"
         component={CCenterStackNavigator}
-        options={{ tabBarLabel: '고객센터' }}
+        options={{tabBarLabel: '고객센터'}}
       />
       <Tab.Screen
         name="PaperInfo"
         component={PaperInfoStackNavigator}
-        options={{ tabBarLabel: '지류정보' }}
+        options={{tabBarLabel: '지류정보'}}
       />
     </Tab.Navigator>
   );
@@ -115,7 +130,7 @@ export const BottomTabNavigator = () => {
 
 const TabNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={LoginStackNavigator} />
       <Stack.Screen name="Stack" component={BottomTabNavigator} />
       <Stack.Screen name="Register" component={RegisterStackNavigator} />
@@ -124,25 +139,46 @@ const TabNavigator = () => {
       <Stack.Screen name="FindId" component={FindIdStackNavigator} />
       <Stack.Screen name="FindPwd" component={FindPwdStackNavigator} />
       <Stack.Screen name="Message" component={MessageStackNavigator} />
-      <Stack.Screen name="MessageDetail" component={MessageDetailStackNavigator} />
+      <Stack.Screen
+        name="MessageDetail"
+        component={MessageDetailStackNavigator}
+      />
       <Stack.Screen name="Order" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep02" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep03" component={OrderStackNavigator} />
       <Stack.Screen name="easyOrderComplete" component={OrderStackNavigator} />
       <Stack.Screen name="CancelOrder" component={MyOrderStackNavigator} />
       <Stack.Screen name="MyOrder" component={MyOrderStackNavigator} />
-      <Stack.Screen name="MyOrderReqDetailList" component={MyOrderStackNavigator} />
-      <Stack.Screen name="SelectPartnerStep01" component={MyOrderStackNavigator} />
-      <Stack.Screen name="SelectPartnerStep02" component={MyOrderStackNavigator} />
-      <Stack.Screen name="SelectPartnerStep03" component={MyOrderStackNavigator} />
+      <Stack.Screen
+        name="MyOrderReqDetailList"
+        component={MyOrderStackNavigator}
+      />
+      <Stack.Screen
+        name="SelectPartnerStep01"
+        component={MyOrderStackNavigator}
+      />
+      <Stack.Screen
+        name="SelectPartnerStep02"
+        component={MyOrderStackNavigator}
+      />
+      <Stack.Screen
+        name="SelectPartnerStep03"
+        component={MyOrderStackNavigator}
+      />
       <Stack.Screen name="Receive" component={MyOrderStackNavigator} />
       <Stack.Screen name="Done" component={MyOrderStackNavigator} />
       <Stack.Screen name="CopyOrder" component={MyOrderStackNavigator} />
       <Stack.Screen name="OrderDetail" component={MyOrderStackNavigator} />
       <Stack.Screen name="FeedBack" component={MyOrderStackNavigator} />
       <Stack.Screen name="Review" component={ReviewStackNavigator} />
-      <Stack.Screen name="ReviewDetail" component={ReviewDetailStackNavigator} />
-      <Stack.Screen name="PartnersDetail" component={PartnersDetailStackNavigator} />
+      <Stack.Screen
+        name="ReviewDetail"
+        component={ReviewDetailStackNavigator}
+      />
+      <Stack.Screen
+        name="PartnersDetail"
+        component={PartnersDetailStackNavigator}
+      />
       <Stack.Screen name="CompanyInfo" component={CompanyInfoStackNavigator} />
       <Stack.Screen name="Event" component={EventStackNavigator} />
       <Stack.Screen name="EventDetail" component={EventStackNavigator} />

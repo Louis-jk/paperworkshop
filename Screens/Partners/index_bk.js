@@ -18,10 +18,10 @@ import qs from 'qs';
 
 import Header from '../Common/Header';
 import Footer from '../Common/Footer';
-const partnersData = require('../Common/DummyData/Partners01/Partners');
-const partnersPackageData = require('../Common/DummyData/Partners01/PartnersPackage');
-const partnersGeneralData = require('../Common/DummyData/Partners01/PartnersGeneral');
-const partnersEtcData = require('../Common/DummyData/Partners01/PartnersEtc');
+const partnersData = require('../Common/DummyData/Partners');
+const partnersPackageData = require('../Common/DummyData/PartnersPackage');
+const partnersGeneralData = require('../Common/DummyData/PartnersGeneral');
+const partnersEtcData = require('../Common/DummyData/PartnersEtc');
 
 const All = (props) => {
   const navigation = props.navigation;
@@ -683,7 +683,7 @@ const Etc = (props) => {
   );
 };
 
-const Partner01 = (props) => {
+const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
@@ -899,6 +899,7 @@ const Partner01 = (props) => {
         style={styles.container}
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}> */}
+
       <View
         style={{
           position: 'relative',
@@ -928,26 +929,6 @@ const Partner01 = (props) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Partners', {name: 'All'});
-              setActiveLocation(false);
-            }}
-            activeOpacity={0.8}>
-            <Text
-              style={[
-                styles.normalText,
-                {
-                  fontSize: 16,
-                  marginBottom: 20,
-                  marginRight: 20,
-                  color: '#707070',
-                },
-              ]}>
-              전체
-            </Text>
-          </TouchableOpacity>
-
           <View style={{position: 'relative'}}>
             <Text
               style={[
@@ -958,7 +939,7 @@ const Partner01 = (props) => {
                   marginRight: 20,
                 },
               ]}>
-              성실파트너스
+              전체
             </Text>
             <View
               style={{
@@ -972,6 +953,26 @@ const Partner01 = (props) => {
               }}
             />
           </View>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Partners01');
+              setActiveLocation(false);
+            }}
+            activeOpacity={0.8}>
+            <Text
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 16,
+                  marginBottom: 20,
+                  marginRight: 20,
+                  color: '#707070',
+                },
+              ]}>
+              성실파트너스
+            </Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
@@ -1282,4 +1283,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Partner01;
+export default index;
