@@ -38,7 +38,7 @@ const index = (props) => {
       }),
     })
       .then((res) => {
-        if (res.data.result === '1') {
+        if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
         } else {
           setPartners(null);
@@ -214,18 +214,25 @@ const index = (props) => {
           cateName={cateName}
         />
 
-        <FlatList
-          data={partners}
-          renderItem={renderRow}
-          keyExtractor={(list, index) => index.toString()}
-          numColumns={2}
-          pagingEnabled={true}
-          persistentScrollbar={true}
-          showsVerticalScrollIndicator={false}
-          progressViewOffset={true}
-          refreshing={true}
-          // onEndReached={handleLoadMore}
-        />
+        {partners ? (
+          <FlatList
+            data={partners}
+            renderItem={renderRow}
+            keyExtractor={(list, index) => index.toString()}
+            numColumns={2}
+            pagingEnabled={true}
+            persistentScrollbar={true}
+            showsVerticalScrollIndicator={false}
+            progressViewOffset={true}
+            refreshing={true}
+            // onEndReached={handleLoadMore}
+          />
+        ) : (
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
+          </View>
+        )}
       </View>
 
       {/* <Footer navigation={navigation} /> */}

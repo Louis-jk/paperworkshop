@@ -26,11 +26,23 @@ const Packages = (props) => {
   const cateName = props.route.params.name;
   const cate1 = props.route.params.cate1;
   const ca_id = props.route.params.ca_id;
+  const propLocation = props.route.params.location;
 
-  console.log('Packages props', props);
+  const [location, setLocation] = React.useState(null);
+
+  React.useEffect(() => {
+    if (propLocation) {
+      setLocation(propLocation);
+    } else {
+      setLocation(null);
+    }
+  });
+
+  console.log('ListPage props', props);
 
   const [partners, setPartners] = React.useState([]);
 
+  // useMemo || useCallback 필요
   const getApi = () => {
     axios({
       method: 'post',
@@ -39,10 +51,17 @@ const Packages = (props) => {
         method: 'proc_partner_list',
         cate1,
         ca_id,
+        ptype:
+          routeName === 'Partners01'
+            ? 'sincere'
+            : routeName === 'Partners02'
+            ? 'popular'
+            : null,
+        location: location ? location : null,
       }),
     })
       .then((res) => {
-        if (res.data.result === '1') {
+        if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
         } else {
           setPartners(null);
@@ -53,7 +72,8 @@ const Packages = (props) => {
 
   React.useEffect(() => {
     getApi();
-  }, [cate1, ca_id]);
+    return () => getApi();
+  }, [location, cate1, ca_id]);
 
   console.log('partners:', partners);
 

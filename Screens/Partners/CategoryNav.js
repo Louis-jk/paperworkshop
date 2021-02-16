@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   View,
   Text,
@@ -8,10 +8,21 @@ import {
   Image,
 } from 'react-native';
 
-const CategoryNav = (props, {getApi}) => {
+const CategoryNav = (props) => {
   const navigation = props.navigation;
   const routeName = props.routeName;
   const cateName = props.cateName;
+  const propLocation = props.location;
+
+  const [location, setLocation] = React.useState(null);
+
+  React.useEffect(() => {
+    if (propLocation) {
+      setLocation(propLocation);
+    } else {
+      setLocation(null);
+    }
+  });
 
   console.log('Category Nav Props', props);
 
@@ -123,12 +134,13 @@ const CategoryNav = (props, {getApi}) => {
                 key={idx}
                 style={{paddingVertical: 10, paddingHorizontal: 10}}
                 onPress={() => {
-                  navigation.navigate('Packages', {
-                    screen: 'Packages',
+                  navigation.navigate('ListPage', {
+                    screen: 'ListPage',
                     name: 'Packages',
                     routeName: routeName,
                     cate1: '1',
                     ca_id: v,
+                    location: location ? location : null,
                   });
                   setIsActivePackages(false);
                 }}>
@@ -197,12 +209,13 @@ const CategoryNav = (props, {getApi}) => {
                 key={idx}
                 style={{paddingVertical: 10, paddingHorizontal: 10}}
                 onPress={() => {
-                  navigation.navigate('Packages', {
-                    screen: 'Packages',
+                  navigation.navigate('ListPage', {
+                    screen: 'ListPage',
                     name: 'General',
                     routeName: routeName,
                     cate1: '0',
                     ca_id: v,
+                    location: location ? location : null,
                   });
                   setIsActiveGeneral(false);
                 }}>
@@ -270,12 +283,13 @@ const CategoryNav = (props, {getApi}) => {
                 key={idx}
                 style={{paddingVertical: 10, paddingHorizontal: 10}}
                 onPress={() => {
-                  navigation.navigate('Packages', {
-                    screen: 'Packages',
+                  navigation.navigate('ListPage', {
+                    screen: 'ListPage',
                     name: 'Etc',
                     routeName: routeName,
                     cate1: '2',
                     ca_id: v,
+                    location: location ? location : null,
                   });
                   setIsActiveEtc(false);
                 }}>

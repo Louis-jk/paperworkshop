@@ -15,7 +15,7 @@ import GalleryEtcScreen from '../Screens/Gallery/Etc';
 // 파트너스(성실,인기,지역) SCREEN
 // 메인
 import PartnersScreen from '../Screens/Partners';
-import PackagesScreen from '../Screens/Partners/Packages';
+import PartnersListPageScreen from '../Screens/Partners/ListPage';
 // 성실 파트너스 SCREEN
 import Partners01Screen from '../Screens/Partners/Partner01';
 // 인기 파트너스 SCREEN
@@ -184,7 +184,7 @@ export const PartnersStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Partners" component={PartnersScreen} />
-      <Stack.Screen name="Packages" component={PackagesScreen} />
+      <Stack.Screen name="ListPage" component={PartnersListPageScreen} />
       <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
       <Stack.Screen name="Partners01" component={Partners01Screen} />
       <Stack.Screen name="Partners02" component={Partners02Screen} />
