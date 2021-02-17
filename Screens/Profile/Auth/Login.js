@@ -11,9 +11,13 @@ import {
   ScrollView,
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import {useDispatch} from 'react-redux';
+import {setFcmToken} from '../../../Modules/InfoReducer';
 
 const Login = (props) => {
   const navigation = props.navigation;
+
+  const dispatch = useDispatch();
 
   const [autoLogin, setAutoLogin] = React.useState(false);
   const toggleCheck = () => {
@@ -23,9 +27,16 @@ const Login = (props) => {
   React.useEffect(() => {
     messaging()
       .getToken()
-      .then((token) => {
-        return console.log(token);
-      });
+      .then((fcmToken) => {
+        dispatch(setFcmToken(fcmToken));
+      })
+      .catch((err) =>
+        Alert.alert('관리자에게 문의하세요', err.messaging(), [
+          {
+            text: '확인',
+          },
+        ]),
+      );
   }, []);
 
   return (
