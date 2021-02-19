@@ -23,6 +23,8 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import axios from 'axios';
 import qs from 'qs';
+import ImagePicker from 'react-native-image-crop-picker';
+import FastImage from 'react-native-fast-image';
 
 import Header from '../Common/Header';
 import Timer from '../Common/Timer';
@@ -36,13 +38,51 @@ const Edit = (props) => {
   const dispatch = useDispatch();
 
   // Redux 에서 유저 정보 가져오기
-  const {mb_id, mb_email, mb_name, mb_hp, mb_1, mb_2, mb_img} = useSelector(
-    (state) => state.UserInfoReducer,
-  );
+  const {
+    mb_id,
+    mb_email,
+    mb_name,
+    mb_hp,
+    mb_1,
+    mb_2,
+    mb_profile_img,
+  } = useSelector((state) => state.UserInfoReducer);
+
+  const [profileImg, setProfileImg] = React.useState(null);
+
+  const [source, setSoure] = React.useState({});
+
+  // react-native-image-crop-picker 모듈 사용
+  const pickImageHandler = () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      sortOrder: 'none',
+      compressImageMaxWidth: 500,
+      compressImageMaxHeight: 500,
+      compressImageQuality: 1,
+      compressVideoPreset: 'MediumQuality',
+      includeExif: true,
+      cropperCircleOverlay: true,
+      useFrontCamera: false,
+      // includeBase64: true,
+      cropping: true,
+    })
+      .then((img) => {
+        console.log('img', img);
+        dispatch(UserProfileImg(img.path));
+        setSoure({
+          uri: img.path,
+          type: img.mime,
+          name: img.path.slice(img.path.lastIndexOf('/')),
+        });
+        setProfileImg(img.path);
+      })
+      .catch((e) => console.log(e.message ? e.message : e));
+  };
 
   // 회원 정보 수정시 입력값 담기
   const [pwd, setPwd] = React.useState(null);
-  const [mobileConfirmNum, setMobileConfirmNum] = React.useState(null);
+  const [mobileConfirmNum, setMobileConfirmNum] = React.useState('null');
   const [email, setEmail] = React.useState(null);
   const [company, setCompany] = React.useState(null);
 
@@ -79,9 +119,6 @@ const Edit = (props) => {
 
   const [isSend, setIsSend] = React.useState(false);
 
-  // 본인 인증 시간 초과의 경우 상태관리
-  const [reSend, setReSend] = React.useState(false);
-  const [reSendStatus, setReSendStatus] = React.useState('n');
   const onFailConfirm = () => {
     setIsSend(false);
     setReSend(true);
@@ -89,7 +126,7 @@ const Edit = (props) => {
   };
 
   // 인증여부 mb_1 의 인증'Y' 미인증 'N'를 위한 상태값
-  const [confirm, setConfirm] = React.useState(null);
+  const [confirm, setConfirm] = React.useState('Y');
 
   // 본인인증(휴대전화번호) 인증번호 확인 버튼
   const confirmMobile = (register_confirmMobile) => {
@@ -216,27 +253,42 @@ const Edit = (props) => {
     dispatch(UserMobileCfm(mb_1));
     dispatch(UserEmail(mb_email));
     dispatch(UserCompany(mb_2));
-    dispatch(UserProfileImg(mb_img));
+    // dispatch(UserProfileImg(mb_img));
     navigation.navigate('Stack');
   };
+
+  const frmdata = new FormData();
+  frmdata.append('method', 'proc_modify_member');
+  frmdata.append('mb_id', mb_id);
+  frmdata.append('mb_password', pwd ? pwd : '');
+  frmdata.append('mb_hp', mobileNo ? mobileNo : mb_hp);
+  frmdata.append('mb_1', confirm);
+  frmdata.append('mb_email', email ? email : mb_email);
+  frmdata.append('mb_2', company ? company : mb_2 ? mb_2 : '');
+  frmdata.append('mb_img', source);
+
+  const [imgMime, setImgMime] = React.useState(null);
+
+  React.useEffect(() => {
+    if (mb_profile_img) {
+      const sliceImg = mb_profile_img.slice(mb_profile_img.lastIndexOf('.'));
+      if (sliceImg === '.gif') {
+        setImgMime('gif');
+      }
+    }
+  }, [mb_profile_img]);
 
   const onSubmit = () => {
     axios({
       method: 'post',
       url: `${baseUrl}`,
-      data: qs.stringify({
-        method: 'proc_modify_member',
-        mb_id,
-        mb_password: pwd ? pwd : null,
-        mb_hp: mobileNo ? mobileNo : mb_hp,
-        mb_1: confirm,
-        mb_email: email ? email : mb_email,
-        mb_2: company ? company : mb_2 ? mb_2 : null,
-        mb_img: null,
-      }),
+      data: frmdata,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
       .then((res) => {
-        // console.log('수정 시 테스트', res);
+        console.log('수정 시 테스트', res);
         if (res.data.result === '1') {
           Alert.alert(
             '수정되었습니다.',
@@ -252,7 +304,7 @@ const Edit = (props) => {
                     res.data.item.mb_1,
                     res.data.item.mb_email,
                     res.data.item.mb_2,
-                    res.data.item.mb_img,
+                    // res.data.item.mb_img,
                   ),
               },
               {
@@ -282,15 +334,26 @@ const Edit = (props) => {
             }}>
             <TouchableOpacity
               activeOpacity={0.8}
+              onPress={pickImageHandler}
               style={{
                 borderWidth: 1,
                 borderColor: '#E3E3E3',
                 borderRadius: 100,
               }}>
-              {mb_img ? (
+              {mb_profile_img && imgMime !== 'gif' ? (
                 <Image
-                  source={{uri: `${mb_img}`}}
+                  source={{uri: `${mb_profile_img}`}}
                   resizeMode="cover"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 100,
+                  }}
+                />
+              ) : mb_profile_img && imgMime === 'gif' ? (
+                <FastImage
+                  source={{uri: `${mb_profile_img}`}}
+                  resizeMode={FastImage.resizeMode.contain}
                   style={{
                     width: 100,
                     height: 100,
@@ -397,8 +460,8 @@ const Edit = (props) => {
                 <Image
                   source={
                     pwdEyes
-                      ? require('../../src/assets/pwd_eye_on.png')
-                      : require('../../src/assets/pwd_eye_off.png')
+                      ? require('../../src/assets/icon_eye.png')
+                      : require('../../src/assets/icon_eye_on.png')
                   }
                   resizeMode="center"
                   style={{width: 35, height: 20}}

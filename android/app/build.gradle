@@ -192,6 +192,10 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1'  // <-- MultiDex
 
+    // gif 파일 렌더링 때문에 필요
+    implementation 'com.facebook.fresco:fresco:1.+' 
+    implementation 'com.facebook.fresco:animated-gif:1.+'
+
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

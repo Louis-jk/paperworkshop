@@ -600,8 +600,8 @@ const Register = (props) => {
                       <Image
                         source={
                           pwdEyes
-                            ? require('../../../src/assets/pwd_eye_on.png')
-                            : require('../../../src/assets/pwd_eye_off.png')
+                            ? require('../../../src/assets/icon_eye.png')
+                            : require('../../../src/assets/icon_eye_on.png')
                         }
                         resizeMode="center"
                         style={{width: 35, height: 20}}
@@ -672,8 +672,8 @@ const Register = (props) => {
                       <Image
                         source={
                           pwdReEyes
-                            ? require('../../../src/assets/pwd_eye_on.png')
-                            : require('../../../src/assets/pwd_eye_off.png')
+                            ? require('../../../src/assets/icon_eye.png')
+                            : require('../../../src/assets/icon_eye_on.png')
                         }
                         resizeMode="center"
                         style={{width: 35, height: 20}}

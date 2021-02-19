@@ -15,14 +15,37 @@ import {useSelector} from 'react-redux';
 
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Collapsible from 'react-native-collapsible';
+import FastImage from 'react-native-fast-image';
 
 const DrawerMenu = (props) => {
   const navigation = props.navigation;
 
-  const {mb_name, mb_email, mb_id, mb_password} = useSelector(
-    (state) => state.UserInfoReducer,
-  ); // Redux에서 가입시 회원 정보 가져오기
+  // Redux 에서 유저 정보 가져오기
+  const {
+    mb_id,
+    mb_email,
+    mb_name,
+    mb_hp,
+    mb_1,
+    mb_2,
+    mb_profile_img,
+    estimate_cnt,
+  } = useSelector((state) => state.UserInfoReducer);
 
+  const [imgMime, setImgMime] = React.useState(null);
+
+  React.useEffect(() => {
+    if (mb_profile_img) {
+      const sliceImg = mb_profile_img.slice(mb_profile_img.lastIndexOf('.'));
+      if (sliceImg === '.gif') {
+        setImgMime('gif');
+      }
+    }
+  }, [mb_profile_img]);
+
+  // Redux에서 가입시 회원 정보 가져오기
+
+  // console.log('유저 이미지', mb_img);
   const bannerCarouselRef = React.useRef(null);
 
   const banners = [
@@ -148,11 +171,37 @@ const DrawerMenu = (props) => {
                   marginRight: 20,
                 }}>
                 <View>
-                  <Image
-                    source={require('../../src/assets/photo.png')}
-                    resizeMode="cover"
-                    style={{width: 80, height: 80}}
-                  />
+                  {mb_profile_img && imgMime !== 'gif' ? (
+                    <Image
+                      source={{uri: `${mb_profile_img}`}}
+                      resizeMode="cover"
+                      style={{
+                        width: 80,
+                        height: 80,
+                        borderRadius: 80,
+                      }}
+                    />
+                  ) : mb_profile_img && imgMime === 'gif' ? (
+                    <FastImage
+                      source={{uri: `${mb_profile_img}`}}
+                      resizeMode={FastImage.resizeMode.contain}
+                      style={{
+                        width: 80,
+                        height: 80,
+                        borderRadius: 80,
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      source={require('../../src/assets/photo.png')}
+                      resizeMode="cover"
+                      style={{
+                        width: 80,
+                        height: 80,
+                        borderRadius: 80,
+                      }}
+                    />
+                  )}
                 </View>
               </View>
               <View>
@@ -242,7 +291,7 @@ const DrawerMenu = (props) => {
                       marginBottom: 7,
                     },
                   ]}>
-                  12
+                  {estimate_cnt}
                 </Text>
                 <Text
                   style={[

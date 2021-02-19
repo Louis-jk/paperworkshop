@@ -22,7 +22,13 @@ import {
   UserMobile,
   UserEmail,
   UserCompany,
+  UserMobileCfm,
+  UserType,
+  UserProfileImg,
+  UserEstimateCnt,
 } from '../../../Modules/UserInfoReducer';
+
+import Auth from '../../../src/api/Auth.js';
 
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
@@ -64,17 +70,7 @@ const Login = (props) => {
 
   // 로그인 API
   const login = () => {
-    axios({
-      method: 'post',
-      url: `${baseUrl}`,
-      data: qs.stringify({
-        method: 'proc_login_member',
-        mb_id: userId,
-        mb_password: userPwd,
-        mb_3: fFcmToken,
-        mb_4: checkPlatform,
-      }),
-    })
+    Auth.onLogin('proc_login_member', userId, userPwd, fFcmToken, checkPlatform)
       .then((res) => {
         if (res.data.result === '1') {
           dispatch(UserId(res.data.item.mb_id));
@@ -82,9 +78,17 @@ const Login = (props) => {
           dispatch(UserMobile(res.data.item.mb_hp));
           dispatch(UserEmail(res.data.item.mb_email));
           dispatch(UserCompany(res.data.item.mb_2));
+          dispatch(UserMobileCfm(res.data.item.mb_1));
+          dispatch(UserType(res.data.item.mb_level));
+          dispatch(UserProfileImg(res.data.item.mb_profile));
+          dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
           navigation.navigate('Stack');
         } else {
-          Alert.alert(res.data.message);
+          Alert.alert(res.data.message, '다시 시도해주세요.', [
+            {
+              text: '확인',
+            },
+          ]);
         }
       })
       .catch((err) => Alert.alert(`${err.messaging()}`));

@@ -243,7 +243,7 @@ const index = (props) => {
           }}
           style={styles.categoryItem}>
           <Image
-            source={require('../../src/images/icon14.png')}
+            source={require('../../src/images/icon28.png')}
             resizeMode="cover"
             style={styles.categoryItemImg}
           />
@@ -258,7 +258,7 @@ const index = (props) => {
           }}
           style={styles.categoryItem}>
           <Image
-            source={require('../../src/images/icon15.png')}
+            source={require('../../src/images/icon26.png')}
             resizeMode="cover"
             style={styles.categoryItemImg}
           />
@@ -273,7 +273,7 @@ const index = (props) => {
           }}
           style={styles.categoryItem}>
           <Image
-            source={require('../../src/images/icon16.png')}
+            source={require('../../src/images/icon27.png')}
             resizeMode="cover"
             style={styles.categoryItemImg}
           />
@@ -288,7 +288,7 @@ const index = (props) => {
           }}
           style={styles.categoryItem}>
           <Image
-            source={require('../../src/images/icon17.png')}
+            source={require('../../src/images/icon29.png')}
             resizeMode="cover"
             style={styles.categoryItemImg}
           />

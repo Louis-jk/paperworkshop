@@ -5,8 +5,10 @@ const USER_NAME = 'USER_NAME';
 const USER_MOBILE = 'USER_MOBILE';
 const USER_EMAIL = 'USER_EMAIL';
 const USER_MOBILE_CFM = 'USER_MOBILE_CFM';
+const USER_TYPE = 'USER_TYPE';
 const USER_COMPANY = 'USER_COMPANY';
 const USER_PROFILE_IMG = 'USER_PROFILE_IMG';
+const USER_ESTIMATE_CNT = 'USER_ESTIMATE_CNT';
 
 // action method
 export const UserId = (payload) => ({type: USER_ID, payload});
@@ -15,8 +17,13 @@ export const UserName = (payload) => ({type: USER_NAME, payload});
 export const UserMobile = (payload) => ({type: USER_MOBILE, payload});
 export const UserEmail = (payload) => ({type: USER_EMAIL, payload});
 export const UserMobileCfm = (payload) => ({type: USER_MOBILE_CFM, payload});
+export const UserType = (payload) => ({type: USER_TYPE, payload});
 export const UserCompany = (payload) => ({type: USER_COMPANY, payload});
 export const UserProfileImg = (payload) => ({type: USER_PROFILE_IMG, payload});
+export const UserEstimateCnt = (payload) => ({
+  type: USER_ESTIMATE_CNT,
+  payload,
+});
 
 // initialize
 const initialize = {
@@ -25,8 +32,10 @@ const initialize = {
   mb_hp: null,
   mb_email: null,
   mb_1: null,
+  mb_level: null,
   mb_2: null,
-  mb_img: null,
+  mb_profile_img: null,
+  estimate_cnt: 0,
 };
 
 // reducer create
@@ -62,6 +71,11 @@ export default function setJoinInfo(state = initialize, action) {
         ...state,
         mb_1: action.payload,
       };
+    case USER_TYPE:
+      return {
+        ...state,
+        mb_level: action.payload,
+      };
     case USER_COMPANY:
       return {
         ...state,
@@ -70,7 +84,12 @@ export default function setJoinInfo(state = initialize, action) {
     case USER_PROFILE_IMG:
       return {
         ...state,
-        mb_img: action.payload,
+        mb_profile_img: action.payload,
+      };
+    case USER_ESTIMATE_CNT:
+      return {
+        ...state,
+        estimate_cnt: action.payload,
       };
     default:
       return state;
