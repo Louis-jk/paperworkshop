@@ -133,6 +133,7 @@ android {
         applicationId "com.dmonster.paperworkshop"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }
@@ -188,6 +189,8 @@ dependencies {
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
+
+    implementation 'androidx.multidex:multidex:2.0.1'  // <-- MultiDex
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
