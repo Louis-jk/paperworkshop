@@ -32,9 +32,9 @@ const FindPwd = (props) => {
         <View style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
           {/* 이메일 */}
           <View style={{ marginBottom: 20 }}>
-            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>이메일 (아이디)</Text>
+            <Text style={[styles.profileTitle, { marginBottom: 10 }]}>아이디</Text>
             <TextInput
-              placeholder="이메일을 입력해주세요."
+              placeholder="아이디를 입력해주세요."
               placeholderTextColor="#A2A2A2"
               style={[
                 styles.normalText,

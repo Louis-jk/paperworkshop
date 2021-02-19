@@ -9,17 +9,34 @@ import {
   Dimensions,
   Alert,
   ScrollView,
+  Platform,
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {useDispatch} from 'react-redux';
+import axios from 'axios';
+import qs from 'qs';
 import {setFcmToken} from '../../../Modules/InfoReducer';
+import {
+  UserId,
+  UserName,
+  UserMobile,
+  UserEmail,
+  UserCompany,
+} from '../../../Modules/UserInfoReducer';
+
+const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
 const Login = (props) => {
   const navigation = props.navigation;
 
   const dispatch = useDispatch();
 
-  const [autoLogin, setAutoLogin] = React.useState(false);
+  const [fFcmToken, setFfcmToken] = React.useState(null); // fcmtoken 현재 페이지 저장
+  const [checkPlatform, setCheckPlatform] = React.useState(null); // OS 체크
+  const [userId, setUserId] = React.useState(null);
+  const [userPwd, setUserPwd] = React.useState(null);
+
+  const [autoLogin, setAutoLogin] = React.useState(false); // 자동 로그인
   const toggleCheck = () => {
     setAutoLogin((prev) => !prev);
   };
@@ -27,8 +44,9 @@ const Login = (props) => {
   React.useEffect(() => {
     messaging()
       .getToken()
-      .then((fcmToken) => {
-        dispatch(setFcmToken(fcmToken));
+      .then((currentToken) => {
+        setFfcmToken(currentToken);
+        dispatch(setFcmToken(currentToken));
       })
       .catch((err) =>
         Alert.alert('관리자에게 문의하세요', err.messaging(), [
@@ -37,7 +55,41 @@ const Login = (props) => {
           },
         ]),
       );
+    if (Platform.OS === 'ios') {
+      setCheckPlatform('ios');
+    } else {
+      setCheckPlatform('aos');
+    }
   }, []);
+
+  // 로그인 API
+  const login = () => {
+    axios({
+      method: 'post',
+      url: `${baseUrl}`,
+      data: qs.stringify({
+        method: 'proc_login_member',
+        mb_id: userId,
+        mb_password: userPwd,
+        mb_3: fFcmToken,
+        mb_4: checkPlatform,
+      }),
+    })
+      .then((res) => {
+        if (res.data.result === '1') {
+          dispatch(UserId(res.data.item.mb_id));
+          dispatch(UserName(res.data.item.mb_name));
+          dispatch(UserMobile(res.data.item.mb_hp));
+          dispatch(UserEmail(res.data.item.mb_email));
+          dispatch(UserCompany(res.data.item.mb_2));
+          navigation.navigate('Stack');
+        } else {
+          Alert.alert(res.data.message);
+        }
+      })
+      .catch((err) => Alert.alert(`${err.messaging()}`));
+    // navigation.navigate('Stack')
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -68,14 +120,17 @@ const Login = (props) => {
             />
             <View style={{marginBottom: 30}}>
               <TextInput
-                placeholder="이메일"
+                placeholder="아이디"
                 style={[styles.textInput, styles.normalText]}
-                editable={false}
+                onChangeText={(text) => setUserId(text)}
+                autoCapitalize="none"
               />
               <TextInput
                 placeholder="비밀번호"
                 style={[styles.textInput, styles.normalText]}
-                editable={false}
+                onChangeText={(text) => setUserPwd(text)}
+                autoCapitalize="none"
+                secureTextEntry={true}
               />
 
               <TouchableOpacity
@@ -113,7 +168,7 @@ const Login = (props) => {
           <View style={{marginBottom: 20}}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('Stack')}
+              onPress={() => login()}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',

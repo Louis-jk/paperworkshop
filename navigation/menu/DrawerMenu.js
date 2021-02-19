@@ -11,12 +11,17 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Collapsible from 'react-native-collapsible';
 
 const DrawerMenu = (props) => {
   const navigation = props.navigation;
+
+  const {mb_name, mb_email, mb_id, mb_password} = useSelector(
+    (state) => state.UserInfoReducer,
+  ); // Redux에서 가입시 회원 정보 가져오기
 
   const bannerCarouselRef = React.useRef(null);
 
@@ -64,10 +69,10 @@ const DrawerMenu = (props) => {
     );
   };
 
-  const [collapseArrow01, setCollapseArrow01] = React.useState(false);
-  const [collapseArrow02, setCollapseArrow02] = React.useState(false);
-  const [collapseArrow03, setCollapseArrow03] = React.useState(false);
-  const [collapseArrow04, setCollapseArrow04] = React.useState(false);
+  const [collapseArrow01, setCollapseArrow01] = React.useState(true);
+  const [collapseArrow02, setCollapseArrow02] = React.useState(true);
+  const [collapseArrow03, setCollapseArrow03] = React.useState(true);
+  const [collapseArrow04, setCollapseArrow04] = React.useState(true);
 
   const setCollapseArrowFunc01 = () => {
     setCollapseArrow01((prev) => !prev);
@@ -154,7 +159,7 @@ const DrawerMenu = (props) => {
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
                     alignItems: 'center',
                     marginBottom: 5,
                   }}>
@@ -178,7 +183,7 @@ const DrawerMenu = (props) => {
                   </View>
                   <Text
                     style={[styles.normalText, {color: '#fff', fontSize: 18}]}>
-                    페이퍼님
+                    {mb_name}님
                   </Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
@@ -201,7 +206,7 @@ const DrawerMenu = (props) => {
                   </TouchableOpacity>
                 </View>
                 <Text style={[styles.normalText, styles.whiteFont]}>
-                  paper@naver.com
+                  {mb_email}
                 </Text>
               </View>
             </View>
@@ -734,6 +739,23 @@ const DrawerMenu = (props) => {
             </View>
           </Collapsible>
 
+          <View
+            style={{
+              width: Dimensions.get('window').width,
+              height: 1,
+              backgroundColor: '#F5F5F5',
+            }}
+          />
+          <TouchableOpacity activeOpacity={1}>
+            <View
+              style={[
+                styles.categoryTitle,
+                styles.mV10,
+                {flexDirection: 'row', justifyContent: 'space-between'},
+              ]}>
+              <Text style={[styles.mediumText, {fontSize: 16}]}>로그아웃</Text>
+            </View>
+          </TouchableOpacity>
           <View
             style={{
               width: Dimensions.get('window').width,
