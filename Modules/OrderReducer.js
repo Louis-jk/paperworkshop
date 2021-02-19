@@ -10,9 +10,21 @@ export const selectTypeId = (payload) => ({type: SELECT_TYPE_ID, payload});
 
 // initialize
 const initialize = {
-  cate1: null,
-  ca_id: null,
+  cate1: null, // 1차 카테고리('패키지','일반인쇄','기타인쇄')
+  ca_id: null, // 2차 카테고리('패키지 -> 칼라박스, ~~박스', '일반인쇄 -> 접지 ~~ 등')
   type_id: null,
+  mb_id: null, // 회원 아이디
+  title: null, // 제작명
+  company: null, // 회사명
+  mb_name: null, // 주문자명
+  mb_hp: null, // 주문자 휴대폰 번호
+  ord_company: null, // 주문자 회사명
+  design_print: null,
+  favor_area: null,
+  delivery_date: null,
+  estimate_date: null,
+  pe_file: [],
+  memo: null,
 };
 
 // reducer create

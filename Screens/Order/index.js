@@ -14,17 +14,21 @@ import {
   Alert,
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {selectCate1, selectCaId} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
 
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
   const dispatch = useDispatch();
+
+  // Redux 에서 유저 정보 가져오기
+  const {mb_id, mb_email, mb_name, mb_hp, mb_1, mb_2, mb_img} = useSelector(
+    (state) => state.UserInfoReducer,
+  );
 
   // start 비교 견적 대상 카테고리 선택 Tab
 
@@ -446,20 +450,22 @@ const index = (props) => {
             견적 신청 대상
           </Text>
           <View style={[styles.infoBox, {marginBottom: 10}]}>
-            <View style={styles.details}>
-              <Text style={[styles.normalText, styles.detailsTitle]}>
-                업체명
-              </Text>
-              <Text style={[styles.normalText, styles.detailsDesc]}>
-                삼보인쇄(주)
-              </Text>
-            </View>
+            {mb_2 ? (
+              <View style={styles.details}>
+                <Text style={[styles.normalText, styles.detailsTitle]}>
+                  업체명
+                </Text>
+                <Text style={[styles.normalText, styles.detailsDesc]}>
+                  {mb_2}
+                </Text>
+              </View>
+            ) : null}
             <View style={styles.details}>
               <Text style={[styles.normalText, styles.detailsTitle]}>
                 담당자
               </Text>
               <Text style={[styles.normalText, styles.detailsDesc]}>
-                김성준
+                {mb_name}
               </Text>
             </View>
           </View>
