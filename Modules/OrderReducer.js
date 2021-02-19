@@ -1,10 +1,22 @@
 // action type
 const SELECT_CATE1 = 'SELECT_CATE1';
 const SELECT_CA_ID = 'SELECT_CA_ID';
-const TYPE_ID = 'TYPE_ID';
-const PF_ID = 'PF_ID';
-const PD_ID = 'PD_ID';
-const PN_ID = 'PN_ID';
+const SELECT_TYPE_ID = 'SELECT_TYPE_ID';
+const SELECT_PF_ID = 'SELECT_PF_ID';
+const SELECT_PD_ID = 'SELECT_PD_ID';
+const SELECT_PN_ID = 'SELECT_PN_ID';
+const SELECT_PAPER_NAME = 'SELECT_PAPER_NAME';
+const SET_USER_ID = 'SET_USER_ID';
+const SET_TITLE = 'SET_TITLE';
+const SET_COMPANY = 'SET_COMPANY';
+const SET_USER_NAME = 'SET_USER_NAME';
+const SET_USER_MOBILE = 'SET_USER_MOBILE';
+const SET_DESIGN = 'SET_DESIGN';
+const SET_LOCATION = 'SET_LOCATION';
+const SET_DELIVERY = 'SET_DELIVERY';
+const SET_ESTIMATE = 'SET_ESTIMATE';
+const SET_FILE = 'SET_FILE';
+const SET_MEMO = 'SET_MEMO';
 
 // action method
 export const selectCate1 = (payload) => ({type: SELECT_CATE1, payload});
@@ -13,6 +25,21 @@ export const selectTypeId = (payload) => ({type: SELECT_TYPE_ID, payload});
 export const selectPfId = (payload) => ({type: SELECT_PF_ID, payload});
 export const selectPdId = (payload) => ({type: SELECT_PD_ID, payload});
 export const selectPnId = (payload) => ({type: SELECT_PN_ID, payload});
+export const selectPaperName = (payload) => ({
+  type: SELECT_PAPER_NAME,
+  payload,
+});
+export const setUserId = (payload) => ({type: SET_USER_ID, payload});
+export const setTitle = (payload) => ({type: SET_TITLE, payload});
+export const setCompany = (payload) => ({type: SET_COMPANY, payload});
+export const setUserName = (payload) => ({type: SET_USER_NAME, payload});
+export const setUserMobile = (payload) => ({type: SET_USER_MOBILE, payload});
+export const setDesign = (payload) => ({type: SET_DESIGN, payload});
+export const setLocation = (payload) => ({type: SET_LOCATION, payload});
+export const setDelivery = (payload) => ({type: SET_DELIVERY, payload});
+export const setEstimate = (payload) => ({type: SET_ESTIMATE, payload});
+export const setFile = (payload) => ({type: SET_FILE, payload});
+export const setMemo = (payload) => ({type: SET_MEMO, payload});
 
 // initialize
 const initialize = {
@@ -28,7 +55,6 @@ const initialize = {
   company: null, // 회사명
   mb_name: null, // 주문자명
   mb_hp: null, // 주문자 휴대폰 번호
-  ord_company: null, // 주문자 회사명
   design_print: null, // 디자인의뢰
   favor_area: null, // 지역
   delivery_date: null, // 납품희망일자
@@ -72,25 +98,85 @@ export default function setOrder(state = initialize, action) {
         ...state,
         ca_id: action.payload,
       };
-    case TYPE_ID:
+    case SELECT_TYPE_ID:
       return {
         ...state,
         type_id: action.payload,
       };
-    case PF_ID:
+    case SELECT_PF_ID:
       return {
         ...state,
         pf_id: action.payload,
       };
-    case PD_ID:
+    case SELECT_PD_ID:
       return {
         ...state,
         pd_id: action.payload,
       };
-    case PN_ID:
+    case SELECT_PN_ID:
       return {
         ...state,
         pn_id: action.payload,
+      };
+    case SELECT_PAPER_NAME:
+      return {
+        ...state,
+        paper_name2: action.payload,
+      };
+    case SET_USER_ID:
+      return {
+        ...state,
+        mb_id: action.payload,
+      };
+    case SET_TITLE:
+      return {
+        ...state,
+        title: action.payload,
+      };
+    case SET_COMPANY:
+      return {
+        ...state,
+        company: action.payload,
+      };
+    case SET_USER_NAME:
+      return {
+        ...state,
+        mb_name: action.payload,
+      };
+    case SET_USER_MOBILE:
+      return {
+        ...state,
+        mb_hp: action.payload,
+      };
+    case SET_DESIGN:
+      return {
+        ...state,
+        design_print: action.payload,
+      };
+    case SET_LOCATION:
+      return {
+        ...state,
+        favor_area: action.payload,
+      };
+    case SET_DELIVERY:
+      return {
+        ...state,
+        delivery_date: action.payload,
+      };
+    case SET_ESTIMATE:
+      return {
+        ...state,
+        estimate_date: action.payload,
+      };
+    case SET_FILE:
+      return {
+        ...state,
+        pe_file: action.payload,
+      };
+    case SET_MEMO:
+      return {
+        ...state,
+        memo: action.payload,
       };
     default:
       return state;

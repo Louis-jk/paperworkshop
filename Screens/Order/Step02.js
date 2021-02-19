@@ -19,17 +19,14 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import 'moment/locale/ko';
+import {useSelector, useDispatch} from 'react-redux';
 
+// import {setTitle, setUserName} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
 
 const Step02 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-
-  const [category01, setCategory01] = React.useState(null);
-  const [category02, setCategory02] = React.useState(null);
-  const [value, setValue] = React.useState(null);
 
   const [order, setOrder] = React.useState('print');
 
@@ -52,11 +49,15 @@ const Step02 = (props) => {
     setShow01(Platform.OS === 'ios');
 
     if (selectedDate < date) {
-      Alert.alert('오늘 이전 날짜는 선택이 불가능 합니다.', '날짜를 다시 선택해주세요.', [
-        {
-          text: '확인',
-        },
-      ]);
+      Alert.alert(
+        '오늘 이전 날짜는 선택이 불가능 합니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
       setdDayDate(date);
     } else {
       setArriveDate(currentDate);
@@ -68,11 +69,15 @@ const Step02 = (props) => {
     setShow02(Platform.OS === 'ios');
 
     if (selectedDate < date) {
-      Alert.alert('오늘 이전 날짜는 선택이 불가능 합니다.', '날짜를 다시 선택해주세요.', [
-        {
-          text: '확인',
-        },
-      ]);
+      Alert.alert(
+        '오늘 이전 날짜는 선택이 불가능 합니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
       setdDayDate(date);
     } else {
       setdDayDate(currentDate);
@@ -101,13 +106,31 @@ const Step02 = (props) => {
     showMode('time');
   };
 
+  const [title, setTitle] = React.useState(null); // 제작명 (필수)
+  const [name, setName] = React.useState(null); // 고객명 (필수)
+  const [mobile, setMobile] = React.useState(null); // 휴대폰 번호 (필수)
+  const [company, setCompany] = React.useState(null); // 회사명 (선택)
+  const [designOrder, setDesignOrder] = React.useState('y'); // 디자인 의뢰 (필수)
+  const [location, setLocation] = React.useState(null); // 인쇄 업체 선호 지역 (필수)
+  const [deliveryDate, setDeliveryDate] = React.useState(null); // 납품 희망일 (필수)
+  const [estimateDate, setEstimateDate] = React.useState(null); // 견적 마감일 (필수)
+  const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
+  const [memo, setMemo] = React.useState(null); // 메모 (선택)
+
+  // 다음 스텝
+  const nextStep = () => {
+    navigation.navigate('OrderStep03');
+  };
+
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
+        <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
           <View style={styles.profileBox}>
-            <Text style={[styles.boldText, { fontSize: 16, marginBottom: 20 }]}>기본 정보</Text>
+            <Text style={[styles.boldText, {fontSize: 16, marginBottom: 20}]}>
+              기본 정보
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -115,10 +138,13 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>제작명</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                제작명
+              </Text>
               <Text style={[styles.profileRequired]}>(필수)</Text>
             </View>
             <TextInput
+              value={title}
               placeholder="제작명을 입력해주세요."
               placeholderTextColor="#A2A2A2"
               style={[
@@ -132,12 +158,13 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 },
               ]}
+              onChangeText={(text) => setTitle(text)}
               autoCapitalize="none"
             />
           </View>
 
           {/* 고객명  */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{marginBottom: 20}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -145,10 +172,13 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>고객명</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                고객명
+              </Text>
               <Text style={[styles.profileRequired]}>(필수)</Text>
             </View>
             <TextInput
+              value={name}
               placeholder="고객명을 입력해주세요."
               placeholderTextColor="#A2A2A2"
               style={[
@@ -162,13 +192,14 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 },
               ]}
+              onChangeText={(text) => setName(text)}
               autoCapitalize="none"
             />
           </View>
           {/* // 고객명  */}
 
           {/* 휴대폰 번호  */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{marginBottom: 20}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -176,10 +207,13 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>휴대폰 번호</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                휴대폰 번호
+              </Text>
               <Text style={[styles.profileRequired]}>(필수)</Text>
             </View>
             <TextInput
+              value={mobile}
               placeholder="휴대폰 번호를 입력해주세요."
               placeholderTextColor="#A2A2A2"
               style={[
@@ -193,13 +227,14 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 },
               ]}
+              onChangeText={(text) => setMobile(text)}
               autoCapitalize="none"
             />
           </View>
           {/* // 휴대폰 번호  */}
 
           {/* 회사명  */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{marginBottom: 20}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -207,10 +242,15 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>회사명</Text>
-              <Text style={[styles.profileRequired, { color: '#707070' }]}>(선택)</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                회사명
+              </Text>
+              <Text style={[styles.profileRequired, {color: '#707070'}]}>
+                (선택)
+              </Text>
             </View>
             <TextInput
+              value={company}
               placeholder="회사명을 입력해주세요."
               placeholderTextColor="#A2A2A2"
               style={[
@@ -224,13 +264,14 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 },
               ]}
+              onChangeText={(text) => setCompany(text)}
               autoCapitalize="none"
             />
           </View>
           {/* // 회사명  */}
 
           {/* 디자인 의뢰  */}
-          <View style={{ marginBottom: 25 }}>
+          <View style={{marginBottom: 25}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -238,14 +279,20 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>디자인 의뢰</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                디자인 의뢰
+              </Text>
               <Text style={[styles.profileRequired]}>(필수)</Text>
             </View>
             <View
-              style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}>
               <TouchableOpacity
                 activeOpacity={1}
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                 onPress={() => setOrderDesign('print')}
                 style={{
                   flexDirection: 'row',
@@ -260,13 +307,15 @@ const Step02 = (props) => {
                       : require('../../src/assets/radio_off.png')
                   }
                   resizeMode="contain"
-                  style={{ width: 20, height: 20, marginRight: 5 }}
+                  style={{width: 20, height: 20, marginRight: 5}}
                 />
-                <Text style={[styles.normalText, { fontSize: 14 }]}>인쇄만 의뢰</Text>
+                <Text style={[styles.normalText, {fontSize: 14}]}>
+                  인쇄만 의뢰
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={1}
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                 onPress={() => setOrderDesign('design')}
                 style={{
                   flexDirection: 'row',
@@ -280,16 +329,18 @@ const Step02 = (props) => {
                       : require('../../src/assets/radio_off.png')
                   }
                   resizeMode="contain"
-                  style={{ width: 20, height: 20, marginRight: 5 }}
+                  style={{width: 20, height: 20, marginRight: 5}}
                 />
-                <Text style={[styles.normalText, { fontSize: 14 }]}>인쇄 + 디자인 의뢰</Text>
+                <Text style={[styles.normalText, {fontSize: 14}]}>
+                  인쇄 + 디자인 의뢰
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
           {/* // 디자인 의뢰  */}
 
           {/* 입쇄 업체 선호 지역  */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{marginBottom: 20}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -297,33 +348,39 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>입쇄 업체 선호 지역</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                입쇄 업체 선호 지역
+              </Text>
               <Text style={[styles.profileRequired]}>(필수)</Text>
             </View>
             <DropDownPicker
               placeholder={'선호지역을 입력해주세요.'}
-              placeholderStyle={{ fontSize: 14, color: '#A2A2A2', fontWeight: '400' }}
-              activeLabelStyle={{ color: '#000' }}
-              activeItemStyle={{ color: '#000' }}
-              selectedLabelStyle={{ color: '#000' }}
+              placeholderStyle={{
+                fontSize: 14,
+                color: '#A2A2A2',
+                fontWeight: '400',
+              }}
+              activeLabelStyle={{color: '#000'}}
+              activeItemStyle={{color: '#000'}}
+              selectedLabelStyle={{color: '#000'}}
               items={[
-                { label: '서울', value: '서울' },
-                { label: '부산', value: '부산' },
-                { label: '대구', value: '대구' },
-                { label: '인천', value: '인천' },
-                { label: '광주', value: '광주' },
-                { label: '세종/대전/청주', value: '세종/대전/청주' },
-                { label: '울산', value: '울산' },
-                { label: '경기', value: '경기' },
-                { label: '강원', value: '강원' },
-                { label: '충청', value: '충청' },
-                { label: '전라북도', value: '전라북도' },
-                { label: '전라남도', value: '전라남도' },
-                { label: '경상북도', value: '경상북도' },
-                { label: '경상남도', value: '경상남도' },
-                { label: '제주', value: '제주' },
+                {label: '서울', value: '서울'},
+                {label: '부산', value: '부산'},
+                {label: '대구', value: '대구'},
+                {label: '인천', value: '인천'},
+                {label: '광주', value: '광주'},
+                {label: '세종/대전/청주', value: '세종/대전/청주'},
+                {label: '울산', value: '울산'},
+                {label: '경기', value: '경기'},
+                {label: '강원', value: '강원'},
+                {label: '충청', value: '충청'},
+                {label: '전라북도', value: '전라북도'},
+                {label: '전라남도', value: '전라남도'},
+                {label: '경상북도', value: '경상북도'},
+                {label: '경상남도', value: '경상남도'},
+                {label: '제주', value: '제주'},
               ]}
-              containerStyle={{ height: 50 }}
+              containerStyle={{height: 50}}
               style={{
                 backgroundColor: '#fff',
                 borderTopRightRadius: 4,
@@ -335,20 +392,20 @@ const Step02 = (props) => {
                 justifyContent: 'flex-start',
                 paddingVertical: 10,
               }}
-              labelStyle={{ fontFamily: 'SCDream4', color: '#A2A2A2' }}
-              dropDownStyle={{ backgroundColor: '#fff' }}
+              labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+              dropDownStyle={{backgroundColor: '#fff'}}
               onChangeItem={(item) => setCa(item.value)}
               customArrowDown={() => (
                 <Image
                   source={require('../../src/assets/arr01.png')}
-                  style={{ width: 25, height: 25 }}
+                  style={{width: 25, height: 25}}
                   resizeMode="contain"
                 />
               )}
               customArrowUp={() => (
                 <Image
                   source={require('../../src/assets/arr01_top.png')}
-                  style={{ width: 25, height: 25 }}
+                  style={{width: 25, height: 25}}
                   resizeMode="contain"
                 />
               )}
@@ -365,7 +422,7 @@ const Step02 = (props) => {
               marginBottom: 20,
               zIndex: -10,
             }}>
-            <View style={{ width: '50%', paddingRight: 5 }}>
+            <View style={{width: '50%', paddingRight: 5}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -373,7 +430,9 @@ const Step02 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>납품 희망일</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  납품 희망일
+                </Text>
                 <Text style={[styles.profileRequired]}>(필수)</Text>
               </View>
               <TouchableOpacity
@@ -406,7 +465,7 @@ const Step02 = (props) => {
                 <Image
                   source={require('../../src/assets/icon03.png')}
                   resizeMode="contain"
-                  style={{ width: 30, height: 30, marginRight: 10 }}
+                  style={{width: 30, height: 30, marginRight: 10}}
                 />
               </TouchableOpacity>
             </View>
@@ -420,7 +479,7 @@ const Step02 = (props) => {
                 onChange={onChange01}
               />
             )}
-            <View style={{ width: '50%', paddingLeft: 5 }}>
+            <View style={{width: '50%', paddingLeft: 5}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -428,7 +487,9 @@ const Step02 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>견적 마감일</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  견적 마감일
+                </Text>
                 <Text style={[styles.profileRequired]}>(필수)</Text>
               </View>
               <TouchableOpacity
@@ -461,7 +522,7 @@ const Step02 = (props) => {
                 <Image
                   source={require('../../src/assets/icon03.png')}
                   resizeMode="contain"
-                  style={{ width: 30, height: 30, marginRight: 10 }}
+                  style={{width: 30, height: 30, marginRight: 10}}
                 />
               </TouchableOpacity>
             </View>
@@ -479,7 +540,7 @@ const Step02 = (props) => {
           {/* // 납품 희망일, 견적 마감일  */}
 
           {/* 파일 첨부  */}
-          <View style={{ marginBottom: 20, zIndex: -10 }}>
+          <View style={{marginBottom: 20, zIndex: -10}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -487,8 +548,12 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>파일 첨부</Text>
-              <Text style={[styles.profileRequired, { color: '#707070' }]}>(선택)</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                파일 첨부
+              </Text>
+              <Text style={[styles.profileRequired, {color: '#707070'}]}>
+                (선택)
+              </Text>
             </View>
             <View
               style={{
@@ -524,19 +589,23 @@ const Step02 = (props) => {
                   height: 50,
                   paddingHorizontal: 20,
                 }}>
-                <Text style={[styles.normalText, { color: '#fff', textAlign: 'center' }]}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {color: '#fff', textAlign: 'center'},
+                  ]}>
                   파일 선택
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text style={[styles.normalText, { fontSize: 12, color: '#366DE5' }]}>
+            <Text style={[styles.normalText, {fontSize: 12, color: '#366DE5'}]}>
               * 인쇄/패키지 제작에 참고 할 수 있는 자료가 있다면 첨부해주세요.
             </Text>
           </View>
           {/* // 파일 첨부  */}
 
           {/* 메모  */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{marginBottom: 20}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -544,10 +613,13 @@ const Step02 = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.profileTitle, { marginRight: 5 }]}>메모</Text>
-              <Text style={[styles.profileRequired, { color: '#707070' }]}>(선택)</Text>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>메모</Text>
+              <Text style={[styles.profileRequired, {color: '#707070'}]}>
+                (선택)
+              </Text>
             </View>
             <TextInput
+              value={memo}
               placeholder="메모를 입력해주세요."
               placeholderTextColor="#A2A2A2"
               style={[
@@ -562,14 +634,16 @@ const Step02 = (props) => {
                   paddingVertical: 10,
                 },
               ]}
+              onChangeText={(text) => setMemo(text)}
               multiline={true}
+              autoCapitalize="none"
             />
           </View>
           {/* // 메모  */}
         </View>
 
         {/* 이전, 다음 버튼 부분 (Prev, Next) */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <View
             style={{
               flexDirection: 'row',
@@ -581,7 +655,9 @@ const Step02 = (props) => {
               backgroundColor: '#fff',
               marginBottom: 20,
             }}>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
             <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
               <View
                 style={{
@@ -594,7 +670,7 @@ const Step02 = (props) => {
                 <Image
                   source={require('../../src/assets/prevUnActiveArrow.png')}
                   resizeMode="contain"
-                  style={{ width: 16, height: 16, marginRight: 7 }}
+                  style={{width: 16, height: 16, marginRight: 7}}
                 />
                 <Text
                   style={[
@@ -609,8 +685,10 @@ const Step02 = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('OrderStep03')}>
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
+            <TouchableWithoutFeedback onPress={() => nextStep()}>
               <View
                 style={{
                   flex: 1,
@@ -622,7 +700,7 @@ const Step02 = (props) => {
                 <Image
                   source={require('../../src/assets/nextActiveArrow.png')}
                   resizeMode="contain"
-                  style={{ width: 16, height: 16, marginLeft: 7 }}
+                  style={{width: 16, height: 16, marginLeft: 7}}
                 />
                 <Text
                   style={[

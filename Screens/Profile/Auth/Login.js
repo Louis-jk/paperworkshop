@@ -30,7 +30,7 @@ import {
 
 import Auth from '../../../src/api/Auth.js';
 
-const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
+// const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
 const Login = (props) => {
   const navigation = props.navigation;
