@@ -20,7 +20,6 @@ import qs from 'qs';
 import {useSelector, useDispatch} from 'react-redux';
 
 import DetailHeader from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
 import Modal from '../Common/InfoModal';
 import {selectTypeId, selectTypeName} from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
@@ -35,6 +34,7 @@ const Step03 = (props) => {
   const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
   const [typeDetail, setTypeDetail] = React.useState([]);
 
+  // 박스 정보 가져오기
   const getTypeDetail = () => {
     axios({
       url: `${baseUrl}`,
@@ -152,6 +152,7 @@ const Step03 = (props) => {
           {/* 타입 부분 */}
           <View style={{marginBottom: 20}}>
             <View style={styles.categoryWrap}>
+              {/* {console.log('TypeDetail', typeDetail)} */}
               {typeDetail
                 ? typeDetail.map((t) => (
                     <TouchableOpacity
@@ -162,18 +163,36 @@ const Step03 = (props) => {
                         setTypeName(t.type_name);
                       }}
                       style={styles.categoryItem}>
-                      <ImageBackground
-                        source={{uri: `${t.box_img}`}}
-                        resizeMode="cover"
-                        style={styles.categoryItemImg}>
-                        {type === t.type_id && (
-                          <Image
-                            source={require('../../src/images/box_on.png')}
-                            resizeMode="cover"
-                            style={styles.categoryItemImgHover}
-                          />
-                        )}
-                      </ImageBackground>
+                      {t.box_img ? (
+                        <ImageBackground
+                          source={{uri: `${t.box_img}`}}
+                          resizeMode="cover"
+                          style={styles.categoryItemImg}>
+                          {type === t.type_id && (
+                            <Image
+                              source={require('../../src/images/box_on.png')}
+                              resizeMode="cover"
+                              style={styles.categoryItemImgHover}
+                            />
+                          )}
+                        </ImageBackground>
+                      ) : (
+                        <ImageBackground
+                          source={require('../../src/assets/photo.png')}
+                          resizeMode="cover"
+                          style={[
+                            styles.categoryItemImg,
+                            {borderWidth: 0.5, borderColor: '#E5E5E5'},
+                          ]}>
+                          {type === t.type_id && (
+                            <Image
+                              source={require('../../src/images/box_on.png')}
+                              resizeMode="cover"
+                              style={styles.categoryItemImgHover}
+                            />
+                          )}
+                        </ImageBackground>
+                      )}
 
                       <Text
                         style={[
@@ -197,9 +216,12 @@ const Step03 = (props) => {
                 }}
                 style={styles.categoryItem}>
                 <ImageBackground
-                  source={require('../../src/images/icon25.png')}
+                  source={require('../../src/assets/photo.png')}
                   resizeMode="cover"
-                  style={styles.categoryItemImg}>
+                  style={[
+                    styles.categoryItemImg,
+                    {borderWidth: 0.5, borderColor: '#E5E5E5'},
+                  ]}>
                   {type === '0' && (
                     <Image
                       source={require('../../src/images/box_on.png')}

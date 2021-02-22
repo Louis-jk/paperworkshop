@@ -13,29 +13,100 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import axios from 'axios';
+import qs from 'qs';
+import {useSelector, useDispatch} from 'react-redux';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import DetailHeader from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
+const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
 const Step05 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
+  const dispatch = useDispatch();
+  const {cate1, ca_id, type_id} = useSelector((state) => state.OrderReducer);
+
+  const [typeDetail, setTypeDetail] = React.useState([]); // 지류 정보 담기
+  const [paperDetail, setPaperDetail] = React.useState([]); // 지종 정보 담기
+
   //  지류 선택
   const [paper, setPaper] = React.useState('normal');
 
-  const setPaperChoise = (v) => {
-    setPaper(v);
-  };
-
-  //  고급지 일 경우 - 지종 선택
+  // 지종 선택
   const [paperType, setPaperType] = React.useState('지종 선택');
 
   const setPaperTypeChoise = (v) => {
     setPaperType(v);
   };
+
+  // 지종 가져오기
+  const getPaperDetail = (pf_id) => {
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_list',
+        cate1,
+        ca_id,
+        pf_id,
+      }),
+    })
+      .then((res) => {
+        console.log('res', res);
+        if (res.data.result === '1') {
+          setPaperDetail(res.data.item);
+          // setPaperType(res.data.item[0].paper_name);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const setPaperChoise = (v) => {
+    setPaper(v);
+    getPaperDetail(v);
+  };
+
+  // 지류 정보 가져오기
+  const getTypeDetail = () => {
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_feeder_list',
+        cate1,
+        ca_id,
+        type_id,
+      }),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.result === '1') {
+          setTypeDetail(res.data.item);
+          setPaperChoise(res.data.item[0].pf_id);
+          // dispatch(setOrderDetails(res.data.item));
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    getTypeDetail();
+  }, [paperType]);
 
   //  고급지 일 경우 - 지종 선택 - 세부 선택
   const [paperTypeDetail, setPaperTypeDetail] = React.useState('세부 선택');
@@ -72,6 +143,8 @@ const Step05 = (props) => {
     setCheck(v);
   };
 
+  const temp = [{label: 1}];
+
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
@@ -85,7 +158,9 @@ const Step05 = (props) => {
           paddingVertical: 20,
           backgroundColor: '#fff',
         }}>
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.wrap}>
             <View
               style={{
@@ -93,21 +168,15 @@ const Step05 = (props) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.boldText, { fontSize: 16, color: '#000000' }]}>지류 선택</Text>
-              {/* <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={toggleModal}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                  <Text style={[styles.normalText, { fontSize: 13, color: '#366DE5' }]}>
-                    *이전 단계 입력 내용 자동 저장
-                  </Text>
-                </TouchableOpacity> */}
+              <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+                지류 선택
+              </Text>
             </View>
           </View>
 
           <View style={styles.wrap}>
             {/* 지류 선택  */}
-            <View style={{ marginBottom: paper === 'normal' ? 40 : 25 }}>
+            <View style={{marginBottom: paper === 'normal' ? 40 : 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -115,7 +184,9 @@ const Step05 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>구분</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  구분
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
@@ -123,213 +194,81 @@ const Step05 = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
+                  flexWrap: 'wrap',
                 }}>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                  onPress={() => setPaperChoise('normal')}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginRight: 20,
-                  }}>
-                  <Image
-                    source={
-                      paper === 'normal'
-                        ? require('../../src/assets/radio_on.png')
-                        : require('../../src/assets/radio_off.png')
-                    }
-                    resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
-                  />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>일반(백판지,마닐라류)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                  onPress={() => setPaperChoise('premium')}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={
-                      paper === 'premium'
-                        ? require('../../src/assets/radio_on.png')
-                        : require('../../src/assets/radio_off.png')
-                    }
-                    resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
-                  />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>고급(특수지,CCP류)</Text>
-                </TouchableOpacity>
+                {typeDetail
+                  ? typeDetail.map((t) => (
+                      <TouchableOpacity
+                        key={t.pf_id}
+                        activeOpacity={1}
+                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        onPress={() => setPaperChoise(t.pf_id)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                          marginBottom: 20,
+                          // width: '100%',
+                        }}>
+                        <Image
+                          source={
+                            paper === t.pf_id
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {t.feeder_name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))
+                  : null}
               </View>
             </View>
             {/* // 지류 선택  */}
 
-            {/* 지종 선택 -- 고급일 경우에만  */}
-            {paper === 'premium' && (
-              <View style={{ marginBottom: 40 }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 10,
-                  }}>
-                  <Text style={[styles.profileTitle, { marginRight: 5 }]}>지종</Text>
-                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: paperType === 'direct' ? 0 : 25,
-                  }}>
-                  <View style={{ width: '49%' }}>
-                    <DropDownPicker
-                      placeholder={'지종 선택'}
-                      placeholderStyle={{ fontSize: 14, color: '#A2A2A2', fontWeight: '400' }}
-                      activeLabelStyle={{ color: '#000' }}
-                      activeItemStyle={{ color: '#000' }}
-                      selectedLabelStyle={{ color: '#000' }}
-                      value={paperType}
-                      dropDownMaxHeight={500}
-                      items={[
-                        { label: 'CCP지', value: 'CCP지' },
-                        { label: '친환경 용지', value: '친환경 용지' },
-                        { label: '크라프트', value: '크라프트' },
-                        { label: '특수지(국산)', value: '특수지(국산)' },
-                        { label: '특수지(수입)', value: '특수지(수입)' },
-                        { label: '직접입력', value: 'direct' },
-                      ]}
-                      containerStyle={{ height: 50 }}
-                      style={{
-                        backgroundColor: '#fff',
-                        borderTopRightRadius: 4,
-                        borderTopLeftRadius: 4,
-                        borderBottomRightRadius: 4,
-                        borderBottomLeftRadius: 4,
-                      }}
-                      itemStyle={{
-                        justifyContent: 'flex-start',
-                        paddingVertical: 10,
-                      }}
-                      labelStyle={{ fontFamily: 'SCDream4', color: '#A2A2A2' }}
-                      dropDownStyle={{ backgroundColor: '#fff' }}
-                      onChangeItem={(item) => setPaperTypeChoise(item.value)}
-                      customArrowDown={() => (
-                        <Image
-                          source={require('../../src/assets/arr01.png')}
-                          style={{ width: 25, height: 25 }}
-                          resizeMode="contain"
-                        />
-                      )}
-                      customArrowUp={() => (
-                        <Image
-                          source={require('../../src/assets/arr01_top.png')}
-                          style={{ width: 25, height: 25 }}
-                          resizeMode="contain"
-                        />
-                      )}
-                    />
-                  </View>
-                  <View style={{ width: '49%' }}>
-                    <DropDownPicker
-                      placeholder={'세부 선택'}
-                      placeholderStyle={{ fontSize: 14, color: '#A2A2A2', fontWeight: '400' }}
-                      activeLabelStyle={{ color: '#000' }}
-                      activeItemStyle={{ color: '#000' }}
-                      selectedLabelStyle={{ color: '#000' }}
-                      value={paperType === 'direct' ? '없음' : paperTypeDetail}
-                      dropDownMaxHeight={500}
-                      items={[
-                        { label: '세부 선택01', value: '세부 선택01' },
-                        { label: '세부 선택02', value: '세부 선택02' },
-                        { label: '세부 선택03', value: '세부 선택03' },
-                        { label: '없음', value: '없음' },
-                      ]}
-                      containerStyle={{ height: 50 }}
-                      style={{
-                        backgroundColor: '#fff',
-                        borderTopRightRadius: 4,
-                        borderTopLeftRadius: 4,
-                        borderBottomRightRadius: 4,
-                        borderBottomLeftRadius: 4,
-                      }}
-                      itemStyle={{
-                        justifyContent: 'flex-start',
-                        paddingVertical: 10,
-                      }}
-                      labelStyle={{ fontFamily: 'SCDream4', color: '#A2A2A2' }}
-                      dropDownStyle={{ backgroundColor: '#fff' }}
-                      onChangeItem={(item) => setPaperTypeDetailChoise(item.value)}
-                      customArrowDown={() => (
-                        <Image
-                          source={require('../../src/assets/arr01.png')}
-                          style={{ width: 25, height: 25 }}
-                          resizeMode="contain"
-                        />
-                      )}
-                      customArrowUp={() => (
-                        <Image
-                          source={require('../../src/assets/arr01_top.png')}
-                          style={{ width: 25, height: 25 }}
-                          resizeMode="contain"
-                        />
-                      )}
-                    />
-                  </View>
-                </View>
-                {paperType === 'direct' && (
-                  <TextInput
-                    value=""
-                    placeholder="지종을 직접 입력해주세요."
-                    placeholderTextColor="#A2A2A2"
-                    style={[
-                      styles.normalText,
-                      {
-                        borderWidth: 1,
-                        borderColor: '#E3E3E3',
-                        borderRadius: 4,
-                        paddingHorizontal: 10,
-                        marginTop: 5,
-                        marginBottom: 25,
-                      },
-                    ]}
-                    autoCapitalize="none"
-                  />
-                )}
+            {/* 지종 선택 */}
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 10,
-                  }}>
-                  <Text style={[styles.profileTitle, { marginRight: 5 }]}>평량</Text>
-                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                </View>
-                <View style={{ width: '49%' }}>
+            <View style={{marginBottom: 40}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  지종
+                </Text>
+                {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: paperType === 'direct' ? 0 : 25,
+                }}>
+                <View style={{width: '49%'}}>
                   <DropDownPicker
-                    placeholder={'평량 선택'}
-                    placeholderStyle={{ fontSize: 14, color: '#A2A2A2', fontWeight: '400' }}
-                    activeLabelStyle={{ color: '#000' }}
-                    activeItemStyle={{ color: '#000' }}
-                    selectedLabelStyle={{ color: '#000' }}
-                    value={weight}
-                    items={[
-                      { label: '평량01', value: '평량01' },
-                      { label: '평량02', value: '평량02' },
-                      { label: '평량03', value: '평량03' },
-                      { label: '평량04', value: '평량04' },
-                      { label: '평량05', value: '평량05' },
-                    ]}
-                    containerStyle={{ height: 50 }}
+                    placeholder="지종 선택"
+                    placeholderStyle={{
+                      fontSize: 14,
+                      color: '#A2A2A2',
+                      fontWeight: '400',
+                    }}
+                    activeLabelStyle={{color: '#000'}}
+                    activeItemStyle={{color: '#000'}}
+                    selectedLabelStyle={{color: '#000'}}
+                    value={paperType}
+                    dropDownMaxHeight={500}
+                    items={paperDetail.map((v, _i) => {
+                      return {value: v.pd_id, label: v.paper_name};
+                    })}
+                    containerStyle={{height: 50}}
                     style={{
                       backgroundColor: '#fff',
                       borderTopRightRadius: 4,
@@ -341,31 +280,169 @@ const Step05 = (props) => {
                       justifyContent: 'flex-start',
                       paddingVertical: 10,
                     }}
-                    labelStyle={{ fontFamily: 'SCDream4', color: '#A2A2A2' }}
-                    dropDownStyle={{ backgroundColor: '#fff' }}
-                    onChangeItem={(item) => setWeightChoise(item.value)}
+                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                    dropDownStyle={{backgroundColor: '#fff'}}
+                    onChangeItem={(item) => setPaperTypeChoise(item.value)}
                     customArrowDown={() => (
                       <Image
                         source={require('../../src/assets/arr01.png')}
-                        style={{ width: 25, height: 25 }}
+                        style={{width: 25, height: 25}}
                         resizeMode="contain"
                       />
                     )}
                     customArrowUp={() => (
                       <Image
                         source={require('../../src/assets/arr01_top.png')}
-                        style={{ width: 25, height: 25 }}
+                        style={{width: 25, height: 25}}
                         resizeMode="contain"
                       />
                     )}
                   />
                 </View>
+                {paperDetail.map((pd, idx) =>
+                  pd.paper_name2 ? (
+                    <View style={{width: '49%'}} key={idx}>
+                      <DropDownPicker
+                        placeholder="세부 선택"
+                        placeholderStyle={{
+                          fontSize: 14,
+                          color: '#A2A2A2',
+                          fontWeight: '400',
+                        }}
+                        activeLabelStyle={{color: '#000'}}
+                        activeItemStyle={{color: '#000'}}
+                        selectedLabelStyle={{color: '#000'}}
+                        value={
+                          paperType === 'direct' ? '없음' : paperTypeDetail
+                        }
+                        dropDownMaxHeight={500}
+                        items={pd.paper_name2.map((v, _i) => {
+                          return {value: v, label: v};
+                        })}
+                        containerStyle={{height: 50}}
+                        style={{
+                          backgroundColor: '#fff',
+                          borderTopRightRadius: 4,
+                          borderTopLeftRadius: 4,
+                          borderBottomRightRadius: 4,
+                          borderBottomLeftRadius: 4,
+                        }}
+                        itemStyle={{
+                          justifyContent: 'flex-start',
+                          paddingVertical: 10,
+                        }}
+                        labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                        dropDownStyle={{backgroundColor: '#fff'}}
+                        onChangeItem={(item) =>
+                          setPaperTypeDetailChoise(item.value)
+                        }
+                        customArrowDown={() => (
+                          <Image
+                            source={require('../../src/assets/arr01.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                        customArrowUp={() => (
+                          <Image
+                            source={require('../../src/assets/arr01_top.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                      />
+                    </View>
+                  ) : null,
+                )}
               </View>
-            )}
-            {/* // 지종 선택 -- 고급일 경우에만  */}
+              {paperType === 'direct' && (
+                <TextInput
+                  value=""
+                  placeholder="지종을 직접 입력해주세요."
+                  placeholderTextColor="#A2A2A2"
+                  style={[
+                    styles.normalText,
+                    {
+                      borderWidth: 1,
+                      borderColor: '#E3E3E3',
+                      borderRadius: 4,
+                      paddingHorizontal: 10,
+                      marginTop: 5,
+                      marginBottom: 25,
+                    },
+                  ]}
+                  autoCapitalize="none"
+                />
+              )}
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  평량
+                </Text>
+                {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+              </View>
+              <View style={{width: '49%'}}>
+                <DropDownPicker
+                  placeholder={'평량 선택'}
+                  placeholderStyle={{
+                    fontSize: 14,
+                    color: '#A2A2A2',
+                    fontWeight: '400',
+                  }}
+                  activeLabelStyle={{color: '#000'}}
+                  activeItemStyle={{color: '#000'}}
+                  selectedLabelStyle={{color: '#000'}}
+                  value={weight}
+                  items={[
+                    {label: '평량01', value: '평량01'},
+                    {label: '평량02', value: '평량02'},
+                    {label: '평량03', value: '평량03'},
+                    {label: '평량04', value: '평량04'},
+                    {label: '평량05', value: '평량05'},
+                  ]}
+                  containerStyle={{height: 50}}
+                  style={{
+                    backgroundColor: '#fff',
+                    borderTopRightRadius: 4,
+                    borderTopLeftRadius: 4,
+                    borderBottomRightRadius: 4,
+                    borderBottomLeftRadius: 4,
+                  }}
+                  itemStyle={{
+                    justifyContent: 'flex-start',
+                    paddingVertical: 10,
+                  }}
+                  labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                  dropDownStyle={{backgroundColor: '#fff'}}
+                  onChangeItem={(item) => setWeightChoise(item.value)}
+                  customArrowDown={() => (
+                    <Image
+                      source={require('../../src/assets/arr01.png')}
+                      style={{width: 25, height: 25}}
+                      resizeMode="contain"
+                    />
+                  )}
+                  customArrowUp={() => (
+                    <Image
+                      source={require('../../src/assets/arr01_top.png')}
+                      style={{width: 25, height: 25}}
+                      resizeMode="contain"
+                    />
+                  )}
+                />
+              </View>
+            </View>
+
+            {/* // 지종 선택  */}
 
             {/* 인쇄 도수  */}
-            <View style={{ marginBottom: 20 }}>
+            <View style={{marginBottom: 20}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -374,7 +451,10 @@ const Step05 = (props) => {
                   marginBottom: 10,
                 }}>
                 <Text
-                  style={[styles.boldText, { fontSize: 16, color: '#000000', marginBottom: 10 }]}>
+                  style={[
+                    styles.boldText,
+                    {fontSize: 16, color: '#000000', marginBottom: 10},
+                  ]}>
                   인쇄도수/교정/감리 선택
                 </Text>
               </View>
@@ -385,30 +465,42 @@ const Step05 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>인쇄도수</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  인쇄도수
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <DropDownPicker
                 placeholder={'도수 선택'}
-                placeholderStyle={{ fontSize: 14, color: '#A2A2A2', fontWeight: '400' }}
-                activeLabelStyle={{ color: '#000' }}
-                activeItemStyle={{ color: '#000' }}
-                selectedLabelStyle={{ color: '#000' }}
+                placeholderStyle={{
+                  fontSize: 14,
+                  color: '#A2A2A2',
+                  fontWeight: '400',
+                }}
+                activeLabelStyle={{color: '#000'}}
+                activeItemStyle={{color: '#000'}}
+                selectedLabelStyle={{color: '#000'}}
                 value={print}
                 items={[
-                  { label: '(전면) 1도', value: '(전면) 1도' },
-                  { label: '(전면) 4도', value: '(전면) 4도' },
-                  { label: '(전면) 4도 + 별색 1도', value: '(전면) 4도 + 별색 1도' },
-                  { label: '(전면) 4도 + (후면) 1도', value: '(전면) 4도 + (후면) 1도' },
+                  {label: '(전면) 1도', value: '(전면) 1도'},
+                  {label: '(전면) 4도', value: '(전면) 4도'},
+                  {
+                    label: '(전면) 4도 + 별색 1도',
+                    value: '(전면) 4도 + 별색 1도',
+                  },
+                  {
+                    label: '(전면) 4도 + (후면) 1도',
+                    value: '(전면) 4도 + (후면) 1도',
+                  },
                   {
                     label: '(전면) 4도 + 별색 1도 + (후면) 1도',
                     value: '(전면) 4도 + 별색 1도 + (후면) 1도',
                   },
-                  { label: '(전면) 별색 1도', value: '(전면) 별색 1도' },
-                  { label: '(전면) 별색 2도', value: '(전면) 별색 2도' },
-                  { label: '인쇄없음', value: '인쇄없음' },
+                  {label: '(전면) 별색 1도', value: '(전면) 별색 1도'},
+                  {label: '(전면) 별색 2도', value: '(전면) 별색 2도'},
+                  {label: '인쇄없음', value: '인쇄없음'},
                 ]}
-                containerStyle={{ height: 50 }}
+                containerStyle={{height: 50}}
                 style={{
                   backgroundColor: '#fff',
                   borderTopRightRadius: 4,
@@ -420,20 +512,20 @@ const Step05 = (props) => {
                   justifyContent: 'flex-start',
                   paddingVertical: 10,
                 }}
-                labelStyle={{ fontFamily: 'SCDream4', color: '#A2A2A2' }}
-                dropDownStyle={{ backgroundColor: '#fff' }}
+                labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                dropDownStyle={{backgroundColor: '#fff'}}
                 onChangeItem={(item) => setPrintColor(item.value)}
                 customArrowDown={() => (
                   <Image
                     source={require('../../src/assets/arr01.png')}
-                    style={{ width: 25, height: 25 }}
+                    style={{width: 25, height: 25}}
                     resizeMode="contain"
                   />
                 )}
                 customArrowUp={() => (
                   <Image
                     source={require('../../src/assets/arr01_top.png')}
-                    style={{ width: 25, height: 25 }}
+                    style={{width: 25, height: 25}}
                     resizeMode="contain"
                   />
                 )}
@@ -442,7 +534,7 @@ const Step05 = (props) => {
             {/* // 인쇄 도수  */}
 
             {/* 인쇄 교정  */}
-            <View style={{ marginBottom: 25 }}>
+            <View style={{marginBottom: 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -450,7 +542,9 @@ const Step05 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>인쇄교정</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  인쇄교정
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
@@ -461,7 +555,7 @@ const Step05 = (props) => {
                 }}>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setColorChoise('y')}
                   style={{
                     flexDirection: 'row',
@@ -476,13 +570,13 @@ const Step05 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>있음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>있음</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setColorChoise('n')}
                   style={{
                     flexDirection: 'row',
@@ -496,16 +590,16 @@ const Step05 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>없음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>없음</Text>
                 </TouchableOpacity>
               </View>
             </View>
             {/* // 인쇄 교정  */}
 
             {/* 인쇄 감리  */}
-            <View style={{ marginBottom: 25 }}>
+            <View style={{marginBottom: 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -513,7 +607,9 @@ const Step05 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>인쇄감리</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  인쇄감리
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
@@ -524,7 +620,7 @@ const Step05 = (props) => {
                 }}>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setCheckChoise('y')}
                   style={{
                     flexDirection: 'row',
@@ -539,13 +635,13 @@ const Step05 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>있음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>있음</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setCheckChoise('n')}
                   style={{
                     flexDirection: 'row',
@@ -559,9 +655,9 @@ const Step05 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>없음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>없음</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -569,7 +665,7 @@ const Step05 = (props) => {
           </View>
         </ScrollView>
 
-        <View style={{ width: '100%' }}>
+        <View style={{width: '100%'}}>
           {/* 이전, 다음 버튼 부분 (Prev, Next) */}
           <View>
             <View
@@ -583,7 +679,13 @@ const Step05 = (props) => {
                 backgroundColor: '#fff',
                 marginBottom: 0,
               }}>
-              <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
+              <View
+                style={{
+                  borderWidth: 0.5,
+                  height: '100%',
+                  borderColor: '#E3E3E3',
+                }}
+              />
               <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
                 <View
                   style={{
@@ -596,7 +698,7 @@ const Step05 = (props) => {
                   <Image
                     source={require('../../src/assets/prevUnActiveArrow.png')}
                     resizeMode="contain"
-                    style={{ width: 16, height: 16, marginRight: 7 }}
+                    style={{width: 16, height: 16, marginRight: 7}}
                   />
                   <Text
                     style={[
@@ -611,8 +713,15 @@ const Step05 = (props) => {
                   </Text>
                 </View>
               </TouchableWithoutFeedback>
-              <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-              <TouchableWithoutFeedback onPress={() => navigation.navigate('OrderStep06')}>
+              <View
+                style={{
+                  borderWidth: 0.5,
+                  height: '100%',
+                  borderColor: '#E3E3E3',
+                }}
+              />
+              <TouchableWithoutFeedback
+                onPress={() => navigation.navigate('OrderStep06')}>
                 <View
                   style={{
                     flex: 1,
@@ -624,7 +733,7 @@ const Step05 = (props) => {
                   <Image
                     source={require('../../src/assets/nextActiveArrow.png')}
                     resizeMode="contain"
-                    style={{ width: 16, height: 16, marginLeft: 7 }}
+                    style={{width: 16, height: 16, marginLeft: 7}}
                   />
                   <Text
                     style={[

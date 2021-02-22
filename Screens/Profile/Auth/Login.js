@@ -67,11 +67,16 @@ const Login = (props) => {
           },
         ]),
       );
+
     if (Platform.OS === 'ios') {
       setCheckPlatform('ios');
     } else {
       setCheckPlatform('aos');
     }
+
+    messaging().onMessage(async (remoteMessage) => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
   }, []);
 
   // 로그인 API

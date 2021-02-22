@@ -16,7 +16,7 @@ import {
 import {TabView, SceneMap} from 'react-native-tab-view';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {selectCate1, selectCaId} from '../../Modules/OrderReducer';
+import {selectCate1, selectCaId, setUserId} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
 
 const index = (props) => {
@@ -29,6 +29,10 @@ const index = (props) => {
   const {mb_id, mb_email, mb_name, mb_hp, mb_1, mb_2, mb_img} = useSelector(
     (state) => state.UserInfoReducer,
   );
+
+  React.useEffect(() => {
+    dispatch(setUserId(mb_id));
+  }, []);
 
   // start 비교 견적 대상 카테고리 선택 Tab
 
@@ -219,9 +223,12 @@ const index = (props) => {
           }}
           style={styles.categoryItem}>
           <Image
-            source={require('../../src/images/icon19.png')}
+            source={require('../../src/assets/photo.png')}
             resizeMode="cover"
-            style={styles.categoryItemImg}
+            style={[
+              styles.categoryItemImg,
+              {borderWidth: 0.5, borderColor: '#E5E5E5'},
+            ]}
           />
           <Text style={styles.categoryItemText}>기타 인쇄물</Text>
         </TouchableOpacity>
@@ -303,9 +310,12 @@ const index = (props) => {
           }}
           style={styles.categoryItem}>
           <Image
-            source={require('../../src/images/icon18.png')}
+            source={require('../../src/assets/photo.png')}
             resizeMode="cover"
-            style={styles.categoryItemImg}
+            style={[
+              styles.categoryItemImg,
+              {borderWidth: 0.5, borderColor: '#E5E5E5'},
+            ]}
           />
           <Text style={styles.categoryItemText}>기타</Text>
         </TouchableOpacity>
