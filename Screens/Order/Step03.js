@@ -14,17 +14,60 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import {TabView, SceneMap} from 'react-native-tab-view';
+import axios from 'axios';
+import qs from 'qs';
+import {useSelector, useDispatch} from 'react-redux';
 
 import DetailHeader from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
 import Modal from '../Common/InfoModal';
+import {selectTypeId, selectTypeName} from '../../Modules/OrderReducer';
+import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
+
+const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
 const Step03 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
+  const dispatch = useDispatch();
+  const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
+  const [typeDetail, setTypeDetail] = React.useState([]);
+
+  const getTypeDetail = () => {
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_box_list',
+        cate1,
+        ca_id,
+      }),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.result === '1') {
+          setTypeDetail(res.data.item);
+          dispatch(setOrderDetails(res.data.item));
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    getTypeDetail();
+  }, []);
+
   const [type, setType] = React.useState('');
+  const [typeName, setTypeName] = React.useState('');
+  const [directTypeName, setDirectTypeName] = React.useState('');
 
   const checkType = (v) => {
     setType(v);
@@ -36,6 +79,17 @@ const Step03 = (props) => {
     setModalVisible(!isModalVisible);
   };
 
+  const nextBtn = () => {
+    if (type === '0') {
+      dispatch(selectTypeId(type));
+      dispatch(selectTypeName(directTypeName));
+    } else {
+      dispatch(selectTypeId(type));
+      dispatch(selectTypeName(typeName));
+    }
+    navigation.navigate('OrderStep04');
+  };
+
   return (
     <>
       <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
@@ -43,8 +97,12 @@ const Step03 = (props) => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Text style={[styles.boldText, { fontSize: 16, color: '#000000' }]}>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
               박스 타입 선택
             </Text>
             <TouchableOpacity
@@ -62,16 +120,16 @@ const Step03 = (props) => {
               <Image
                 source={require('../../src/assets/icon_bikkuri.png')}
                 resizeMode="contain"
-                style={{ width: 17, height: 17, marginRight: 5 }}
+                style={{width: 17, height: 17, marginRight: 5}}
               />
-              <Text style={[styles.normalText, { fontSize: 13, color: '#fff' }]}>
+              <Text style={[styles.normalText, {fontSize: 13, color: '#fff'}]}>
                 세부 정보 안내
               </Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <View style={[styles.wrap, { marginBottom: 25 }]}>
+        <View style={[styles.wrap, {marginBottom: 25}]}>
           <View
             style={{
               flexDirection: 'row',
@@ -79,136 +137,70 @@ const Step03 = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 10 }]}>
+            <Text
+              style={[
+                styles.mediumText,
+                {fontSize: 15, color: '#000000', marginRight: 10},
+              ]}>
               1. 선택형
             </Text>
-            <Text style={[styles.normalText, { fontSize: 14, color: '#366DE5' }]}>
+            <Text style={[styles.normalText, {fontSize: 14, color: '#366DE5'}]}>
               원하는 박스 타입을 선택해주세요.
             </Text>
           </View>
 
           {/* 타입 부분 */}
-          <View style={{ marginBottom: 20 }}>
+          <View style={{marginBottom: 20}}>
             <View style={styles.categoryWrap}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => checkType(0)}
-                style={styles.categoryItem}>
-                <ImageBackground
-                  source={require('../../src/images/icon20.png')}
-                  resizeMode="cover"
-                  style={styles.categoryItemImg}>
-                  {type === 0 && (
-                    <Image
-                      source={require('../../src/images/box_on.png')}
-                      resizeMode="cover"
-                      style={styles.categoryItemImgHover}
-                    />
-                  )}
-                </ImageBackground>
+              {typeDetail
+                ? typeDetail.map((t) => (
+                    <TouchableOpacity
+                      key={t.type_id}
+                      activeOpacity={0.8}
+                      onPress={() => {
+                        checkType(t.type_id);
+                        setTypeName(t.type_name);
+                      }}
+                      style={styles.categoryItem}>
+                      <ImageBackground
+                        source={{uri: `${t.box_img}`}}
+                        resizeMode="cover"
+                        style={styles.categoryItemImg}>
+                        {type === t.type_id && (
+                          <Image
+                            source={require('../../src/images/box_on.png')}
+                            resizeMode="cover"
+                            style={styles.categoryItemImgHover}
+                          />
+                        )}
+                      </ImageBackground>
 
-                <Text
-                  style={[styles.categoryItemText, { color: type === 0 ? '#275696' : '#000000' }]}>
-                  B형 십자
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => checkType(1)}
-                style={styles.categoryItem}>
-                <ImageBackground
-                  source={require('../../src/images/icon21.png')}
-                  resizeMode="cover"
-                  style={styles.categoryItemImg}>
-                  {type === 1 && (
-                    <Image
-                      source={require('../../src/images/box_on.png')}
-                      resizeMode="cover"
-                      style={styles.categoryItemImgHover}
-                    />
-                  )}
-                </ImageBackground>
+                      <Text
+                        style={[
+                          styles.categoryItemText,
+                          {
+                            color: type === t.type_id ? '#275696' : '#000000',
+                          },
+                        ]}>
+                        {t.type_name}
+                      </Text>
+                    </TouchableOpacity>
+                  ))
+                : null}
 
-                <Text
-                  style={[styles.categoryItemText, { color: type === 1 ? '#275696' : '#000000' }]}>
-                  B형 삼면접착
-                </Text>
-              </TouchableOpacity>
+              {/* 기타(직접인력) */}
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => checkType(2)}
-                style={styles.categoryItem}>
-                <ImageBackground
-                  source={require('../../src/images/icon22.png')}
-                  resizeMode="cover"
-                  style={styles.categoryItemImg}>
-                  {type === 2 && (
-                    <Image
-                      source={require('../../src/images/box_on.png')}
-                      resizeMode="cover"
-                      style={styles.categoryItemImgHover}
-                    />
-                  )}
-                </ImageBackground>
-
-                <Text
-                  style={[styles.categoryItemText, { color: type === 2 ? '#275696' : '#000000' }]}>
-                  B형 맞뚜껑
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => checkType(3)}
-                style={styles.categoryItem}>
-                <ImageBackground
-                  source={require('../../src/images/icon23.png')}
-                  resizeMode="cover"
-                  style={styles.categoryItemImg}>
-                  {type === 3 && (
-                    <Image
-                      source={require('../../src/images/box_on.png')}
-                      resizeMode="cover"
-                      style={styles.categoryItemImgHover}
-                    />
-                  )}
-                </ImageBackground>
-
-                <Text
-                  style={[styles.categoryItemText, { color: type === 3 ? '#275696' : '#000000' }]}>
-                  Y형 상하짝
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => checkType(4)}
-                style={styles.categoryItem}>
-                <ImageBackground
-                  source={require('../../src/images/icon24.png')}
-                  resizeMode="cover"
-                  style={styles.categoryItemImg}>
-                  {type === 4 && (
-                    <Image
-                      source={require('../../src/images/box_on.png')}
-                      resizeMode="cover"
-                      style={styles.categoryItemImgHover}
-                    />
-                  )}
-                </ImageBackground>
-
-                <Text
-                  style={[styles.categoryItemText, { color: type === 4 ? '#275696' : '#000000' }]}>
-                  S형 슬리브, 하짝
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => checkType(5)}
+                onPress={() => {
+                  checkType('0');
+                  setTypeName(typeName);
+                }}
                 style={styles.categoryItem}>
                 <ImageBackground
                   source={require('../../src/images/icon25.png')}
                   resizeMode="cover"
                   style={styles.categoryItemImg}>
-                  {type === 5 && (
+                  {type === '0' && (
                     <Image
                       source={require('../../src/images/box_on.png')}
                       resizeMode="cover"
@@ -218,7 +210,10 @@ const Step03 = (props) => {
                 </ImageBackground>
 
                 <Text
-                  style={[styles.categoryItemText, { color: type === 5 ? '#275696' : '#000000' }]}>
+                  style={[
+                    styles.categoryItemText,
+                    {color: type === '0' ? '#275696' : '#000000'},
+                  ]}>
                   기타
                 </Text>
               </TouchableOpacity>
@@ -233,15 +228,19 @@ const Step03 = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 10 }]}>
+            <Text
+              style={[
+                styles.mediumText,
+                {fontSize: 15, color: '#000000', marginRight: 10},
+              ]}>
               2. 직접입력
             </Text>
           </View>
           <TextInput
-            value=""
+            value={directTypeName}
             placeholder="원하는 박스 타입을 직접 입력해주세요."
             placeholderTextColor="#A2A2A2"
-            onFocus={() => setType(5)}
+            onFocus={() => setType('0')}
             style={[
               styles.normalText,
               {
@@ -251,12 +250,13 @@ const Step03 = (props) => {
                 paddingHorizontal: 10,
               },
             ]}
+            onChangeText={(text) => setDirectTypeName(text)}
             autoCapitalize="none"
           />
         </View>
 
         {/* 이전, 다음 버튼 부분 (Prev, Next) */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <View
             style={{
               flexDirection: 'row',
@@ -268,7 +268,9 @@ const Step03 = (props) => {
               backgroundColor: '#fff',
               marginBottom: 20,
             }}>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
             <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
               <View
                 style={{
@@ -281,7 +283,7 @@ const Step03 = (props) => {
                 <Image
                   source={require('../../src/assets/prevUnActiveArrow.png')}
                   resizeMode="contain"
-                  style={{ width: 16, height: 16, marginRight: 7 }}
+                  style={{width: 16, height: 16, marginRight: 7}}
                 />
                 <Text
                   style={[
@@ -296,8 +298,10 @@ const Step03 = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('OrderStep04')}>
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
+            <TouchableWithoutFeedback onPress={() => nextBtn()}>
               <View
                 style={{
                   flex: 1,
@@ -309,7 +313,7 @@ const Step03 = (props) => {
                 <Image
                   source={require('../../src/assets/nextActiveArrow.png')}
                   resizeMode="contain"
-                  style={{ width: 16, height: 16, marginLeft: 7 }}
+                  style={{width: 16, height: 16, marginLeft: 7}}
                 />
                 <Text
                   style={[

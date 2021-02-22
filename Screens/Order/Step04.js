@@ -14,15 +14,27 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import {TabView, SceneMap} from 'react-native-tab-view';
+import {useSelector, useDispatch} from 'react-redux';
 
 import DetailHeader from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
 import Modal from './easyOrderModal';
+import {
+  setUserPwidth,
+  setUserPlength,
+  setUserPheight,
+  setUserCnt,
+  setUserCntEtc,
+  setUserWoodPattern,
+  setUserEasyYn,
+} from '../../Modules/OrderReducer';
 
 const Step04 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+
+  const {type_details} = useSelector((state) => state.OrderHandlerReducer);
+  const dispatch = useDispatch();
 
   const [type, setType] = React.useState('');
 
@@ -30,17 +42,20 @@ const Step04 = (props) => {
     setType(v);
   };
 
-  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [getQuantity, setGetQuantity] = React.useState([]);
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  React.useEffect(() => {
+    setGetQuantity(type_details[0].making_cnt);
+  }, []);
 
   const goEasyComplete = async () => {
     await setModalVisible(!isModalVisible);
     await navigation.navigate('easyOrderComplete');
   };
 
+  const [pWidth, setPwidth] = React.useState(null);
+  const [pLength, setPlength] = React.useState(null);
+  const [pHeight, setPheight] = React.useState(null);
   const [quantity, setQuantity] = React.useState(null);
   const [quantityDirect, setQuantityDirect] = React.useState(null);
   const setOrderQuantity = (v) => {
@@ -52,9 +67,38 @@ const Step04 = (props) => {
     setPattern(b);
   };
 
+  // 간단 견적 전 모달
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const toggleModal = () => {
+    dispatch(setUserPwidth(pWidth));
+    dispatch(setUserPlength(pLength));
+    dispatch(setUserPheight(pHeight));
+
+    if (quantity !== 'direct') {
+      dispatch(setUserCnt(quantity));
+    } else {
+      dispatch(setUserCntEtc(quantityDirect));
+    }
+
+    if (pattern) {
+      dispatch(setUserWoodPattern('Y'));
+    } else {
+      dispatch(setUserWoodPattern('N'));
+    }
+
+    // dispatch(setUserEasyYn('Y'))
+
+    setModalVisible(!isModalVisible);
+  };
+
   return (
     <>
-      <Modal isVisible={isModalVisible} toggleModal={toggleModal} goEasyComplete={goEasyComplete} />
+      <Modal
+        isVisible={isModalVisible}
+        toggleModal={toggleModal}
+        goEasyComplete={goEasyComplete}
+      />
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
@@ -65,7 +109,9 @@ const Step04 = (props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <Text style={[styles.boldText, { fontSize: 16, color: '#000000' }]}>제작 정보</Text>
+            <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+              제작 정보
+            </Text>
             {/* <TouchableOpacity
               activeOpacity={0.8}
               onPress={toggleModal}
@@ -86,13 +132,19 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+            <Text
+              style={[
+                styles.mediumText,
+                {fontSize: 15, color: '#000000', marginRight: 5},
+              ]}>
               가로 규격
             </Text>
-            <Text style={[styles.normalText, { fontSize: 14, color: '#000000' }]}>(mm)</Text>
+            <Text style={[styles.normalText, {fontSize: 14, color: '#000000'}]}>
+              (mm)
+            </Text>
           </View>
           <TextInput
-            value=""
+            value={pWidth}
             placeholder="예) 10"
             placeholderTextColor="#A2A2A2"
             style={[
@@ -104,7 +156,9 @@ const Step04 = (props) => {
                 paddingHorizontal: 10,
               },
             ]}
+            onChangeText={(text) => setPwidth(text)}
             autoCapitalize="none"
+            keyboardType="number-pad"
           />
         </View>
         {/* // 가로 규격 */}
@@ -118,13 +172,19 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+            <Text
+              style={[
+                styles.mediumText,
+                {fontSize: 15, color: '#000000', marginRight: 5},
+              ]}>
               세로 규격
             </Text>
-            <Text style={[styles.normalText, { fontSize: 14, color: '#000000' }]}>(mm)</Text>
+            <Text style={[styles.normalText, {fontSize: 14, color: '#000000'}]}>
+              (mm)
+            </Text>
           </View>
           <TextInput
-            value=""
+            value={pLength}
             placeholder="예) 10"
             placeholderTextColor="#A2A2A2"
             style={[
@@ -136,7 +196,9 @@ const Step04 = (props) => {
                 paddingHorizontal: 10,
               },
             ]}
+            onChangeText={(text) => setPlength(text)}
             autoCapitalize="none"
+            keyboardType="number-pad"
           />
         </View>
         {/* // 세로 규격 */}
@@ -150,13 +212,19 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+            <Text
+              style={[
+                styles.mediumText,
+                {fontSize: 15, color: '#000000', marginRight: 5},
+              ]}>
               높이 규격
             </Text>
-            <Text style={[styles.normalText, { fontSize: 14, color: '#000000' }]}>(mm)</Text>
+            <Text style={[styles.normalText, {fontSize: 14, color: '#000000'}]}>
+              (mm)
+            </Text>
           </View>
           <TextInput
-            value=""
+            value={pHeight}
             placeholder="예) 10"
             placeholderTextColor="#A2A2A2"
             style={[
@@ -168,7 +236,9 @@ const Step04 = (props) => {
                 paddingHorizontal: 10,
               },
             ]}
+            onChangeText={(text) => setPheight(text)}
             autoCapitalize="none"
+            keyboardType="number-pad"
           />
         </View>
         {/* // 높이 규격 */}
@@ -182,7 +252,11 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={[styles.mediumText, { fontSize: 15, color: '#000000', marginRight: 5 }]}>
+            <Text
+              style={[
+                styles.mediumText,
+                {fontSize: 15, color: '#000000', marginRight: 5},
+              ]}>
               수량
             </Text>
           </View>
@@ -194,90 +268,43 @@ const Step04 = (props) => {
                 marginBottom: 15,
               },
             ]}>
-            <TouchableOpacity
-              activeOpacity={1}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              onPress={() => setOrderQuantity(500)}
-              style={[
-                styles.details,
-                {
-                  marginRight: 20,
-                },
-              ]}>
-              <Image
-                source={
-                  quantity === 500
-                    ? require('../../src/assets/radio_on.png')
-                    : require('../../src/assets/radio_off.png')
-                }
-                resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 5 }}
-              />
-              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>500</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={1}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              onPress={() => setOrderQuantity(1000)}
-              style={[
-                styles.details,
-                {
-                  marginRight: 20,
-                },
-              ]}>
-              <Image
-                source={
-                  quantity === 1000
-                    ? require('../../src/assets/radio_on.png')
-                    : require('../../src/assets/radio_off.png')
-                }
-                resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 5 }}
-              />
-              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>1,000</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={1}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              onPress={() => setOrderQuantity(2000)}
-              style={[
-                styles.details,
-                {
-                  marginRight: 20,
-                },
-              ]}>
-              <Image
-                source={
-                  quantity === 2000
-                    ? require('../../src/assets/radio_on.png')
-                    : require('../../src/assets/radio_off.png')
-                }
-                resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 5 }}
-              />
-              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>2,000</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={1}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              onPress={() => setOrderQuantity(3000)}
-              style={styles.details}>
-              <Image
-                source={
-                  quantity === 3000
-                    ? require('../../src/assets/radio_on.png')
-                    : require('../../src/assets/radio_off.png')
-                }
-                resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 5 }}
-              />
-              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>3,000</Text>
-            </TouchableOpacity>
+            {getQuantity
+              ? getQuantity.map((q, idx) => (
+                  <TouchableOpacity
+                    key={idx}
+                    activeOpacity={1}
+                    hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                    onPress={() => setOrderQuantity(q)}
+                    style={[
+                      styles.details,
+                      {
+                        marginRight: 20,
+                      },
+                    ]}>
+                    <Image
+                      source={
+                        quantity === q
+                          ? require('../../src/assets/radio_on.png')
+                          : require('../../src/assets/radio_off.png')
+                      }
+                      resizeMode="contain"
+                      style={{width: 20, height: 20, marginRight: 5}}
+                    />
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 14, color: '#000'},
+                      ]}>
+                      {q}
+                    </Text>
+                  </TouchableOpacity>
+                ))
+              : null}
           </View>
           <View>
             <TouchableOpacity
               activeOpacity={1}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
               onPress={() => setOrderQuantity('direct')}
               style={[
                 styles.details,
@@ -292,9 +319,11 @@ const Step04 = (props) => {
                     : require('../../src/assets/radio_off.png')
                 }
                 resizeMode="contain"
-                style={{ width: 20, height: 20, marginRight: 5 }}
+                style={{width: 20, height: 20, marginRight: 5}}
               />
-              <Text style={[styles.normalText, { fontSize: 14, color: '#000' }]}>직접 입력</Text>
+              <Text style={[styles.normalText, {fontSize: 14, color: '#000'}]}>
+                직접 입력
+              </Text>
             </TouchableOpacity>
             <TextInput
               value={quantityDirect}
@@ -321,7 +350,7 @@ const Step04 = (props) => {
         {/* // 수량 */}
 
         {/* 목형 */}
-        <View style={[styles.wrap, { marginBottom: 25 }]}>
+        <View style={[styles.wrap, {marginBottom: 25}]}>
           <View
             style={[
               styles.details,
@@ -329,10 +358,16 @@ const Step04 = (props) => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={{ fontSize: 15, color: '#000000', marginRight: 5 }}>목형</Text>
+            <Text style={{fontSize: 15, color: '#000000', marginRight: 5}}>
+              목형
+            </Text>
           </View>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => setIsPattern(true)}
@@ -385,16 +420,16 @@ const Step04 = (props) => {
         </View>
         {/* // 목형 */}
 
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity onPress={toggleModal} activeOpacity={0.8}>
-            <View style={[styles.submitBtn, { marginBottom: 10 }]}>
+            <View style={[styles.submitBtn, {marginBottom: 10}]}>
               <Text style={styles.submitBtnText}>간단 견적 제출</Text>
             </View>
           </TouchableOpacity>
         </View>
 
         {/* 이전, 다음 버튼 부분 (Prev, Next) */}
-        <View style={{ paddingHorizontal: 20 }}>
+        <View style={{paddingHorizontal: 20}}>
           <View
             style={{
               flexDirection: 'row',
@@ -406,7 +441,9 @@ const Step04 = (props) => {
               backgroundColor: '#fff',
               marginBottom: 35,
             }}>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
             <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
               <View
                 style={{
@@ -419,7 +456,7 @@ const Step04 = (props) => {
                 <Image
                   source={require('../../src/assets/prevUnActiveArrow.png')}
                   resizeMode="contain"
-                  style={{ width: 16, height: 16, marginRight: 7 }}
+                  style={{width: 16, height: 16, marginRight: 7}}
                 />
                 <Text
                   style={[
@@ -434,8 +471,11 @@ const Step04 = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <View style={{ borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3' }} />
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('OrderStep05')}>
+            <View
+              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+            />
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('OrderStep05')}>
               <View
                 style={{
                   flex: 1,
@@ -447,7 +487,7 @@ const Step04 = (props) => {
                 <Image
                   source={require('../../src/assets/nextActiveArrow.png')}
                   resizeMode="contain"
-                  style={{ width: 16, height: 16, marginLeft: 7 }}
+                  style={{width: 16, height: 16, marginLeft: 7}}
                 />
                 <Text
                   style={[
@@ -464,7 +504,7 @@ const Step04 = (props) => {
           </View>
         </View>
         {/* 간단 견적 제출시 안내 멘트 - 하단 */}
-        <View style={{ backgroundColor: '#F5F5F5' }}>
+        <View style={{backgroundColor: '#F5F5F5'}}>
           <View
             style={{
               paddingHorizontal: 20,
@@ -476,12 +516,22 @@ const Step04 = (props) => {
             <Text
               style={[
                 styles.normalText,
-                { fontSize: 12, color: '#707070', lineHeight: 18, marginRight: 5 },
+                {
+                  fontSize: 12,
+                  color: '#707070',
+                  lineHeight: 18,
+                  marginRight: 5,
+                },
               ]}>
               -
             </Text>
-            <Text style={[styles.normalText, { fontSize: 12, color: '#707070', lineHeight: 18 }]}>
-              간단 견적 제출 시, 최고관리자가 확인 및 추가 입력 후, 입찰할 파트너스 회원들을 지정
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 12, color: '#707070', lineHeight: 18},
+              ]}>
+              간단 견적 제출 시, 최고관리자가 확인 및 추가 입력 후, 입찰할
+              파트너스 회원들을 지정
             </Text>
           </View>
         </View>

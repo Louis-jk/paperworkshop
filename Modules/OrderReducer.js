@@ -2,6 +2,7 @@
 const SELECT_CATE1 = 'SELECT_CATE1';
 const SELECT_CA_ID = 'SELECT_CA_ID';
 const SELECT_TYPE_ID = 'SELECT_TYPE_ID';
+const SELECT_TYPE_NAME = 'SELECT_TYPE_NAME';
 const SELECT_PF_ID = 'SELECT_PF_ID';
 const SELECT_PD_ID = 'SELECT_PD_ID';
 const SELECT_PN_ID = 'SELECT_PN_ID';
@@ -20,11 +21,19 @@ const SET_FILE_TYPE = 'SET_FILE_TYPE';
 const SET_FILE_NAME = 'SET_FILE_NAME';
 const SET_FILE_SIZE = 'SET_FILE_SIZE';
 const SET_MEMO = 'SET_MEMO';
+const SET_PWIDTH = 'SET_PWIDTH';
+const SET_PLENGTH = 'SET_PLENGTH';
+const SET_PHEIGHT = 'SET_PHEIGHT';
+const SET_CNT = 'SET_CNT';
+const SET_CNT_ETC = 'SET_CNT_ETC';
+const SET_WOOD_PATTERN = 'SET_WOOD_PATTERN';
+const SET_EASY_YN = 'SET_EASY_YN';
 
 // action method
 export const selectCate1 = (payload) => ({type: SELECT_CATE1, payload});
 export const selectCaId = (payload) => ({type: SELECT_CA_ID, payload});
 export const selectTypeId = (payload) => ({type: SELECT_TYPE_ID, payload});
+export const selectTypeName = (payload) => ({type: SELECT_TYPE_NAME, payload});
 export const selectPfId = (payload) => ({type: SELECT_PF_ID, payload});
 export const selectPdId = (payload) => ({type: SELECT_PD_ID, payload});
 export const selectPnId = (payload) => ({type: SELECT_PN_ID, payload});
@@ -46,12 +55,23 @@ export const setUserFileType = (payload) => ({type: SET_FILE_TYPE, payload});
 export const setUserFileName = (payload) => ({type: SET_FILE_NAME, payload});
 export const setUserFileSize = (payload) => ({type: SET_FILE_SIZE, payload});
 export const setUserMemo = (payload) => ({type: SET_MEMO, payload});
+export const setUserPwidth = (payload) => ({type: SET_PWIDTH, payload});
+export const setUserPlength = (payload) => ({type: SET_PLENGTH, payload});
+export const setUserPheight = (payload) => ({type: SET_PHEIGHT, payload});
+export const setUserCnt = (payload) => ({type: SET_CNT, payload});
+export const setUserCntEtc = (payload) => ({type: SET_CNT_ETC, payload});
+export const setUserWoodPattern = (payload) => ({
+  type: SET_WOOD_PATTERN,
+  payload,
+});
+export const setUserEasyYn = (payload) => ({type: SET_EASY_YN, payload});
 
 // initialize
 const initialize = {
   cate1: null, // 1차 카테고리('패키지','일반인쇄','기타인쇄')
   ca_id: null, // 2차 카테고리('패키지 -> 칼라박스, ~~박스', '일반인쇄 -> 접지 ~~ 등')
   type_id: null, // 박스아이디
+  type_name: null, // 박스아이디
   pf_id: null, // 지류아이디
   pd_id: null, // 지종아이디
   pn_id: null, // 지종상세아이디
@@ -111,6 +131,11 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         type_id: action.payload,
+      };
+    case SELECT_TYPE_NAME:
+      return {
+        ...state,
+        type_name: action.payload,
       };
     case SELECT_PF_ID:
       return {
@@ -201,6 +226,41 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         memo: action.payload,
+      };
+    case SET_PWIDTH:
+      return {
+        ...state,
+        pwidth: action.payload,
+      };
+    case SET_PLENGTH:
+      return {
+        ...state,
+        plength: action.payload,
+      };
+    case SET_PHEIGHT:
+      return {
+        ...state,
+        pheight: action.payload,
+      };
+    case SET_CNT:
+      return {
+        ...state,
+        cnt: action.payload,
+      };
+    case SET_CNT_ETC:
+      return {
+        ...state,
+        cnt_etc: action.payload,
+      };
+    case SET_WOOD_PATTERN:
+      return {
+        ...state,
+        wood_pattern: action.payload,
+      };
+    case SET_EASY_YN:
+      return {
+        ...state,
+        easy_yn: action.payload,
       };
     default:
       return state;
