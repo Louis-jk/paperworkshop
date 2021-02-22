@@ -15,7 +15,10 @@ const SET_DESIGN = 'SET_DESIGN';
 const SET_LOCATION = 'SET_LOCATION';
 const SET_DELIVERY = 'SET_DELIVERY';
 const SET_ESTIMATE = 'SET_ESTIMATE';
-const SET_FILE = 'SET_FILE';
+const SET_FILE_URL = 'SET_FILE_URL';
+const SET_FILE_TYPE = 'SET_FILE_TYPE';
+const SET_FILE_NAME = 'SET_FILE_NAME';
+const SET_FILE_SIZE = 'SET_FILE_SIZE';
 const SET_MEMO = 'SET_MEMO';
 
 // action method
@@ -30,16 +33,19 @@ export const selectPaperName = (payload) => ({
   payload,
 });
 export const setUserId = (payload) => ({type: SET_USER_ID, payload});
-export const setTitle = (payload) => ({type: SET_TITLE, payload});
-export const setCompany = (payload) => ({type: SET_COMPANY, payload});
+export const setUserTitle = (payload) => ({type: SET_TITLE, payload});
+export const setUserCompany = (payload) => ({type: SET_COMPANY, payload});
 export const setUserName = (payload) => ({type: SET_USER_NAME, payload});
 export const setUserMobile = (payload) => ({type: SET_USER_MOBILE, payload});
-export const setDesign = (payload) => ({type: SET_DESIGN, payload});
-export const setLocation = (payload) => ({type: SET_LOCATION, payload});
-export const setDelivery = (payload) => ({type: SET_DELIVERY, payload});
-export const setEstimate = (payload) => ({type: SET_ESTIMATE, payload});
-export const setFile = (payload) => ({type: SET_FILE, payload});
-export const setMemo = (payload) => ({type: SET_MEMO, payload});
+export const setUserDesign = (payload) => ({type: SET_DESIGN, payload});
+export const setUserLocation = (payload) => ({type: SET_LOCATION, payload});
+export const setUserDelivery = (payload) => ({type: SET_DELIVERY, payload});
+export const setUserEstimate = (payload) => ({type: SET_ESTIMATE, payload});
+export const setUserFileUrl = (payload) => ({type: SET_FILE_URL, payload});
+export const setUserFileType = (payload) => ({type: SET_FILE_TYPE, payload});
+export const setUserFileName = (payload) => ({type: SET_FILE_NAME, payload});
+export const setUserFileSize = (payload) => ({type: SET_FILE_SIZE, payload});
+export const setUserMemo = (payload) => ({type: SET_MEMO, payload});
 
 // initialize
 const initialize = {
@@ -59,7 +65,10 @@ const initialize = {
   favor_area: null, // 지역
   delivery_date: null, // 납품희망일자
   estimate_date: null, // 견적마감일자
-  pe_file: [], // 첨부파일
+  pe_file_url: null, // 첨부파일 url
+  pe_file_type: null, // 첨부파일 type
+  pe_file_name: null, // 첨부파일 name
+  pe_file_size: null, // 첨부파일 size
   memo: null, // 메모
   pwidth: 0, // 가로규격
   plength: 0, // 세로규격
@@ -168,10 +177,25 @@ export default function setOrder(state = initialize, action) {
         ...state,
         estimate_date: action.payload,
       };
-    case SET_FILE:
+    case SET_FILE_URL:
       return {
         ...state,
-        pe_file: action.payload,
+        pe_file_url: action.payload,
+      };
+    case SET_FILE_TYPE:
+      return {
+        ...state,
+        pe_file_type: action.payload,
+      };
+    case SET_FILE_NAME:
+      return {
+        ...state,
+        pe_file_name: action.payload,
+      };
+    case SET_FILE_SIZE:
+      return {
+        ...state,
+        pe_file_size: action.payload,
       };
     case SET_MEMO:
       return {

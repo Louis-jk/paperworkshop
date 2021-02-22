@@ -22,12 +22,28 @@ import 'moment/locale/ko';
 import DocumentPicker from 'react-native-document-picker';
 import {useSelector, useDispatch} from 'react-redux';
 
-// import {setTitle, setUserName} from '../../Modules/OrderReducer';
+import {
+  setUserTitle,
+  setUserName,
+  setUserMobile,
+  setUserCompany,
+  setUserDesign,
+  setUserLocation,
+  setUserDelivery,
+  setUserEstimate,
+  setUserFileUrl,
+  setUserFileType,
+  setUserFileName,
+  setUserFileSize,
+  setUserMemo,
+} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
 
 const Step02 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+
+  const dispatch = useDispatch();
 
   const [date, setDate] = React.useState(new Date());
   const [mode01, setMode01] = React.useState('date');
@@ -43,7 +59,7 @@ const Step02 = (props) => {
   const [location, setLocation] = React.useState(null); // 인쇄 업체 선호 지역 (필수)
   const [deliveryDate, setDeliveryDate] = React.useState(new Date()); // 납품 희망일 (필수)
   const [estimateDate, setEstimateDate] = React.useState(new Date()); // 견적 마감일 (필수)
-  const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
+  // const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
   const [memo, setMemo] = React.useState(null); // 메모 (선택)
 
   const onChange01 = (event, selectedDate) => {
@@ -108,6 +124,11 @@ const Step02 = (props) => {
     showMode('time');
   };
 
+  const [fileUrlCurrent, setFileUrlCurrent] = React.useState(null);
+  const [fileTypeCurrent, setFileTypeCurrent] = React.useState(null);
+  const [fileNameCurrent, setFileNameCurrent] = React.useState(null);
+  const [fileSizeCurrent, setFileSizeCurrent] = React.useState(null);
+
   // 파일 업로드 (document picker)
   const filePicker = async () => {
     try {
@@ -120,6 +141,10 @@ const Step02 = (props) => {
         res.name,
         res.size,
       );
+      setFileUrlCurrent(res.uri);
+      setFileTypeCurrent(res.type);
+      setFileNameCurrent(res.name);
+      setFileSizeCurrent(res.size);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -131,6 +156,19 @@ const Step02 = (props) => {
 
   // 다음 스텝
   const nextStep = () => {
+    dispatch(setUserTitle(title));
+    dispatch(setUserName(name));
+    dispatch(setUserMobile(mobile));
+    dispatch(setUserCompany(company));
+    dispatch(setUserDesign(designOrder));
+    dispatch(setUserLocation(location));
+    dispatch(setUserDelivery(deliveryDate));
+    dispatch(setUserEstimate(estimateDate));
+    dispatch(setUserFileUrl(fileUrlCurrent));
+    dispatch(setUserFileName(fileNameCurrent));
+    dispatch(setUserFileType(fileTypeCurrent));
+    dispatch(setUserFileSize(fileSizeCurrent));
+    dispatch(setUserMemo(memo));
     navigation.navigate('OrderStep03');
   };
 
@@ -574,7 +612,7 @@ const Step02 = (props) => {
                 marginBottom: 5,
               }}>
               <TextInput
-                value=""
+                value={fileNameCurrent}
                 placeholder="파일을 선택해주세요."
                 placeholderTextColor="#A2A2A2"
                 style={[
