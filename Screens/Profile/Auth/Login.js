@@ -47,6 +47,12 @@ const Login = (props) => {
     setAutoLogin((prev) => !prev);
   };
 
+  // 비밀번호 보이기 기능
+  const [pwdEyes, setPwdEyes] = React.useState(true);
+  const togglePwdEyes = () => {
+    setPwdEyes(!pwdEyes);
+  };
+
   React.useEffect(() => {
     messaging()
       .getToken()
@@ -122,20 +128,49 @@ const Login = (props) => {
                 marginBottom: 50,
               }}
             />
-            <View style={{marginBottom: 30}}>
+            <View style={{marginBottom: 30, paddingHorizontal: 40}}>
               <TextInput
                 placeholder="아이디"
-                style={[styles.textInput, styles.normalText]}
+                style={[styles.textInput, styles.normalText, {height: 50}]}
                 onChangeText={(text) => setUserId(text)}
                 autoCapitalize="none"
               />
-              <TextInput
-                placeholder="비밀번호"
-                style={[styles.textInput, styles.normalText]}
-                onChangeText={(text) => setUserPwd(text)}
-                autoCapitalize="none"
-                secureTextEntry={true}
-              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  marginBottom: 10,
+                  height: 50,
+                }}>
+                <TextInput
+                  value={userPwd}
+                  placeholder="비밀번호"
+                  placeholderTextColor="#A2A2A2"
+                  style={[styles.normalText, {width: '80%'}]}
+                  onChangeText={(text) => setUserPwd(text)}
+                  autoCapitalize="none"
+                  secureTextEntry={pwdEyes}
+                />
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={togglePwdEyes}
+                  hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
+                  <Image
+                    source={
+                      pwdEyes
+                        ? require('../../../src/assets/icon_eye.png')
+                        : require('../../../src/assets/icon_eye_on.png')
+                    }
+                    resizeMode="center"
+                    style={{width: 35, height: 20}}
+                  />
+                </TouchableOpacity>
+              </View>
 
               <TouchableOpacity
                 activeOpacity={1}

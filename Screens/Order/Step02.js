@@ -19,6 +19,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import 'moment/locale/ko';
+import DocumentPicker from 'react-native-document-picker';
 import {useSelector, useDispatch} from 'react-redux';
 
 // import {setTitle, setUserName} from '../../Modules/OrderReducer';
@@ -28,21 +29,22 @@ const Step02 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  const [order, setOrder] = React.useState('print');
-
-  const setOrderDesign = (v) => {
-    setOrder(v);
-  };
-
   const [date, setDate] = React.useState(new Date());
-  const [arriveDate, setArriveDate] = React.useState(new Date());
-  const [dDayDate, setdDayDate] = React.useState(new Date());
   const [mode01, setMode01] = React.useState('date');
   const [mode02, setMode02] = React.useState('date');
   const [show01, setShow01] = React.useState(false);
   const [show02, setShow02] = React.useState(false);
 
-  const [ca, setCa] = React.useState('');
+  const [title, setTitle] = React.useState(null); // 제작명 (필수)
+  const [name, setName] = React.useState(null); // 고객명 (필수)
+  const [mobile, setMobile] = React.useState(null); // 휴대폰 번호 (필수)
+  const [company, setCompany] = React.useState(null); // 회사명 (선택)
+  const [designOrder, setDesignOrder] = React.useState('P'); // 디자인 의뢰 (필수) : 인쇄만 의뢰/인쇄+디자인의뢰
+  const [location, setLocation] = React.useState(null); // 인쇄 업체 선호 지역 (필수)
+  const [deliveryDate, setDeliveryDate] = React.useState(new Date()); // 납품 희망일 (필수)
+  const [estimateDate, setEstimateDate] = React.useState(new Date()); // 견적 마감일 (필수)
+  const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
+  const [memo, setMemo] = React.useState(null); // 메모 (선택)
 
   const onChange01 = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -58,9 +60,9 @@ const Step02 = (props) => {
           },
         ],
       );
-      setdDayDate(date);
+      setEstimateDate(date);
     } else {
-      setArriveDate(currentDate);
+      setDeliveryDate(currentDate);
     }
   };
 
@@ -78,9 +80,9 @@ const Step02 = (props) => {
           },
         ],
       );
-      setdDayDate(date);
+      setEstimateDate(date);
     } else {
-      setdDayDate(currentDate);
+      setEstimateDate(currentDate);
     }
   };
 
@@ -106,16 +108,26 @@ const Step02 = (props) => {
     showMode('time');
   };
 
-  const [title, setTitle] = React.useState(null); // 제작명 (필수)
-  const [name, setName] = React.useState(null); // 고객명 (필수)
-  const [mobile, setMobile] = React.useState(null); // 휴대폰 번호 (필수)
-  const [company, setCompany] = React.useState(null); // 회사명 (선택)
-  const [designOrder, setDesignOrder] = React.useState('y'); // 디자인 의뢰 (필수)
-  const [location, setLocation] = React.useState(null); // 인쇄 업체 선호 지역 (필수)
-  const [deliveryDate, setDeliveryDate] = React.useState(null); // 납품 희망일 (필수)
-  const [estimateDate, setEstimateDate] = React.useState(null); // 견적 마감일 (필수)
-  const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
-  const [memo, setMemo] = React.useState(null); // 메모 (선택)
+  // 파일 업로드 (document picker)
+  const filePicker = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+      });
+      console.log(
+        res.uri,
+        res.type, // mime type
+        res.name,
+        res.size,
+      );
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
 
   // 다음 스텝
   const nextStep = () => {
@@ -293,7 +305,7 @@ const Step02 = (props) => {
               <TouchableOpacity
                 activeOpacity={1}
                 hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                onPress={() => setOrderDesign('print')}
+                onPress={() => setDesignOrder('P')}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
@@ -302,7 +314,7 @@ const Step02 = (props) => {
                 }}>
                 <Image
                   source={
-                    order === 'print'
+                    designOrder === 'P'
                       ? require('../../src/assets/radio_on.png')
                       : require('../../src/assets/radio_off.png')
                   }
@@ -316,7 +328,7 @@ const Step02 = (props) => {
               <TouchableOpacity
                 activeOpacity={1}
                 hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                onPress={() => setOrderDesign('design')}
+                onPress={() => setDesignOrder('D')}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
@@ -324,7 +336,7 @@ const Step02 = (props) => {
                 }}>
                 <Image
                   source={
-                    order === 'design'
+                    designOrder === 'D'
                       ? require('../../src/assets/radio_on.png')
                       : require('../../src/assets/radio_off.png')
                   }
@@ -360,25 +372,24 @@ const Step02 = (props) => {
                 color: '#A2A2A2',
                 fontWeight: '400',
               }}
+              value={location}
               activeLabelStyle={{color: '#000'}}
               activeItemStyle={{color: '#000'}}
               selectedLabelStyle={{color: '#000'}}
               items={[
-                {label: '서울', value: '서울'},
-                {label: '부산', value: '부산'},
-                {label: '대구', value: '대구'},
-                {label: '인천', value: '인천'},
-                {label: '광주', value: '광주'},
-                {label: '세종/대전/청주', value: '세종/대전/청주'},
-                {label: '울산', value: '울산'},
-                {label: '경기', value: '경기'},
-                {label: '강원', value: '강원'},
-                {label: '충청', value: '충청'},
-                {label: '전라북도', value: '전라북도'},
-                {label: '전라남도', value: '전라남도'},
-                {label: '경상북도', value: '경상북도'},
-                {label: '경상남도', value: '경상남도'},
-                {label: '제주', value: '제주'},
+                {label: '서울', value: 'seoul'},
+                {label: '부산', value: 'busan'},
+                {label: '대구', value: 'daegu'},
+                {label: '인천', value: 'incheon'},
+                {label: '광주', value: 'gwangju'},
+                {label: '세종/대전/청주', value: 'sejong'},
+                {label: '울산', value: 'ulsan'},
+                {label: '경기', value: 'gyeongi'},
+                {label: '강원', value: 'gangwon'},
+                {label: '충청', value: 'choongcheong'},
+                {label: '전라', value: 'jeonra'},
+                {label: '경상', value: 'gyeongsang'},
+                {label: '제주', value: 'jeju'},
               ]}
               containerStyle={{height: 50}}
               style={{
@@ -394,7 +405,7 @@ const Step02 = (props) => {
               }}
               labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
               dropDownStyle={{backgroundColor: '#fff'}}
-              onChangeItem={(item) => setCa(item.value)}
+              onChangeItem={(item) => setLocation(item.value)}
               customArrowDown={() => (
                 <Image
                   source={require('../../src/assets/arr01.png')}
@@ -448,7 +459,7 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 }}>
                 <TextInput
-                  value={moment(arriveDate).format('YY-MM-DD')}
+                  value={moment(deliveryDate).format('YY-MM-DD')}
                   placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
                   style={[
@@ -456,7 +467,7 @@ const Step02 = (props) => {
                     {
                       paddingHorizontal: 10,
                       width: '70%',
-                      color: arriveDate ? '#111' : '#A2A2A2',
+                      color: deliveryDate ? '#111' : '#A2A2A2',
                     },
                   ]}
                   autoCapitalize="none"
@@ -472,7 +483,7 @@ const Step02 = (props) => {
             {show01 && (
               <DateTimePicker
                 testID="dateTimePicker01"
-                value={arriveDate}
+                value={deliveryDate}
                 mode={mode01}
                 is24Hour={true}
                 display="default"
@@ -505,7 +516,7 @@ const Step02 = (props) => {
                   marginBottom: 5,
                 }}>
                 <TextInput
-                  value={moment(dDayDate).format('YY-MM-DD')}
+                  value={moment(estimateDate).format('YY-MM-DD')}
                   placeholder="00-00-00"
                   placeholderTextColor="#A2A2A2"
                   style={[
@@ -513,7 +524,7 @@ const Step02 = (props) => {
                     {
                       paddingHorizontal: 10,
                       width: '70%',
-                      color: dDayDate ? '#111' : '#A2A2A2',
+                      color: estimateDate ? '#111' : '#A2A2A2',
                     },
                   ]}
                   autoCapitalize="none"
@@ -529,7 +540,7 @@ const Step02 = (props) => {
             {show02 && (
               <DateTimePicker
                 testID="dateTimePicker02"
-                value={dDayDate}
+                value={estimateDate}
                 mode={mode02}
                 is24Hour={true}
                 display="default"
@@ -581,6 +592,7 @@ const Step02 = (props) => {
               />
               <TouchableOpacity
                 activeOpacity={0.8}
+                onPress={filePicker}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
