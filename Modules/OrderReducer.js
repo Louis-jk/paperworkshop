@@ -28,6 +28,21 @@ const SET_CNT = 'SET_CNT';
 const SET_CNT_ETC = 'SET_CNT_ETC';
 const SET_WOOD_PATTERN = 'SET_WOOD_PATTERN';
 const SET_EASY_YN = 'SET_EASY_YN';
+const SET_WEIGHT = 'SET_WEIGHT';
+const SET_WEIGHT_ETC = 'SET_WEIGHT_ETC';
+const SET_GOAL = 'SET_GOAL';
+const SET_GOAL_ETC = 'SET_GOAL_ETC';
+const SET_COLOR = 'SET_COLOR';
+const SET_COLOR_ETC = 'SET_COLOR_ETC';
+const SET_FREQUENCY = 'SET_FREQUENCY';
+const SET_PRINTING = 'SET_PRINTING';
+const SET_PRINT_SUPERVISION = 'SET_PRINT_SUPERVISION';
+const SET_PARK_PROCESSING = 'SET_PARK_PROCESSING';
+const SET_PRESS_DESIGN = 'SET_PRESS_DESIGN';
+const SET_PARTIAL_SILK = 'SET_PARTIAL_SILK';
+const SET_COATING = 'SET_COATING';
+const SET_OUTSIDE = 'SET_OUTSIDE';
+const SET_STATUS = 'SET_STATUS';
 
 // action method
 export const selectCate1 = (payload) => ({type: SELECT_CATE1, payload});
@@ -65,11 +80,35 @@ export const setUserWoodPattern = (payload) => ({
   payload,
 });
 export const setUserEasyYn = (payload) => ({type: SET_EASY_YN, payload});
+export const setUserWeight = (payload) => ({type: SET_WEIGHT, payload});
+export const setUserWeightEtc = (payload) => ({type: SET_WEIGHT_ETC, payload});
+export const setUserGoal = (payload) => ({type: SET_GOAL, payload});
+export const setUserGoalEtc = (payload) => ({type: SET_GOAL_ETC, payload});
+export const setUserColor = (payload) => ({type: SET_COLOR, payload});
+export const setUserColorEtc = (payload) => ({type: SET_COLOR_ETC, payload});
+export const setUserFrequency = (payload) => ({type: SET_FREQUENCY, payload});
+export const setUserPrinting = (payload) => ({type: SET_PRINTING, payload});
+export const setUserPrintSup = (payload) => ({
+  type: SET_PRINT_SUPERVISION,
+  payload,
+});
+export const setUserParkProc = (payload) => ({
+  type: SET_PARK_PROCESSING,
+  payload,
+});
+export const setUserPressDgn = (payload) => ({type: SET_PRESS_DESIGN, payload});
+export const setUserPartialSilk = (payload) => ({
+  type: SET_PARTIAL_SILK,
+  payload,
+});
+export const setUserCoating = (payload) => ({type: SET_COATING, payload});
+export const setUserOutside = (payload) => ({type: SET_OUTSIDE, payload});
+export const setUserStatus = (payload) => ({type: SET_STATUS, payload});
 
 // initialize
 const initialize = {
-  cate1: null, // 1차 카테고리('패키지','일반인쇄','기타인쇄')
-  ca_id: null, // 2차 카테고리('패키지 -> 칼라박스, ~~박스', '일반인쇄 -> 접지 ~~ 등')
+  cate1: null, // 분류아이디 (1차 카테고리('패키지','일반인쇄','기타인쇄'))
+  ca_id: null, // 1차분류아이디('패키지 -> 칼라박스, ~~박스', '일반인쇄 -> 접지 ~~ 등')
   type_id: null, // 박스아이디
   type_name: null, // 박스아이디
   pf_id: null, // 지류아이디
@@ -261,6 +300,81 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         easy_yn: action.payload,
+      };
+    case SET_WEIGHT:
+      return {
+        ...state,
+        paper_weight: action.payload,
+      };
+    case SET_WEIGHT_ETC:
+      return {
+        ...state,
+        paper_weight_etc: action.payload,
+      };
+    case SET_GOAL:
+      return {
+        ...state,
+        paper_goal: action.payload,
+      };
+    case SET_GOAL_ETC:
+      return {
+        ...state,
+        paper_goal_etc: action.payload,
+      };
+    case SET_COLOR:
+      return {
+        ...state,
+        paper_color: action.payload,
+      };
+    case SET_COLOR_ETC:
+      return {
+        ...state,
+        paper_color_etc: action.payload,
+      };
+    case SET_FREQUENCY:
+      return {
+        ...state,
+        print_frequency: action.payload,
+      };
+    case SET_PRINTING:
+      return {
+        ...state,
+        proof_printing: action.payload,
+      };
+    case SET_PRINT_SUPERVISION:
+      return {
+        ...state,
+        print_supervision: action.payload,
+      };
+    case SET_PARK_PROCESSING:
+      return {
+        ...state,
+        park_processing: action.payload,
+      };
+    case SET_PRESS_DESIGN:
+      return {
+        ...state,
+        press_design: action.payload,
+      };
+    case SET_PARTIAL_SILK:
+      return {
+        ...state,
+        partial_silk: action.payload,
+      };
+    case SET_COATING:
+      return {
+        ...state,
+        coating: action.payload,
+      };
+    case SET_OUTSIDE:
+      return {
+        ...state,
+        outside: action.payload,
+      };
+    case SET_STATUS:
+      return {
+        ...state,
+        status: action.payload,
       };
     default:
       return state;

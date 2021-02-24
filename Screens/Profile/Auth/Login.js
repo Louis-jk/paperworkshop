@@ -134,12 +134,25 @@ const Login = (props) => {
               }}
             />
             <View style={{marginBottom: 30, paddingHorizontal: 40}}>
-              <TextInput
-                placeholder="아이디"
-                style={[styles.textInput, styles.normalText, {height: 50}]}
-                onChangeText={(text) => setUserId(text)}
-                autoCapitalize="none"
-              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  marginBottom: 10,
+                  height: 50,
+                }}>
+                <TextInput
+                  placeholder="아이디"
+                  style={[styles.normalText, {width: '80%'}]}
+                  onChangeText={(text) => setUserId(text)}
+                  autoCapitalize="none"
+                />
+              </View>
               <View
                 style={{
                   flexDirection: 'row',

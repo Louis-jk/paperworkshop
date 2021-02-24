@@ -38,6 +38,10 @@ const Step04 = (props) => {
 
   const [type, setType] = React.useState('');
 
+  const directRef = React.useRef();
+
+  console.log('directRef?', directRef);
+
   const checkType = (v) => {
     setType(v);
   };
@@ -60,6 +64,8 @@ const Step04 = (props) => {
   const [quantityDirect, setQuantityDirect] = React.useState(null);
   const setOrderQuantity = (v) => {
     setQuantity(v);
+    // directRef.current.clear();
+    console.log('directRef', directRef.current);
   };
 
   const [pattern, setPattern] = React.useState(true);
@@ -326,6 +332,7 @@ const Step04 = (props) => {
               </Text>
             </TouchableOpacity>
             <TextInput
+              res={directRef}
               value={quantityDirect}
               placeholder="직접 입력해주세요."
               placeholderTextColor="#A2A2A2"

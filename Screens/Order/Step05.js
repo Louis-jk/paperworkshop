@@ -12,6 +12,7 @@ import {
   Button,
   Image,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
 import qs from 'qs';
@@ -20,6 +21,19 @@ import {useSelector, useDispatch} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import DetailHeader from '../Common/DetailHeader';
+import {
+  selectPfId,
+  selectPdId,
+  selectPnId,
+  selectPaperName,
+  setUserWeight,
+  setUserWeightEtc,
+  setUserFrequency,
+  setUserPrinting,
+  setUserPrintSup,
+  setUserColor,
+} from '../../Modules/OrderReducer';
+
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
 const Step05 = (props) => {
@@ -27,55 +41,89 @@ const Step05 = (props) => {
   const routeName = props.route.name;
 
   const dispatch = useDispatch();
+
+  //////////////////////////
+  /////// STATES ///////
+  /////////////////////////
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading01, setIsLoading01] = React.useState(false);
+  const [isLoading02, setIsLoading02] = React.useState(true);
+  const [isLoading03, setIsLoading03] = React.useState(true);
+
   const {cate1, ca_id, type_id} = useSelector((state) => state.OrderReducer);
 
+  const [paper, setPaper] = React.useState(null); // 지류 선택 (pf_id 지류아이디)
   const [typeDetail, setTypeDetail] = React.useState([]); // 지류 정보 담기
+  const [paperType, setPaperType] = React.useState(null); // 지종 선택
   const [paperDetail, setPaperDetail] = React.useState([]); // 지종 정보 담기
+  const [paperDetail2, setPaperDetail2] = React.useState([]); // 지종 2차 정보 담기
+  const [paperTypeDetail, setPaperTypeDetail] = React.useState(null); //  지종 2차 정보 담기
+  const [paperDetail3, setPaperDetail3] = React.useState([]); // 지종 2차 세부 내용 정보 담기
+  const [getWeight, setGetWeight] = React.useState([]);
+  const [weight, setWeight] = React.useState(null); //  평량 정보 담기
+  const [isDirect, setIsDirect] = React.useState(null); // 지종 2차 직접 입력 선택 유무
+  const [directPaperName, setDirectPaperName] = React.useState(null); // 지종 2차 직접 입력시 지종 이름 담기
+  const [print, setPrint] = React.useState(null); //  인쇄도수
+  const [color, setColor] = React.useState('y'); //  인쇄교정
+  const [check, setCheck] = React.useState('y'); //  인쇄감리
+  const [getPaperColors, setGetPaperColors] = React.useState([]); //  색상
+  const [paperColor, setPaperColor] = React.useState(null); //  색상 지정 index
+  const [paperColorName, setPaperColorName] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로)
 
-  //  지류 선택
-  const [paper, setPaper] = React.useState('normal');
+  console.log('paperColor', paperColor);
+  console.log('paperColorName', paperColorName);
 
-  // 지종 선택
-  const [paperType, setPaperType] = React.useState('지종 선택');
+  //////////////////////////
+  /////// FUNCTIONS ///////
+  /////////////////////////
 
-  const setPaperTypeChoise = (v) => {
-    setPaperType(v);
+  const nextBtn = () => {
+    console.log('paper', paper);
+    console.log('paperType', paperType);
+    console.log('weight', weight);
+
+    if (paper === null || paper === '') {
+      Alert.alert('지류를 선택해주세요.', '', [
+        {
+          text: '확인',
+        },
+      ]);
+    } else if (paperType === null || paperType === '') {
+      Alert.alert('지종을 선택해주세요.', '', [
+        {
+          text: '확인',
+        },
+      ]);
+    } else if (weight === null || weight === '') {
+      Alert.alert('평량을 선택해주세요.', '', [
+        {
+          text: '확인',
+        },
+      ]);
+    } else if (paperColor === null || paperColor === '') {
+      Alert.alert('색상을 선택해주세요.', '', [
+        {
+          text: '확인',
+        },
+      ]);
+    } else {
+      dispatch(selectPfId(paper));
+      dispatch(selectPdId(paperType));
+      dispatch(selectPnId(paperTypeDetail));
+      dispatch(selectPaperName(directPaperName));
+      dispatch(setUserWeight(weight));
+      dispatch(setUserWeightEtc(weight));
+      dispatch(setUserColor(paperColor));
+      dispatch(setUserFrequency(print));
+      dispatch(setUserPrinting(color));
+      dispatch(setUserPrintSup(check));
+
+      navigation.navigate('OrderStep06');
+    }
   };
 
-  // 지종 가져오기
-  const getPaperDetail = (pf_id) => {
-    axios({
-      url: `${baseUrl}`,
-      method: 'post',
-      data: qs.stringify({
-        method: 'proc_paper_list',
-        cate1,
-        ca_id,
-        pf_id,
-      }),
-    })
-      .then((res) => {
-        console.log('res', res);
-        if (res.data.result === '1') {
-          setPaperDetail(res.data.item);
-          // setPaperType(res.data.item[0].paper_name);
-        } else {
-          Alert.alert(res.data.message, '', [
-            {
-              text: '확인',
-            },
-          ]);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const setPaperChoise = (v) => {
-    setPaper(v);
-    getPaperDetail(v);
-  };
-
-  // 지류 정보 가져오기
+  // 지류 정보 가져오기 (분류아이디: cate1, 1차분류아이디: ca_id, 박스타입아이디: type_id(선택) 필요)
   const getTypeDetail = () => {
     axios({
       url: `${baseUrl}`,
@@ -104,49 +152,194 @@ const Step05 = (props) => {
       .catch((err) => console.log(err));
   };
 
-  React.useEffect(() => {
-    getTypeDetail();
-  }, [paperType]);
+  // 지종 가져오기 (지류 아이디 필요 : pf_id)
+  const getPaperDetail = (pf_id) => {
+    setIsLoading(true);
+    setIsLoading01(true);
+    setIsLoading02(true);
 
-  //  고급지 일 경우 - 지종 선택 - 세부 선택
-  const [paperTypeDetail, setPaperTypeDetail] = React.useState('세부 선택');
-
-  const setPaperTypeDetailChoise = (v) => {
-    setPaperTypeDetail(v);
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_list',
+        cate1,
+        ca_id,
+        pf_id,
+      }),
+    })
+      .then((res) => {
+        console.log('res', res);
+        if (res.data.result === '1') {
+          setIsLoading(false);
+          setPaperDetail(res.data.item);
+          setPaperType(res.data.item[0].paper_name);
+          setIsLoading02(false);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
-  //  고급지 일 경우 - 평량
-  const [weight, setWeight] = React.useState('평량 선택');
+  const setPaperChoise = (v) => {
+    setPaper(v);
+    getPaperDetail(v);
+    setIsLoading03(true);
+    setWeight(null);
+  };
 
+  // 지종 1차(pd_id) 선택 및 가져오기 (지종 아이디 필요 : pd_id)
+  const getPaperDetailStep01 = (pd_id) => {
+    setIsLoading01(true);
+    setIsLoading02(true);
+    setPaperColor(null);
+    setPaperColorName(null);
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_list',
+        cate1, // 분류아이디
+        ca_id, // 1차 분류 아이디
+        pf_id: paper, // 지류아이디
+        pd_id, // 지종아이디
+      }),
+    })
+      .then((res) => {
+        console.log('res', res);
+        if (res.data.result === '1') {
+          setPaperDetail2(res.data.item);
+          setGetWeight(res.data.item);
+          setGetPaperColors(res.data.item[0].paper_color);
+          setIsLoading01(false);
+          setIsLoading02(false);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // 평량 정보 가져오기
+  const getPaperDetailStep02 = (pn_id) => {
+    setIsLoading02(true);
+    setPaperColor(null);
+    setPaperColorName(null);
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_list',
+        cate1, // 분류아이디('일반','패키지','기타')
+        ca_id, // 1차 분류 아이디
+        pf_id: paper, // 지류 아이디
+        pd_id: paperType, // 지종 아이디
+        pn_id, // 지종 상세 아이디
+      }),
+    })
+      .then((res) => {
+        console.log('지종 상세', res);
+        if (res.data.result === '1') {
+          setPaperDetail3(res.data.item);
+          setGetWeight(res.data.item);
+          setGetPaperColors(res.data.item[0].paper_color);
+          setIsLoading02(false);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    getTypeDetail();
+    setPaperType(null);
+    setPaper(null);
+  }, []);
+
+  // 직접입력시
+  const setPaperTypeName02 = (v) => {
+    if (v === '직접입력') {
+      setIsDirect(v);
+      setIsLoading03(false);
+    }
+  };
+
+  // 지종 1차 선택
+  const setPaperType01 = (v) => {
+    setPaperType(v); // 지종 선택 지종 아이디
+    getPaperDetailStep01(v);
+    setIsLoading01(false);
+    setIsLoading02(false);
+    setIsLoading03(true);
+  };
+
+  // 지종 2차 선택
+  const setPaperType02 = (v) => {
+    console.log('지종2차', v);
+    setPaperTypeDetail(v);
+    getPaperDetailStep02(v);
+    setIsLoading03(true);
+  };
+
+  // 평량 넣기
   const setWeightChoise = (v) => {
     setWeight(v);
   };
 
   //  인쇄도수
-  const [print, setPrint] = React.useState('도수 선택');
-
   const setPrintColor = (v) => {
     setPrint(v);
   };
 
   //  인쇄교정
-  const [color, setColor] = React.useState('y');
-
   const setColorChoise = (v) => {
     setColor(v);
   };
 
   //  인쇄감리
-  const [check, setCheck] = React.useState('y');
-
   const setCheckChoise = (v) => {
     setCheck(v);
   };
 
-  const temp = [{label: 1}];
+  const onSelectPaperColor = (name, idx) => {
+    setPaperColorName(name);
+    setPaperColor(idx);
+  };
 
   return (
     <>
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'transparent',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <DetailHeader title={routeName} navigation={navigation} />
 
       <View
@@ -187,7 +380,6 @@ const Step05 = (props) => {
                 <Text style={[styles.profileTitle, {marginRight: 5}]}>
                   구분
                 </Text>
-                {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
                 style={{
@@ -209,7 +401,7 @@ const Step05 = (props) => {
                           alignItems: 'center',
                           marginRight: 20,
                           marginBottom: 20,
-                          // width: '100%',
+                          width: '100%',
                         }}>
                         <Image
                           source={
@@ -232,7 +424,7 @@ const Step05 = (props) => {
 
             {/* 지종 선택 */}
 
-            <View style={{marginBottom: 40}}>
+            <View style={{marginBottom: 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -250,114 +442,143 @@ const Step05 = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  marginBottom: paperType === 'direct' ? 0 : 25,
+                  marginBottom:
+                    !isLoading03 && isDirect === '직접입력' ? 5 : 25,
                 }}>
-                <View style={{width: '49%'}}>
-                  <DropDownPicker
-                    placeholder="지종 선택"
-                    placeholderStyle={{
-                      fontSize: 14,
-                      color: '#A2A2A2',
-                      fontWeight: '400',
-                    }}
-                    activeLabelStyle={{color: '#000'}}
-                    activeItemStyle={{color: '#000'}}
-                    selectedLabelStyle={{color: '#000'}}
-                    value={paperType}
-                    dropDownMaxHeight={500}
-                    items={paperDetail.map((v, _i) => {
-                      return {value: v.pd_id, label: v.paper_name};
-                    })}
-                    containerStyle={{height: 50}}
-                    style={{
-                      backgroundColor: '#fff',
-                      borderTopRightRadius: 4,
-                      borderTopLeftRadius: 4,
-                      borderBottomRightRadius: 4,
-                      borderBottomLeftRadius: 4,
-                    }}
-                    itemStyle={{
-                      justifyContent: 'flex-start',
-                      paddingVertical: 10,
-                    }}
-                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
-                    dropDownStyle={{backgroundColor: '#fff'}}
-                    onChangeItem={(item) => setPaperTypeChoise(item.value)}
-                    customArrowDown={() => (
-                      <Image
-                        source={require('../../src/assets/arr01.png')}
-                        style={{width: 25, height: 25}}
-                        resizeMode="contain"
-                      />
-                    )}
-                    customArrowUp={() => (
-                      <Image
-                        source={require('../../src/assets/arr01_top.png')}
-                        style={{width: 25, height: 25}}
-                        resizeMode="contain"
-                      />
-                    )}
-                  />
-                </View>
-                {paperDetail.map((pd, idx) =>
-                  pd.paper_name2 ? (
-                    <View style={{width: '49%'}} key={idx}>
-                      <DropDownPicker
-                        placeholder="세부 선택"
-                        placeholderStyle={{
-                          fontSize: 14,
-                          color: '#A2A2A2',
-                          fontWeight: '400',
-                        }}
-                        activeLabelStyle={{color: '#000'}}
-                        activeItemStyle={{color: '#000'}}
-                        selectedLabelStyle={{color: '#000'}}
-                        value={
-                          paperType === 'direct' ? '없음' : paperTypeDetail
-                        }
-                        dropDownMaxHeight={500}
-                        items={pd.paper_name2.map((v, _i) => {
-                          return {value: v, label: v};
-                        })}
-                        containerStyle={{height: 50}}
-                        style={{
-                          backgroundColor: '#fff',
-                          borderTopRightRadius: 4,
-                          borderTopLeftRadius: 4,
-                          borderBottomRightRadius: 4,
-                          borderBottomLeftRadius: 4,
-                        }}
-                        itemStyle={{
-                          justifyContent: 'flex-start',
-                          paddingVertical: 10,
-                        }}
-                        labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
-                        dropDownStyle={{backgroundColor: '#fff'}}
-                        onChangeItem={(item) =>
-                          setPaperTypeDetailChoise(item.value)
-                        }
-                        customArrowDown={() => (
-                          <Image
-                            source={require('../../src/assets/arr01.png')}
-                            style={{width: 25, height: 25}}
-                            resizeMode="contain"
+                {/* 지종 1차 */}
+                {!isLoading && paperDetail ? (
+                  <View style={{width: '49%'}}>
+                    <DropDownPicker
+                      value={paperType}
+                      placeholder="지종 선택"
+                      placeholderStyle={{
+                        fontSize: 14,
+                        color: '#A2A2A2',
+                        fontWeight: '400',
+                      }}
+                      activeLabelStyle={{color: '#000'}}
+                      activeItemStyle={{color: '#000'}}
+                      selectedLabelStyle={{color: '#000'}}
+                      value={paperType}
+                      dropDownMaxHeight={300}
+                      items={paperDetail.map((v, _i) => {
+                        // setPfId(v.pf_id);
+                        return {value: v.pd_id, label: v.paper_name};
+                      })}
+                      containerStyle={{height: 50}}
+                      style={{
+                        backgroundColor: '#fff',
+                        borderTopRightRadius: 4,
+                        borderTopLeftRadius: 4,
+                        borderBottomRightRadius: 4,
+                        borderBottomLeftRadius: 4,
+                      }}
+                      itemStyle={{
+                        justifyContent: 'flex-start',
+                        paddingVertical: 10,
+                      }}
+                      onOpen={() => {
+                        setDirectPaperName(null);
+                        setWeight(null);
+                        setIsLoading02(true);
+                      }}
+                      labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                      dropDownStyle={{backgroundColor: '#fff'}}
+                      onChangeItem={(item) => {
+                        setPaperType01(item.value);
+                        setIsLoading01(true);
+
+                        // setIsLoading02(true);
+                      }}
+                      customArrowDown={() => (
+                        <Image
+                          source={require('../../src/assets/arr01.png')}
+                          style={{width: 25, height: 25}}
+                          resizeMode="contain"
+                        />
+                      )}
+                      customArrowUp={() => (
+                        <Image
+                          source={require('../../src/assets/arr01_top.png')}
+                          style={{width: 25, height: 25}}
+                          resizeMode="contain"
+                        />
+                      )}
+                    />
+                  </View>
+                ) : null}
+                {/* // 지종 1차 */}
+
+                {/* 지종 2차 */}
+                {!isLoading01 && paperDetail2
+                  ? paperDetail2.map((pd, idx) =>
+                      pd.paper_name2 ? (
+                        <View style={{width: '49%'}} key={idx}>
+                          <DropDownPicker
+                            placeholder="세부 선택"
+                            placeholderStyle={{
+                              fontSize: 14,
+                              color: '#A2A2A2',
+                              fontWeight: '400',
+                            }}
+                            activeLabelStyle={{color: '#000'}}
+                            activeItemStyle={{color: '#000'}}
+                            selectedLabelStyle={{color: '#000'}}
+                            value={
+                              paperType === '직접입력'
+                                ? '없음'
+                                : paperTypeDetail
+                            }
+                            dropDownMaxHeight={300}
+                            items={pd.paper_name2.map((v, _i) => {
+                              return {value: v.pn_id, label: v.name};
+                            })}
+                            containerStyle={{height: 50}}
+                            style={{
+                              backgroundColor: '#fff',
+                              borderTopRightRadius: 4,
+                              borderTopLeftRadius: 4,
+                              borderBottomRightRadius: 4,
+                              borderBottomLeftRadius: 4,
+                            }}
+                            itemStyle={{
+                              justifyContent: 'flex-start',
+                              paddingVertical: 10,
+                            }}
+                            labelStyle={{
+                              fontFamily: 'SCDream4',
+                              color: '#A2A2A2',
+                            }}
+                            dropDownStyle={{backgroundColor: '#fff'}}
+                            onChangeItem={(item) => {
+                              setPaperType02(item.value);
+                              setPaperTypeName02(item.label);
+                              setIsLoading02(true);
+                            }}
+                            customArrowDown={() => (
+                              <Image
+                                source={require('../../src/assets/arr01.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
+                            customArrowUp={() => (
+                              <Image
+                                source={require('../../src/assets/arr01_top.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
                           />
-                        )}
-                        customArrowUp={() => (
-                          <Image
-                            source={require('../../src/assets/arr01_top.png')}
-                            style={{width: 25, height: 25}}
-                            resizeMode="contain"
-                          />
-                        )}
-                      />
-                    </View>
-                  ) : null,
-                )}
+                        </View>
+                      ) : null,
+                    )
+                  : null}
+                {/* // 지종 2차 */}
               </View>
-              {paperType === 'direct' && (
+              {!isLoading03 && isDirect === '직접입력' && (
                 <TextInput
-                  value=""
+                  value={directPaperName}
                   placeholder="지종을 직접 입력해주세요."
                   placeholderTextColor="#A2A2A2"
                   style={[
@@ -367,81 +588,168 @@ const Step05 = (props) => {
                       borderColor: '#E3E3E3',
                       borderRadius: 4,
                       paddingHorizontal: 10,
-                      marginTop: 5,
-                      marginBottom: 25,
+                      marginBottom: 10,
                     },
                   ]}
+                  onChangeText={(text) => setDirectPaperName(text)}
                   autoCapitalize="none"
                 />
               )}
 
+              {/* 평량 선택 또는 입력 */}
+              {!isLoading02 && getWeight ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}>
+                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                    평량
+                  </Text>
+                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                </View>
+              ) : null}
+              {!isLoading03 && isDirect === '직접입력' && (
+                <TextInput
+                  value={weight}
+                  placeholder="평량을 직접 입력해주세요."
+                  placeholderTextColor="#A2A2A2"
+                  style={[
+                    styles.normalText,
+                    {
+                      borderWidth: 1,
+                      borderColor: '#E3E3E3',
+                      borderRadius: 4,
+                      paddingHorizontal: 10,
+                      marginBottom: 5,
+                    },
+                  ]}
+                  onChangeText={(text) => setWeightChoise(text)}
+                  autoCapitalize="none"
+                  keyboardType="number-pad"
+                />
+              )}
+              {!isLoading02 && getWeight
+                ? getWeight.map((pd, idx) => (
+                    <View style={{width: '49%'}} key={idx}>
+                      {pd.paper_weight ? (
+                        <DropDownPicker
+                          placeholder="평량 선택"
+                          placeholderStyle={{
+                            fontSize: 14,
+                            color: '#A2A2A2',
+                            fontWeight: '400',
+                          }}
+                          activeLabelStyle={{color: '#000'}}
+                          activeItemStyle={{color: '#000'}}
+                          selectedLabelStyle={{color: '#000'}}
+                          value={weight}
+                          items={pd.paper_weight.map((v, _i) => {
+                            return {value: v, label: v};
+                          })}
+                          containerStyle={{height: 50}}
+                          style={{
+                            backgroundColor: '#fff',
+                            borderTopRightRadius: 4,
+                            borderTopLeftRadius: 4,
+                            borderBottomRightRadius: 4,
+                            borderBottomLeftRadius: 4,
+                          }}
+                          dropDownMaxHeight={300}
+                          itemStyle={{
+                            justifyContent: 'flex-start',
+                            paddingVertical: 10,
+                          }}
+                          labelStyle={{
+                            fontFamily: 'SCDream4',
+                            color: '#A2A2A2',
+                          }}
+                          dropDownStyle={{backgroundColor: '#fff'}}
+                          onChangeItem={(item) => setWeightChoise(item.value)}
+                          onOpen={() => {
+                            setDirectPaperName(null);
+                            setWeight(null);
+                          }}
+                          customArrowDown={() => (
+                            <Image
+                              source={require('../../src/assets/arr01.png')}
+                              style={{width: 25, height: 25}}
+                              resizeMode="contain"
+                            />
+                          )}
+                          customArrowUp={() => (
+                            <Image
+                              source={require('../../src/assets/arr01_top.png')}
+                              style={{width: 25, height: 25}}
+                              resizeMode="contain"
+                            />
+                          )}
+                        />
+                      ) : null}
+                    </View>
+                  ))
+                : null}
+            </View>
+            {/* // 평량 선택 또는 입력 */}
+
+            {/* 색상 선택  */}
+            <View style={{marginBottom: 45}}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 10,
+                  marginBottom: 5,
                 }}>
                 <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                  평량
+                  색상
                 </Text>
-                {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
-              <View style={{width: '49%'}}>
-                <DropDownPicker
-                  placeholder={'평량 선택'}
-                  placeholderStyle={{
-                    fontSize: 14,
-                    color: '#A2A2A2',
-                    fontWeight: '400',
-                  }}
-                  activeLabelStyle={{color: '#000'}}
-                  activeItemStyle={{color: '#000'}}
-                  selectedLabelStyle={{color: '#000'}}
-                  value={weight}
-                  items={[
-                    {label: '평량01', value: '평량01'},
-                    {label: '평량02', value: '평량02'},
-                    {label: '평량03', value: '평량03'},
-                    {label: '평량04', value: '평량04'},
-                    {label: '평량05', value: '평량05'},
-                  ]}
-                  containerStyle={{height: 50}}
-                  style={{
-                    backgroundColor: '#fff',
-                    borderTopRightRadius: 4,
-                    borderTopLeftRadius: 4,
-                    borderBottomRightRadius: 4,
-                    borderBottomLeftRadius: 4,
-                  }}
-                  itemStyle={{
-                    justifyContent: 'flex-start',
-                    paddingVertical: 10,
-                  }}
-                  labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
-                  dropDownStyle={{backgroundColor: '#fff'}}
-                  onChangeItem={(item) => setWeightChoise(item.value)}
-                  customArrowDown={() => (
-                    <Image
-                      source={require('../../src/assets/arr01.png')}
-                      style={{width: 25, height: 25}}
-                      resizeMode="contain"
-                    />
-                  )}
-                  customArrowUp={() => (
-                    <Image
-                      source={require('../../src/assets/arr01_top.png')}
-                      style={{width: 25, height: 25}}
-                      resizeMode="contain"
-                    />
-                  )}
-                />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}>
+                {getPaperColors
+                  ? getPaperColors.map((t, idx) => (
+                      <TouchableOpacity
+                        key={idx}
+                        activeOpacity={1}
+                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        onPress={() => onSelectPaperColor(t, t[idx])}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                          marginBottom: 20,
+                          width: '100%',
+                        }}>
+                        <Image
+                          source={
+                            paperColor === t[idx]
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {t}
+                        </Text>
+                      </TouchableOpacity>
+                    ))
+                  : null}
               </View>
             </View>
-
-            {/* // 지종 선택  */}
+            {/* // 색상 선택  */}
 
             {/* 인쇄 도수  */}
+
             <View style={{marginBottom: 20}}>
               <View
                 style={{
@@ -470,66 +778,55 @@ const Step05 = (props) => {
                 </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
-              <DropDownPicker
-                placeholder={'도수 선택'}
-                placeholderStyle={{
-                  fontSize: 14,
-                  color: '#A2A2A2',
-                  fontWeight: '400',
-                }}
-                activeLabelStyle={{color: '#000'}}
-                activeItemStyle={{color: '#000'}}
-                selectedLabelStyle={{color: '#000'}}
-                value={print}
-                items={[
-                  {label: '(전면) 1도', value: '(전면) 1도'},
-                  {label: '(전면) 4도', value: '(전면) 4도'},
-                  {
-                    label: '(전면) 4도 + 별색 1도',
-                    value: '(전면) 4도 + 별색 1도',
-                  },
-                  {
-                    label: '(전면) 4도 + (후면) 1도',
-                    value: '(전면) 4도 + (후면) 1도',
-                  },
-                  {
-                    label: '(전면) 4도 + 별색 1도 + (후면) 1도',
-                    value: '(전면) 4도 + 별색 1도 + (후면) 1도',
-                  },
-                  {label: '(전면) 별색 1도', value: '(전면) 별색 1도'},
-                  {label: '(전면) 별색 2도', value: '(전면) 별색 2도'},
-                  {label: '인쇄없음', value: '인쇄없음'},
-                ]}
-                containerStyle={{height: 50}}
-                style={{
-                  backgroundColor: '#fff',
-                  borderTopRightRadius: 4,
-                  borderTopLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                  borderBottomLeftRadius: 4,
-                }}
-                itemStyle={{
-                  justifyContent: 'flex-start',
-                  paddingVertical: 10,
-                }}
-                labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
-                dropDownStyle={{backgroundColor: '#fff'}}
-                onChangeItem={(item) => setPrintColor(item.value)}
-                customArrowDown={() => (
-                  <Image
-                    source={require('../../src/assets/arr01.png')}
-                    style={{width: 25, height: 25}}
-                    resizeMode="contain"
-                  />
-                )}
-                customArrowUp={() => (
-                  <Image
-                    source={require('../../src/assets/arr01_top.png')}
-                    style={{width: 25, height: 25}}
-                    resizeMode="contain"
-                  />
-                )}
-              />
+              {getWeight
+                ? getWeight.map((pd, idx) => (
+                    <DropDownPicker
+                      key={idx}
+                      placeholder={'도수 선택'}
+                      placeholderStyle={{
+                        fontSize: 14,
+                        color: '#A2A2A2',
+                        fontWeight: '400',
+                      }}
+                      activeLabelStyle={{color: '#000'}}
+                      activeItemStyle={{color: '#000'}}
+                      selectedLabelStyle={{color: '#000'}}
+                      value={print}
+                      items={pd.print_frequency.map((v, _i) => {
+                        return {value: v, label: v};
+                      })}
+                      containerStyle={{height: 50}}
+                      style={{
+                        backgroundColor: '#fff',
+                        borderTopRightRadius: 4,
+                        borderTopLeftRadius: 4,
+                        borderBottomRightRadius: 4,
+                        borderBottomLeftRadius: 4,
+                      }}
+                      itemStyle={{
+                        justifyContent: 'flex-start',
+                        paddingVertical: 10,
+                      }}
+                      labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                      dropDownStyle={{backgroundColor: '#fff'}}
+                      onChangeItem={(item) => setPrintColor(item.value)}
+                      customArrowDown={() => (
+                        <Image
+                          source={require('../../src/assets/arr01.png')}
+                          style={{width: 25, height: 25}}
+                          resizeMode="contain"
+                        />
+                      )}
+                      customArrowUp={() => (
+                        <Image
+                          source={require('../../src/assets/arr01_top.png')}
+                          style={{width: 25, height: 25}}
+                          resizeMode="contain"
+                        />
+                      )}
+                    />
+                  ))
+                : null}
             </View>
             {/* // 인쇄 도수  */}
 
@@ -720,8 +1017,7 @@ const Step05 = (props) => {
                   borderColor: '#E3E3E3',
                 }}
               />
-              <TouchableWithoutFeedback
-                onPress={() => navigation.navigate('OrderStep06')}>
+              <TouchableWithoutFeedback onPress={() => nextBtn()}>
                 <View
                   style={{
                     flex: 1,

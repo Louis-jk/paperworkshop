@@ -64,7 +64,7 @@ const CategoryNav = (props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 10,
+            marginRight: 5,
             paddingBottom: 10,
             paddingRight: 10,
             // backgroundColor: '#ffaaee',
@@ -82,7 +82,7 @@ const CategoryNav = (props) => {
             style={{
               paddingVertical: 12,
               fontFamily: cateName === 'All' ? 'SCDream5' : 'SCDream4',
-              fontSize: 15,
+              fontSize: 13,
               color: cateName === 'All' ? '#275696' : '#B5B5B5',
             }}>
             전체
@@ -94,7 +94,7 @@ const CategoryNav = (props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 10,
+            marginRight: 5,
             paddingBottom: 10,
             paddingHorizontal: 10,
           }}
@@ -103,7 +103,7 @@ const CategoryNav = (props) => {
             style={{
               paddingVertical: 12,
               fontFamily: cateName === 'Packages' ? 'SCDream5' : 'SCDream4',
-              fontSize: 15,
+              fontSize: 13,
               color:
                 cateName === 'Packages' ||
                 (cateName === 'Packages' && isActivePackages)
@@ -144,7 +144,7 @@ const CategoryNav = (props) => {
                   });
                   setIsActivePackages(false);
                 }}>
-                <Text style={{fontFamily: 'SCDream4'}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v === '9'
                     ? '칼라박스'
                     : v === '10'
@@ -169,7 +169,7 @@ const CategoryNav = (props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 10,
+            marginRight: 5,
             paddingBottom: 10,
             paddingHorizontal: 10,
           }}
@@ -178,7 +178,7 @@ const CategoryNav = (props) => {
             style={{
               paddingVertical: 12,
               fontFamily: cateName === 'General' ? 'SCDream5' : 'SCDream4',
-              fontSize: 15,
+              fontSize: 13,
               color:
                 cateName === 'General' ||
                 (cateName === 'General' && isActiveGeneral)
@@ -219,7 +219,7 @@ const CategoryNav = (props) => {
                   });
                   setIsActiveGeneral(false);
                 }}>
-                <Text style={{fontFamily: 'SCDream4'}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v === '1'
                     ? '카달로그,브로슈어,팜플렛'
                     : v === '4'
@@ -244,7 +244,7 @@ const CategoryNav = (props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 10,
+            marginRight: 5,
             paddingBottom: 10,
             paddingHorizontal: 10,
           }}
@@ -253,7 +253,7 @@ const CategoryNav = (props) => {
             style={{
               paddingVertical: 12,
               fontFamily: cateName === 'Etc' ? 'SCDream5' : 'SCDream4',
-              fontSize: 15,
+              fontSize: 13,
               color:
                 cateName === 'Etc' || (cateName === 'Etc' && isActiveEtc)
                   ? '#275696'
@@ -293,7 +293,7 @@ const CategoryNav = (props) => {
                   });
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: 'SCDream4'}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v === '15'
                     ? '상품권/티켓'
                     : v === '16'

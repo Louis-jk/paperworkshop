@@ -648,9 +648,32 @@ const Step02 = (props) => {
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text style={[styles.normalText, {fontSize: 12, color: '#366DE5'}]}>
-              * 인쇄/패키지 제작에 참고 할 수 있는 자료가 있다면 첨부해주세요.
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+              }}>
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 12,
+                    color: '#366DE5',
+                    lineHeight: 18,
+                    marginRight: 5,
+                  },
+                ]}>
+                *
+              </Text>
+              <Text
+                style={[
+                  styles.normalText,
+                  {fontSize: 12, color: '#366DE5', lineHeight: 18},
+                ]}>
+                인쇄/패키지 제작에 참고 할 수 있는 자료가 있다면 첨부해주세요.
+              </Text>
+            </View>
           </View>
           {/* // 파일 첨부  */}
 

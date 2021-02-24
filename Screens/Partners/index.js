@@ -10,6 +10,7 @@ import {
   TextInput,
   Dimensions,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 
 import axios from 'axios';
@@ -28,8 +29,10 @@ const index = (props) => {
   console.log('파트너스 전체 props', props);
 
   const [partners, setPartners] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const getApi = () => {
+    setIsLoading(true);
     axios({
       method: 'post',
       url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
@@ -40,6 +43,7 @@ const index = (props) => {
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
+          setIsLoading(false);
         } else {
           setPartners(null);
         }
@@ -49,7 +53,6 @@ const index = (props) => {
 
   React.useEffect(() => {
     getApi();
-    return () => getApi();
   }, []);
 
   console.log('partners:', partners);
@@ -198,7 +201,25 @@ const index = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <View
         style={{
           position: 'relative',

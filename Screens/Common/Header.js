@@ -13,7 +13,7 @@ const Header = (props) => {
   const navigation = props.navigation;
 
   const [title, setTitle] = React.useState('');
-  const { container, headerCtrl, headerTitle, icons } = styles;
+  const {container, headerCtrl, headerTitle, icons} = styles;
 
   React.useEffect(() => {
     switch (props.title) {
@@ -62,7 +62,6 @@ const Header = (props) => {
       case 'StoryCreateInfo':
         setTitle('인쇄/패키지 제작정보');
         break;
-
       case 'CCenter':
         setTitle('FAQ');
         break;
@@ -108,7 +107,7 @@ const Header = (props) => {
   }, [title]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#fff' }}>
+    <SafeAreaView style={{backgroundColor: '#fff'}}>
       <View style={container}>
         <View style={headerCtrl}>
           <Text style={[styles.boldText, headerTitle]}>{title}</Text>
@@ -117,7 +116,7 @@ const Header = (props) => {
         <View style={icons}>
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate('Search')}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: -15 }}>
+            hitSlop={{top: 5, bottom: 5, left: 5, right: -15}}>
             <View>
               <Image
                 source={require('../../src/assets/top_seach02.png')}
@@ -132,7 +131,7 @@ const Header = (props) => {
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
             onPress={() => navigation.openDrawer('right')}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}>
+            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
             <View>
               <Image
                 source={require('../../src/assets/menu.png')}

@@ -22,10 +22,14 @@ const index = (props) => {
     <>
       <Header title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+        <View style={{paddingHorizontal: 20, paddingTop: 20}}>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <View style={{ position: 'relative' }}>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <View style={{position: 'relative'}}>
               <Text
                 style={[
                   styles.mediumText,
@@ -86,7 +90,9 @@ const index = (props) => {
                 일반인쇄
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('GalleryEtc')}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('GalleryEtc')}>
               <Text
                 style={[
                   styles.normalText,
@@ -117,13 +123,13 @@ const index = (props) => {
               placeholder="키워드를 입력하세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, { width: '80%' }]}
+              style={[styles.normalText, {width: '80%'}]}
             />
             <TouchableOpacity>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
-                style={{ width: 30, height: 30 }}
+                style={{width: 30, height: 30}}
               />
             </TouchableOpacity>
           </View>
@@ -140,18 +146,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general01.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -190,7 +196,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
@@ -200,18 +206,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 02 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general02.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -250,7 +256,7 @@ const index = (props) => {
                   </Text>
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
@@ -260,18 +266,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package01.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -310,7 +316,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
@@ -320,18 +326,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 02 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package02.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -370,7 +376,7 @@ const index = (props) => {
                   </Text>
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
@@ -380,18 +386,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc01.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -430,7 +436,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
@@ -440,18 +446,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 02 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc02.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -490,7 +496,7 @@ const index = (props) => {
                   </Text>
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
@@ -500,18 +506,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 03 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general03.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -550,7 +556,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
@@ -560,18 +566,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 04 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general04.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -610,7 +616,7 @@ const index = (props) => {
                   </Text>
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   명함, 판촉물, 패키지 인쇄몰입니다.
                 </Text>
@@ -620,18 +626,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/p11.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -670,7 +676,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
@@ -680,18 +686,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 02 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/p13.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -730,7 +736,7 @@ const index = (props) => {
                   </Text>
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
@@ -741,18 +747,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 03 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package03.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -791,7 +797,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
@@ -801,18 +807,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 04 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package04.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -851,7 +857,7 @@ const index = (props) => {
                   </Text>
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   명함, 판촉물, 패키지 인쇄몰입니다.
                 </Text>
@@ -862,18 +868,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 03 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc03.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -912,7 +918,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
@@ -922,18 +928,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 04 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc04.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -972,7 +978,7 @@ const index = (props) => {
                   </Text>
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   명함, 판촉물, 패키지 인쇄몰입니다.
                 </Text>
@@ -984,18 +990,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc05.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1034,7 +1040,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
@@ -1044,18 +1050,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 02 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc06.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1094,7 +1100,7 @@ const index = (props) => {
                   </Text> */}
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
@@ -1104,18 +1110,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package05.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1154,7 +1160,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
@@ -1164,18 +1170,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 02 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package06.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1214,7 +1220,7 @@ const index = (props) => {
                   </Text> */}
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
@@ -1224,18 +1230,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 03 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package07.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1274,7 +1280,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
@@ -1284,18 +1290,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 04 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/packages/package08.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1334,7 +1340,7 @@ const index = (props) => {
                   </Text> */}
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   명함, 판촉물, 패키지 인쇄몰입니다.
                 </Text>
@@ -1344,18 +1350,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 03 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc07.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1394,7 +1400,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
@@ -1404,18 +1410,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 04 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/etc/etc08.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1454,7 +1460,7 @@ const index = (props) => {
                   </Text> */}
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   명함, 판촉물, 패키지 인쇄몰입니다.
                 </Text>
@@ -1464,18 +1470,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 01 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general05.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1514,7 +1520,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [패키지] 병원/의약품/건강/케어/헬스 관련패키지
                 </Text>
@@ -1524,18 +1530,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 02 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general06.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1574,7 +1580,7 @@ const index = (props) => {
                   </Text> */}
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   식품, 박스, 패키지 디자인 전문입니다.
                 </Text>
@@ -1584,18 +1590,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 03 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingRight: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general07.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1634,7 +1640,7 @@ const index = (props) => {
                 </View>
 
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   [일반인쇄] 설 선물세트 / 선물 박스 패키지 디자인
                 </Text>
@@ -1644,18 +1650,18 @@ const index = (props) => {
             {/* 갤러리 리스트(list) 04 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
+              onPress={() => navigation.navigate('GalleryWebView')}
               style={{
                 width: '50%',
                 borderRadius: 5,
                 marginBottom: 20,
                 paddingLeft: 5,
               }}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <Image
                   source={require('../../src/images/general/general08.jpg')}
                   resizeMode="cover"
-                  style={{ width: '100%', height: 130, borderRadius: 5 }}
+                  style={{width: '100%', height: 130, borderRadius: 5}}
                 />
               </View>
               <View
@@ -1694,7 +1700,7 @@ const index = (props) => {
                   </Text> */}
                 </View>
                 <Text
-                  style={[styles.normalText, { fontSize: 13, lineHeight: 18 }]}
+                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
                   numberOfLines={2}>
                   명함, 판촉물, 패키지 인쇄몰입니다.
                 </Text>

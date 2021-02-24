@@ -46,7 +46,7 @@ const PartnersNav = (props) => {
             style={[
               styles.mediumText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginBottom: 20,
                 marginRight: 20,
               },
@@ -79,7 +79,7 @@ const PartnersNav = (props) => {
             style={[
               styles.normalText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginBottom: 20,
                 marginRight: 20,
                 color: '#707070',
@@ -96,7 +96,7 @@ const PartnersNav = (props) => {
             style={[
               styles.mediumText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginBottom: 20,
                 marginRight: 20,
               },
@@ -129,7 +129,7 @@ const PartnersNav = (props) => {
             style={[
               styles.normalText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginBottom: 20,
                 marginRight: 20,
                 color: '#707070',
@@ -146,7 +146,7 @@ const PartnersNav = (props) => {
             style={[
               styles.mediumText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginBottom: 20,
                 marginRight: 20,
               },
@@ -179,7 +179,7 @@ const PartnersNav = (props) => {
             style={[
               styles.normalText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginBottom: 20,
                 marginRight: 20,
                 color: '#707070',
@@ -197,7 +197,7 @@ const PartnersNav = (props) => {
               style={[
                 styles.mediumText,
                 {
-                  fontSize: 16,
+                  fontSize: 14,
                   marginBottom: 20,
                   marginRight: 20,
                 },
@@ -223,7 +223,7 @@ const PartnersNav = (props) => {
             style={[
               styles.normalText,
               {
-                fontSize: 16,
+                fontSize: 14,
                 marginBottom: 20,
                 marginRight: 20,
                 color: '#707070',
@@ -265,7 +265,7 @@ const PartnersNav = (props) => {
                 <Text
                   style={{
                     fontFamily: 'SCDream4',
-                    fontSize: 14,
+                    fontSize: 12,
                     color: '#707070',
                   }}>
                   {v === 'seoul'

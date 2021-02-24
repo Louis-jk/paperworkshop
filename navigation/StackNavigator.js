@@ -11,6 +11,7 @@ import GalleryDetailScreen from '../Screens/Gallery/Detail';
 import GalleryPackageScreen from '../Screens/Gallery/Package';
 import GalleryGeneralScreen from '../Screens/Gallery/General';
 import GalleryEtcScreen from '../Screens/Gallery/Etc';
+import GalleryWebViewScreen from '../Screens/Gallery/WebView';
 
 // 파트너스(성실,인기,지역) SCREEN
 // 메인
@@ -176,6 +177,7 @@ export const GalleryStackNavigator = () => {
       <Stack.Screen name="GalleryPackage" component={GalleryPackageScreen} />
       <Stack.Screen name="GalleryGeneral" component={GalleryGeneralScreen} />
       <Stack.Screen name="GalleryEtc" component={GalleryEtcScreen} />
+      <Stack.Screen name="GalleryWebView" component={GalleryWebViewScreen} />
     </Stack.Navigator>
   );
 };

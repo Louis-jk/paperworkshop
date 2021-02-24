@@ -151,7 +151,7 @@ const Register = (props) => {
             text: '확인',
             onPress: () => {
               setIsSend(true);
-              confirmCount(30);
+              confirmCount(3);
             },
           },
         ],
@@ -167,8 +167,6 @@ const Register = (props) => {
       })
         .then((res) => {
           if (res.data.result == '1') {
-            // console.log('인증번호 response', res.data.item);
-            // setMobileConfirmId(res.data.item);
             setMobileConfimed(false);
           } else {
             Alert.alert('휴대전화번호를 올바르게 입력해주세요.');
@@ -213,9 +211,7 @@ const Register = (props) => {
         }),
       })
         .then((res) => {
-          // console.log('재전송시 인증번호 response', res);
           if (res.data.result == '1') {
-            // setMobileConfirmId(res.data.item);
             setMobileConfimed(false);
             confirmClearCount(0);
           } else {
@@ -1020,7 +1016,7 @@ const Register = (props) => {
               </View>
 
               {formikProps.isSubmitting ? (
-                <ActivityIndicator />
+                <ActivityIndicator size="large" color="#275696" />
               ) : (
                 <View style={{paddingHorizontal: 20, marginBottom: 50}}>
                   <TouchableOpacity

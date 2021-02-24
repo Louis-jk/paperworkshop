@@ -20,6 +20,9 @@ const DetailHeader = (props) => {
       case 'Main':
         setTitle('페이퍼공작소');
         break;
+      case 'SetPwd':
+        setTitle('비밀번호 변경');
+        break;
       case 'Partners':
         setTitle('파트너스');
         break;
@@ -28,6 +31,9 @@ const DetailHeader = (props) => {
         break;
       case 'GalleryDetail':
         setTitle('게시물 상세');
+        break;
+      case 'GalleryWebView':
+        setTitle('인쇄/패키지 갤러리');
         break;
       case 'Story':
         setTitle('제작스토리');
