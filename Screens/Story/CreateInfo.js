@@ -28,7 +28,7 @@ const CreateInfo = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <View style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
+      <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
           style={{
             flexDirection: 'row',
@@ -39,12 +39,12 @@ const CreateInfo = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Story')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -56,12 +56,12 @@ const CreateInfo = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('StoryTips')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -70,12 +70,12 @@ const CreateInfo = (props) => {
             </Text>
           </TouchableOpacity>
 
-          <View style={{ position: 'relative' }}>
+          <View style={{position: 'relative'}}>
             <Text
               style={[
                 styles.mediumText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                 },
               ]}>
@@ -104,13 +104,13 @@ const CreateInfo = (props) => {
             alignItems: 'center',
             height: Dimensions.get('window').height - 400,
           }}>
-          <Text style={{ fontFamily: 'SCDream4' }}>인쇄/패키지 제작정보</Text>
+          <Text style={{fontFamily: 'SCDream4'}}>인쇄/패키지 제작정보</Text>
         </View>
       </ScrollView>
       {visibleStep01 && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ zIndex: 1000 }}
+          contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
             top: 164,
@@ -133,7 +133,7 @@ const CreateInfo = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -145,7 +145,7 @@ const CreateInfo = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -157,7 +157,7 @@ const CreateInfo = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}

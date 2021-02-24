@@ -28,9 +28,13 @@ const QnA = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <View style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
+      <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
-          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           {/* 상단 탭 메뉴 Area */}
           <View
             style={{
@@ -42,12 +46,12 @@ const QnA = (props) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('CCenterNotice')}
               activeOpacity={0.8}
-              hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+              hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
               <Text
                 style={[
                   styles.normalText,
                   {
-                    fontSize: 16,
+                    fontSize: 15,
                     marginRight: 20,
                     color: '#707070',
                   },
@@ -59,12 +63,12 @@ const QnA = (props) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('CCenter')}
               activeOpacity={0.8}
-              hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+              hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
               <Text
                 style={[
                   styles.normalText,
                   {
-                    fontSize: 16,
+                    fontSize: 15,
                     marginRight: 20,
                     color: '#707070',
                   },
@@ -72,12 +76,12 @@ const QnA = (props) => {
                 FAQ
               </Text>
             </TouchableOpacity>
-            <View style={{ position: 'relative' }}>
+            <View style={{position: 'relative'}}>
               <Text
                 style={[
                   styles.mediumText,
                   {
-                    fontSize: 16,
+                    fontSize: 15,
                     marginRight: 20,
                     color: '#000000',
                   },
@@ -102,16 +106,21 @@ const QnA = (props) => {
           {/* 문의 등록 Area */}
           <TouchableOpacity
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
+            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
             onPress={() => navigation.navigate('CCenterQnAwrite')}
-            style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <Text style={{ fontFamily: 'SCDream4', fontSize: 13, color: '#275696' }}>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{fontFamily: 'SCDream4', fontSize: 13, color: '#275696'}}>
               문의 등록
             </Text>
             <Image
               source={require('../../src/assets/icon_plus_02.png')}
               resizeMode="contain"
-              style={{ width: 18, height: 18, marginLeft: 5 }}
+              style={{width: 18, height: 18, marginLeft: 5}}
             />
           </TouchableOpacity>
           {/* // 문의 등록 Area */}
@@ -140,13 +149,13 @@ const QnA = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, { width: '80%' }]}
+              style={[styles.normalText, {width: '80%'}]}
             />
             <TouchableOpacity>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
-                style={{ width: 30, height: 30 }}
+                style={{width: 30, height: 30}}
               />
             </TouchableOpacity>
           </View>
@@ -156,9 +165,11 @@ const QnA = (props) => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterQnADetail', { status: 'yet' })}>
+          onPress={() =>
+            navigation.navigate('CCenterQnADetail', {status: 'yet'})
+          }>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -180,18 +191,26 @@ const QnA = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterQnADetail', { status: 'yet' })}>
+          onPress={() =>
+            navigation.navigate('CCenterQnADetail', {status: 'yet'})
+          }>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -213,18 +232,26 @@ const QnA = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterQnADetail', { status: 'yet' })}>
+          onPress={() =>
+            navigation.navigate('CCenterQnADetail', {status: 'yet'})
+          }>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -246,19 +273,27 @@ const QnA = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
 
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterQnADetail', { status: 'done' })}>
+          onPress={() =>
+            navigation.navigate('CCenterQnADetail', {status: 'done'})
+          }>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -280,18 +315,26 @@ const QnA = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterQnADetail', { status: 'done' })}>
+          onPress={() =>
+            navigation.navigate('CCenterQnADetail', {status: 'done'})
+          }>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -313,18 +356,26 @@ const QnA = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterQnADetail', { status: 'done' })}>
+          onPress={() =>
+            navigation.navigate('CCenterQnADetail', {status: 'done'})
+          }>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -346,18 +397,24 @@ const QnA = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
       </ScrollView>
       {visibleStep01 && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ zIndex: 1000 }}
+          contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
             top: 164,
@@ -380,7 +437,7 @@ const QnA = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -392,7 +449,7 @@ const QnA = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -404,7 +461,7 @@ const QnA = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}

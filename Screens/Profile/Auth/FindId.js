@@ -14,7 +14,7 @@ import {
   Alert,
 } from 'react-native';
 
-import DetailHeader from '../../Common/DetailHeader';
+import DetailHeader from '../../Common/HeaderNotBackBtnDrawer';
 import Auth from '../../../src/api/Auth.js';
 import Timer from '../../Common/Timer';
 

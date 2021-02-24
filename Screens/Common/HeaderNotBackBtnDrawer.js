@@ -9,7 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-const Header = (props) => {
+const HeaderNotBackBtnDrawer = (props) => {
   const navigation = props.navigation;
 
   const [title, setTitle] = React.useState('');
@@ -17,88 +17,24 @@ const Header = (props) => {
 
   React.useEffect(() => {
     switch (props.title) {
-      case 'Main':
-        setTitle('페이퍼공작소');
+      case 'SetPwd':
+        setTitle('비밀번호 변경');
         break;
-      case 'CompanyInfo':
-        setTitle('회사소개');
+      case 'Register':
+        setTitle('회원가입');
         break;
-      case 'Event':
-        setTitle('이벤트');
+      case 'FindId':
+        setTitle('아이디 찾기');
         break;
-      case 'Partners':
-        setTitle('파트너스');
+      case 'FindPwd':
+        setTitle('비밀번호 찾기');
         break;
-      case 'Partners01':
-        setTitle('성실파트너스');
+      case 'SetPwdComplete':
+        setTitle('비밀번호 수정 완료');
         break;
-      case 'Partners02':
-        setTitle('인기파트너스');
+      case 'Signed':
+        setTitle('회원가입 완료');
         break;
-      case 'Partners03':
-        setTitle('지역파트너스');
-        break;
-      case 'MyPartners':
-        setTitle('나의파트너스');
-        break;
-      case 'Gallery':
-        setTitle('인쇄/패키지 갤러리');
-        break;
-      case 'GalleryPackage':
-        setTitle('인쇄/패키지 갤러리');
-        break;
-      case 'GalleryGeneral':
-        setTitle('인쇄/패키지 갤러리');
-        break;
-      case 'GalleryEtc':
-        setTitle('인쇄/패키지 갤러리');
-        break;
-      case 'Story':
-        setTitle('고객후기');
-        break;
-      case 'StoryTips':
-        setTitle('유용한정보');
-        break;
-      case 'StoryCreateInfo':
-        setTitle('인쇄/패키지 제작정보');
-        break;
-      case 'CCenter':
-        setTitle('FAQ');
-        break;
-      case 'CCenterNotice':
-        setTitle('공지사항');
-        break;
-      case 'CCenterQnA':
-        setTitle('1:1문의');
-        break;
-      case 'CCenterDetail':
-        setTitle('FAQ');
-        break;
-      case 'PaperInfo':
-        setTitle('지류정보');
-        break;
-      case 'PaperPrice':
-        setTitle('지류고시가');
-        break;
-      case 'Estimate':
-        setTitle('실시간 견적 처리 현황');
-        break;
-      case 'Terms':
-        setTitle('이용약관');
-        break;
-      case 'Privacy':
-        setTitle('개인정보 처리방침');
-        break;
-      case 'PartnersDetail':
-        setTitle('파트너스 정보');
-        break;
-      case 'ProfileEdit':
-        setTitle('회원 정보 수정');
-        break;
-      case 'Message':
-        setTitle('페이퍼공작소');
-        break;
-
       default:
         return false;
     }
@@ -107,10 +43,22 @@ const Header = (props) => {
   return (
     <SafeAreaView style={{backgroundColor: '#fff'}}>
       <View style={container}>
-        <View style={headerCtrl}>
-          <Text style={[styles.boldText, headerTitle]}>{title}</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <View style={headerCtrl}>
+            <View style={{paddingVertical: 10, paddingRight: 3}}>
+              <Image
+                source={require('../../src/assets/arr02.png')}
+                resizeMode="cover"
+                style={{
+                  width: 20,
+                  height: 30,
+                }}
+              />
+            </View>
 
+            <Text style={[styles.boldText, headerTitle]}>{title}</Text>
+          </View>
+        </TouchableWithoutFeedback>
         <View style={icons}>
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate('Search')}
@@ -122,12 +70,12 @@ const Header = (props) => {
                 style={{
                   width: 30,
                   height: 30,
-                  marginRight: 20,
+                  // marginRight: 20,
                 }}
               />
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
+          {/* <TouchableWithoutFeedback
             onPress={() => navigation.openDrawer('right')}
             hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
             <View>
@@ -140,7 +88,7 @@ const Header = (props) => {
                 }}
               />
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback> */}
         </View>
       </View>
     </SafeAreaView>
@@ -184,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default HeaderNotBackBtnDrawer;

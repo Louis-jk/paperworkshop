@@ -169,7 +169,7 @@ const index = (props) => {
       renderItem={renderRow}
       keyExtractor={(list, index) => index.toString()}
       numColumns={2}
-      pagingEnabled={true}
+      // pagingEnabled={true}
       persistentScrollbar={true}
       showsVerticalScrollIndicator={false}
       progressViewOffset={true}

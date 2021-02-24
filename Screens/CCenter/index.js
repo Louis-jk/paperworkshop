@@ -44,7 +44,7 @@ const index = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -58,7 +58,7 @@ const index = (props) => {
               style={[
                 styles.mediumText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                   color: '#000000',
                 },
@@ -86,7 +86,7 @@ const index = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                   color: '#707070',
                 },

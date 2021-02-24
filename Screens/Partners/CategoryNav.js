@@ -14,17 +14,8 @@ const CategoryNav = (props) => {
   const cateName = props.cateName;
   const propLocation = props.location;
 
-  const [location, setLocation] = React.useState(null);
-
-  React.useEffect(() => {
-    if (propLocation) {
-      setLocation(propLocation);
-    } else {
-      setLocation(null);
-    }
-  });
-
   console.log('Category Nav Props', props);
+  console.log('Category Nav propLocation', propLocation);
 
   const packageIds = ['9', '10', '11', '12', '13', '14'];
   const generalIds = ['1', '4', '5', '6', '7', '8'];
@@ -65,7 +56,7 @@ const CategoryNav = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             marginRight: 5,
-            paddingBottom: 10,
+            paddingBottom: 0,
             paddingRight: 10,
             // backgroundColor: '#ffaaee',
           }}
@@ -95,7 +86,7 @@ const CategoryNav = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             marginRight: 5,
-            paddingBottom: 10,
+            paddingBottom: 0,
             paddingHorizontal: 10,
           }}
           onPress={togglePackages}>
@@ -140,7 +131,7 @@ const CategoryNav = (props) => {
                     routeName: routeName,
                     cate1: '1',
                     ca_id: v,
-                    location: location ? location : null,
+                    location: propLocation ? propLocation : null,
                   });
                   setIsActivePackages(false);
                 }}>
@@ -170,7 +161,7 @@ const CategoryNav = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             marginRight: 5,
-            paddingBottom: 10,
+            paddingBottom: 0,
             paddingHorizontal: 10,
           }}
           onPress={toggleGeneral}>
@@ -215,7 +206,7 @@ const CategoryNav = (props) => {
                     routeName: routeName,
                     cate1: '0',
                     ca_id: v,
-                    location: location ? location : null,
+                    location: propLocation ? propLocation : null,
                   });
                   setIsActiveGeneral(false);
                 }}>
@@ -245,7 +236,7 @@ const CategoryNav = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             marginRight: 5,
-            paddingBottom: 10,
+            paddingBottom: 0,
             paddingHorizontal: 10,
           }}
           onPress={toggleEtc}>
@@ -270,7 +261,7 @@ const CategoryNav = (props) => {
             style={{
               position: 'absolute',
               top: 40,
-              right: '19%',
+              right: '30%',
               backgroundColor: '#fff',
               zIndex: 100,
               borderWidth: 1,
@@ -289,7 +280,7 @@ const CategoryNav = (props) => {
                     routeName: routeName,
                     cate1: '2',
                     ca_id: v,
-                    location: location ? location : null,
+                    location: propLocation ? propLocation : null,
                   });
                   setIsActiveEtc(false);
                 }}>
@@ -317,7 +308,7 @@ const CategoryNav = (props) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: 20,
+          marginBottom: 10,
           borderWidth: 1,
           borderColor: '#DEDEDE',
           borderRadius: 5,

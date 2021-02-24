@@ -28,7 +28,7 @@ const Tips = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <View style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
+      <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
           style={{
             flexDirection: 'row',
@@ -39,12 +39,12 @@ const Tips = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Story')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -53,12 +53,12 @@ const Tips = (props) => {
             </Text>
           </TouchableOpacity>
 
-          <View style={{ position: 'relative' }}>
+          <View style={{position: 'relative'}}>
             <Text
               style={[
                 styles.mediumText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                 },
               ]}>
@@ -80,12 +80,12 @@ const Tips = (props) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('StoryCreateInfo')}
             activeOpacity={0.8}
-            hitSlop={{ top: 5, bottom: 5, right: 5, left: 5 }}>
+            hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
             <Text
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -118,13 +118,13 @@ const Tips = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, { width: '80%' }]}
+              style={[styles.normalText, {width: '80%'}]}
             />
             <TouchableOpacity>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
-                style={{ width: 30, height: 30 }}
+                style={{width: 30, height: 30}}
               />
             </TouchableOpacity>
           </View>
@@ -134,7 +134,7 @@ const Tips = (props) => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
@@ -158,16 +158,22 @@ const Tips = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
@@ -191,16 +197,22 @@ const Tips = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
@@ -224,16 +236,22 @@ const Tips = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
@@ -257,16 +275,22 @@ const Tips = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
@@ -290,16 +314,22 @@ const Tips = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
@@ -323,16 +353,22 @@ const Tips = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
         {/* 카테고리 리스트 */}
         <TouchableOpacity
-          style={{ paddingHorizontal: 20 }}
+          style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('StoryTipsDetail')}>
           <View style={styles.categoryWrap}>
@@ -356,18 +392,24 @@ const Tips = (props) => {
               </View>
               <Text style={styles.categoryDate}>2020.11.01</Text>
             </View>
-            <Text style={styles.categoryTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.categoryTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={{ height: 0.5, width: Dimensions.get('window').width, backgroundColor: '#E3E3E3' }}
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
         />
         {/* // 카테고리 리스트 */}
       </ScrollView>
       {visibleStep01 && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ zIndex: 1000 }}
+          contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
             top: 164,
@@ -390,7 +432,7 @@ const Tips = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>일반인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -402,7 +444,7 @@ const Tips = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>패키지</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -414,7 +456,7 @@ const Tips = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{ fontSize: 14, fontFamily: 'SCDream4' }}>기타인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
@@ -448,7 +490,7 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontFamily: 'SCDream5',
-    fontSize: 14,
+    fontSize: 15,
     color: '#000',
   },
   categoryDate: {

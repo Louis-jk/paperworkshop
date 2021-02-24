@@ -16,20 +16,17 @@ import {
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
-import DetailHeader from '../../Common/DetailHeader';
+import DetailHeader from '../../Common/HeaderNotBackBtnDrawer';
 import Auth from '../../../src/api/Auth.js';
 
 const SetPwd = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const userId = props.route.params.mb_id;
+  console.log('setPwd props:', props);
 
   const [newPwd, setNewPwd] = React.useState(null);
   const [newPwdRe, setNewPwdRe] = React.useState(null);
-
-  const setUserNewPwd = () => {
-    if (newPwd === null) {
-    }
-  };
 
   // 유효성 체크
   const validationSchema = yup.object().shape({
@@ -59,91 +56,216 @@ const SetPwd = (props) => {
       ),
   });
 
+  const [pwdEyes, setPwdEyes] = React.useState(true);
+  const togglePwdEyes = () => {
+    setPwdEyes(!pwdEyes);
+  };
+
+  const [pwdReEyes, setPwdReEyes] = React.useState(true);
+  const togglePwdReEyes = () => {
+    setPwdReEyes(!pwdReEyes);
+  };
+
+  const setUserNewPwd = (mb_id, mb_password, mb_password_re) => {
+    Auth.onSetPwd('proc_change_pass', mb_id, mb_password, mb_password_re)
+      .then((res) => {
+        console.log('비밀번호 변경', res);
+        if (res.data.result === '1') {
+          navigation.navigate('SetPwdComplete');
+        } else {
+          Alert.alert(res.data.message, '다시 확인해주세요.', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+        // navigation.navigate('SetPwdComplete')
+      })
+      .catch((err) =>
+        Alert.alert(`${err.message()}`, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]),
+      );
+  };
+
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
-          {/* 비밀번호 */}
-          <Formik
-            initialValues={{
-              register_pw: '',
-              register_confirmPw: '',
-            }}
-            onSubmit={(values, actions) => {
-              if (checkedId) {
-                let mb_1 = isMobileConfimed ? 'Y' : 'N';
-                signIn(
-                  values.register_id,
-                  values.register_pw,
-                  values.register_confirmPw,
-                  values.register_name,
-                  values.register_mobile,
-                  mb_1,
-                  values.register_email,
-                  values.register_company,
-                );
-              } else {
-                Alert.alert('인증되지 않은 입력란이 있습니다.');
-                return false;
-              }
-              setTimeout(() => {
-                actions.setSubmitting(false);
-              }, 1000);
-            }}
-            validationSchema={validationSchema}>
-            {(formikProps) => (
-              <View style={{marginBottom: 20}}>
-                <Text style={[styles.profileTitle, {marginBottom: 10}]}>
-                  새로운 비밀번호
-                </Text>
-                <TextInput
-                  placeholder="새로운 비밀번호를 입력해주세요."
-                  placeholderTextColor="#A2A2A2"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#E3E3E3',
-                    borderRadius: 2,
-                    paddingHorizontal: 10,
-                    marginBottom: 5,
-                  }}
-                  autoCapitalize="none"
-                  secureTextEntry
-                />
-                <TextInput
-                  placeholder="새로운 비밀번호를 재입력해주세요."
-                  placeholderTextColor="#A2A2A2"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#E3E3E3',
-                    borderRadius: 2,
-                    paddingHorizontal: 10,
-                  }}
-                  autoCapitalize="none"
-                  secureTextEntry
-                />
-              </View>
-            )}
-            {/* // 비밀번호 */}
-          </Formik>
-        </View>
+        <Formik
+          initialValues={{
+            register_pw: '',
+            register_confirmPw: '',
+          }}
+          onSubmit={(values, actions) => {
+            setUserNewPwd(
+              userId,
+              values.register_pw,
+              values.register_confirmPw,
+            );
 
-        <View style={{paddingHorizontal: 20, marginBottom: 50}}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('SetPwdComplete')}
-            activeOpacity={0.8}>
-            <View style={[styles.submitBtn, {marginBottom: 10}]}>
-              <Text style={styles.submitBtnText}>비밀번호 변경</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            activeOpacity={0.8}>
-            <View style={styles.cancelBtn}>
-              <Text style={styles.cancelBtnText}>취소</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+            setTimeout(() => {
+              actions.setSubmitting(false);
+            }, 1000);
+          }}
+          validationSchema={validationSchema}>
+          {(formikProps) => (
+            <>
+              <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
+                <View style={{marginBottom: 20}}>
+                  <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+                    새로운 비밀번호
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
+                      borderWidth: 1,
+                      borderColor: '#E3E3E3',
+                      borderRadius: 4,
+                      marginBottom:
+                        formikProps.touched.register_pw &&
+                        formikProps.errors.register_pw
+                          ? 0
+                          : 5,
+                      height: 50,
+                    }}>
+                    <TextInput
+                      placeholder="새로운 비밀번호를 입력해주세요."
+                      placeholderTextColor="#A2A2A2"
+                      style={[styles.normalText, {width: '90%'}]}
+                      onChangeText={formikProps.handleChange('register_pw')}
+                      autoCapitalize="none"
+                      onBlur={formikProps.handleBlur('register_pw')}
+                      secureTextEntry={pwdEyes}
+                    />
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={togglePwdEyes}>
+                      <Image
+                        source={
+                          pwdEyes
+                            ? require('../../../src/assets/icon_eye.png')
+                            : require('../../../src/assets/icon_eye_on.png')
+                        }
+                        resizeMode="center"
+                        style={{width: 35, height: 20}}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  {!formikProps.values.register_pw &&
+                  !formikProps.errors.register_pw ? (
+                    <Text
+                      style={{
+                        width: '100%',
+                        fontFamily: 'SCDream4',
+                        fontSize: 12,
+                        lineHeight: 18,
+                        color: '#B5B5B5',
+                        lineHeight: 18,
+                        marginBottom: 10,
+                      }}>
+                      ※ 비밀번호는 영문, 숫자, 특수기호 조합으로 8자리~16자리
+                      이내로 입력해주세요.
+                    </Text>
+                  ) : formikProps.touched.register_pw &&
+                    formikProps.errors.register_pw ? (
+                    <Text
+                      style={{
+                        width: '100%',
+                        fontFamily: 'SCDream4',
+                        fontSize: 12,
+                        lineHeight: 18,
+                        color: '#366DE5',
+                        marginBottom: 10,
+                        marginTop: 5,
+                      }}>
+                      {formikProps.touched.register_pw &&
+                        formikProps.errors.register_pw}
+                    </Text>
+                  ) : null}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
+                      borderWidth: 1,
+                      borderColor: '#E3E3E3',
+                      borderRadius: 4,
+                      marginBottom:
+                        formikProps.touched.register_pw &&
+                        formikProps.errors.register_pw
+                          ? 5
+                          : 5,
+                      height: 50,
+                    }}>
+                    <TextInput
+                      placeholder="새로운 비밀번호를 재입력해주세요."
+                      placeholderTextColor="#A2A2A2"
+                      style={[styles.normalText, {width: '90%'}]}
+                      onChangeText={formikProps.handleChange(
+                        'register_confirmPw',
+                      )}
+                      autoCapitalize="none"
+                      onBlur={formikProps.handleBlur('register_confirmPw')}
+                      secureTextEntry={pwdReEyes}
+                    />
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={togglePwdReEyes}>
+                      <Image
+                        source={
+                          pwdReEyes
+                            ? require('../../../src/assets/icon_eye.png')
+                            : require('../../../src/assets/icon_eye_on.png')
+                        }
+                        resizeMode="center"
+                        style={{width: 35, height: 20}}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  {formikProps.touched.register_confirmPw &&
+                    formikProps.errors.register_confirmPw && (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginBottom: 5,
+                        }}>
+                        {formikProps.touched.register_confirmPw &&
+                          formikProps.errors.register_confirmPw}
+                      </Text>
+                    )}
+                </View>
+              </View>
+
+              <View style={{paddingHorizontal: 20, marginBottom: 50}}>
+                <TouchableOpacity
+                  onPress={formikProps.handleSubmit}
+                  activeOpacity={0.8}>
+                  <View style={[styles.submitBtn, {marginBottom: 10}]}>
+                    <Text style={styles.submitBtnText}>비밀번호 변경</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  activeOpacity={0.8}>
+                  <View style={styles.cancelBtn}>
+                    <Text style={styles.cancelBtnText}>취소</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </Formik>
       </ScrollView>
     </>
   );

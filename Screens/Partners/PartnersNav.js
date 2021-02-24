@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 const PartnersNav = (props) => {
   const navigation = props.navigation;
@@ -46,8 +40,8 @@ const PartnersNav = (props) => {
             style={[
               styles.mediumText,
               {
-                fontSize: 14,
-                marginBottom: 20,
+                fontSize: 15,
+                marginBottom: 10,
                 marginRight: 20,
               },
             ]}>
@@ -79,8 +73,8 @@ const PartnersNav = (props) => {
             style={[
               styles.normalText,
               {
-                fontSize: 14,
-                marginBottom: 20,
+                fontSize: 15,
+                marginBottom: 10,
                 marginRight: 20,
                 color: '#707070',
               },
@@ -96,8 +90,8 @@ const PartnersNav = (props) => {
             style={[
               styles.mediumText,
               {
-                fontSize: 14,
-                marginBottom: 20,
+                fontSize: 15,
+                marginBottom: 10,
                 marginRight: 20,
               },
             ]}>
@@ -129,8 +123,8 @@ const PartnersNav = (props) => {
             style={[
               styles.normalText,
               {
-                fontSize: 14,
-                marginBottom: 20,
+                fontSize: 15,
+                marginBottom: 10,
                 marginRight: 20,
                 color: '#707070',
               },
@@ -146,8 +140,8 @@ const PartnersNav = (props) => {
             style={[
               styles.mediumText,
               {
-                fontSize: 14,
-                marginBottom: 20,
+                fontSize: 15,
+                marginBottom: 10,
                 marginRight: 20,
               },
             ]}>
@@ -179,8 +173,8 @@ const PartnersNav = (props) => {
             style={[
               styles.normalText,
               {
-                fontSize: 14,
-                marginBottom: 20,
+                fontSize: 15,
+                marginBottom: 10,
                 marginRight: 20,
                 color: '#707070',
               },
@@ -197,8 +191,8 @@ const PartnersNav = (props) => {
               style={[
                 styles.mediumText,
                 {
-                  fontSize: 14,
-                  marginBottom: 20,
+                  fontSize: 15,
+                  marginBottom: 10,
                   marginRight: 20,
                 },
               ]}>
@@ -221,10 +215,10 @@ const PartnersNav = (props) => {
         <TouchableOpacity onPress={toggleLocation} activeOpacity={0.8}>
           <Text
             style={[
-              styles.normalText,
+              isActiveLocation ? styles.mediumText : styles.normalText,
               {
-                fontSize: 14,
-                marginBottom: 20,
+                fontSize: 15,
+                marginBottom: 10,
                 marginRight: 20,
                 color: '#707070',
               },
@@ -238,12 +232,13 @@ const PartnersNav = (props) => {
           style={{
             position: 'absolute',
             top: 29,
-            right: -20,
+            right: 0,
             width: 130,
             borderWidth: 1,
-            borderColor: '#fff',
-            borderBottomRightRadius: 5,
-            borderBottomLeftRadius: 5,
+            borderColor: '#E5E5E5',
+            // borderBottomRightRadius: 5,
+            // borderBottomLeftRadius: 5,
+            borderRadius: 5,
             backgroundColor: '#fff',
             zIndex: 100,
             paddingLeft: 7,

@@ -18,7 +18,7 @@ import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment';
 
-import DetailHeader from '../../Common/DetailHeader';
+import DetailHeader from '../../Common/HeaderNotBackBtnDrawer';
 import {
   joinId,
   joinPwd,

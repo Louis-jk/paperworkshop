@@ -34,14 +34,14 @@ const index = (props) => {
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            paddingVertical: 20,
+            paddingTop: 20,
           }}>
           <View style={{position: 'relative'}}>
             <Text
               style={[
                 styles.mediumText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginBottom: 20,
                   marginRight: 20,
                 },
@@ -68,7 +68,7 @@ const index = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginBottom: 20,
                   marginRight: 20,
                   color: '#707070',
@@ -85,7 +85,7 @@ const index = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 16,
+                  fontSize: 15,
                   marginBottom: 20,
                   marginRight: 20,
                   color: '#707070',
@@ -193,8 +193,8 @@ const index = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={[styles.mediumText, { fontSize: 16, marginRight: 12 }]}>고객후기</Text>
-              <Text style={[styles.normalText, { fontSize: 14, color: '#275696' }]}>
+              <Text style={[styles.mediumText, { fontSize: 15, marginRight: 12 }]}>고객후기</Text>
+              <Text style={[styles.normalText, { fontSize: 15, color: '#275696' }]}>
                 총 리뷰수 26
               </Text>
             </View> */}
@@ -278,11 +278,11 @@ const index = (props) => {
                 </ImageBackground>
                 <View style={{flexShrink: 2, marginLeft: 20}}>
                   <Text
-                    style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
+                    style={[styles.boldText, {fontSize: 15, marginBottom: 10}]}>
                     하나로세상(김*미 고객님)
                   </Text>
                   <Text
-                    style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
+                    style={[styles.normalText, {fontSize: 15, lineHeight: 22}]}>
                     배송도 빠르고 프린트 퀄리티도 너무 좋아요 배송도 빠르고
                     프린트 퀄리티도 너무 좋아요
                   </Text>
@@ -444,11 +444,11 @@ const index = (props) => {
                 </ImageBackground>
                 <View style={{flexShrink: 2, marginLeft: 20}}>
                   <Text
-                    style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
+                    style={[styles.boldText, {fontSize: 15, marginBottom: 10}]}>
                     신세계세상(정*주 고객님)
                   </Text>
                   <Text
-                    style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
+                    style={[styles.normalText, {fontSize: 15, lineHeight: 22}]}>
                     퀄리티 하나는 정말 끝내줍니다. 믿고 맡기는 업체로 선정한 지
                     꽤 됩니다.
                   </Text>
@@ -610,11 +610,11 @@ const index = (props) => {
                 </ImageBackground>
                 <View style={{flexShrink: 2, marginLeft: 20}}>
                   <Text
-                    style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
+                    style={[styles.boldText, {fontSize: 15, marginBottom: 10}]}>
                     내안에바다(전*리 고객님)
                   </Text>
                   <Text
-                    style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
+                    style={[styles.normalText, {fontSize: 15, lineHeight: 22}]}>
                     명함은 항상 여기서 주문해요. 고급지도 종류별로 다양하고
                     디지털로 찍어도 오프셋 뺨치게 잘나옵니다.
                   </Text>
@@ -717,7 +717,7 @@ const index = (props) => {
               <Text
                 style={[
                   styles.normalText,
-                  { textAlign: 'center', fontSize: 16, color: '#444444', paddingVertical: 15 },
+                  { textAlign: 'center', fontSize: 15, color: '#444444', paddingVertical: 15 },
                 ]}>
                 고객후기 전체보기
               </Text>

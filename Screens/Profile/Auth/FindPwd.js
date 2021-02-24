@@ -14,7 +14,7 @@ import {
   Alert,
 } from 'react-native';
 
-import DetailHeader from '../../Common/DetailHeader';
+import DetailHeader from '../../Common/HeaderNotBackBtnDrawer';
 import Auth from '../../../src/api/Auth.js';
 import Timer from '../../Common/Timer';
 
@@ -148,7 +148,6 @@ const FindPwd = (props) => {
                 },
               ],
             );
-            // console.log('getUserId res', res);
           } else {
             Alert.alert(res.data.result.message, '', [
               {
@@ -309,7 +308,7 @@ const FindPwd = (props) => {
         <View style={{paddingHorizontal: 20, marginBottom: 50}}>
           {isMobileConfimed ? (
             <TouchableOpacity
-              onPress={() => navigation.navigate('SetPwd')}
+              onPress={() => navigation.navigate('SetPwd', {mb_id: userId})}
               activeOpacity={0.8}>
               <View style={[styles.submitBtn, {marginBottom: 10}]}>
                 <Text style={styles.submitBtnText}>비밀번호 변경하기</Text>

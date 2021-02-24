@@ -14,16 +14,11 @@ import {
   Alert,
 } from 'react-native';
 
-import Header from '../../Common/Header';
-import Footer from '../../Common/Footer';
+import Header from '../../Common/HeaderNotBackBtnDrawer';
 
 const SetPwdComplete = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-
-  const [category01, setCategory01] = React.useState(null);
-  const [category02, setCategory02] = React.useState(null);
-  const [value, setValue] = React.useState(null);
 
   return (
     <>
@@ -33,16 +28,24 @@ const SetPwdComplete = (props) => {
           style={{
             flex: 1,
             // height: Dimensions.get('window').height - 100,
+            height: Dimensions.get('window').height - 200,
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: 20,
             paddingVertical: 20,
           }}>
-          <Text style={{ fontSize: 18, color: '#275696', marginTop: 20 }}>
+          <Text
+            style={{
+              fontFamily: 'SCDream5',
+              fontSize: 18,
+              color: '#275696',
+              marginTop: 20,
+            }}>
             비밀번호가 변경되었습니다.
           </Text>
           <Text
             style={{
+              fontFamily: 'SCDream4',
               fontSize: 16,
               color: '#111',
               marginTop: 10,
@@ -54,9 +57,11 @@ const SetPwdComplete = (props) => {
             style={{
               width: '100%',
             }}>
-            <TouchableOpacity onPress={() => navigation.navigate('Stack')} activeOpacity={0.8}>
-              <View style={[styles.submitBtn, { marginBottom: 10 }]}>
-                <Text style={styles.submitBtnText}>홈으로</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Login')}
+              activeOpacity={0.8}>
+              <View style={[styles.submitBtn, {marginBottom: 10}]}>
+                <Text style={styles.submitBtnText}>로그인 하기</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -77,6 +82,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
