@@ -16,6 +16,8 @@ const List = ({item, index, navigation}) => {
             portfolioImg: item.portfolioImg,
             mobile: item.mobile,
             description: item.description,
+            openingTime: item.mb_7,
+            closedDay: item.mb_8,
             used: item.used,
           },
         })

@@ -30,6 +30,8 @@ const Detail = (props) => {
   const mobile = props.route.params.mobile;
   const description = props.route.params.description;
   const used = props.route.params.used;
+  const openingTime = props.route.params.openingTime;
+  const closedDay = props.route.params.closedDay;
 
   const [like, setLike] = React.useState(false);
   const onLikeBtn = () => {
@@ -63,68 +65,78 @@ const Detail = (props) => {
             justifyContent: 'flex-start',
             marginBottom: 20,
           }}>
-          <Carousel
-            ref={carouselRef}
-            data={portfolioImg ? portfolioImg : null}
-            renderItem={renderItem}
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-            loop={true}
-          />
+          {portfolioImg ? (
+            <Carousel
+              ref={carouselRef}
+              data={portfolioImg ? portfolioImg : null}
+              renderItem={renderItem}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              loop={true}
+            />
+          ) : (
+            <Image
+              source={require('../../src/assets/noImg.png')}
+              resizeMode="cover"
+              style={{width: '100%'}}
+            />
+          )}
 
           {/* Swipe Prev,Next 버튼 Custom */}
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: 111,
-              height: 67,
-              backgroundColor: '#275696',
-            }}>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                carouselRef.current.snapToPrev();
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '100%',
-                }}>
-                <Image
-                  source={require('../../src/assets/slide_arr02.png')}
-                  resizeMode="contain"
-                  style={{width: 22, height: 20}}
-                />
-              </View>
-            </TouchableWithoutFeedback>
+          {portfolioImg ? (
             <View
-              style={{borderWidth: 0.2, height: 15, borderColor: '#D4D4D4'}}
-            />
-            <TouchableWithoutFeedback
-              onPress={() => {
-                carouselRef.current.snapToNext();
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 111,
+                height: 67,
+                backgroundColor: '#275696',
               }}>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '100%',
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  carouselRef.current.snapToPrev();
                 }}>
-                <Image
-                  source={require('../../src/assets/slide_arr01.png')}
-                  resizeMode="contain"
-                  style={{width: 22, height: 20}}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                  }}>
+                  <Image
+                    source={require('../../src/assets/slide_arr02.png')}
+                    resizeMode="contain"
+                    style={{width: 22, height: 20}}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+              <View
+                style={{borderWidth: 0.2, height: 15, borderColor: '#D4D4D4'}}
+              />
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  carouselRef.current.snapToNext();
+                }}>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                  }}>
+                  <Image
+                    source={require('../../src/assets/slide_arr01.png')}
+                    resizeMode="contain"
+                    style={{width: 22, height: 20}}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          ) : null}
           {/* // Swipe Prev,Next 버튼 Custom */}
 
           {/* 회사정보 상단 fix */}
@@ -261,16 +273,22 @@ const Detail = (props) => {
                 styles.normalText,
                 {fontSize: 14, lineHeight: 22, marginBottom: 5},
               ]}>
-              {description}
+              {description
+                ? description
+                : '업체 소개글이 등록되어 있지 않습니다.'}
             </Text>
 
             <View style={{paddingVertical: 20, paddingLeft: 7}}>
               <Text
                 style={[styles.normalText, {fontSize: 14, marginBottom: 5}]}>
-                * 업무시간 : 평일 09:00 ~ 18:00
+                * 업무시간 :
+                {openingTime ? openingTime : ' 현재 미등록 상태입니다.'}
+                {/* 평일 09:00 ~ 18:00 */}
               </Text>
               <Text style={[styles.normalText, {fontSize: 14}]}>
-                * 토, 일, 공휴일 휴무
+                * 휴무일 안내 :
+                {closedDay ? closedDay : ' 현재 미등록 상태입니다.'}
+                {/* * 토, 일, 공휴일 휴무 */}
               </Text>
             </View>
           </View>
@@ -293,7 +311,7 @@ const Detail = (props) => {
               styles.normalText,
               {fontSize: 14, lineHeight: 24, marginBottom: 5},
             ]}>
-            {used}
+            {used ? used : '영업품목이 등록되어 있지 않습니다.'}
           </Text>
         </View>
         {/* // 영업품목 */}

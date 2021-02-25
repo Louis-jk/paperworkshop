@@ -8,9 +8,116 @@ import {
   TextInput,
 } from 'react-native';
 
+import axios from 'axios';
+import qs from 'qs';
+
 const GalleryNav = (props) => {
   const navigation = props.navigation;
   const routeName = props.routeName;
+
+  const packageIds = ['9', '10', '11', '12', '13', '14'];
+  const generalIds = ['1', '4', '5', '6', '7', '8'];
+  const etcIds = ['15', '16', '17', '18', '19'];
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [packagesInfo, setPackagesInfo] = React.useState([]);
+  const [generalInfo, setGeneralInfo] = React.useState([]);
+  const [etcInfo, setEtcInfo] = React.useState([]);
+
+  const [isActivePackages, setIsActivePackages] = React.useState(false);
+  const togglePackages = () => {
+    setIsActivePackages(!isActivePackages);
+    setIsActiveGeneral(false);
+    setIsActiveEtc(false);
+  };
+
+  const [isActiveGeneral, setIsActiveGeneral] = React.useState(false);
+  const toggleGenerals = () => {
+    setIsActiveGeneral(!isActiveGeneral);
+    setIsActivePackages(false);
+    setIsActiveEtc(false);
+  };
+
+  const [isActiveEtc, setIsActiveEtc] = React.useState(false);
+  const toggleEtc = () => {
+    setIsActiveEtc(!isActiveEtc);
+    setIsActivePackages(false);
+    setIsActiveGeneral(false);
+  };
+
+  const getPackages = () => {
+    setIsLoading(true);
+    axios({
+      method: 'post',
+      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
+      data: qs.stringify({
+        method: 'proc_cate_list',
+        cate1: '1',
+      }),
+    })
+      .then((res) => {
+        console.log('package: ', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setPackagesInfo(res.data.item);
+          setIsLoading(false);
+        } else {
+          setPackagesInfo(null);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getGenerals = () => {
+    setIsLoading(true);
+    axios({
+      method: 'post',
+      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
+      data: qs.stringify({
+        method: 'proc_cate_list',
+        cate1: '0',
+      }),
+    })
+      .then((res) => {
+        console.log('general: ', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setGeneralInfo(res.data.item);
+          setIsLoading(false);
+        } else {
+          setGeneralInfo(null);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getEtc = () => {
+    setIsLoading(true);
+    axios({
+      method: 'post',
+      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
+      data: qs.stringify({
+        method: 'proc_cate_list',
+        cate1: '2',
+      }),
+    })
+      .then((res) => {
+        console.log('etc: ', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setEtcInfo(res.data.item);
+          setIsLoading(false);
+        } else {
+          setEtcInfo(null);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    getPackages();
+    getGenerals();
+    getEtc();
+  }, []);
+
+  console.log('packagesInfo', packagesInfo);
 
   return (
     <>
@@ -19,7 +126,7 @@ const GalleryNav = (props) => {
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          marginBottom: 10,
+          marginBottom: 5,
         }}>
         {routeName === 'Gallery' ? (
           <View style={{position: 'relative'}}>
@@ -28,7 +135,7 @@ const GalleryNav = (props) => {
                 styles.mediumText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                 },
               ]}>
@@ -60,7 +167,7 @@ const GalleryNav = (props) => {
                 styles.normalText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -77,7 +184,7 @@ const GalleryNav = (props) => {
                 styles.mediumText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                 },
               ]}>
@@ -96,20 +203,13 @@ const GalleryNav = (props) => {
             />
           </View>
         ) : (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('GalleryPackage', {
-                screen: 'GalleryPackage',
-                name: 'All',
-              });
-            }}
-            activeOpacity={0.8}>
+          <TouchableOpacity onPress={togglePackages} activeOpacity={0.8}>
             <Text
               style={[
-                styles.normalText,
+                isActivePackages ? styles.mediumText : styles.normalText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -117,6 +217,40 @@ const GalleryNav = (props) => {
               패키지
             </Text>
           </TouchableOpacity>
+        )}
+        {isActivePackages && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 25,
+              left: 20,
+              backgroundColor: '#fff',
+              zIndex: 100,
+              borderWidth: 1,
+              borderColor: '#E3E3E3',
+              borderRadius: 4,
+              paddingVertical: 10,
+            }}>
+            {packagesInfo.map((v, idx) => (
+              <TouchableOpacity
+                key={v.ca_id}
+                style={{paddingVertical: 10, paddingHorizontal: 10}}
+                onPress={() => {
+                  navigation.navigate('GalleryPackage', {
+                    screen: 'GalleryPackage',
+                    name: 'Packages',
+                    routeName: routeName,
+                    cate1: '1',
+                    ca_id: v.ca_id,
+                  });
+                  setIsActivePackages(false);
+                }}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
+                  {v.ca_id === v.ca_id && v.ca_name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         )}
 
         {routeName === 'GalleryGeneral' ? (
@@ -126,7 +260,7 @@ const GalleryNav = (props) => {
                 styles.mediumText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                 },
               ]}>
@@ -145,20 +279,13 @@ const GalleryNav = (props) => {
             />
           </View>
         ) : (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('GalleryGeneral', {
-                screen: 'GalleryGeneral',
-                name: 'All',
-              });
-            }}
-            activeOpacity={0.8}>
+          <TouchableOpacity onPress={toggleGenerals} activeOpacity={0.8}>
             <Text
               style={[
-                styles.normalText,
+                isActiveGeneral ? styles.mediumText : styles.normalText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -166,6 +293,40 @@ const GalleryNav = (props) => {
               일반인쇄
             </Text>
           </TouchableOpacity>
+        )}
+        {isActiveGeneral && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 25,
+              left: 65,
+              backgroundColor: '#fff',
+              zIndex: 100,
+              borderWidth: 1,
+              borderColor: '#E3E3E3',
+              borderRadius: 4,
+              paddingVertical: 10,
+            }}>
+            {generalInfo.map((v, idx) => (
+              <TouchableOpacity
+                key={v.ca_id}
+                style={{paddingVertical: 10, paddingHorizontal: 10}}
+                onPress={() => {
+                  navigation.navigate('GalleryGeneral', {
+                    screen: 'GalleryGeneral',
+                    name: 'All',
+                    routeName: routeName,
+                    cate1: '0',
+                    ca_id: v.ca_id,
+                  });
+                  setIsActivePackages(false);
+                }}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
+                  {v.ca_id === v.ca_id && v.ca_name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         )}
 
         {routeName === 'GalleryEtc' ? (
@@ -175,7 +336,7 @@ const GalleryNav = (props) => {
                 styles.mediumText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                 },
               ]}>
@@ -194,20 +355,13 @@ const GalleryNav = (props) => {
             />
           </View>
         ) : (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('GalleryEtc', {
-                screen: 'GalleryEtc',
-                name: 'All',
-              });
-            }}
-            activeOpacity={0.8}>
+          <TouchableOpacity onPress={toggleEtc} activeOpacity={0.8}>
             <Text
               style={[
-                styles.normalText,
+                isActiveEtc ? styles.mediumText : styles.normalText,
                 {
                   fontSize: 15,
-                  marginBottom: 10,
+                  marginBottom: 5,
                   marginRight: 20,
                   color: '#707070',
                 },
@@ -216,13 +370,47 @@ const GalleryNav = (props) => {
             </Text>
           </TouchableOpacity>
         )}
+        {isActiveEtc && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 25,
+              left: 190,
+              backgroundColor: '#fff',
+              zIndex: 100,
+              borderWidth: 1,
+              borderColor: '#E3E3E3',
+              borderRadius: 4,
+              paddingVertical: 10,
+            }}>
+            {etcInfo.map((v, idx) => (
+              <TouchableOpacity
+                key={v.ca_id}
+                style={{paddingVertical: 10, paddingHorizontal: 10}}
+                onPress={() => {
+                  navigation.navigate('GalleryEtc', {
+                    screen: 'GalleryEtc',
+                    name: 'All',
+                    routeName: routeName,
+                    cate1: '0',
+                    ca_id: v.ca_id,
+                  });
+                  setIsActivePackages(false);
+                }}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
+                  {v.ca_id === v.ca_id && v.ca_name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
       </View>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: 10,
+          marginBottom: 5,
           borderWidth: 1,
           borderColor: '#DEDEDE',
           borderRadius: 5,
