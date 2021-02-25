@@ -160,6 +160,9 @@ const GalleryNav = (props) => {
                 screen: 'Gallery',
                 name: 'All',
               });
+              setIsActivePackages(false);
+              setIsActiveGeneral(false);
+              setIsActiveEtc(false);
             }}
             activeOpacity={0.8}>
             <Text
@@ -179,17 +182,19 @@ const GalleryNav = (props) => {
 
         {routeName === 'GalleryPackage' ? (
           <View style={{position: 'relative'}}>
-            <Text
-              style={[
-                styles.mediumText,
-                {
-                  fontSize: 15,
-                  marginBottom: 5,
-                  marginRight: 20,
-                },
-              ]}>
-              패키지
-            </Text>
+            <TouchableOpacity onPress={togglePackages} activeOpacity={0.8}>
+              <Text
+                style={[
+                  styles.mediumText,
+                  {
+                    fontSize: 15,
+                    marginBottom: 5,
+                    marginRight: 20,
+                  },
+                ]}>
+                패키지
+              </Text>
+            </TouchableOpacity>
             <View
               style={{
                 position: 'absolute',
@@ -231,6 +236,22 @@ const GalleryNav = (props) => {
               borderRadius: 4,
               paddingVertical: 10,
             }}>
+            <TouchableOpacity
+              style={{paddingVertical: 10, paddingHorizontal: 10}}
+              onPress={() => {
+                navigation.navigate('GalleryPackage', {
+                  screen: 'GalleryPackage',
+                  name: 'Packages',
+                  routeName: routeName,
+                  cate1: '1',
+                  ca_id: null,
+                });
+                setIsActivePackages(false);
+                setIsActiveGeneral(false);
+                setIsActiveEtc(false);
+              }}>
+              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
+            </TouchableOpacity>
             {packagesInfo.map((v, idx) => (
               <TouchableOpacity
                 key={v.ca_id}
@@ -244,6 +265,8 @@ const GalleryNav = (props) => {
                     ca_id: v.ca_id,
                   });
                   setIsActivePackages(false);
+                  setIsActiveGeneral(false);
+                  setIsActiveEtc(false);
                 }}>
                 <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
@@ -255,17 +278,19 @@ const GalleryNav = (props) => {
 
         {routeName === 'GalleryGeneral' ? (
           <View style={{position: 'relative'}}>
-            <Text
-              style={[
-                styles.mediumText,
-                {
-                  fontSize: 15,
-                  marginBottom: 5,
-                  marginRight: 20,
-                },
-              ]}>
-              일반인쇄
-            </Text>
+            <TouchableOpacity onPress={toggleGenerals} activeOpacity={0.8}>
+              <Text
+                style={[
+                  styles.mediumText,
+                  {
+                    fontSize: 15,
+                    marginBottom: 5,
+                    marginRight: 20,
+                  },
+                ]}>
+                일반인쇄
+              </Text>
+            </TouchableOpacity>
             <View
               style={{
                 position: 'absolute',
@@ -307,6 +332,22 @@ const GalleryNav = (props) => {
               borderRadius: 4,
               paddingVertical: 10,
             }}>
+            <TouchableOpacity
+              style={{paddingVertical: 10, paddingHorizontal: 10}}
+              onPress={() => {
+                navigation.navigate('GalleryGeneral', {
+                  screen: 'GalleryGeneral',
+                  name: 'General',
+                  routeName: routeName,
+                  cate1: '0',
+                  ca_id: null,
+                });
+                setIsActivePackages(false);
+                setIsActiveGeneral(false);
+                setIsActiveEtc(false);
+              }}>
+              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
+            </TouchableOpacity>
             {generalInfo.map((v, idx) => (
               <TouchableOpacity
                 key={v.ca_id}
@@ -314,12 +355,14 @@ const GalleryNav = (props) => {
                 onPress={() => {
                   navigation.navigate('GalleryGeneral', {
                     screen: 'GalleryGeneral',
-                    name: 'All',
+                    name: 'General',
                     routeName: routeName,
                     cate1: '0',
                     ca_id: v.ca_id,
                   });
                   setIsActivePackages(false);
+                  setIsActiveGeneral(false);
+                  setIsActiveEtc(false);
                 }}>
                 <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
@@ -331,17 +374,19 @@ const GalleryNav = (props) => {
 
         {routeName === 'GalleryEtc' ? (
           <View style={{position: 'relative'}}>
-            <Text
-              style={[
-                styles.mediumText,
-                {
-                  fontSize: 15,
-                  marginBottom: 5,
-                  marginRight: 20,
-                },
-              ]}>
-              기타 인쇄물
-            </Text>
+            <TouchableOpacity onPress={toggleEtc} activeOpacity={0.8}>
+              <Text
+                style={[
+                  styles.mediumText,
+                  {
+                    fontSize: 15,
+                    marginBottom: 5,
+                    marginRight: 20,
+                  },
+                ]}>
+                기타 인쇄물
+              </Text>
+            </TouchableOpacity>
             <View
               style={{
                 position: 'absolute',
@@ -375,7 +420,7 @@ const GalleryNav = (props) => {
             style={{
               position: 'absolute',
               top: 25,
-              left: 190,
+              left: 187,
               backgroundColor: '#fff',
               zIndex: 100,
               borderWidth: 1,
@@ -383,6 +428,22 @@ const GalleryNav = (props) => {
               borderRadius: 4,
               paddingVertical: 10,
             }}>
+            <TouchableOpacity
+              style={{paddingVertical: 10, paddingHorizontal: 10}}
+              onPress={() => {
+                navigation.navigate('GalleryEtc', {
+                  screen: 'GalleryEtc',
+                  name: 'Etc',
+                  routeName: routeName,
+                  cate1: '2',
+                  ca_id: null,
+                });
+                setIsActivePackages(false);
+                setIsActiveGeneral(false);
+                setIsActiveEtc(false);
+              }}>
+              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
+            </TouchableOpacity>
             {etcInfo.map((v, idx) => (
               <TouchableOpacity
                 key={v.ca_id}
@@ -392,10 +453,12 @@ const GalleryNav = (props) => {
                     screen: 'GalleryEtc',
                     name: 'All',
                     routeName: routeName,
-                    cate1: '0',
+                    cate1: '2',
                     ca_id: v.ca_id,
                   });
                   setIsActivePackages(false);
+                  setIsActiveGeneral(false);
+                  setIsActiveEtc(false);
                 }}>
                 <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}

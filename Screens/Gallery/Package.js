@@ -24,6 +24,10 @@ import List from './Components/List';
 const Package = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const cate1 = props.route.params.cate1;
+  const ca_id = props.route.params.ca_id;
+
+  console.log('Galley package props', props);
 
   const [galleries, setGalleries] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -35,7 +39,8 @@ const Package = (props) => {
       url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
       data: qs.stringify({
         method: 'proc_gallery_list',
-        cate1: '1',
+        cate1,
+        ca_id: ca_id ? ca_id : null,
       }),
     })
       .then((res) => {
@@ -43,6 +48,9 @@ const Package = (props) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setGalleries(res.data.item);
           setIsLoading(false);
+        } else if (res.data.result === '1' && res.data.count === 0) {
+          setIsLoading(false);
+          setGalleries(null);
         } else {
           setGalleries(null);
         }
@@ -52,7 +60,7 @@ const Package = (props) => {
 
   React.useEffect(() => {
     getApi();
-  }, []);
+  }, [ca_id]);
 
   const renderRow = ({item, index}) => {
     return <List item={item} index={index} navigation={navigation} />;
@@ -108,7 +116,9 @@ const Package = (props) => {
         ) : (
           <View
             style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
+            <Text style={{fontFamily: 'SCDream4'}}>
+              해당 갤러리가 없습니다.
+            </Text>
           </View>
         )}
       </View>
