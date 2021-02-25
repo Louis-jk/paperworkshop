@@ -316,7 +316,7 @@ const Edit = (props) => {
           Alert.alert(res.data.message);
         }
       })
-      .catch((err) => Alert.alert(err.message()));
+      .catch((err) => console.log(err));
   };
 
   return (

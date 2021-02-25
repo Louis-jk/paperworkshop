@@ -34,419 +34,6 @@ const index = (props) => {
     dispatch(setUserId(mb_id));
   }, []);
 
-  // start 비교 견적 대상 카테고리 선택 Tab
-
-  const FirstRoute = (props) => (
-    <View>
-      {/* 패키지 1차 카테고리 리스트(list) */}
-      <View style={styles.categoryWrap}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('1'));
-            dispatch(selectCaId('9'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon08.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>칼라박스</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('1'));
-            dispatch(selectCaId('10'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon09.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>골판지 박스</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('1'));
-            dispatch(selectCaId('11'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon10.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>합지 골판지 박스</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('1'));
-            dispatch(selectCaId('12'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon11.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>싸바리 박스</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('1'));
-            dispatch(selectCaId('13'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon12.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>식품 박스</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('1'));
-            dispatch(selectCaId('14'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon13.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>쇼핑백</Text>
-        </TouchableOpacity>
-      </View>
-      {/* // 패키지 1차 카테고리 리스트(list) */}
-    </View>
-  );
-
-  const SecondRoute = (props) => (
-    <View>
-      {/* 일반인쇄물 1차 카테고리 리스트(list) */}
-      <View style={styles.categoryWrap}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('0'));
-            dispatch(selectCaId('1'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon14.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>카달로그/브로슈어/팜플렛</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('0'));
-            dispatch(selectCaId('4'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon15.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>책자/서적류</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('0'));
-            dispatch(selectCaId('5'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon16.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>전단/포스터/안내장</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('0'));
-            dispatch(selectCaId('6'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon17.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>스티커/라벨</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('0'));
-            dispatch(selectCaId('7'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon18.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>봉투/명함</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('0'));
-            dispatch(selectCaId('8'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/assets/photo.png')}
-            resizeMode="cover"
-            style={[
-              styles.categoryItemImg,
-              {borderWidth: 0.5, borderColor: '#E5E5E5'},
-            ]}
-          />
-          <Text style={styles.categoryItemText}>기타 인쇄물</Text>
-        </TouchableOpacity>
-      </View>
-      {/* // 일반인쇄물 1차 카테고리 리스트(list) */}
-    </View>
-  );
-
-  const ThirdRoute = (props) => (
-    <View>
-      {/* 기타인쇄물 1차 카테고리 리스트(list) */}
-      <View style={styles.categoryWrap}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('2'));
-            dispatch(selectCaId('15'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon28.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>상품권/티켓</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('2'));
-            dispatch(selectCaId('16'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon26.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>초대장/카드</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('2'));
-            dispatch(selectCaId('17'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon27.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>비닐 BAG</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('2'));
-            dispatch(selectCaId('18'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/images/icon29.png')}
-            resizeMode="cover"
-            style={styles.categoryItemImg}
-          />
-          <Text style={styles.categoryItemText}>감압지</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            dispatch(selectCate1('2'));
-            dispatch(selectCaId('19'));
-            navigation.navigate('OrderStep02');
-          }}
-          style={styles.categoryItem}>
-          <Image
-            source={require('../../src/assets/photo.png')}
-            resizeMode="cover"
-            style={[
-              styles.categoryItemImg,
-              {borderWidth: 0.5, borderColor: '#E5E5E5'},
-            ]}
-          />
-          <Text style={styles.categoryItemText}>기타</Text>
-        </TouchableOpacity>
-      </View>
-      {/* // 기타인쇄물 1차 카테고리 리스트(list) */}
-    </View>
-  );
-
-  const initialLayout = {width: Dimensions.get('window').width};
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'first', title: '패키지'},
-    {key: 'second', title: '일반 인쇄물'},
-    {key: 'third', title: '기타 인쇄물'},
-  ]);
-
-  const renderScene = ({route}) => {
-    switch (route.key) {
-      case 'first':
-        return <FirstRoute />;
-      case 'second':
-        return <SecondRoute />;
-      case 'third':
-        return <ThirdRoute />;
-    }
-  };
-
-  const [tabIndex, setTabIndex] = React.useState('first');
-
-  const TabBar = (props) => {
-    const {tabIndex, jumpTo} = props;
-
-    return (
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 20,
-            }}
-            onPress={async () => {
-              await jumpTo('first');
-              await setTabIndex('first');
-            }}>
-            <Text
-              style={[
-                tabIndex === 'first' && index === 0
-                  ? styles.boldText
-                  : styles.normalText,
-                {
-                  paddingVertical: 12,
-                  fontSize: 14,
-                  color:
-                    tabIndex === 'first' && index === 0 ? '#275696' : '#C1C1C1',
-                },
-              ]}>
-              패키지
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={async () => {
-              await jumpTo('second');
-              await setTabIndex('second');
-            }}>
-            <Text
-              style={[
-                tabIndex === 'second' || index === 1
-                  ? styles.boldText
-                  : styles.normalText,
-                {
-                  paddingVertical: 12,
-                  fontSize: 14,
-                  color:
-                    tabIndex === 'second' || index === 1
-                      ? '#275696'
-                      : '#C1C1C1',
-                  marginRight: 20,
-                },
-              ]}>
-              일반 인쇄물
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={async () => {
-              await jumpTo('third');
-              await setTabIndex('third');
-            }}>
-            <Text
-              style={[
-                tabIndex === 'third' || index === 2
-                  ? styles.boldText
-                  : styles.normalText,
-                {
-                  paddingVertical: 12,
-                  fontSize: 14,
-                  color:
-                    tabIndex === 'third' || index === 2 ? '#275696' : '#C1C1C1',
-                },
-              ]}>
-              기타 인쇄물
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
-  // end 비교 견적 대상 카테고리 선택 Tab
-
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
@@ -489,24 +76,174 @@ const index = (props) => {
             ]}>
             비교 견적 대상을 선택해주세요.
           </Text>
-          <View>
-            <TabView
-              renderTabBar={(props) => (
-                <TabBar
-                  {...props}
-                  navigation={navigation}
-                  setTabIndex={setTabIndex}
-                  tabIndex={tabIndex}
-                  onIndexChange={setIndex}
-                />
-              )}
-              navigationState={{index, routes}}
-              renderScene={renderScene}
-              onIndexChange={setIndex}
-              initialLayout={initialLayout}
-              swipeEnabled={false}
-            />
+
+          {/* 패키지 */}
+          <View style={{marginBottom: 10}}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                dispatch(selectCate1('1'));
+                navigation.navigate('OrderPackage', {
+                  screen: 'OrderPackage',
+                });
+              }}>
+              <View
+                style={[
+                  styles.flexRowCenter,
+                  {
+                    backgroundColor: '#rgba(216, 229, 245, 0.5)',
+                    borderRadius: 5,
+                    height: 130,
+                    paddingHorizontal: 20,
+                  },
+                ]}>
+                <View style={{marginRight: 30}}>
+                  <Image
+                    source={require('../../src/images/box01.png')}
+                    resizeMode="contain"
+                    style={{width: 100, height: 100}}
+                  />
+                </View>
+                <View
+                  style={{
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                  }}>
+                  <Text style={styles.infoStepTitle}>패키지</Text>
+                  <Text style={styles.infoStepDesc}>
+                    단상자/싸바리/쇼핑백 등
+                  </Text>
+                  <View style={{backgroundColor: '#275696', borderRadius: 20}}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          fontSize: 13,
+                          color: '#fff',
+                          paddingVertical: 7,
+                          paddingHorizontal: 13,
+                        },
+                      ]}>
+                      견적 바로가기
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
           </View>
+          {/* // 패키지 */}
+
+          {/* 일반인쇄 */}
+          <View style={{marginBottom: 10}}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                dispatch(selectCate1('0'));
+                navigation.navigate('OrderGeneral', {
+                  screen: 'OrderGeneral',
+                });
+              }}>
+              <View
+                style={[
+                  styles.flexRowCenter,
+                  {
+                    backgroundColor: '#rgba(216, 229, 245, 0.5)',
+                    borderRadius: 5,
+                    height: 130,
+                    paddingHorizontal: 20,
+                  },
+                ]}>
+                <View style={{marginRight: 30}}>
+                  <Image
+                    source={require('../../src/images/box02.png')}
+                    resizeMode="contain"
+                    style={{width: 100, height: 100}}
+                  />
+                </View>
+                <View
+                  style={{
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                  }}>
+                  <Text style={styles.infoStepTitle}>일반인쇄</Text>
+                  <Text style={styles.infoStepDesc}>
+                    리플렛/브로슈어/포스터 등
+                  </Text>
+                  <View style={{backgroundColor: '#275696', borderRadius: 20}}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          fontSize: 13,
+                          color: '#fff',
+                          paddingVertical: 7,
+                          paddingHorizontal: 13,
+                        },
+                      ]}>
+                      견적 바로가기
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          {/* // 일반인쇄 */}
+
+          {/* 기타인쇄 */}
+          <View style={{marginBottom: 10}}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                dispatch(selectCate1('2'));
+                navigation.navigate('OrderEtc', {
+                  screen: 'OrderEtc',
+                });
+              }}>
+              <View
+                style={[
+                  styles.flexRowCenter,
+                  {
+                    backgroundColor: '#rgba(216, 229, 245, 0.5)',
+                    borderRadius: 5,
+                    height: 130,
+                    paddingHorizontal: 20,
+                  },
+                ]}>
+                <View style={{marginRight: 30}}>
+                  <Image
+                    source={require('../../src/images/box03.png')}
+                    resizeMode="contain"
+                    style={{width: 100, height: 100}}
+                  />
+                </View>
+                <View
+                  style={{
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                  }}>
+                  <Text style={styles.infoStepTitle}>기타인쇄물</Text>
+                  <Text style={styles.infoStepDesc}>
+                    카렌다/상품권/티겟/비닐 BAG 등
+                  </Text>
+                  <View style={{backgroundColor: '#275696', borderRadius: 20}}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          fontSize: 13,
+                          color: '#fff',
+                          paddingVertical: 7,
+                          paddingHorizontal: 13,
+                        },
+                      ]}>
+                      견적 바로가기
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          {/* // 기타인쇄 */}
         </View>
       </ScrollView>
     </>
@@ -534,13 +271,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
+    fontFamily: 'SCDream4',
     fontSize: 14,
-    color: '#A2A2A2',
-    lineHeight: 23,
+    color: '#484848',
+    marginBottom: 10,
   },
   infoStepTitle: {
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#000000',
+    marginBottom: 7,
   },
   line: {
     width: '100%',

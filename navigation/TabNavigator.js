@@ -144,6 +144,9 @@ const TabNavigator = () => {
         component={MessageDetailStackNavigator}
       />
       <Stack.Screen name="Order" component={OrderStackNavigator} />
+      <Stack.Screen name="OrderPackage" component={OrderStackNavigator} />
+      <Stack.Screen name="OrderGeneral" component={OrderStackNavigator} />
+      <Stack.Screen name="OrderEtc" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep02" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep03" component={OrderStackNavigator} />
       <Stack.Screen name="easyOrderComplete" component={OrderStackNavigator} />

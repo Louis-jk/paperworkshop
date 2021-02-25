@@ -1339,7 +1339,14 @@ const index = (props) => {
             backgroundColor: '#fff',
             paddingVertical: 40,
           }}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() =>
+              navigation.navigate('OrderPackage', {
+                screen: 'OrderPackage',
+              })
+            }
+            style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
                 width: 100,
@@ -1361,6 +1368,7 @@ const index = (props) => {
                 }}
               />
             </View>
+
             <Text
               style={[
                 styles.mediumText,
@@ -1384,25 +1392,31 @@ const index = (props) => {
               ]}>
               단상자/싸바리/쇼핑백 등
             </Text>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('Order')}>
-              <View style={{backgroundColor: '#275696', borderRadius: 20}}>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {
-                      fontSize: 13,
-                      color: '#fff',
-                      paddingVertical: 7,
-                      paddingHorizontal: 13,
-                    },
-                  ]}>
-                  견적 바로가기
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+
+            <View style={{backgroundColor: '#275696', borderRadius: 20}}>
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 13,
+                    color: '#fff',
+                    paddingVertical: 7,
+                    paddingHorizontal: 13,
+                  },
+                ]}>
+                견적 바로가기
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() =>
+              navigation.navigate('OrderGeneral', {
+                screen: 'OrderGeneral',
+              })
+            }
+            style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
                 width: 100,
@@ -1424,6 +1438,7 @@ const index = (props) => {
                 }}
               />
             </View>
+
             <Text
               style={[
                 styles.mediumText,
@@ -1447,24 +1462,22 @@ const index = (props) => {
               ]}>
               리플렛/브로슈어/포스터 등
             </Text>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('Order')}>
-              <View style={{backgroundColor: '#275696', borderRadius: 20}}>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {
-                      fontSize: 13,
-                      color: '#fff',
-                      paddingVertical: 7,
-                      paddingHorizontal: 13,
-                    },
-                  ]}>
-                  견적 바로가기
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
+
+            <View style={{backgroundColor: '#275696', borderRadius: 20}}>
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 13,
+                    color: '#fff',
+                    paddingVertical: 7,
+                    paddingHorizontal: 13,
+                  },
+                ]}>
+                견적 바로가기
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
         {/* // 견적 바로가기 아이콘 section */}
 
