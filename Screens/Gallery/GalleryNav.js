@@ -12,8 +12,6 @@ const GalleryNav = (props) => {
   const navigation = props.navigation;
   const routeName = props.routeName;
 
-  console.log('G routeName', routeName);
-
   return (
     <>
       <View

@@ -96,6 +96,7 @@ const DrawerMenu = (props) => {
   const [collapseArrow02, setCollapseArrow02] = React.useState(true);
   const [collapseArrow03, setCollapseArrow03] = React.useState(true);
   const [collapseArrow04, setCollapseArrow04] = React.useState(true);
+  const [collapseArrow05, setCollapseArrow05] = React.useState(true);
 
   const setCollapseArrowFunc01 = () => {
     setCollapseArrow01((prev) => !prev);
@@ -108,6 +109,9 @@ const DrawerMenu = (props) => {
   };
   const setCollapseArrowFunc04 = () => {
     setCollapseArrow04((prev) => !prev);
+  };
+  const setCollapseArrowFunc05 = () => {
+    setCollapseArrow05((prev) => !prev);
   };
 
   return (
@@ -733,7 +737,7 @@ const DrawerMenu = (props) => {
             }}
           />
 
-          <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc04}>
+          <TouchableOpacity activeOpacity={1} onPress={setCollapseArrowFunc05}>
             <View
               style={[
                 styles.categoryTitle,
@@ -752,7 +756,7 @@ const DrawerMenu = (props) => {
               />
             </View>
           </TouchableOpacity>
-          <Collapsible collapsed={collapseArrow04}>
+          <Collapsible collapsed={collapseArrow05}>
             <View
               style={{
                 backgroundColor: '#F5F5F5',
@@ -783,6 +787,20 @@ const DrawerMenu = (props) => {
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
                   지류고시가
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.subCategory}
+                activeOpacity={0.8}
+                onPress={() =>
+                  Alert.alert('준비중입니다.', '', [
+                    {
+                      text: '확인',
+                    },
+                  ])
+                }>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  지류가격계산
                 </Text>
               </TouchableOpacity>
             </View>

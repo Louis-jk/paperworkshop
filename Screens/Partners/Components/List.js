@@ -21,13 +21,14 @@ const List = ({item, index, navigation}) => {
         })
       }
       style={{
-        width: '49%',
+        width: '50%',
         borderRadius: 5,
         marginBottom: 25,
         height: 220,
         backgroundColor: '#fff',
-        marginRight: index % 2 === 0 ? '1%' : 0,
-        marginLeft: index % 2 !== 0 ? '1%' : 0,
+        paddingHorizontal: 2,
+        // marginRight: index % 2 === 0 ? '1%' : 0,
+        // marginLeft: index % 2 !== 0 ? '1%' : 0,
       }}>
       <View style={{marginBottom: 10}}>
         {item.portfolioImg.length > 0 ? (

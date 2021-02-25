@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, FlatList, Dimensions} from 'react-native';
 
 import List from '../List';
 
-const All = (props) => {
+const Package = (props) => {
   const navigation = props.navigation;
   const partners = props.partners;
 
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default All;
+export default Package;
