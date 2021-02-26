@@ -34,6 +34,7 @@ const index = (props) => {
           setIsLoading(false);
         } else {
           setGalleries(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));

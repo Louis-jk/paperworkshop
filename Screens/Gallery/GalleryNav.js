@@ -17,10 +17,6 @@ const GalleryNav = (props) => {
   const navigation = props.navigation;
   const routeName = props.routeName;
 
-  const packageIds = ['9', '10', '11', '12', '13', '14'];
-  const generalIds = ['1', '4', '5', '6', '7', '8'];
-  const etcIds = ['15', '16', '17', '18', '19'];
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [packagesInfo, setPackagesInfo] = React.useState([]);
   const [generalInfo, setGeneralInfo] = React.useState([]);
@@ -57,6 +53,7 @@ const GalleryNav = (props) => {
           setIsLoading(false);
         } else {
           setPackagesInfo(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
@@ -72,6 +69,7 @@ const GalleryNav = (props) => {
           setIsLoading(false);
         } else {
           setGeneralInfo(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
@@ -87,6 +85,7 @@ const GalleryNav = (props) => {
           setIsLoading(false);
         } else {
           setEtcInfo(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
