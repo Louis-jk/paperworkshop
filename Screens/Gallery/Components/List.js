@@ -5,7 +5,13 @@ const List = ({item, index, navigation}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('GalleryWebView')}
+      onPress={() =>
+        navigation.navigate('GalleryWebView', {
+          id: item.id,
+          description: item.description,
+          businessName: item.businessName,
+        })
+      }
       style={{
         width: '50%',
         borderRadius: 5,
