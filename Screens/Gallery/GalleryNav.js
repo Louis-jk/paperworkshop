@@ -11,6 +11,8 @@ import {
 import axios from 'axios';
 import qs from 'qs';
 
+import GalleryApi from '../../src/api/Gallery';
+
 const GalleryNav = (props) => {
   const navigation = props.navigation;
   const routeName = props.routeName;
@@ -47,14 +49,7 @@ const GalleryNav = (props) => {
 
   const getPackages = () => {
     setIsLoading(true);
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_cate_list',
-        cate1: '1',
-      }),
-    })
+    GalleryApi.getPartner('proc_cate_list', '1')
       .then((res) => {
         console.log('package: ', res);
         if (res.data.result === '1' && res.data.count > 0) {
@@ -69,14 +64,7 @@ const GalleryNav = (props) => {
 
   const getGenerals = () => {
     setIsLoading(true);
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_cate_list',
-        cate1: '0',
-      }),
-    })
+    GalleryApi.getPartner('proc_cate_list', '0')
       .then((res) => {
         console.log('general: ', res);
         if (res.data.result === '1' && res.data.count > 0) {
@@ -91,14 +79,7 @@ const GalleryNav = (props) => {
 
   const getEtc = () => {
     setIsLoading(true);
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_cate_list',
-        cate1: '2',
-      }),
-    })
+    GalleryApi.getPartner('proc_cate_list', '2')
       .then((res) => {
         console.log('etc: ', res);
         if (res.data.result === '1' && res.data.count > 0) {
@@ -116,8 +97,6 @@ const GalleryNav = (props) => {
     getGenerals();
     getEtc();
   }, []);
-
-  console.log('packagesInfo', packagesInfo);
 
   return (
     <>

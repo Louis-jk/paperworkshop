@@ -17,9 +17,9 @@ import axios from 'axios';
 import qs from 'qs';
 
 import Header from '../Common/Header';
-import Footer from '../Common/Footer';
 import GalleryNav from './GalleryNav';
 import List from './Components/List';
+import GalleryApi from '../../src/api/Gallery';
 
 const Package = (props) => {
   const navigation = props.navigation;
@@ -34,15 +34,8 @@ const Package = (props) => {
 
   const getApi = () => {
     setIsLoading(true);
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_gallery_list',
-        cate1,
-        ca_id: ca_id ? ca_id : null,
-      }),
-    })
+
+    GalleryApi.getPartnerType('proc_gallery_list', cate1, ca_id)
       .then((res) => {
         console.log('gallery res', res);
         if (res.data.result === '1' && res.data.count > 0) {
