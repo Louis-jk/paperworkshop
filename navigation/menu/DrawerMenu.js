@@ -431,7 +431,7 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Gallery',
-                    params: {screen: 'GalleryPackage'},
+                    params: {screen: 'GalleryPackage', params: {cate1: '1'}},
                   })
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
@@ -444,7 +444,7 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Gallery',
-                    params: {screen: 'GalleryGeneral'},
+                    params: {screen: 'GalleryGeneral', params: {cate1: '0'}},
                   })
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
@@ -457,7 +457,7 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Gallery',
-                    params: {screen: 'GalleryEtc'},
+                    params: {screen: 'GalleryEtc', params: {cate1: '2'}},
                   })
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
