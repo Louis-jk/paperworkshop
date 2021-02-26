@@ -2,6 +2,8 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 
 const List = ({item, index, navigation}) => {
+  // console.log('List item', item);
+
   return (
     <TouchableOpacity
       key={item.id}
@@ -19,6 +21,7 @@ const List = ({item, index, navigation}) => {
             openingTime: item.mb_7,
             closedDay: item.mb_8,
             used: item.used,
+            cate1: item.cate1,
           },
         })
       }

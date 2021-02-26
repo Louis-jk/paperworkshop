@@ -32,6 +32,7 @@ const Detail = (props) => {
   const used = props.route.params.used;
   const openingTime = props.route.params.openingTime;
   const closedDay = props.route.params.closedDay;
+  const cate1 = props.route.params.cate1;
 
   const [like, setLike] = React.useState(false);
   const onLikeBtn = () => {
@@ -53,6 +54,8 @@ const Detail = (props) => {
 
   const sliderWidth = Dimensions.get('window').width;
   const itemWidth = Dimensions.get('window').width;
+
+  console.log('Detail props', props);
 
   return (
     <>
@@ -789,7 +792,16 @@ const Detail = (props) => {
           }}>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => navigation.navigate('Order')}
+            onPress={() =>
+              navigation.navigate('Home', {
+                screen: 'Order',
+                params: {
+                  screen: 'DirectOrder',
+                  params: {bName: bName, name: name, cate1: cate1},
+                },
+              })
+            }
+            // onPress={() => navigation.navigate('DirectOrder')}
             style={{width: '85%'}}>
             <View style={[styles.submitBtn]}>
               <View

@@ -100,6 +100,7 @@ import MessageDetailScreen from '../Screens/Message/Detail';
 // 견적 SCREEN
 // 비교견적 신청 스텝
 import OrderStep01Screen from '../Screens/Order';
+import DirectOrderScreen from '../Screens/Order/Direct';
 import OrderPackageScreen from '../Screens/Order/Package';
 import OrderGeneralScreen from '../Screens/Order/General';
 import OrderEtcScreen from '../Screens/Order/Etc';
@@ -323,6 +324,7 @@ export const OrderStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Order" component={OrderStep01Screen} />
+      <Stack.Screen name="DirectOrder" component={DirectOrderScreen} />
       <Stack.Screen name="OrderPackage" component={OrderPackageScreen} />
       <Stack.Screen name="OrderGeneral" component={OrderGeneralScreen} />
       <Stack.Screen name="OrderEtc" component={OrderEtcScreen} />

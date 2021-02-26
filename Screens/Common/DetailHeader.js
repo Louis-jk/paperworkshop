@@ -71,6 +71,9 @@ const DetailHeader = (props) => {
       case 'Order':
         setTitle('비교 견적 신청');
         break;
+      case 'DirectOrder':
+        setTitle('직접 견적 신청');
+        break;
       case 'OrderPackage':
         setTitle('비교 견적 신청');
         break;
