@@ -1288,7 +1288,9 @@ const index = (props) => {
                 <View>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={() => navigation.navigate('Order')}
+                    onPress={() =>
+                      navigation.navigate('Order', {screen: 'Order'})
+                    }
                     style={{
                       borderWidth: 2,
                       borderColor: '#fff',
@@ -2250,7 +2252,7 @@ const index = (props) => {
 
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('Order')}
+              onPress={() => navigation.navigate('Order', {screen: 'Order'})}
               style={{
                 width: '100%',
                 justifyContent: 'center',

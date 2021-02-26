@@ -42,6 +42,9 @@ import DetailHeader from '../Common/DetailHeader';
 const Step02 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const propsScreenName = props.route.params.screen;
+
+  console.log('Step02', props);
 
   const dispatch = useDispatch();
 
@@ -169,12 +172,17 @@ const Step02 = (props) => {
     dispatch(setUserFileType(fileTypeCurrent));
     dispatch(setUserFileSize(fileSizeCurrent));
     dispatch(setUserMemo(memo));
-    navigation.navigate('OrderStep03');
+    navigation.navigate('OrderStep03', {
+      screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+    });
   };
 
   return (
     <>
-      <DetailHeader title={routeName} navigation={navigation} />
+      <DetailHeader
+        title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
+        navigation={navigation}
+      />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
           <View style={styles.profileBox}>

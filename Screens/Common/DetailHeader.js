@@ -69,31 +69,31 @@ const DetailHeader = (props) => {
         setTitle('메세지');
         break;
       case 'Order':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'DirectOrder':
-        setTitle('직접 견적 신청');
+        setTitle('직접견적');
         break;
       case 'OrderPackage':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'OrderGeneral':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'OrderEtc':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'OrderStep02':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'OrderStep03':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'OrderStep04':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'easyOrderComplete':
-        setTitle('비교 견적 신청');
+        setTitle('비교견적');
         break;
       case 'OrderStep05':
         setTitle('세부 견적 작성');

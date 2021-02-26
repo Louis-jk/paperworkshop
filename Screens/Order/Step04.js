@@ -32,6 +32,7 @@ import {
 const Step04 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const propsScreenName = props.route.params.screen;
 
   const {type_details} = useSelector((state) => state.OrderHandlerReducer);
   const dispatch = useDispatch();
@@ -48,9 +49,9 @@ const Step04 = (props) => {
 
   const [getQuantity, setGetQuantity] = React.useState([]);
 
-  React.useEffect(() => {
-    setGetQuantity(type_details[0].making_cnt);
-  }, []);
+  // React.useEffect(() => {
+  //   setGetQuantity(type_details[0].making_cnt);
+  // }, []);
 
   const goEasyComplete = async () => {
     await setModalVisible(!isModalVisible);
@@ -105,7 +106,10 @@ const Step04 = (props) => {
         toggleModal={toggleModal}
         goEasyComplete={goEasyComplete}
       />
-      <DetailHeader title={routeName} navigation={navigation} />
+      <DetailHeader
+        title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
+        navigation={navigation}
+      />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
           <View
@@ -482,7 +486,12 @@ const Step04 = (props) => {
               style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
             />
             <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('OrderStep05')}>
+              onPress={() =>
+                navigation.navigate('OrderStep05', {
+                  screen:
+                    propsScreenName === 'DirectOrder' ? propsScreenName : null,
+                })
+              }>
               <View
                 style={{
                   flex: 1,

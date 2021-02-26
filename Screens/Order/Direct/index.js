@@ -16,10 +16,14 @@ import {
 import {TabView, SceneMap} from 'react-native-tab-view';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {selectCate1, selectCaId, setUserId} from '../../Modules/OrderReducer';
-import DetailHeader from '../Common/DetailHeader';
+import {
+  selectCate1,
+  selectCaId,
+  setUserId,
+} from '../../../Modules/OrderReducer';
+import DetailHeader from '../../Common/DetailHeader';
 
-const Direct = (props) => {
+const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const cate1 = props.route.params.cate1;
@@ -56,14 +60,14 @@ const Direct = (props) => {
               styles.boldText,
               {fontSize: 16, color: '#000000', marginBottom: 10},
             ]}>
-            견적 신청 대상 업체 정보
+            신청 대상 업체
           </Text>
           <View style={[styles.infoBox, {marginBottom: 10}]}>
             <View style={styles.details}>
               <Text style={[styles.normalText, styles.detailsTitle]}>
                 업체명
               </Text>
-              <Text style={[styles.normalText, styles.detailsDesc]}>
+              <Text style={[styles.mediumText, styles.detailsDesc]}>
                 {bName}
               </Text>
             </View>
@@ -72,7 +76,7 @@ const Direct = (props) => {
               <Text style={[styles.normalText, styles.detailsTitle]}>
                 담당자
               </Text>
-              <Text style={[styles.normalText, styles.detailsDesc]}>
+              <Text style={[styles.mediumText, styles.detailsDesc]}>
                 {name}
               </Text>
             </View>
@@ -96,7 +100,7 @@ const Direct = (props) => {
               styles.boldText,
               {fontSize: 16, color: '#000000', marginBottom: 10},
             ]}>
-            견적 신청자 정보
+            신청자 정보
           </Text>
           <View style={[styles.infoBox, {marginBottom: 10}]}>
             {mb_2 ? (
@@ -104,7 +108,7 @@ const Direct = (props) => {
                 <Text style={[styles.normalText, styles.detailsTitle]}>
                   업체명
                 </Text>
-                <Text style={[styles.normalText, styles.detailsDesc]}>
+                <Text style={[styles.mediumText, styles.detailsDesc]}>
                   {mb_2}
                 </Text>
               </View>
@@ -113,7 +117,7 @@ const Direct = (props) => {
               <Text style={[styles.normalText, styles.detailsTitle]}>
                 담당자
               </Text>
-              <Text style={[styles.normalText, styles.detailsDesc]}>
+              <Text style={[styles.mediumText, styles.detailsDesc]}>
                 {mb_name}
               </Text>
             </View>
@@ -126,7 +130,7 @@ const Direct = (props) => {
               styles.boldText,
               {fontSize: 16, color: '#000000', marginBottom: 10},
             ]}>
-            견적 대상을 선택해주세요.
+            카테고리를 선택해주세요.
           </Text>
 
           {/* 패키지 */}
@@ -137,7 +141,7 @@ const Direct = (props) => {
                 onPress={() => {
                   dispatch(selectCate1('1'));
                   navigation.navigate('OrderPackage', {
-                    screen: 'OrderPackage',
+                    screen: 'DirectOrder',
                   });
                 }}>
                 <View
@@ -152,7 +156,7 @@ const Direct = (props) => {
                   ]}>
                   <View style={{marginRight: 30}}>
                     <Image
-                      source={require('../../src/images/box01.png')}
+                      source={require('../../../src/images/box01.png')}
                       resizeMode="contain"
                       style={{width: 100, height: 100}}
                     />
@@ -196,7 +200,7 @@ const Direct = (props) => {
                 onPress={() => {
                   dispatch(selectCate1('0'));
                   navigation.navigate('OrderGeneral', {
-                    screen: 'OrderGeneral',
+                    screen: 'DirectOrder',
                   });
                 }}>
                 <View
@@ -211,7 +215,7 @@ const Direct = (props) => {
                   ]}>
                   <View style={{marginRight: 30}}>
                     <Image
-                      source={require('../../src/images/box02.png')}
+                      source={require('../../../src/images/box02.png')}
                       resizeMode="contain"
                       style={{width: 100, height: 100}}
                     />
@@ -255,7 +259,7 @@ const Direct = (props) => {
                 onPress={() => {
                   dispatch(selectCate1('2'));
                   navigation.navigate('OrderEtc', {
-                    screen: 'OrderEtc',
+                    screen: 'DirectOrder',
                   });
                 }}>
                 <View
@@ -270,7 +274,7 @@ const Direct = (props) => {
                   ]}>
                   <View style={{marginRight: 30}}>
                     <Image
-                      source={require('../../src/images/box03.png')}
+                      source={require('../../../src/images/box03.png')}
                       resizeMode="contain"
                       style={{width: 100, height: 100}}
                     />
@@ -430,4 +434,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Direct;
+export default index;

@@ -22,6 +22,7 @@ import DetailHeader from '../Common/DetailHeader';
 const Etc = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const propsScreenName = props.route.params.screen;
 
   const dispatch = useDispatch();
 
@@ -36,45 +37,19 @@ const Etc = (props) => {
 
   return (
     <>
-      <DetailHeader title={routeName} navigation={navigation} />
+      <DetailHeader
+        title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
+        navigation={navigation}
+      />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.wrap}>
-          <Text
-            style={[
-              styles.boldText,
-              {fontSize: 16, color: '#000000', marginBottom: 10},
-            ]}>
-            견적 신청 대상 (General)
-          </Text>
-          <View style={[styles.infoBox, {marginBottom: 10}]}>
-            {mb_2 ? (
-              <View style={styles.details}>
-                <Text style={[styles.normalText, styles.detailsTitle]}>
-                  업체명
-                </Text>
-                <Text style={[styles.normalText, styles.detailsDesc]}>
-                  {mb_2}
-                </Text>
-              </View>
-            ) : null}
-            <View style={styles.details}>
-              <Text style={[styles.normalText, styles.detailsTitle]}>
-                담당자
-              </Text>
-              <Text style={[styles.normalText, styles.detailsDesc]}>
-                {mb_name}
-              </Text>
-            </View>
-          </View>
-        </View> */}
-
         <View style={styles.wrap}>
           <Text
             style={[
               styles.boldText,
               {fontSize: 16, color: '#000000', marginBottom: 20},
             ]}>
-            비교 견적 대상을 선택해주세요.
+            {propsScreenName === 'DirectOrder' ? '' : '비교'} 견적 대상을
+            선택해주세요.
           </Text>
           <View>
             {/* 기타인쇄물 1차 카테고리 리스트(list) */}
@@ -83,7 +58,12 @@ const Etc = (props) => {
                 activeOpacity={0.8}
                 onPress={() => {
                   dispatch(selectCaId('15'));
-                  navigation.navigate('OrderStep02');
+                  navigation.navigate('OrderStep02', {
+                    screen:
+                      propsScreenName === 'DirectOrder'
+                        ? propsScreenName
+                        : null,
+                  });
                 }}
                 style={styles.categoryItem}>
                 <Image
@@ -97,7 +77,12 @@ const Etc = (props) => {
                 activeOpacity={0.8}
                 onPress={() => {
                   dispatch(selectCaId('16'));
-                  navigation.navigate('OrderStep02');
+                  navigation.navigate('OrderStep02', {
+                    screen:
+                      propsScreenName === 'DirectOrder'
+                        ? propsScreenName
+                        : null,
+                  });
                 }}
                 style={styles.categoryItem}>
                 <Image
@@ -111,7 +96,12 @@ const Etc = (props) => {
                 activeOpacity={0.8}
                 onPress={() => {
                   dispatch(selectCaId('17'));
-                  navigation.navigate('OrderStep02');
+                  navigation.navigate('OrderStep02', {
+                    screen:
+                      propsScreenName === 'DirectOrder'
+                        ? propsScreenName
+                        : null,
+                  });
                 }}
                 style={styles.categoryItem}>
                 <Image
@@ -125,7 +115,12 @@ const Etc = (props) => {
                 activeOpacity={0.8}
                 onPress={() => {
                   dispatch(selectCaId('18'));
-                  navigation.navigate('OrderStep02');
+                  navigation.navigate('OrderStep02', {
+                    screen:
+                      propsScreenName === 'DirectOrder'
+                        ? propsScreenName
+                        : null,
+                  });
                 }}
                 style={styles.categoryItem}>
                 <Image
@@ -139,7 +134,12 @@ const Etc = (props) => {
                 activeOpacity={0.8}
                 onPress={() => {
                   dispatch(selectCaId('19'));
-                  navigation.navigate('OrderStep02');
+                  navigation.navigate('OrderStep02', {
+                    screen:
+                      propsScreenName === 'DirectOrder'
+                        ? propsScreenName
+                        : null,
+                  });
                 }}
                 style={styles.categoryItem}>
                 <Image

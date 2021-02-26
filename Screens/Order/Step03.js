@@ -29,6 +29,7 @@ const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 const Step03 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const propsScreenName = props.route.params.screen;
 
   const dispatch = useDispatch();
   const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
@@ -87,13 +88,18 @@ const Step03 = (props) => {
       dispatch(selectTypeId(type));
       dispatch(selectTypeName(typeName));
     }
-    navigation.navigate('OrderStep04');
+    navigation.navigate('OrderStep04', {
+      screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+    });
   };
 
   return (
     <>
       <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
-      <DetailHeader title={routeName} navigation={navigation} />
+      <DetailHeader
+        title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
+        navigation={navigation}
+      />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
           <View

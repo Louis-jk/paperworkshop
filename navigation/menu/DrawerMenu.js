@@ -375,7 +375,7 @@ const DrawerMenu = (props) => {
 
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => navigation.navigate('Order')}
+            onPress={() => navigation.navigate('Order', {screen: 'Order'})}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',

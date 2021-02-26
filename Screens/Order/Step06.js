@@ -22,6 +22,7 @@ import InfoModal from '../Common/infoModal02';
 const Step06 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const propsScreenName = props.route.params.screen;
 
   //  박가공 유무
   const [foil, setFoil] = React.useState('y');
@@ -76,7 +77,10 @@ const Step06 = (props) => {
         goOrderComplete={goOrderComplete}
       />
       <InfoModal isVisible={isInfoModalVisible} toggleModal={toggleInfoModal} />
-      <DetailHeader title={routeName} navigation={navigation} />
+      <DetailHeader
+        title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
+        navigation={navigation}
+      />
 
       <View
         style={{
@@ -87,7 +91,9 @@ const Step06 = (props) => {
           paddingVertical: 20,
           backgroundColor: '#fff',
         }}>
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.container}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.wrap}>
             <View
               style={{
@@ -95,7 +101,9 @@ const Step06 = (props) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.boldText, { fontSize: 16, color: '#000000' }]}>후가공</Text>
+              <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+                후가공
+              </Text>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={toggleInfoModal}
@@ -111,9 +119,10 @@ const Step06 = (props) => {
                 <Image
                   source={require('../../src/assets/icon_bikkuri.png')}
                   resizeMode="contain"
-                  style={{ width: 17, height: 17, marginRight: 5 }}
+                  style={{width: 17, height: 17, marginRight: 5}}
                 />
-                <Text style={[styles.normalText, { fontSize: 13, color: '#fff' }]}>
+                <Text
+                  style={[styles.normalText, {fontSize: 13, color: '#fff'}]}>
                   세부 정보 안내
                 </Text>
               </TouchableOpacity>
@@ -122,7 +131,7 @@ const Step06 = (props) => {
 
           <View style={styles.wrap}>
             {/* 박가공  */}
-            <View style={{ marginBottom: 25 }}>
+            <View style={{marginBottom: 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -130,7 +139,9 @@ const Step06 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>박가공</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  박가공
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
@@ -141,7 +152,7 @@ const Step06 = (props) => {
                 }}>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setFoilChoise('y')}
                   style={{
                     flexDirection: 'row',
@@ -156,13 +167,13 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>있음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>있음</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setColorChoise('n')}
                   style={{
                     flexDirection: 'row',
@@ -176,16 +187,16 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>없음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>없음</Text>
                 </TouchableOpacity>
               </View>
             </View>
             {/* // 박가공  */}
 
             {/* 형압  */}
-            <View style={{ marginBottom: 25 }}>
+            <View style={{marginBottom: 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -193,7 +204,9 @@ const Step06 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>형압</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  형압
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
@@ -204,7 +217,7 @@ const Step06 = (props) => {
                 }}>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setPressChoise('y')}
                   style={{
                     flexDirection: 'row',
@@ -219,13 +232,13 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>있음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>있음</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setCheckChoise('n')}
                   style={{
                     flexDirection: 'row',
@@ -239,16 +252,16 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>없음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>없음</Text>
                 </TouchableOpacity>
               </View>
             </View>
             {/* // 형압  */}
 
             {/* 부분 실크  */}
-            <View style={{ marginBottom: 25 }}>
+            <View style={{marginBottom: 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -256,7 +269,9 @@ const Step06 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>부분 실크</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  부분 실크
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
@@ -267,7 +282,7 @@ const Step06 = (props) => {
                 }}>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setSilkChoise('y')}
                   style={{
                     flexDirection: 'row',
@@ -282,13 +297,13 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>있음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>있음</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setCheckChoise('n')}
                   style={{
                     flexDirection: 'row',
@@ -302,16 +317,16 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>없음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>없음</Text>
                 </TouchableOpacity>
               </View>
             </View>
             {/* // 부분 실크  */}
 
             {/* 코팅  */}
-            <View style={{ marginBottom: 25 }}>
+            <View style={{marginBottom: 25}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -319,7 +334,9 @@ const Step06 = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>코팅</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  코팅
+                </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
               <View
@@ -331,7 +348,7 @@ const Step06 = (props) => {
                 }}>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setLaminateChoise('none')}
                   style={{
                     flexDirection: 'row',
@@ -347,13 +364,15 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>코팅 없음</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>
+                    코팅 없음
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setLaminateChoise('gloss')}
                   style={{
                     flexDirection: 'row',
@@ -369,13 +388,15 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>단면 유광</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>
+                    단면 유광
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setLaminateChoise('matte')}
                   style={{
                     flexDirection: 'row',
@@ -391,13 +412,15 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>단면 무광</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>
+                    단면 무광
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setLaminateChoise('uv')}
                   style={{
                     flexDirection: 'row',
@@ -413,13 +436,15 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>UV 코팅</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>
+                    UV 코팅
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setLaminateChoise('over')}
                   style={{
                     flexDirection: 'row',
@@ -435,13 +460,15 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>오버 코팅</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>
+                    오버 코팅
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={1}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   onPress={() => setLaminateChoise('cr')}
                   style={{
                     flexDirection: 'row',
@@ -457,9 +484,11 @@ const Step06 = (props) => {
                         : require('../../src/assets/radio_off.png')
                     }
                     resizeMode="contain"
-                    style={{ width: 20, height: 20, marginRight: 5 }}
+                    style={{width: 20, height: 20, marginRight: 5}}
                   />
-                  <Text style={[styles.normalText, { fontSize: 14 }]}>CR 코팅</Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>
+                    CR 코팅
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -467,7 +496,7 @@ const Step06 = (props) => {
           </View>
         </ScrollView>
 
-        <View style={{ width: '100%' }}>
+        <View style={{width: '100%'}}>
           {/* 이전, 다음 버튼 부분 (Prev, Next) */}
 
           <View
@@ -494,7 +523,7 @@ const Step06 = (props) => {
                 <Image
                   source={require('../../src/assets/prevUnActiveArrow.png')}
                   resizeMode="contain"
-                  style={{ width: 16, height: 16, marginRight: 7 }}
+                  style={{width: 16, height: 16, marginRight: 7}}
                 />
                 <Text
                   style={[

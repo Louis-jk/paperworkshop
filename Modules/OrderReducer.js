@@ -8,6 +8,7 @@ const SELECT_PD_ID = 'SELECT_PD_ID';
 const SELECT_PN_ID = 'SELECT_PN_ID';
 const SELECT_PAPER_NAME = 'SELECT_PAPER_NAME';
 const SET_USER_ID = 'SET_USER_ID';
+const SET_COMPANY_ID = 'SET_COMPANY_ID';
 const SET_TITLE = 'SET_TITLE';
 const SET_COMPANY = 'SET_COMPANY';
 const SET_USER_NAME = 'SET_USER_NAME';
@@ -57,6 +58,7 @@ export const selectPaperName = (payload) => ({
   payload,
 });
 export const setUserId = (payload) => ({type: SET_USER_ID, payload});
+export const setCompanyId = (payload) => ({type: SET_COMPANY_ID, payload});
 export const setUserTitle = (payload) => ({type: SET_TITLE, payload});
 export const setUserCompany = (payload) => ({type: SET_COMPANY, payload});
 export const setUserName = (payload) => ({type: SET_USER_NAME, payload});
@@ -116,6 +118,7 @@ const initialize = {
   pn_id: null, // 지종상세아이디
   paper_name2: null, // 지종상세(직접입력)
   mb_id: null, // 회원 아이디
+  company_id: null, // 업체 아이디
   title: null, // 제작명
   company: null, // 회사명
   mb_name: null, // 주문자명
@@ -200,6 +203,11 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         mb_id: action.payload,
+      };
+    case SET_COMPANY_ID:
+      return {
+        ...state,
+        company_id: action.payload,
       };
     case SET_TITLE:
       return {

@@ -15,9 +15,12 @@ import {
 
 import Carousel from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
+import {useDispatch} from 'react-redux';
 
 import Header from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
+
+import {setCompanyId} from '../../Modules/OrderReducer';
 
 const Detail = (props) => {
   const navigation = props.navigation;
@@ -33,6 +36,9 @@ const Detail = (props) => {
   const openingTime = props.route.params.openingTime;
   const closedDay = props.route.params.closedDay;
   const cate1 = props.route.params.cate1;
+  const companyId = props.route.params.companyId;
+
+  const dispatch = useDispatch();
 
   const [like, setLike] = React.useState(false);
   const onLikeBtn = () => {
@@ -792,15 +798,16 @@ const Detail = (props) => {
           }}>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() =>
+            onPress={() => {
+              dispatch(setCompanyId(companyId));
               navigation.navigate('Home', {
                 screen: 'Order',
                 params: {
                   screen: 'DirectOrder',
                   params: {bName: bName, name: name, cate1: cate1},
                 },
-              })
-            }
+              });
+            }}
             // onPress={() => navigation.navigate('DirectOrder')}
             style={{width: '85%'}}>
             <View style={[styles.submitBtn]}>

@@ -39,6 +39,7 @@ const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 const Step05 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const propsScreenName = props.route.params.screen;
 
   const dispatch = useDispatch();
 
@@ -48,8 +49,9 @@ const Step05 = (props) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoading01, setIsLoading01] = React.useState(false);
-  const [isLoading02, setIsLoading02] = React.useState(true);
-  const [isLoading03, setIsLoading03] = React.useState(true);
+  const [isLoading02, setIsLoading02] = React.useState(true); // 평량 로딩
+  const [isLoading03, setIsLoading03] = React.useState(true); // 직접 입력 로딩
+  const [isLoading04, setIsLoading04] = React.useState(true); // 색상 입력 로딩
 
   const {cate1, ca_id, type_id} = useSelector((state) => state.OrderReducer);
 
@@ -60,19 +62,25 @@ const Step05 = (props) => {
   const [paperDetail2, setPaperDetail2] = React.useState([]); // 지종 2차 정보 담기
   const [paperTypeDetail, setPaperTypeDetail] = React.useState(null); //  지종 2차 정보 담기
   const [paperDetail3, setPaperDetail3] = React.useState([]); // 지종 2차 세부 내용 정보 담기
-  const [getWeight, setGetWeight] = React.useState([]);
+  const [getWeight, setGetWeight] = React.useState(null); // 지종 1차 Response 평량 값 및 유무 (paper_weight)
+  const [getGoal, setGetGoal] = React.useState(null); // 지종 1차 Response 골 값 및 유무 (paper_goal)
   const [weight, setWeight] = React.useState(null); //  평량 정보 담기
+  const [goal, setGoal] = React.useState(null); //  골 정보 담기
   const [isDirect, setIsDirect] = React.useState(null); // 지종 2차 직접 입력 선택 유무
   const [directPaperName, setDirectPaperName] = React.useState(null); // 지종 2차 직접 입력시 지종 이름 담기
   const [print, setPrint] = React.useState(null); //  인쇄도수
-  const [color, setColor] = React.useState('y'); //  인쇄교정
-  const [check, setCheck] = React.useState('y'); //  인쇄감리
-  const [getPaperColors, setGetPaperColors] = React.useState([]); //  색상
+  const [color, setColor] = React.useState('Y'); //  인쇄교정
+  const [check, setCheck] = React.useState('Y'); //  인쇄감리
+  const [getPaperColors, setGetPaperColors] = React.useState(null); //  색상
+  const [getPrtFrequency, setGetPrtFrequency] = React.useState([]); //  수량
+  const [getProofPrinting, setGetProofPrinting] = React.useState(null); //  인쇄교정 API 가져온 값 담기
+  const [getPrtSupervision, setGetPrtSupervision] = React.useState(null); //  인쇄감리 API 가져온 값 담기
   const [paperColor, setPaperColor] = React.useState(null); //  색상 지정 index
   const [paperColorName, setPaperColorName] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로)
 
   console.log('paperColor', paperColor);
   console.log('paperColorName', paperColorName);
+  console.log('paperDetail', paperDetail);
 
   //////////////////////////
   /////// FUNCTIONS ///////
@@ -119,7 +127,9 @@ const Step05 = (props) => {
       dispatch(setUserPrinting(color));
       dispatch(setUserPrintSup(check));
 
-      navigation.navigate('OrderStep06');
+      navigation.navigate('OrderStep06', {
+        screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+      });
     }
   };
 
@@ -136,7 +146,7 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        console.log(res);
+        console.log('지류 정보 step05', res);
         if (res.data.result === '1') {
           setTypeDetail(res.data.item);
           setPaperChoise(res.data.item[0].pf_id);
@@ -169,12 +179,11 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        console.log('res', res);
+        console.log('지종 정보 step05', res);
         if (res.data.result === '1') {
           setIsLoading(false);
           setPaperDetail(res.data.item);
           setPaperType(res.data.item[0].paper_name);
-          setIsLoading02(false);
         } else {
           Alert.alert(res.data.message, '', [
             {
@@ -189,8 +198,11 @@ const Step05 = (props) => {
   const setPaperChoise = (v) => {
     setPaper(v);
     getPaperDetail(v);
+    setIsLoading02(true);
     setIsLoading03(true);
+    setIsLoading04(true);
     setWeight(null);
+    setGoal(null);
   };
 
   // 지종 1차(pd_id) 선택 및 가져오기 (지종 아이디 필요 : pd_id)
@@ -211,13 +223,19 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        console.log('res', res);
+        console.log('지종1 차 결과 res', res);
         if (res.data.result === '1') {
-          setPaperDetail2(res.data.item);
-          setGetWeight(res.data.item);
-          setGetPaperColors(res.data.item[0].paper_color);
+          setPaperDetail2(res.data.item); // 상세 지종 API 가져온 값 담기
+          setGetWeight(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
+          setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기
+          setGetPaperColors(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
+          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
+          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
+          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
+
           setIsLoading01(false);
           setIsLoading02(false);
+          setIsLoading04(false);
         } else {
           Alert.alert(res.data.message, '', [
             {
@@ -250,9 +268,14 @@ const Step05 = (props) => {
         console.log('지종 상세', res);
         if (res.data.result === '1') {
           setPaperDetail3(res.data.item);
-          setGetWeight(res.data.item);
-          setGetPaperColors(res.data.item[0].paper_color);
+          setGetWeight(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
+          setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기
+          setGetPaperColors(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
+          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
+          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
+          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
           setIsLoading02(false);
+          setIsLoading04(false);
         } else {
           Alert.alert(res.data.message, '', [
             {
@@ -300,6 +323,11 @@ const Step05 = (props) => {
     setWeight(v);
   };
 
+  // 골 넣기
+  const setGoalChoise = (v) => {
+    setGoal(v);
+  };
+
   //  인쇄도수
   const setPrintColor = (v) => {
     setPrint(v);
@@ -308,17 +336,23 @@ const Step05 = (props) => {
   //  인쇄교정
   const setColorChoise = (v) => {
     setColor(v);
+    console.log('setColorChoise v', v);
   };
 
   //  인쇄감리
   const setCheckChoise = (v) => {
     setCheck(v);
+    console.log('setCheckChoise v', v);
   };
 
   const onSelectPaperColor = (name, idx) => {
     setPaperColorName(name);
     setPaperColor(idx);
   };
+
+  console.log('getGoal', getGoal);
+  console.log('getWeight', getWeight);
+  console.log('getPrtSupervision', getPrtSupervision);
 
   return (
     <>
@@ -340,7 +374,10 @@ const Step05 = (props) => {
           <ActivityIndicator size="large" color="#275696" />
         </View>
       )}
-      <DetailHeader title={routeName} navigation={navigation} />
+      <DetailHeader
+        title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
+        navigation={navigation}
+      />
 
       <View
         style={{
@@ -430,7 +467,7 @@ const Step05 = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 10,
+                  marginBottom: 5,
                 }}>
                 <Text style={[styles.profileTitle, {marginRight: 5}]}>
                   지종
@@ -443,7 +480,7 @@ const Step05 = (props) => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   marginBottom:
-                    !isLoading03 && isDirect === '직접입력' ? 5 : 25,
+                    !isLoading03 && isDirect === '직접입력' ? 5 : 20,
                 }}>
                 {/* 지종 1차 */}
                 {!isLoading && paperDetail ? (
@@ -595,22 +632,22 @@ const Step05 = (props) => {
                   autoCapitalize="none"
                 />
               )}
-
               {/* 평량 선택 또는 입력 */}
-              {!isLoading02 && getWeight ? (
+              {!isLoading02 && getWeight !== null && getWeight.length > 0 && (
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
-                    marginBottom: 10,
                   }}>
-                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                    평량
-                  </Text>
+                  <View>
+                    <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                      평량
+                    </Text>
+                  </View>
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              ) : null}
+              )}
               {!isLoading03 && isDirect === '직접입력' && (
                 <TextInput
                   value={weight}
@@ -631,91 +668,185 @@ const Step05 = (props) => {
                   keyboardType="number-pad"
                 />
               )}
-              {!isLoading02 && getWeight
-                ? getWeight.map((pd, idx) => (
-                    <View style={{width: '49%'}} key={idx}>
-                      {pd.paper_weight ? (
-                        <DropDownPicker
-                          placeholder="평량 선택"
-                          placeholderStyle={{
-                            fontSize: 14,
-                            color: '#A2A2A2',
-                            fontWeight: '400',
-                          }}
-                          activeLabelStyle={{color: '#000'}}
-                          activeItemStyle={{color: '#000'}}
-                          selectedLabelStyle={{color: '#000'}}
-                          value={weight}
-                          items={pd.paper_weight.map((v, _i) => {
-                            return {value: v, label: v};
-                          })}
-                          containerStyle={{height: 50}}
-                          style={{
-                            backgroundColor: '#fff',
-                            borderTopRightRadius: 4,
-                            borderTopLeftRadius: 4,
-                            borderBottomRightRadius: 4,
-                            borderBottomLeftRadius: 4,
-                          }}
-                          dropDownMaxHeight={300}
-                          itemStyle={{
-                            justifyContent: 'flex-start',
-                            paddingVertical: 10,
-                          }}
-                          labelStyle={{
-                            fontFamily: 'SCDream4',
-                            color: '#A2A2A2',
-                          }}
-                          dropDownStyle={{backgroundColor: '#fff'}}
-                          onChangeItem={(item) => setWeightChoise(item.value)}
-                          onOpen={() => {
-                            setDirectPaperName(null);
-                            setWeight(null);
-                          }}
-                          customArrowDown={() => (
-                            <Image
-                              source={require('../../src/assets/arr01.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                          customArrowUp={() => (
-                            <Image
-                              source={require('../../src/assets/arr01_top.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                        />
-                      ) : null}
+              {!isLoading02 && getWeight !== null && getWeight.length > 0 && (
+                <View style={{width: '49%', marginBottom: 20}}>
+                  <DropDownPicker
+                    placeholder="평량 선택"
+                    placeholderStyle={{
+                      fontSize: 14,
+                      color: '#A2A2A2',
+                      fontWeight: '400',
+                    }}
+                    activeLabelStyle={{color: '#000'}}
+                    activeItemStyle={{color: '#000'}}
+                    selectedLabelStyle={{color: '#000'}}
+                    value={weight}
+                    items={getWeight.map((v) => {
+                      return {value: v, label: v};
+                    })}
+                    containerStyle={{height: 50}}
+                    style={{
+                      backgroundColor: '#fff',
+                      borderTopRightRadius: 4,
+                      borderTopLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      borderBottomLeftRadius: 4,
+                    }}
+                    dropDownMaxHeight={300}
+                    itemStyle={{
+                      justifyContent: 'flex-start',
+                      paddingVertical: 10,
+                    }}
+                    labelStyle={{
+                      fontFamily: 'SCDream4',
+                      color: '#A2A2A2',
+                    }}
+                    dropDownStyle={{backgroundColor: '#fff'}}
+                    onChangeItem={(item) => setWeightChoise(item.value)}
+                    onOpen={() => {
+                      setDirectPaperName(null);
+                      setWeight(null);
+                    }}
+                    customArrowDown={() => (
+                      <Image
+                        source={require('../../src/assets/arr01.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                    customArrowUp={() => (
+                      <Image
+                        source={require('../../src/assets/arr01_top.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                  />
+                </View>
+              )}
+              {/* // 평량 선택 또는 입력 */}
+              {/* 골 선택 또는 입력 */}
+              {getGoal !== null && getGoal.length > 0 && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  <View>
+                    <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                      골
+                    </Text>
+                  </View>
+                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                </View>
+              )}
+              {!isLoading03 && isDirect === '직접입력' && (
+                <TextInput
+                  value={weight}
+                  placeholder="골을 직접 입력해주세요."
+                  placeholderTextColor="#A2A2A2"
+                  style={[
+                    styles.normalText,
+                    {
+                      borderWidth: 1,
+                      borderColor: '#E3E3E3',
+                      borderRadius: 4,
+                      paddingHorizontal: 10,
+                      marginBottom: 5,
+                    },
+                  ]}
+                  onChangeText={(text) => setGoalChoise(text)}
+                  autoCapitalize="none"
+                  keyboardType="number-pad"
+                />
+              )}
+              {getGoal !== null && getGoal.length > 0 && (
+                <View style={{width: '49%', marginBottom: 20}}>
+                  <DropDownPicker
+                    placeholder="골 선택"
+                    placeholderStyle={{
+                      fontSize: 14,
+                      color: '#A2A2A2',
+                      fontWeight: '400',
+                    }}
+                    activeLabelStyle={{color: '#000'}}
+                    activeItemStyle={{color: '#000'}}
+                    selectedLabelStyle={{color: '#000'}}
+                    value={goal}
+                    items={getGoal.map((v) => {
+                      return {value: v, label: v};
+                    })}
+                    containerStyle={{height: 50}}
+                    style={{
+                      backgroundColor: '#fff',
+                      borderTopRightRadius: 4,
+                      borderTopLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      borderBottomLeftRadius: 4,
+                    }}
+                    dropDownMaxHeight={300}
+                    itemStyle={{
+                      justifyContent: 'flex-start',
+                      paddingVertical: 10,
+                    }}
+                    labelStyle={{
+                      fontFamily: 'SCDream4',
+                      color: '#A2A2A2',
+                    }}
+                    dropDownStyle={{backgroundColor: '#fff'}}
+                    onChangeItem={(item) => setGoalChoise(item.value)}
+                    onOpen={() => {
+                      setDirectPaperName(null);
+                      setGoal(null);
+                    }}
+                    customArrowDown={() => (
+                      <Image
+                        source={require('../../src/assets/arr01.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                    customArrowUp={() => (
+                      <Image
+                        source={require('../../src/assets/arr01_top.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                  />
+                </View>
+              )}
+              {/* // 골 선택 또는 입력 */}
+              {/* 색상 선택  */}
+              {!isLoading04 &&
+                getPaperColors !== null &&
+                getPaperColors.length > 0 && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        색상
+                      </Text>
                     </View>
-                  ))
-                : null}
-            </View>
-            {/* // 평량 선택 또는 입력 */}
-
-            {/* 색상 선택  */}
-            <View style={{marginBottom: 45}}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 5,
-                }}>
-                <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                  색상
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                }}>
-                {getPaperColors
-                  ? getPaperColors.map((t, idx) => (
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                )}
+              {!isLoading04 &&
+                getPaperColors !== null &&
+                getPaperColors.length > 0 && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                    }}>
+                    {getPaperColors.map((t, idx) => (
                       <TouchableOpacity
                         key={idx}
                         activeOpacity={1}
@@ -742,11 +873,11 @@ const Step05 = (props) => {
                           {t}
                         </Text>
                       </TouchableOpacity>
-                    ))
-                  : null}
-              </View>
+                    ))}
+                  </View>
+                )}
+              {/* // 색상 선택  */}
             </View>
-            {/* // 색상 선택  */}
 
             {/* 인쇄 도수  */}
 
@@ -778,119 +909,118 @@ const Step05 = (props) => {
                 </Text>
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
-              {getWeight
-                ? getWeight.map((pd, idx) => (
-                    <DropDownPicker
-                      key={idx}
-                      placeholder={'도수 선택'}
-                      placeholderStyle={{
-                        fontSize: 14,
-                        color: '#A2A2A2',
-                        fontWeight: '400',
-                      }}
-                      activeLabelStyle={{color: '#000'}}
-                      activeItemStyle={{color: '#000'}}
-                      selectedLabelStyle={{color: '#000'}}
-                      value={print}
-                      items={pd.print_frequency.map((v, _i) => {
-                        return {value: v, label: v};
-                      })}
-                      containerStyle={{height: 50}}
-                      style={{
-                        backgroundColor: '#fff',
-                        borderTopRightRadius: 4,
-                        borderTopLeftRadius: 4,
-                        borderBottomRightRadius: 4,
-                        borderBottomLeftRadius: 4,
-                      }}
-                      itemStyle={{
-                        justifyContent: 'flex-start',
-                        paddingVertical: 10,
-                      }}
-                      labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
-                      dropDownStyle={{backgroundColor: '#fff'}}
-                      onChangeItem={(item) => setPrintColor(item.value)}
-                      customArrowDown={() => (
-                        <Image
-                          source={require('../../src/assets/arr01.png')}
-                          style={{width: 25, height: 25}}
-                          resizeMode="contain"
-                        />
-                      )}
-                      customArrowUp={() => (
-                        <Image
-                          source={require('../../src/assets/arr01_top.png')}
-                          style={{width: 25, height: 25}}
-                          resizeMode="contain"
-                        />
-                      )}
+              {getPrtFrequency.length > 0 ? (
+                <DropDownPicker
+                  placeholder={'도수 선택'}
+                  placeholderStyle={{
+                    fontSize: 14,
+                    color: '#A2A2A2',
+                    fontWeight: '400',
+                  }}
+                  activeLabelStyle={{color: '#000'}}
+                  activeItemStyle={{color: '#000'}}
+                  selectedLabelStyle={{color: '#000'}}
+                  value={print}
+                  items={getPrtFrequency.map((v, _i) => {
+                    return {value: v, label: v};
+                  })}
+                  dropDownMaxHeight={200}
+                  containerStyle={{height: 50}}
+                  style={{
+                    backgroundColor: '#fff',
+                    borderTopRightRadius: 4,
+                    borderTopLeftRadius: 4,
+                    borderBottomRightRadius: 4,
+                    borderBottomLeftRadius: 4,
+                  }}
+                  itemStyle={{
+                    justifyContent: 'flex-start',
+                    paddingVertical: 10,
+                  }}
+                  labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                  dropDownStyle={{backgroundColor: '#fff'}}
+                  onChangeItem={(item) => setPrintColor(item.value)}
+                  customArrowDown={() => (
+                    <Image
+                      source={require('../../src/assets/arr01.png')}
+                      style={{width: 25, height: 25}}
+                      resizeMode="contain"
                     />
-                  ))
-                : null}
+                  )}
+                  customArrowUp={() => (
+                    <Image
+                      source={require('../../src/assets/arr01_top.png')}
+                      style={{width: 25, height: 25}}
+                      resizeMode="contain"
+                    />
+                  )}
+                />
+              ) : (
+                <View>
+                  <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                </View>
+              )}
             </View>
             {/* // 인쇄 도수  */}
 
             {/* 인쇄 교정  */}
-            <View style={{marginBottom: 25}}>
+            <View style={{marginBottom: 20}}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                  인쇄교정
-                </Text>
+                <View>
+                  <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                    인쇄교정
+                  </Text>
+                </View>
+
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                  onPress={() => setColorChoise('y')}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginRight: 20,
-                  }}>
-                  <Image
-                    source={
-                      color === 'y'
-                        ? require('../../src/assets/radio_on.png')
-                        : require('../../src/assets/radio_off.png')
-                    }
-                    resizeMode="contain"
-                    style={{width: 20, height: 20, marginRight: 5}}
-                  />
-                  <Text style={[styles.normalText, {fontSize: 14}]}>있음</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                  onPress={() => setColorChoise('n')}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={
-                      color === 'n'
-                        ? require('../../src/assets/radio_on.png')
-                        : require('../../src/assets/radio_off.png')
-                    }
-                    resizeMode="contain"
-                    style={{width: 20, height: 20, marginRight: 5}}
-                  />
-                  <Text style={[styles.normalText, {fontSize: 14}]}>없음</Text>
-                </TouchableOpacity>
+              <View>
+                {getProofPrinting !== null ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                    }}>
+                    {getProofPrinting.map((t, idx) => (
+                      <TouchableOpacity
+                        key={idx}
+                        activeOpacity={1}
+                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        onPress={() => setColorChoise(t)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                          marginBottom: 10,
+                        }}>
+                        <Image
+                          source={
+                            color === t
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {t === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                ) : (
+                  <View>
+                    <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                  </View>
+                )}
               </View>
             </View>
             {/* // 인쇄 교정  */}
@@ -902,60 +1032,57 @@ const Step05 = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                  인쇄감리
-                </Text>
+                <View>
+                  <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                    인쇄감리
+                  </Text>
+                </View>
+
                 {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                  onPress={() => setCheckChoise('y')}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginRight: 20,
-                  }}>
-                  <Image
-                    source={
-                      check === 'y'
-                        ? require('../../src/assets/radio_on.png')
-                        : require('../../src/assets/radio_off.png')
-                    }
-                    resizeMode="contain"
-                    style={{width: 20, height: 20, marginRight: 5}}
-                  />
-                  <Text style={[styles.normalText, {fontSize: 14}]}>있음</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                  onPress={() => setCheckChoise('n')}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={
-                      check === 'n'
-                        ? require('../../src/assets/radio_on.png')
-                        : require('../../src/assets/radio_off.png')
-                    }
-                    resizeMode="contain"
-                    style={{width: 20, height: 20, marginRight: 5}}
-                  />
-                  <Text style={[styles.normalText, {fontSize: 14}]}>없음</Text>
-                </TouchableOpacity>
+              <View>
+                {getPrtSupervision !== null ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                    }}>
+                    {getPrtSupervision.map((t, idx) => (
+                      <TouchableOpacity
+                        key={idx}
+                        activeOpacity={1}
+                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        onPress={() => setCheckChoise(t)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                          marginBottom: 10,
+                        }}>
+                        <Image
+                          source={
+                            check === t
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {t === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                ) : (
+                  <View>
+                    <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                  </View>
+                )}
               </View>
             </View>
             {/* // 인쇄 감리  */}
