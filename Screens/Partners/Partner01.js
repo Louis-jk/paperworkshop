@@ -11,9 +11,6 @@ import {
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 
-import axios from 'axios';
-import qs from 'qs';
-
 import Header from '../Common/Header';
 
 import PartnersNav from './PartnersNav';
@@ -21,6 +18,7 @@ import All from './Components/Tabs/All';
 import Package from './Components/Tabs/Package';
 import General from './Components/Tabs/General';
 import Etc from './Components/Tabs/Etc';
+import PartnersApi from '../../src/api/Partners';
 
 const Partner01 = (props) => {
   const navigation = props.navigation;
@@ -35,81 +33,63 @@ const Partner01 = (props) => {
 
   const getPartnersAll = () => {
     setIsLoading(true);
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        ptype: 'sincere',
-        cate1: null,
-      }),
-    })
+
+    PartnersApi.getPartners('proc_partner_list', 'sincere', null, null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
           setIsLoading(false);
         } else {
           setPartners(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   };
 
   const getPartnersPackage = () => {
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        ptype: 'sincere',
-        cate1: '1',
-      }),
-    })
+    setIsLoading(true);
+
+    PartnersApi.getPartners('proc_partner_list', 'sincere', '1', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPpackages(res.data.item);
+          setIsLoading(false);
         } else {
           setPpackages(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   };
 
   const getPartnersGeneral = () => {
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        ptype: 'sincere',
-        cate1: '0',
-      }),
-    })
+    setIsLoading(true);
+
+    PartnersApi.getPartners('proc_partner_list', 'sincere', '0', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPgeneral(res.data.item);
+          setIsLoading(false);
         } else {
           setPgeneral(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   };
 
   const getPartnersEtc = () => {
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        ptype: 'sincere',
-        cate1: '2',
-      }),
-    })
+    setIsLoading(true);
+
+    PartnersApi.getPartners('proc_partner_list', 'sincere', '2', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPetc(res.data.item);
+          setIsLoading(false);
         } else {
           setPetc(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
@@ -389,26 +369,6 @@ const Partner01 = (props) => {
         />
 
         {/* // TabView */}
-
-        {/* {partners ? (
-          <FlatList
-            data={partners}
-            renderItem={renderRow}
-            keyExtractor={(list, index) => index.toString()}
-            numColumns={2}
-            // pagingEnabled={true}
-            persistentScrollbar={true}
-            showsVerticalScrollIndicator={false}
-            progressViewOffset={true}
-            refreshing={true}
-            // onEndReached={handleLoadMore}
-          />
-        ) : (
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
-          </View>
-        )} */}
       </View>
 
       {/* <Footer navigation={navigation} /> */}

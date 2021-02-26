@@ -11,9 +11,6 @@ import {
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 
-import axios from 'axios';
-import qs from 'qs';
-
 import Header from '../Common/Header';
 
 import PartnersNav from './PartnersNav';
@@ -21,6 +18,7 @@ import All from './Components/Tabs/All';
 import Package from './Components/Tabs/Package';
 import General from './Components/Tabs/General';
 import Etc from './Components/Tabs/Etc';
+import PartnersApi from '../../src/api/Partners';
 
 const Partner03 = (props) => {
   const navigation = props.navigation;
@@ -36,84 +34,66 @@ const Partner03 = (props) => {
 
   const getPartnersAll = () => {
     setIsLoading(true);
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        cate1: null,
-        location,
-      }),
-    })
+
+    PartnersApi.getPartners('proc_partner_list', null, null, null, location)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
           setIsLoading(false);
         } else if (res.data.result === '1' && res.data.count === 0) {
-          setIsLoading(false);
           setPartners(null);
+          setIsLoading(false);
         } else {
           setPartners(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   };
 
   const getPartnersPackage = () => {
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        cate1: '1',
-        location,
-      }),
-    })
+    setIsLoading(true);
+
+    PartnersApi.getPartners('proc_partner_list', null, '1', null, location)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPpackages(res.data.item);
+          setIsLoading(false);
         } else {
           setPpackages(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   };
 
   const getPartnersGeneral = () => {
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        cate1: '0',
-        location,
-      }),
-    })
+    setIsLoading(true);
+
+    PartnersApi.getPartners('proc_partner_list', null, '0', null, location)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPgeneral(res.data.item);
+          setIsLoading(false);
         } else {
           setPgeneral(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   };
 
   const getPartnersEtc = () => {
-    axios({
-      method: 'post',
-      url: 'http://dmonster1506.cafe24.com/json/proc_json.php',
-      data: qs.stringify({
-        method: 'proc_partner_list',
-        cate1: '2',
-        location,
-      }),
-    })
+    setIsLoading(true);
+
+    PartnersApi.getPartners('proc_partner_list', null, '2', null, location)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPetc(res.data.item);
+          setIsLoading(false);
         } else {
           setPetc(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
