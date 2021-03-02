@@ -100,7 +100,6 @@ const index = (props) => {
 
   // 메인 최상단 슬라이더 배너
   const mainRenderItem = ({item, index}) => {
-    console.log('item bImg', item.bimg);
     return (
       <View style={{borderRadius: 20, height: 120}}>
         <Image
