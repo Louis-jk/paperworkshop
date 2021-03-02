@@ -146,6 +146,12 @@ const DetailHeader = (props) => {
       case 'Event':
         setTitle('이벤트');
         break;
+      case 'Terms':
+        setTitle('이용약관');
+        break;
+      case 'Privacy':
+        setTitle('개인정보 처리방침');
+        break;
       default:
         return false;
     }
