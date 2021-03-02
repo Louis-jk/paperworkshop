@@ -93,6 +93,8 @@ const Step03 = (props) => {
     });
   };
 
+  const directInput = React.useRef(null);
+
   return (
     <>
       <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
@@ -219,6 +221,7 @@ const Step03 = (props) => {
                 onPress={() => {
                   checkType('0');
                   setTypeName(typeName);
+                  directInput.current.focus();
                 }}
                 style={styles.categoryItem}>
                 <ImageBackground
@@ -265,6 +268,7 @@ const Step03 = (props) => {
             </Text>
           </View>
           <TextInput
+            ref={directInput}
             value={directTypeName}
             placeholder="원하는 박스 타입을 직접 입력해주세요."
             placeholderTextColor="#A2A2A2"
@@ -276,10 +280,12 @@ const Step03 = (props) => {
                 borderColor: '#E3E3E3',
                 borderRadius: 4,
                 paddingHorizontal: 10,
+                marginBottom: 50,
               },
             ]}
             onChangeText={(text) => setDirectTypeName(text)}
             autoCapitalize="none"
+            // isFocused={true}
           />
         </View>
 
