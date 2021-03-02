@@ -18,6 +18,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {selectCate1, selectCaId, setUserId} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
+import Modal from '../Common/InfoModal';
 
 const General = (props) => {
   const navigation = props.navigation;
@@ -35,8 +36,15 @@ const General = (props) => {
     dispatch(setUserId(mb_id));
   }, []);
 
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return (
     <>
+      <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
       <DetailHeader
         title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
         navigation={navigation}
@@ -48,9 +56,45 @@ const General = (props) => {
               styles.boldText,
               {fontSize: 16, color: '#000000', marginBottom: 20},
             ]}>
-            {propsScreenName === 'DirectOrder' ? '' : '비교'} 견적 대상을
+            {propsScreenName === 'DirectOrder' ? '' : '비교 '}견적 대상을
             선택해주세요.
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              marginBottom: 10,
+            }}>
+            <View>
+              <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+                인쇄 타입 선택
+              </Text>
+            </View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={toggleModal}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#275696',
+                paddingVertical: 6,
+                paddingHorizontal: 8,
+                borderRadius: 50,
+              }}>
+              <Image
+                source={require('../../src/assets/icon_bikkuri.png')}
+                resizeMode="contain"
+                style={{width: 17, height: 17, marginRight: 5}}
+              />
+              <Text style={[styles.normalText, {fontSize: 13, color: '#fff'}]}>
+                세부 정보 안내
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           <View>
             {/* 일반인쇄물 1차 카테고리 리스트(list) */}
             <View style={styles.categoryWrap}>
