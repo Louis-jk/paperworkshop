@@ -44,7 +44,7 @@ const index = (props) => {
               styles.boldText,
               {fontSize: 16, color: '#000000', marginBottom: 10},
             ]}>
-            견적 신청 대상
+            신청자 정보
           </Text>
           <View style={[styles.infoBox, {marginBottom: 10}]}>
             {mb_2 ? (
