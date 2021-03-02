@@ -50,7 +50,7 @@ const Edit = (props) => {
 
   const [profileImg, setProfileImg] = React.useState(null);
 
-  const [source, setSoure] = React.useState({});
+  const [source, setSource] = React.useState({});
 
   // react-native-image-crop-picker 모듈 사용
   const pickImageHandler = () => {
@@ -70,7 +70,7 @@ const Edit = (props) => {
       .then((img) => {
         console.log('img', img);
         dispatch(UserProfileImg(img.path));
-        setSoure({
+        setSource({
           uri: img.path,
           type: img.mime,
           name: img.path.slice(img.path.lastIndexOf('/')),
