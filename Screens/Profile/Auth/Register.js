@@ -426,7 +426,11 @@ const Register = (props) => {
               dispatch(joinEmail(values.register_email));
               dispatch(joinCompany(values.register_company));
             } else {
-              Alert.alert('인증되지 않은 입력란이 있습니다.');
+              Alert.alert('인증되지 않은 입력란이 있습니다.', '확인해주세요.', [
+                {
+                  text: '확인',
+                },
+              ]);
               return false;
             }
             setTimeout(() => {
@@ -676,18 +680,21 @@ const Register = (props) => {
                       />
                     </TouchableOpacity>
                   </View>
-                  <Text
-                    style={{
-                      width: '100%',
-                      fontFamily: 'SCDream4',
-                      fontSize: 12,
-                      lineHeight: 18,
-                      color: '#366DE5',
-                      marginBottom: 5,
-                    }}>
-                    {formikProps.touched.register_confirmPw &&
-                      formikProps.errors.register_confirmPw}
-                  </Text>
+                  {formikProps.touched.register_confirmPw &&
+                    formikProps.errors.register_confirmPw && (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginBottom: 5,
+                        }}>
+                        {formikProps.touched.register_confirmPw &&
+                          formikProps.errors.register_confirmPw}
+                      </Text>
+                    )}
                 </View>
                 {/* // 비밀번호  */}
 
