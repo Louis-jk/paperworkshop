@@ -10,6 +10,7 @@ import {
   Alert,
   StyleSheet,
   Animated,
+  ActivityIndicator,
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
@@ -19,6 +20,9 @@ import Main from '../../src/api/Main';
 
 const index = (props) => {
   const navigation = props.navigation;
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const [mainPercent, setMainPercent] = React.useState(1);
   const [stepPercent, setStepPercent] = React.useState(1);
 
@@ -42,10 +46,13 @@ const index = (props) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setMainBanners(res.data.item);
           calculator(mainBanners);
+          setIsLoading(false);
         } else if (res.data.result === '1' && res.data.count <= 0) {
           setMainBanners(null);
+          setIsLoading(false);
         } else {
           setMainBanners(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
@@ -58,16 +65,20 @@ const index = (props) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setMiddleBanners(res.data.item);
           calculator(middleBanners);
+          setIsLoading(false);
         } else if (res.data.result === '1' && res.data.count <= 0) {
           setMainBanners(null);
+          setIsLoading(false);
         } else {
           setMainBanners(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   };
 
   React.useEffect(() => {
+    setIsLoading(true);
     getMainTopSlider();
     getMainMiddleSlider();
   }, []);
@@ -1067,15 +1078,6 @@ const index = (props) => {
     extrapolate: 'clamp',
   });
 
-  // Animated.timing(animation, {
-  //   toValue: 0,
-  //   duration: 2000,
-  // }).start();
-
-  // const animationStyles = {
-  //   opacity: animation,
-  // };
-
   const [offsetY, setOffsetY] = React.useState(0);
 
   const handleScroll = (e) => {
@@ -1084,6 +1086,25 @@ const index = (props) => {
 
   return (
     <View style={{position: 'relative'}}>
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.8)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <StatusBar hidden={true} />
       <Animated.View
         style={{
