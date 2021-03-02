@@ -173,6 +173,7 @@ const Login = (props) => {
                   onChangeText={(text) => setUserPwd(text)}
                   autoCapitalize="none"
                   secureTextEntry={pwdEyes}
+                  onSubmitEditing={() => login()}
                 />
                 <TouchableOpacity
                   activeOpacity={0.8}
