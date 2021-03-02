@@ -83,12 +83,6 @@ const Header = (props) => {
       case 'Estimate':
         setTitle('실시간 견적 처리 현황');
         break;
-      case 'Terms':
-        setTitle('이용약관');
-        break;
-      case 'Privacy':
-        setTitle('개인정보 처리방침');
-        break;
       case 'PartnersDetail':
         setTitle('파트너스 정보');
         break;
