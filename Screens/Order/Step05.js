@@ -81,6 +81,7 @@ const Step05 = (props) => {
   console.log('paperColor', paperColor);
   console.log('paperColorName', paperColorName);
   console.log('paperDetail', paperDetail);
+  console.log('paperDetail2', paperDetail2);
 
   //////////////////////////
   /////// FUNCTIONS ///////
@@ -650,7 +651,7 @@ const Step05 = (props) => {
               )}
               {!isLoading03 && isDirect === '직접입력' && (
                 <TextInput
-                  value={weight}
+                  value={isDirect === '직접입력' ? '' : weight}
                   placeholder="평량을 직접 입력해주세요."
                   placeholderTextColor="#A2A2A2"
                   style={[
@@ -743,7 +744,7 @@ const Step05 = (props) => {
               )}
               {!isLoading03 && isDirect === '직접입력' && (
                 <TextInput
-                  value={weight}
+                  value={isDirect === '직접입력' ? '' : goal}
                   placeholder="골을 직접 입력해주세요."
                   placeholderTextColor="#A2A2A2"
                   style={[

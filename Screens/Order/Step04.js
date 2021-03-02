@@ -753,7 +753,13 @@ const Step04 = (props) => {
                         }}
                       />
                       <TouchableWithoutFeedback
-                        onPress={formikProps.handleSubmit}>
+                        // onPress={formikProps.handleSubmit}
+                        onPress={navigation.navigate('OrderStep05', {
+                          screen:
+                            propsScreenName === 'DirectOrder'
+                              ? propsScreenName
+                              : null,
+                        })}>
                         <View
                           style={{
                             flex: 1,
