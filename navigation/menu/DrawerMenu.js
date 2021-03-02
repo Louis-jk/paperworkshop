@@ -13,9 +13,12 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 
+// import { ScrollView } from 'react-native-gesture-handler';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Collapsible from 'react-native-collapsible';
 import FastImage from 'react-native-fast-image';
+
+import Main from '../../src/api/Main';
 
 const DrawerMenu = (props) => {
   const navigation = props.navigation;
@@ -34,6 +37,39 @@ const DrawerMenu = (props) => {
 
   const [imgMime, setImgMime] = React.useState(null);
 
+  // Redux에서 가입시 회원 정보 가져오기
+
+  // console.log('유저 이미지', mb_img);
+  const bannerCarouselRef = React.useRef(null);
+
+  const [banners, setBanners] = React.useState([]); // 드로어 메뉴 내부 슬라이더(배너)
+
+  // 슬라이더 (배너) progress bar 표현식
+  const calculator = (name) => {
+    let initialPer01 = 1 / name.length;
+    if (name === mainBanners) {
+      setMainPercent(initialPer01);
+    } else {
+      setStepPercent(initialPer01);
+    }
+  };
+
+  // 드로어 메뉴 내부 슬라이더(배너) API 연동
+  const getSliderBanners = () => {
+    Main.onSlider('proc_banner_list', '슬라이드')
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setBanners(res.data.item);
+          // calculator(banners);
+        } else if (res.data.result === '1' && res.data.count <= 0) {
+          setMainBanners(null);
+        } else {
+          setMainBanners(null);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   React.useEffect(() => {
     if (mb_profile_img) {
       const sliceImg = mb_profile_img.slice(mb_profile_img.lastIndexOf('.'));
@@ -41,35 +77,32 @@ const DrawerMenu = (props) => {
         setImgMime('gif');
       }
     }
+
+    getSliderBanners();
   }, [mb_profile_img]);
 
-  // Redux에서 가입시 회원 정보 가져오기
-
-  // console.log('유저 이미지', mb_img);
-  const bannerCarouselRef = React.useRef(null);
-
-  const banners = [
-    {
-      id: 1,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 2,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 3,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 4,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 5,
-      image: require('../../src/images/ban01.png'),
-    },
-  ];
+  // const banners = [
+  //   {
+  //     id: 1,
+  //     image: require('../../src/images/ban01.png'),
+  //   },
+  //   {
+  //     id: 2,
+  //     image: require('../../src/images/ban01.png'),
+  //   },
+  //   {
+  //     id: 3,
+  //     image: require('../../src/images/ban01.png'),
+  //   },
+  //   {
+  //     id: 4,
+  //     image: require('../../src/images/ban01.png'),
+  //   },
+  //   {
+  //     id: 5,
+  //     image: require('../../src/images/ban01.png'),
+  //   },
+  // ];
 
   const [activeSlide, setActiveSlide] = React.useState(0);
   const sliderWidth = Dimensions.get('window').width;
@@ -79,8 +112,8 @@ const DrawerMenu = (props) => {
     return (
       <View style={{borderRadius: 20, height: 120}}>
         <Image
-          key={index}
-          source={item.image}
+          key={item.bn_id}
+          source={{uri: `${item.bimg}`}}
           resizeMode="contain"
           style={{
             width: '100%',
@@ -847,9 +880,9 @@ const DrawerMenu = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
               layout="default"
-              autoplay={true}
-              autoplayDelay={3000}
-              autoplayInterval={1000}
+              // autoplay={false}
+              // autoplayDelay={3000}
+              // autoplayInterval={1000}
               loop={true}
               onSnapToItem={(index) => {
                 setActiveSlide(index);

@@ -15,50 +15,62 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import Footer from '../Common/Footer';
+import Main from '../../src/api/Main';
 
 const index = (props) => {
   const navigation = props.navigation;
-  const [currentIndex, setCurrentIndex] = React.useState(1);
   const [mainPercent, setMainPercent] = React.useState(1);
-  const [currentRqIndex, setCurrentRqIndex] = React.useState(1);
   const [stepPercent, setStepPercent] = React.useState(1);
-  const [currentBnIndex, setCurrentBnIndex] = React.useState(1);
 
-  const mainBanners = [
-    {
-      id: 1,
-      image: require('../../src/images/main_slide01.png'),
-    },
-    {
-      id: 2,
-      image: require('../../src/images/main_slide02.png'),
-    },
-    {
-      id: 3,
-      image: require('../../src/images/main_slide03.png'),
-    },
-  ];
+  const [mainBanners, setMainBanners] = React.useState([]); // 메인 최상단 슬라이더(배너)
+  const [middleBanners, setMiddleBanners] = React.useState([]); // 메인 중간 슬라이더(배너)
+
+  // 슬라이더 (배너) progress bar 표현식
+  const calculator = (name) => {
+    let initialPer01 = 1 / name.length;
+    if (name === mainBanners) {
+      setMainPercent(initialPer01);
+    } else {
+      setStepPercent(initialPer01);
+    }
+  };
+
+  // 메인 최상단 슬라이더(배너) API 연동
+  const getMainTopSlider = () => {
+    Main.onSlider('proc_banner_list', '상단')
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setMainBanners(res.data.item);
+          calculator(mainBanners);
+        } else if (res.data.result === '1' && res.data.count <= 0) {
+          setMainBanners(null);
+        } else {
+          setMainBanners(null);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // 메인 중간 슬라이더(배너) API 연동
+  const getMainMiddleSlider = () => {
+    Main.onSlider('proc_banner_list', '중단')
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setMiddleBanners(res.data.item);
+          calculator(middleBanners);
+        } else if (res.data.result === '1' && res.data.count <= 0) {
+          setMainBanners(null);
+        } else {
+          setMainBanners(null);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   React.useEffect(() => {
-    let initialPer01 = 1 / mainBanners.length;
-    setMainPercent(initialPer01);
-
-    let initialPer02 = 1 / steps.length;
-    setStepPercent(initialPer02);
-
-    return () => {
-      setMainPercent();
-      setStepPercent();
-    };
+    getMainTopSlider();
+    getMainMiddleSlider();
   }, []);
-
-  const onPress = () => {
-    Alert.alert('견적바로가기', '작동완료', [
-      {
-        text: '확인',
-      },
-    ]);
-  };
 
   const mainCarouselRef = React.useRef(null);
   const stepCarouselRef = React.useRef(null);
@@ -75,35 +87,14 @@ const index = (props) => {
     },
   ];
 
-  const banners = [
-    {
-      id: 1,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 2,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 3,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 4,
-      image: require('../../src/images/ban01.png'),
-    },
-    {
-      id: 5,
-      image: require('../../src/images/ban01.png'),
-    },
-  ];
-
+  // 메인 최상단 슬라이더 배너
   const mainRenderItem = ({item, index}) => {
+    console.log('item bImg', item.bimg);
     return (
       <View style={{borderRadius: 20, height: 120}}>
         <Image
-          key={index}
-          source={item.image}
+          key={item.bn_id}
+          source={{uri: `${item.bimg}`}}
           resizeMode="cover"
           style={{
             width: '100%',
@@ -142,8 +133,8 @@ const index = (props) => {
     return (
       <View style={{borderRadius: 20, height: 120}}>
         <Image
-          key={index}
-          source={item.image}
+          key={item.bn_id}
+          source={{uri: `${item.bimg}`}}
           resizeMode="contain"
           style={{
             width: '100%',
@@ -1579,7 +1570,7 @@ const index = (props) => {
           <View>
             <Carousel
               ref={bannerCarouselRef}
-              data={banners}
+              data={middleBanners}
               renderItem={renderItem}
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
@@ -1594,7 +1585,7 @@ const index = (props) => {
               // containerCustomStyle={{ marginHorizontal: 20 }}
             />
             <Pagination
-              dotsLength={banners.length}
+              dotsLength={middleBanners.length}
               activeDotIndex={activeSlide}
               dotContainerStyle={{margin: 0, padding: 0}}
               dotStyle={{
