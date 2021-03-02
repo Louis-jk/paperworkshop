@@ -48,7 +48,7 @@ const Package = (props) => {
               styles.boldText,
               {fontSize: 16, color: '#000000', marginBottom: 20},
             ]}>
-            {propsScreenName === 'DirectOrder' ? '' : '비교'} 견적 대상을
+            {propsScreenName === 'DirectOrder' ? '' : '비교 '}견적 대상을
             선택해주세요.
           </Text>
           <View>
