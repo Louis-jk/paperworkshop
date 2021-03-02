@@ -1346,6 +1346,7 @@ const index = (props) => {
             onPress={() =>
               navigation.navigate('OrderPackage', {
                 screen: 'OrderPackage',
+                params: {screen: 'OrderPackage'},
               })
             }
             style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -1416,6 +1417,7 @@ const index = (props) => {
             onPress={() =>
               navigation.navigate('OrderGeneral', {
                 screen: 'OrderGeneral',
+                params: {screen: 'OrderGeneral'},
               })
             }
             style={{justifyContent: 'center', alignItems: 'center'}}>
