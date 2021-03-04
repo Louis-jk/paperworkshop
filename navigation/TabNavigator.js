@@ -150,6 +150,9 @@ const TabNavigator = () => {
       <Stack.Screen name="OrderEtc" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep02" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep03" component={OrderStackNavigator} />
+      <Stack.Screen name="OrderStep04" component={OrderStackNavigator} />
+      <Stack.Screen name="OrderStep05" component={OrderStackNavigator} />
+      <Stack.Screen name="OrderStep06" component={OrderStackNavigator} />
       <Stack.Screen name="easyOrderComplete" component={OrderStackNavigator} />
       <Stack.Screen name="CancelOrder" component={MyOrderStackNavigator} />
       <Stack.Screen name="MyOrder" component={MyOrderStackNavigator} />

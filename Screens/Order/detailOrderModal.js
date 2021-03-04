@@ -14,7 +14,7 @@ import {
 
 import Modal from 'react-native-modal';
 
-const detailOrderModal = ({ toggleModal, isVisible, goOrderComplete }) => {
+const detailOrderModal = ({toggleModal, isVisible, goOrderComplete}) => {
   return (
     <View>
       <Modal isVisible={isVisible}>
@@ -33,11 +33,13 @@ const detailOrderModal = ({ toggleModal, isVisible, goOrderComplete }) => {
               paddingVertical: 20,
               paddingHorizontal: 20,
             }}>
-            <Text style={[styles.boldText, { fontSize: 16, color: '#000' }]}>세부 견적 신청</Text>
+            <Text style={[styles.boldText, {fontSize: 16, color: '#000'}]}>
+              세부 견적 신청
+            </Text>
 
             {/* 컨텐츠 */}
             <View style={styles.container}>
-              <View style={{ marginBottom: 20 }}>
+              <View style={{marginBottom: 20}}>
                 <View style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>
                     작성하신 내용대로 견적 신청을 하시겠습니까?
@@ -63,7 +65,7 @@ const detailOrderModal = ({ toggleModal, isVisible, goOrderComplete }) => {
                     // borderRadius: 5,
                     backgroundColor: '#fff',
                   }}>
-                  <View style={{ height: '100%' }} />
+                  <View style={{height: '100%'}} />
                   <TouchableWithoutFeedback onPress={toggleModal}>
                     <View
                       style={{

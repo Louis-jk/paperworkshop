@@ -31,6 +31,8 @@ const Step03 = (props) => {
   const routeName = props.route.name;
   const propsScreenName = props.route.params.screen;
 
+  console.log('Step03 props', props);
+
   const dispatch = useDispatch();
   const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
   const [typeDetail, setTypeDetail] = React.useState([]);

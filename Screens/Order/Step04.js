@@ -33,11 +33,17 @@ import {
 } from '../../Modules/OrderReducer';
 import BoxType from '../../src/api/BoxType';
 import OrderAPI from '../../src/api/OrderAPI';
+import {number} from 'yup/lib/locale';
 
 const Step04 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const propsScreenName = props.route.params.screen;
+
+  const dispatch = useDispatch();
+
+  console.log('Steo04 propsScreenName', propsScreenName);
+  console.log('Steo04 props', props);
 
   const {type_details} = useSelector((state) => state.OrderHandlerReducer);
   const {
@@ -106,12 +112,10 @@ const Step04 = (props) => {
     frmdata.append('cnt_etc', quantity !== 'direct' ? quantityDirect : '');
     frmdata.append('wood_pattern', wood_pattern);
 
-    OrderAPI.sendOrderEasy(frmdata)
+    OrderAPI.sendOrder(frmdata)
       .then((res) => console.log('간편견적 response', res))
       .catch((err) => console.log(err));
   };
-
-  const dispatch = useDispatch();
 
   const [type, setType] = React.useState('');
 
@@ -175,8 +179,10 @@ const Step04 = (props) => {
 
     if (quantity !== 'direct') {
       dispatch(setUserCnt(quantity));
+      dispatch(setUserCntEtc(null));
     } else {
       dispatch(setUserCntEtc(quantityDirect));
+      dispatch(setUserCnt(null));
     }
 
     if (pattern) {
@@ -215,14 +221,18 @@ const Step04 = (props) => {
   const validationSchema = yup.object().shape({
     order_width: yup
       .string()
+      .matches(/^\d+$/, '숫자만 입력 가능합니다.')
+      // .min(10, '규격은 10(mm)이상부터 입력 가능합니다.')
       .required('가로 규격을 입력해주세요.')
       .label('Width'),
     order_length: yup
       .string()
+      .matches(/^\d+$/, '숫자만 입력 가능합니다.')
       .required('세로 규격을 입력해주세요.')
       .label('Length'),
     order_height: yup
       .string()
+      .matches(/^\d+$/, '숫자만 입력 가능합니다.')
       .required('높이 규격을 입력해주세요.')
       .label('Height'),
   });
@@ -262,25 +272,13 @@ const Step04 = (props) => {
                 order_height: '',
               }}
               onSubmit={(values, actions) => {
-                if (quantity && quantity !== 'direct') {
-                  nextStep(
-                    values.order_width,
-                    values.order_length,
-                    values.order_height,
-                  );
-                } else if (quantity === 'direct' && quantityDirect) {
-                  nextStep(
-                    values.order_width,
-                    values.order_length,
-                    values.order_height,
-                  );
-                } else {
-                  Alert.alert('비어있는 입력란이 있습니다.', '확인해주세요.', [
-                    {
-                      text: '확인',
-                    },
-                  ]);
-                }
+                console.log('Hey');
+
+                nextStep(
+                  values.order_width,
+                  values.order_length,
+                  values.order_height,
+                );
 
                 setTimeout(() => {
                   actions.setSubmitting(false);
@@ -343,9 +341,9 @@ const Step04 = (props) => {
                           paddingHorizontal: 10,
                         },
                       ]}
-                      onChangeText={(text) => {
-                        formikProps.handleChange('order_width', text);
-                        setPwidth(text);
+                      onChangeText={(value) => {
+                        setPwidth(value);
+                        formikProps.setFieldValue('order_width', value);
                       }}
                       onBlur={formikProps.handleBlur('order_width')}
                       autoCapitalize="none"
@@ -405,10 +403,9 @@ const Step04 = (props) => {
                           paddingHorizontal: 10,
                         },
                       ]}
-                      // onChangeText={formikProps.handleChange('order_length')}
-                      onChangeText={(text) => {
-                        formikProps.handleChange('order_length', text);
-                        setPlength(text);
+                      onChangeText={(value) => {
+                        setPlength(value);
+                        formikProps.setFieldValue('order_length', value);
                       }}
                       onBlur={formikProps.handleBlur('order_length')}
                       autoCapitalize="none"
@@ -468,10 +465,9 @@ const Step04 = (props) => {
                           paddingHorizontal: 10,
                         },
                       ]}
-                      // onChangeText={formikProps.handleChange('order_height')}
-                      onChangeText={(text) => {
-                        formikProps.handleChange('order_height', text);
-                        setPheight(text);
+                      onChangeText={(value) => {
+                        setPheight(value);
+                        formikProps.setFieldValue('order_height', value);
                       }}
                       onBlur={formikProps.handleBlur('order_height')}
                       autoCapitalize="none"
@@ -531,7 +527,10 @@ const Step04 = (props) => {
                                 left: 10,
                                 right: 10,
                               }}
-                              onPress={() => setQuantity(q)}
+                              onPress={() => {
+                                setQuantity(q);
+                                setQuantityDirect(null);
+                              }}
                               style={[
                                 styles.details,
                                 {
@@ -753,13 +752,7 @@ const Step04 = (props) => {
                         }}
                       />
                       <TouchableWithoutFeedback
-                        // onPress={formikProps.handleSubmit}
-                        onPress={navigation.navigate('OrderStep05', {
-                          screen:
-                            propsScreenName === 'DirectOrder'
-                              ? propsScreenName
-                              : null,
-                        })}>
+                        onPress={formikProps.handleSubmit}>
                         <View
                           style={{
                             flex: 1,

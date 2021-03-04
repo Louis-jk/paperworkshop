@@ -47,6 +47,8 @@ const Step02 = (props) => {
   const routeName = props.route.name;
   const propsScreenName = props.route.params.screen;
 
+  console.log('Step02 props', props);
+
   const dispatch = useDispatch();
 
   const [date, setDate] = React.useState(new Date());
