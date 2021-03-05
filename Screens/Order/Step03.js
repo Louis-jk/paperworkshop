@@ -49,7 +49,7 @@ const Step03 = (props) => {
       }),
     })
       .then((res) => {
-        console.log(res);
+        console.log('Step03 response', res);
         if (res.data.result === '1') {
           setTypeDetail(res.data.item);
           dispatch(setOrderDetails(res.data.item));
