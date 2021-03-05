@@ -180,6 +180,7 @@ const Step04 = (props) => {
   const [pWidthError, setPwidthError] = React.useState(false);
   const [pLengthError, setPlengthError] = React.useState(false);
   const [pHeightError, setPheightError] = React.useState(false);
+  const [quantityError, setQuantityError] = React.useState(false);
   const [directError, setDirectError] = React.useState(false);
 
   const toggleModal = () => {
@@ -228,6 +229,11 @@ const Step04 = (props) => {
       (quantity === 'direct' && quantityDirect === '')
     ) {
       setDirectError(true);
+    } else if (
+      (quantity !== 'direct' && quantity === null) ||
+      (quantity !== 'direct' && quantity === '')
+    ) {
+      setQuantityError(true);
     } else {
       Alert.alert('입력하지 않은 입력란이 있습니다.', '확인해주세요.', [
         {
@@ -240,27 +246,39 @@ const Step04 = (props) => {
   };
 
   const nextStep = (width, length, height) => {
-    dispatch(setUserPwidth(width));
-    dispatch(setUserPlength(length));
-    dispatch(setUserPheight(height));
-    dispatch(setUserEasyYn('N'));
-
-    if (quantity !== 'direct') {
-      dispatch(setUserCnt(quantity));
-      dispatch(setUserCntEtc(0));
+    if (
+      (quantity === 'direct' && quantityDirect === null) ||
+      (quantity === 'direct' && quantityDirect === '')
+    ) {
+      setDirectError(true);
+    } else if (
+      (quantity !== 'direct' && quantity === null) ||
+      (quantity !== 'direct' && quantity === '')
+    ) {
+      setQuantityError(true);
     } else {
-      dispatch(setUserCntEtc(quantityDirect));
-      dispatch(setUserCnt(0));
-    }
-    if (pattern) {
-      dispatch(setUserWoodPattern('Y'));
-    } else {
-      dispatch(setUserWoodPattern('N'));
-    }
+      dispatch(setUserPwidth(width));
+      dispatch(setUserPlength(length));
+      dispatch(setUserPheight(height));
+      dispatch(setUserEasyYn('N'));
 
-    navigation.navigate('OrderStep05', {
-      screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-    });
+      if (quantity !== 'direct') {
+        dispatch(setUserCnt(quantity));
+        dispatch(setUserCntEtc(0));
+      } else {
+        dispatch(setUserCntEtc(quantityDirect));
+        dispatch(setUserCnt(0));
+      }
+      if (pattern) {
+        dispatch(setUserWoodPattern('Y'));
+      } else {
+        dispatch(setUserWoodPattern('N'));
+      }
+
+      navigation.navigate('OrderStep05', {
+        screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+      });
+    }
   };
 
   // 유효성 체크
@@ -615,6 +633,7 @@ const Step04 = (props) => {
                               onPress={() => {
                                 setQuantity(q);
                                 setQuantityDirect(null);
+                                setQuantityError(false);
                               }}
                               style={[
                                 styles.details,
@@ -694,7 +713,7 @@ const Step04 = (props) => {
                         autoCapitalize="none"
                         keyboardType="number-pad"
                       />
-                      {directError && (
+                      {directError ? (
                         <Text
                           style={{
                             width: '100%',
@@ -706,7 +725,19 @@ const Step04 = (props) => {
                           }}>
                           수량을 입력해주세요.
                         </Text>
-                      )}
+                      ) : quantityError ? (
+                        <Text
+                          style={{
+                            width: '100%',
+                            fontFamily: 'SCDream4',
+                            fontSize: 12,
+                            lineHeight: 18,
+                            color: '#366DE5',
+                            marginVertical: 5,
+                          }}>
+                          수량을 지정해주세요.
+                        </Text>
+                      ) : null}
                     </View>
                   </View>
                   {/* // 수량 */}
