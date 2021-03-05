@@ -21,7 +21,12 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import DetailHeader from '../Common/DetailHeader';
 import Modal from '../Common/InfoModal';
-import {selectTypeId, selectTypeName} from '../../Modules/OrderReducer';
+import SelectModal from '../Common/SelectModal';
+import {
+  selectTypeId,
+  selectTypeName,
+  setUserStype,
+} from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
@@ -36,6 +41,15 @@ const Step03 = (props) => {
   const dispatch = useDispatch();
   const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
   const [typeDetail, setTypeDetail] = React.useState([]);
+  const [sabari, setSabari] = React.useState({});
+
+  console.log('sabari', sabari);
+
+  // 싸바리 선택
+  const selectSabari = (v, type_id) => {
+    setSabari({type_id: type_id, sabari: v});
+    toggleSelectModal();
+  };
 
   // 박스 정보 가져오기
   const getTypeDetail = () => {
@@ -71,15 +85,24 @@ const Step03 = (props) => {
   const [type, setType] = React.useState('');
   const [typeName, setTypeName] = React.useState('');
   const [directTypeName, setDirectTypeName] = React.useState('');
+  const [typeId, setTypeId] = React.useState(''); // 타입아이디 담기
 
   const checkType = (v) => {
     setType(v);
   };
 
   const [isModalVisible, setModalVisible] = React.useState(false);
+  const [isSelectModalVisible, setSelectModalVisible] = React.useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const toggleSelectModal = (type_id) => {
+    setSelectModalVisible(!isSelectModalVisible);
+    if (type_id) {
+      setTypeId(type_id);
+    }
   };
 
   const nextBtn = () => {
@@ -89,6 +112,10 @@ const Step03 = (props) => {
     } else {
       dispatch(selectTypeId(type));
       dispatch(selectTypeName(typeName));
+    }
+
+    if (ca_id === '12') {
+      dispatch(setUserStype(sabari.sabari));
     }
     navigation.navigate('OrderStep04', {
       screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -100,6 +127,13 @@ const Step03 = (props) => {
   return (
     <>
       <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
+
+      <SelectModal
+        isVisible={isSelectModalVisible}
+        toggleModal={toggleSelectModal}
+        selectSabari={selectSabari}
+        typeId={typeId}
+      />
       <DetailHeader
         title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
         navigation={navigation}
@@ -113,7 +147,7 @@ const Step03 = (props) => {
               alignItems: 'center',
             }}>
             <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
-              박스 타입 선택
+              {cate1 === '1' ? '박스' : '인쇄'} 타입 선택
             </Text>
             <TouchableOpacity
               activeOpacity={0.8}
@@ -155,7 +189,8 @@ const Step03 = (props) => {
               1. 선택형
             </Text>
             <Text style={[styles.normalText, {fontSize: 14, color: '#366DE5'}]}>
-              원하는 박스 타입을 선택해주세요.
+              원하는 {cate1 === '1' ? '박스' : '인쇄'}
+              타입을 선택해주세요.
             </Text>
           </View>
 
@@ -171,6 +206,7 @@ const Step03 = (props) => {
                       onPress={() => {
                         checkType(t.type_id);
                         setTypeName(t.type_name);
+                        ca_id === '12' && toggleSelectModal(t.type_id);
                       }}
                       style={styles.categoryItem}>
                       {t.box_img ? (
@@ -212,6 +248,15 @@ const Step03 = (props) => {
                           },
                         ]}>
                         {t.type_name}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.categoryItemText02,
+                          {
+                            color: type === t.type_id ? '#275696' : '#000000',
+                          },
+                        ]}>
+                        {t.type_id === sabari.type_id ? sabari.sabari : null}
                       </Text>
                     </TouchableOpacity>
                   ))
@@ -272,7 +317,11 @@ const Step03 = (props) => {
           <TextInput
             ref={directInput}
             value={directTypeName}
-            placeholder="원하는 박스 타입을 직접 입력해주세요."
+            placeholder={
+              cate1 === '1'
+                ? '원하는 박스 타입을 직접 입력해주세요.'
+                : '원하는 인쇄 타입을 직접 입력해주세요.'
+            }
             placeholderTextColor="#A2A2A2"
             onFocus={() => setType('0')}
             style={[
@@ -486,6 +535,15 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: '#000',
     marginTop: 10,
+  },
+  categoryItemText02: {
+    fontFamily: 'SCDream5',
+    width: 120,
+    textAlign: 'center',
+    fontSize: 14,
+    lineHeight: 18,
+    color: '#000',
+    marginTop: 5,
   },
   normalText: {
     fontFamily: 'SCDream4',

@@ -15,13 +15,12 @@ import {
 
 import Carousel from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import Header from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
 
 import {setCompanyId} from '../../Modules/OrderReducer';
-import PartnersApi from '../../src/api/Partners';
 
 const Detail = (props) => {
   const navigation = props.navigation;
@@ -40,14 +39,10 @@ const Detail = (props) => {
   const companyId = props.route.params.companyId;
 
   const dispatch = useDispatch();
-  const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
   const [like, setLike] = React.useState(false);
-  const onLikeBtn = (payload) => {
+  const onLikeBtn = () => {
     setLike((prev) => !prev);
-    PartnersApi.setFavorPartner(mb_id, payload)
-      .then((res) => console.log('찜 결과', res))
-      .catch((err) => console.log(err));
   };
 
   const carouselRef = React.useRef(null);
@@ -834,9 +829,7 @@ const Detail = (props) => {
               </View>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => onLikeBtn(companyId)}>
+          <TouchableOpacity activeOpacity={1} onPress={onLikeBtn}>
             <View>
               <Image
                 source={

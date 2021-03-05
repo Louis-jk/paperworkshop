@@ -71,7 +71,7 @@ const FindPwd = (props) => {
         },
       ]);
     } else {
-      Auth.onSearchPwdStep01('proc_search_pass', userId, userMobile, '2')
+      Auth.onSearchPwdStep01(userId, userMobile, '2')
         .then((res) => {
           if (res.data.result === '1') {
             Alert.alert(
@@ -124,7 +124,6 @@ const FindPwd = (props) => {
       return false;
     } else {
       Auth.onSearchPwdStep02(
-        'proc_search_pass_confirm',
         userId,
         userMobile,
         mobileCertNum,

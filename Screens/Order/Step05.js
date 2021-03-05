@@ -35,6 +35,7 @@ import {
   setUserFrequency,
   setUserPrinting,
   setUserPrintSup,
+  setUserBoardTk,
 } from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 
@@ -60,7 +61,9 @@ const Step05 = (props) => {
   const [isLoading05, setIsLoading05] = React.useState(true); // 골 입력 로딩
 
   const {cate1, ca_id, type_id} = useSelector((state) => state.OrderReducer);
+  const {type_details} = useSelector((state) => state.OrderHandlerReducer);
 
+  const [boardTk, setBoardTk] = React.useState(''); // 속지 판지 두께 담기 (ca_id === 12 : 싸바리 박스일 경우)
   const [paper, setPaper] = React.useState(null); // 지류 선택 (pf_id 지류아이디)
   const [typeDetail, setTypeDetail] = React.useState([]); // 지류 정보 담기
   const [paperType, setPaperType] = React.useState(null); // 지종 선택
@@ -88,17 +91,17 @@ const Step05 = (props) => {
   const [paperColor, setPaperColor] = React.useState(null); //  색상 지정 index
   const [paperColorName, setPaperColorName] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로)
 
-  console.log('paperColor', paperColor);
-  console.log('paperColorName', paperColorName);
-  console.log('paperDetail', paperDetail);
-  console.log('paperDetail2', paperDetail2);
-  console.log('paper', paper);
-  console.log('isDirect01', isDirect01);
-  console.log('isDirect', isDirect);
-  console.log('directPaperName', directPaperName);
-  console.log('getPaperColors', getPaperColors);
-  console.log('paperColor', paperColor);
-  console.log('인쇄도수 print', print);
+  // console.log('paperColor', paperColor);
+  // console.log('paperColorName', paperColorName);
+  // console.log('paperDetail', paperDetail);
+  // console.log('paperDetail2', paperDetail2);
+  // console.log('paper', paper);
+  // console.log('isDirect01', isDirect01);
+  // console.log('isDirect', isDirect);
+  // console.log('directPaperName', directPaperName);
+  // console.log('getPaperColors', getPaperColors);
+  // console.log('paperColor', paperColor);
+  // console.log('인쇄도수 print', print);
 
   //////////////////////////
   /////// FUNCTIONS ///////
@@ -244,6 +247,7 @@ const Step05 = (props) => {
         dispatch(setUserPrinting(color));
         dispatch(setUserPrintSup(check));
         dispatch(setOrderDetails(paperDetail2));
+        dispatch(setUserBoardTk(boardTk));
 
         navigation.navigate('OrderStep06', {
           screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -501,22 +505,75 @@ const Step05 = (props) => {
   return (
     <>
       {isLoading && (
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 100,
-            elevation: 0,
-            backgroundColor: 'transparent',
-          }}>
-          <ActivityIndicator size="large" color="#275696" />
-        </View>
+        <>
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 100,
+              elevation: 0,
+              backgroundColor: 'transparent',
+            }}>
+            <ActivityIndicator size="large" color="#275696" />
+          </View>
+          {/* 지류 선택  */}
+          <View style={{marginBottom: paper === 'normal' ? 40 : 25}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}>
+              <Text style={[styles.profileTitle, {marginRight: 5}]}>구분</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}>
+              {typeDetail
+                ? typeDetail.map((t) => (
+                    <TouchableOpacity
+                      key={t.pf_id}
+                      activeOpacity={1}
+                      hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                      onPress={() => setPaperChoise(t.pf_id)}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        marginRight: 20,
+                        marginBottom: 20,
+                        width: '100%',
+                      }}>
+                      <Image
+                        source={
+                          paper === t.pf_id
+                            ? require('../../src/assets/radio_on.png')
+                            : require('../../src/assets/radio_off.png')
+                        }
+                        resizeMode="contain"
+                        style={{width: 20, height: 20, marginRight: 5}}
+                      />
+                      <Text style={[styles.normalText, {fontSize: 14}]}>
+                        {t.feeder_name}
+                      </Text>
+                    </TouchableOpacity>
+                  ))
+                : null}
+            </View>
+          </View>
+          {/* // 지류 선택  */}
+        </>
       )}
       <DetailHeader
         title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
@@ -535,6 +592,134 @@ const Step05 = (props) => {
         <ScrollView
           style={styles.container}
           showsVerticalScrollIndicator={false}>
+          {ca_id === '12' && ( //type_details
+            <>
+              <View style={styles.wrap}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+                    속지 판지 두께
+                  </Text>
+                </View>
+              </View>
+              {/* 지류 선택  */}
+              <View style={{marginBottom: paper === 'normal' ? 40 : 25}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                  }}>
+                  {type_details[0].board_tk ? (
+                    <View style={{width: '49%'}}>
+                      <DropDownPicker
+                        value={paperType}
+                        placeholder="속지 두께 선택"
+                        placeholderStyle={{
+                          fontSize: 14,
+                          color: '#A2A2A2',
+                          fontWeight: '400',
+                        }}
+                        activeLabelStyle={{color: '#000'}}
+                        activeItemStyle={{color: '#000'}}
+                        selectedLabelStyle={{color: '#000'}}
+                        value={paperType}
+                        dropDownMaxHeight={300}
+                        items={type_details[0].board_tk.map((v, _i) => {
+                          // setPfId(v.pf_id);
+                          return {value: v, label: v};
+                        })}
+                        containerStyle={{height: 50}}
+                        style={{
+                          backgroundColor: '#fff',
+                          borderTopRightRadius: 4,
+                          borderTopLeftRadius: 4,
+                          borderBottomRightRadius: 4,
+                          borderBottomLeftRadius: 4,
+                        }}
+                        itemStyle={{
+                          justifyContent: 'flex-start',
+                          paddingVertical: 10,
+                        }}
+                        // onOpen={() => {
+                        //   setDirectPaperName(null);
+                        //   setWeight(null);
+                        //   setDirectWeight(null);
+                        //   setDirectGoal(null);
+                        //   setIsLoading02(true);
+                        //   setIsLoading03(true);
+                        //   setIsLoading04(true);
+                        //   setIsLoading05(true);
+                        // }}
+                        labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                        dropDownStyle={{backgroundColor: '#fff'}}
+                        onChangeItem={(item) => {
+                          setBoardTk(item.value);
+                          // setIsLoading01(true);
+
+                          // setIsLoading02(true);
+                        }}
+                        customArrowDown={() => (
+                          <Image
+                            source={require('../../src/assets/arr01.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                        customArrowUp={() => (
+                          <Image
+                            source={require('../../src/assets/arr01_top.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                      />
+                    </View>
+                  ) : null}
+
+                  {/* 라디오 타입 */}
+                  {/* {type_details[0].board_tk
+                    ? type_details[0].board_tk.map((t) => (
+                        <TouchableOpacity
+                          key={t.pf_id}
+                          activeOpacity={1}
+                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                          onPress={() => setPaperChoise(t)}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            marginRight: 20,
+                            marginBottom: 20,
+                            width: '100%',
+                          }}>
+                          <Image
+                            source={
+                              paper === t
+                                ? require('../../src/assets/radio_on.png')
+                                : require('../../src/assets/radio_off.png')
+                            }
+                            resizeMode="contain"
+                            style={{width: 20, height: 20, marginRight: 5}}
+                          />
+                          <Text style={[styles.normalText, {fontSize: 14}]}>
+                            {t}
+                          </Text>
+                        </TouchableOpacity>
+                      ))
+                    : null} */}
+                  {/* // 라디오 타입 */}
+                </View>
+              </View>
+              {/* // 지류 선택  */}
+            </>
+          )}
           <View style={styles.wrap}>
             <View
               style={{

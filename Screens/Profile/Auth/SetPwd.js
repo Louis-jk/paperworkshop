@@ -67,7 +67,7 @@ const SetPwd = (props) => {
   };
 
   const setUserNewPwd = (mb_id, mb_password, mb_password_re) => {
-    Auth.onSetPwd('proc_change_pass', mb_id, mb_password, mb_password_re)
+    Auth.onSetPwd(mb_id, mb_password, mb_password_re)
       .then((res) => {
         console.log('비밀번호 변경', res);
         if (res.data.result === '1') {

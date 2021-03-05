@@ -2,11 +2,11 @@ import Send from '../utils/Send.js';
 import qs from 'qs';
 
 export default {
-  onLogin(method, mb_id, mb_password, mb_3, mb_4) {
+  onLogin(mb_id, mb_password, mb_3, mb_4) {
     return Send({
       method: 'post',
       data: qs.stringify({
-        method,
+        method: 'proc_login_member',
         mb_id,
         mb_password,
         mb_3,
@@ -14,22 +14,22 @@ export default {
       }),
     });
   },
-  onSearchIdStep01(method, mb_name, mb_hp, mb_level) {
+  onSearchIdStep01(mb_name, mb_hp, mb_level) {
     return Send({
       method: 'post',
       data: qs.stringify({
-        method,
+        method: 'proc_search_id',
         mb_name,
         mb_hp,
         mb_level,
       }),
     });
   },
-  onSearchIdStep02(method, mb_name, mb_hp, cert_num, mb_level, rt_yn) {
+  onSearchIdStep02(mb_name, mb_hp, cert_num, mb_level, rt_yn) {
     return Send({
       method: 'post',
       data: qs.stringify({
-        method,
+        method: 'proc_search_id_confirm',
         mb_name,
         mb_hp,
         cert_num,
@@ -38,22 +38,22 @@ export default {
       }),
     });
   },
-  onSearchPwdStep01(method, mb_id, mb_hp, mb_level) {
+  onSearchPwdStep01(mb_id, mb_hp, mb_level) {
     return Send({
       method: 'post',
       data: qs.stringify({
-        method,
+        method: 'proc_search_pass',
         mb_id,
         mb_hp,
         mb_level,
       }),
     });
   },
-  onSearchPwdStep02(method, mb_id, mb_hp, cert_num, mb_level, rt_yn) {
+  onSearchPwdStep02(mb_id, mb_hp, cert_num, mb_level, rt_yn) {
     return Send({
       method: 'post',
       data: qs.stringify({
-        method,
+        method: 'proc_search_pass_confirm',
         mb_id,
         mb_hp,
         cert_num,
@@ -63,11 +63,11 @@ export default {
       }),
     });
   },
-  onSetPwd(method, mb_id, mb_password, mb_password_re) {
+  onSetPwd(mb_id, mb_password, mb_password_re) {
     return Send({
       method: 'post',
       data: qs.stringify({
-        method,
+        method: 'proc_change_pass',
         mb_id,
         mb_password,
         mb_password_re,

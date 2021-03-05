@@ -3,150 +3,287 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   Image,
-  ScrollView,
   TouchableOpacity,
   TextInput,
+  Dimensions,
+  ActivityIndicator,
 } from 'react-native';
+import {TabView, SceneMap} from 'react-native-tab-view';
+import {useSelector} from 'react-redux';
 
 import Header from '../../Common/Header';
-import Footer from '../../Common/Footer';
+
+import PartnersNav from './PartnersNav';
+import All from './Components/Tabs/All';
+import Package from './Components/Tabs/Package';
+import General from './Components/Tabs/General';
+import Etc from './Components/Tabs/Etc';
+import PartnersApi from '../../../src/api/Partners';
 
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  // const cateName = props.route.params.name;
 
-  return (
-    <>
-      <Header title={routeName} navigation={navigation} />
-      {/* <ScrollView style={styles.container} showsVerticalScrollIndicator={false}> */}
-      <View style={[styles.container, {paddingHorizontal: 20, paddingTop: 20}]}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View style={{position: 'relative'}}>
-            <Text
-              style={[
-                styles.boldText,
-                {
-                  fontSize: 16,
-                  marginBottom: 20,
-                  marginRight: 23,
-                },
-              ]}>
-              전체
-            </Text>
-            <View
-              style={{
-                position: 'absolute',
-                top: -1,
-                right: 15,
-                width: 6,
-                height: 6,
-                borderRadius: 6,
-                backgroundColor: '#275696',
-              }}
-            />
-          </View>
-          <Text
-            style={[
-              styles.normalText,
-              {
-                fontSize: 16,
-                marginBottom: 20,
-                marginRight: 20,
-                color: '#707070',
-              },
-            ]}>
-            성실파트너스
-          </Text>
-          <Text
-            style={[
-              styles.normalText,
-              {
-                fontSize: 16,
-                marginBottom: 20,
-                marginRight: 20,
-                color: '#707070',
-              },
-            ]}>
-            인기파트너스
-          </Text>
-          <Text
-            style={[
-              styles.normalText,
-              {
-                fontSize: 16,
-                marginBottom: 20,
-                marginRight: 20,
-                color: '#707070',
-              },
-            ]}>
-            지역파트너스
-          </Text>
-        </View>
+  const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
+
+  console.log('mb_id', mb_id);
+
+  const [partners, setPartners] = React.useState([]);
+  const [pPackage, setPpackages] = React.useState([]);
+  const [pGeneral, setPgeneral] = React.useState([]);
+  const [pEtc, setPetc] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const getPartnersAll = () => {
+    setIsLoading(true);
+
+    PartnersApi.getMyPartners(mb_id, null, null, null, null)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setPartners(res.data.item);
+          setIsLoading(false);
+        } else {
+          setPartners(null);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getPartnersPackage = () => {
+    setIsLoading(true);
+
+    PartnersApi.getPartners(null, '1', null, null)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setPpackages(res.data.item);
+          setIsLoading(false);
+        } else {
+          setPpackages(null);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getPartnersGeneral = () => {
+    setIsLoading(true);
+
+    PartnersApi.getPartners(null, '0', null, null)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setPgeneral(res.data.item);
+          setIsLoading(false);
+        } else {
+          setPgeneral(null);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getPartnersEtc = () => {
+    setIsLoading(true);
+
+    PartnersApi.getPartners(null, '2', null, null)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setPetc(res.data.item);
+          setIsLoading(false);
+        } else {
+          setPetc(null);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    getPartnersAll();
+    getPartnersPackage();
+    getPartnersGeneral();
+    getPartnersEtc();
+  }, []);
+
+  const initialLayout = {width: Dimensions.get('window').width};
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'all', title: '전체'},
+    {key: 'package', title: '패키지'},
+    {key: 'general', title: '일반인쇄'},
+    {key: 'etc', title: '기타인쇄'},
+  ]);
+
+  const renderScene = ({route}) => {
+    switch (route.key) {
+      case 'all':
+        return <All navigation={navigation} partners={partners} />;
+      case 'package':
+        return <Package navigation={navigation} partners={pPackage} />;
+      case 'general':
+        return <General navigation={navigation} partners={pGeneral} />;
+      case 'etc':
+        return <Etc navigation={navigation} partners={pEtc} />;
+    }
+  };
+
+  const [tabIndex, setTabIndex] = React.useState('all');
+
+  const TabBar = (props) => {
+    const {tabIndex, jumpTo} = props;
+
+    return (
+      <View style={{paddingHorizontal: 20}}>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            marginBottom: 20,
           }}>
-          <Text
-            style={[
-              styles.boldText,
-              {
-                fontSize: 14,
-                marginRight: 27,
-                color: '#275696',
-              },
-            ]}>
-            전체
-          </Text>
-          <Text
-            style={[
-              styles.normalText,
-              {
-                fontSize: 15,
-                marginRight: 27,
-                color: '#BEBEBE',
-              },
-            ]}>
-            패키지
-          </Text>
-          <Text
-            style={[
-              styles.normalText,
-              {
-                fontSize: 15,
-                marginRight: 20,
-                color: '#BEBEBE',
-              },
-            ]}>
-            일반인쇄
-          </Text>
-          <Text
-            style={[
-              styles.normalText,
-              {
-                fontSize: 15,
-                marginRight: 20,
-                color: '#BEBEBE',
-              },
-            ]}>
-            기타인쇄
-          </Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 5,
+              paddingBottom: 0,
+              paddingRight: 10,
+              // backgroundColor: '#ffaaee',
+            }}
+            onPress={async () => {
+              await jumpTo('all');
+              await setTabIndex('all');
+            }}>
+            <Text
+              style={[
+                tabIndex === 'all' && index === 0
+                  ? styles.boldText
+                  : styles.mediumText,
+                {
+                  fontFamily:
+                    tabIndex === 'all' && index === 0 ? 'SCDream5' : 'SCDream4',
+                  paddingVertical: 12,
+                  fontSize: 13,
+                  color:
+                    tabIndex === 'all' && index === 0 ? '#275696' : '#B5B5B5',
+                },
+              ]}>
+              전체
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 5,
+              paddingBottom: 0,
+              paddingHorizontal: 10,
+              // backgroundColor: '#ffeeee',
+            }}
+            onPress={async () => {
+              await jumpTo('package');
+              await setTabIndex('package');
+            }}>
+            <Text
+              style={[
+                tabIndex === 'package' || index === 1
+                  ? styles.boldText
+                  : styles.mediumText,
+                {
+                  fontFamily:
+                    tabIndex === 'package' || index === 1
+                      ? 'SCDream5'
+                      : 'SCDream4',
+                  paddingVertical: 12,
+                  fontSize: 13,
+                  color:
+                    tabIndex === 'package' || index === 1
+                      ? '#275696'
+                      : '#B5B5B5',
+                },
+              ]}>
+              패키지
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 5,
+              paddingBottom: 0,
+              paddingHorizontal: 10,
+              // backgroundColor: '#ffeeaa',
+            }}
+            onPress={async () => {
+              await jumpTo('general');
+              await setTabIndex('general');
+            }}>
+            <Text
+              style={[
+                tabIndex === 'general' || index === 2
+                  ? styles.boldText
+                  : styles.mediumText,
+                {
+                  fontFamily:
+                    tabIndex === 'general' || index === 2
+                      ? 'SCDream5'
+                      : 'SCDream4',
+                  paddingVertical: 12,
+                  fontSize: 13,
+                  color:
+                    tabIndex === 'general' || index === 2
+                      ? '#275696'
+                      : '#B5B5B5',
+                },
+              ]}>
+              일반인쇄
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingBottom: 0,
+              paddingHorizontal: 10,
+              // backgroundColor: '#ffeeaa',
+            }}
+            onPress={async () => {
+              await jumpTo('etc');
+              await setTabIndex('etc');
+            }}>
+            <Text
+              style={[
+                tabIndex === 'etc' || index === 3
+                  ? styles.boldText
+                  : styles.mediumText,
+                {
+                  fontFamily:
+                    tabIndex === 'etc' || index === 3 ? 'SCDream5' : 'SCDream4',
+                  paddingVertical: 12,
+                  fontSize: 13,
+                  color:
+                    tabIndex === 'etc' || index === 3 ? '#275696' : '#B5B5B5',
+                },
+              ]}>
+              기타인쇄
+            </Text>
+          </TouchableOpacity>
         </View>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: 5,
+            marginBottom: 10,
             borderWidth: 1,
             borderColor: '#DEDEDE',
             borderRadius: 5,
@@ -166,649 +303,76 @@ const index = (props) => {
             />
           </TouchableOpacity>
         </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{padding: 0, margin: 0, marginBottom: 200}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              marginVertical: 5,
-            }}>
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingRight: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/general/general03.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      패키지
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  삼보인쇄
-                </Text>
+      </View>
+    );
+  };
 
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingLeft: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/general/general08.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  애드프린트
-                </Text>
+  return (
+    <>
+      <Header title={routeName} navigation={navigation} />
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
+      <View
+        style={{
+          position: 'relative',
+          flex: 1,
 
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingRight: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/packages/package01.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      패키지
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  동천문화인쇄
-                </Text>
+          paddingTop: 20,
+          backgroundColor: '#fff',
+          // paddingBottom: 10,
+        }}>
+        <View
+          style={{
+            paddingHorizontal: 20,
+          }}>
+          <PartnersNav navigation={navigation} routeName={routeName} />
+        </View>
+        {/* <CategoryNav
+          navigation={navigation}
+          routeName={routeName}
+          cateName={cateName}
+        /> */}
 
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingLeft: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/packages/package06.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      패키지
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  미래엔인쇄서비스
-                </Text>
+        {/* TabView */}
 
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingRight: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/general/general07.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  {/* <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      패키지
-                    </Text>
-                  </View> */}
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  삼보인쇄
-                </Text>
+        <TabView
+          renderTabBar={(props) => (
+            <TabBar
+              {...props}
+              navigation={navigation}
+              setTabIndex={setTabIndex}
+              tabIndex={tabIndex}
+              onIndexChange={setIndex}
+            />
+          )}
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+          swipeEnabled={false}
+        />
 
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingLeft: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/p08.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  애드프린트
-                </Text>
-
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingRight: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/etc/etc01.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#ACACAC',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      기타인쇄
-                    </Text>
-                  </View>
-                  {/* <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      일반인쇄
-                    </Text>
-                  </View> */}
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  동천문화인쇄
-                </Text>
-
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-            {/* 파트너스 리스트(list) */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('PartnersDetail')}
-              style={{
-                width: '50%',
-                borderRadius: 5,
-                marginBottom: 20,
-                paddingLeft: 5,
-              }}>
-              <View style={{marginBottom: 10}}>
-                <Image
-                  source={require('../../../src/images/packages/package08.jpg')}
-                  resizeMode="cover"
-                  style={{width: '100%', height: 130, borderRadius: 5}}
-                />
-              </View>
-              <View
-                style={{
-                  flexShrink: 2,
-                  marginRight: 35,
-                  // backgroundColor: '#ffeeaa',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      패키지
-                    </Text>
-                  </View>
-                </View>
-                <Text
-                  style={[
-                    styles.boldText,
-                    {
-                      color: '#000',
-                      fontSize: 14,
-                      marginBottom: 5,
-                    },
-                  ]}>
-                  미래엔인쇄서비스
-                </Text>
-
-                <Text
-                  style={[styles.normalText, {fontSize: 13, lineHeight: 18}]}
-                  numberOfLines={2}>
-                  카타로그제작부터 후가공까지 삼보인쇄에서 함께하세요!
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* // 파트너스 리스트(list) */}
-          </View>
-        </ScrollView>
+        {/* // TabView */}
       </View>
 
-      <Footer navigation={navigation} />
+      {/* <Footer navigation={navigation} /> */}
       {/* </ScrollView> */}
     </>
   );

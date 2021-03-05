@@ -71,7 +71,7 @@ const FindId = (props) => {
         },
       ]);
     } else {
-      Auth.onSearchIdStep01('proc_search_id', userName, userMobile, '2')
+      Auth.onSearchIdStep01(userName, userMobile, '2')
         .then((res) => {
           if (res.data.result === '1') {
             Alert.alert(
@@ -123,7 +123,6 @@ const FindId = (props) => {
       return false;
     } else {
       Auth.onSearchIdStep02(
-        'proc_search_id_confirm',
         userName,
         userMobile,
         mobileCertNum,

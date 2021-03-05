@@ -81,7 +81,7 @@ const Login = (props) => {
 
   // 로그인 API
   const login = () => {
-    Auth.onLogin('proc_login_member', userId, userPwd, fFcmToken, checkPlatform)
+    Auth.onLogin(userId, userPwd, fFcmToken, checkPlatform)
       .then((res) => {
         if (res.data.result === '1') {
           dispatch(UserId(res.data.item.mb_id));

@@ -49,7 +49,6 @@ const Step06 = (props) => {
     pe_file_url,
     pe_file_type,
     pe_file_name,
-    pe_file_size,
     memo,
     pwidth,
     plength,
@@ -57,6 +56,8 @@ const Step06 = (props) => {
     cnt,
     cnt_etc,
     wood_pattern,
+    stype,
+    board_tk,
     easy_yn,
     paper_weight,
     paper_weight_etc,
@@ -67,10 +68,6 @@ const Step06 = (props) => {
     print_frequency,
     proof_printing,
     print_supervision,
-    park_processing,
-    press_design,
-    partial_silk,
-    coating,
     outside,
     status,
   } = useSelector((state) => state.OrderReducer);
@@ -109,12 +106,6 @@ const Step06 = (props) => {
     setModalVisible(!isModalVisible);
   };
 
-  const goOrderComplete = async () => {
-    await sendOrderBefore();
-    await setModalVisible(!isModalVisible);
-    await navigation.navigate('OrderComplete');
-  };
-
   const [isInfoModalVisible, setInfoModalVisible] = React.useState(false);
 
   const toggleInfoModal = () => {
@@ -123,7 +114,7 @@ const Step06 = (props) => {
 
   console.log('foil', foil);
 
-  const [source, setSource] = React.useState({});
+  const [source, setSource] = React.useState('');
 
   const sendOrderBefore = () => {
     if (pe_file_url && pe_file_type && pe_file_name !== null) {
@@ -159,7 +150,7 @@ const Step06 = (props) => {
     frmdata.append('favor_area', favor_area);
     frmdata.append('delivery_date', delivery_date);
     frmdata.append('estimate_date', estimate_date);
-    frmdata.append('pe_file[]', source ? source : '');
+    frmdata.append('pe_file[]', source);
     frmdata.append('memo', memo ? memo : '');
     frmdata.append('pwidth', pwidth);
     frmdata.append('plength', plength);
@@ -168,10 +159,12 @@ const Step06 = (props) => {
     frmdata.append('cnt_etc', cnt_etc);
     frmdata.append('easy_yn', easy_yn);
     frmdata.append('wood_pattern', wood_pattern);
+    frmdata.append('stype', stype);
+    frmdata.append('board_tk', board_tk);
     frmdata.append('paper_weight', paper_weight);
     frmdata.append('paper_weight_etc', paper_weight_etc);
-    frmdata.append('paper_goal', paper_goal);
-    frmdata.append('paper_goal_etc', paper_goal_etc);
+    frmdata.append('paper_goal', paper_goal ? paper_goal : '');
+    frmdata.append('paper_goal_etc', paper_goal_etc ? paper_goal_etc : '');
     frmdata.append('paper_color', paper_color);
     frmdata.append('paper_color_etc', paper_color_etc);
     frmdata.append('print_frequency', print_frequency);
@@ -185,7 +178,25 @@ const Step06 = (props) => {
     frmdata.append('status', status);
 
     OrderAPI.sendOrder(frmdata)
-      .then((res) => console.log('세부견적 response', res))
+      .then((res) => {
+        console.log('세부견적', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setModalVisible(!isModalVisible);
+          navigation.navigate('easyOrderComplete');
+        } else if (res.data.result === '1' && res.data.count <= 0) {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
       .catch((err) => console.log(err));
   };
 
@@ -194,7 +205,7 @@ const Step06 = (props) => {
       <Modal
         isVisible={isModalVisible}
         toggleModal={toggleModal}
-        goOrderComplete={goOrderComplete}
+        goOrderComplete={sendOrderBefore}
       />
       <InfoModal isVisible={isInfoModalVisible} toggleModal={toggleInfoModal} />
       <DetailHeader
@@ -412,7 +423,7 @@ const Step06 = (props) => {
             {/* // 부분 실크  */}
 
             {/* 코팅  */}
-            {type_details[0].coating && type_details[0].coating.length > 0 && (
+            {type_details[0].coating && type_details[0].coating.length > 0 ? (
               <View style={{marginBottom: 25}}>
                 <View
                   style={{
@@ -444,7 +455,7 @@ const Step06 = (props) => {
                         justifyContent: 'flex-start',
                         alignItems: 'center',
                         marginRight: 20,
-                        marginBottom: 10,
+                        marginBottom: 15,
                       }}>
                       <Image
                         source={
@@ -462,7 +473,7 @@ const Step06 = (props) => {
                   ))}
                 </View>
               </View>
-            )}
+            ) : null}
             {/* // 코팅  */}
           </View>
         </ScrollView>

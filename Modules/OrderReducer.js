@@ -28,6 +28,8 @@ const SET_PHEIGHT = 'SET_PHEIGHT';
 const SET_CNT = 'SET_CNT';
 const SET_CNT_ETC = 'SET_CNT_ETC';
 const SET_WOOD_PATTERN = 'SET_WOOD_PATTERN';
+const SET_STYPE = 'SET_STYPE';
+const SET_BOARD_TK = 'SET_BOARD_TK';
 const SET_EASY_YN = 'SET_EASY_YN';
 const SET_WEIGHT = 'SET_WEIGHT';
 const SET_WEIGHT_ETC = 'SET_WEIGHT_ETC';
@@ -81,6 +83,8 @@ export const setUserWoodPattern = (payload) => ({
   type: SET_WOOD_PATTERN,
   payload,
 });
+export const setUserStype = (payload) => ({type: SET_STYPE, payload});
+export const setUserBoardTk = (payload) => ({type: SET_BOARD_TK, payload});
 export const setUserEasyYn = (payload) => ({type: SET_EASY_YN, payload});
 export const setUserWeight = (payload) => ({type: SET_WEIGHT, payload});
 export const setUserWeightEtc = (payload) => ({type: SET_WEIGHT_ETC, payload});
@@ -138,6 +142,8 @@ const initialize = {
   cnt: 0, // 수량
   cnt_etc: 0, // 수량(직접입력)
   wood_pattern: '', // 목형
+  stype: '', // 싸바리형태
+  board_tk: '', // 속지 판지두께
   easy_yn: 'N', // 간편견적여부
   paper_weight: 0, // 평량
   paper_weight_etc: 0, // 평량(직접입력)
@@ -303,6 +309,16 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         wood_pattern: action.payload,
+      };
+    case SET_STYPE:
+      return {
+        ...state,
+        stype: action.payload,
+      };
+    case SET_BOARD_TK:
+      return {
+        ...state,
+        board_tk: action.payload,
       };
     case SET_EASY_YN:
       return {

@@ -34,7 +34,7 @@ const index = (props) => {
   const getPartnersAll = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('proc_partner_list', null, null, null, null)
+    PartnersApi.getPartners(null, null, null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
@@ -50,7 +50,7 @@ const index = (props) => {
   const getPartnersPackage = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('proc_partner_list', null, '1', null, null)
+    PartnersApi.getPartners(null, '1', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPpackages(res.data.item);
@@ -66,7 +66,7 @@ const index = (props) => {
   const getPartnersGeneral = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('proc_partner_list', null, '0', null, null)
+    PartnersApi.getPartners(null, '0', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPgeneral(res.data.item);
@@ -82,7 +82,7 @@ const index = (props) => {
   const getPartnersEtc = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('proc_partner_list', null, '2', null, null)
+    PartnersApi.getPartners(null, '2', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPetc(res.data.item);

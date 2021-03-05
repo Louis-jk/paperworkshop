@@ -31,6 +31,7 @@ import {
   setUserWoodPattern,
   setUserEasyYn,
 } from '../../Modules/OrderReducer';
+import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 import BoxType from '../../src/api/BoxType';
 import OrderAPI from '../../src/api/OrderAPI';
 import {number} from 'yup/lib/locale';
@@ -68,7 +69,7 @@ const Step04 = (props) => {
   } = useSelector((state) => state.OrderReducer);
 
   // 간단 견적 제출 func
-  const [source, setSource] = React.useState({});
+  const [source, setSource] = React.useState('');
   const [pWidth, setPwidth] = React.useState(null);
   const [pLength, setPlength] = React.useState(null);
   const [pHeight, setPheight] = React.useState(null);
@@ -104,7 +105,7 @@ const Step04 = (props) => {
     frmdata.append('favor_area', favor_area);
     frmdata.append('delivery_date', delivery_date);
     frmdata.append('estimate_date', estimate_date);
-    frmdata.append('pe_file[]', source ? source : '');
+    frmdata.append('pe_file[]', source);
     frmdata.append('memo', memo ? memo : '');
     frmdata.append('pwidth', pWidth);
     frmdata.append('plength', pLength);
@@ -114,13 +115,29 @@ const Step04 = (props) => {
     frmdata.append('wood_pattern', wood_pattern);
     frmdata.append('easy_yn', 'Y');
 
-    OrderAPI.sendOrder(frmdata)
-      .then((res) => console.log('간편견적 response', res))
-      .catch((err) => console.log(err));
-  };
+    console.log('frmdata', frmdata);
 
-  const goEasyComplete = () => {
-    // await navigation.navigate('easyOrderComplete');
+    OrderAPI.sendOrder(frmdata)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          // console.log('간편견적', res);
+          setModalVisible(!isModalVisible);
+          navigation.navigate('easyOrderComplete');
+        } else if (res.data.result === '1' && res.data.count <= 0) {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const [type, setType] = React.useState('');
@@ -133,14 +150,17 @@ const Step04 = (props) => {
     setType(v);
   };
 
+  const [infoDetail, setInfoDetail] = React.useState(null);
   const [getQuantity, setGetQuantity] = React.useState([]);
   const [isLoading, setLoading] = React.useState(false);
 
   const getType = () => {
     setLoading(true);
-    BoxType.getBoxTypeId('proc_box_list', cate1, ca_id, type_id)
+    BoxType.getBoxTypeId(cate1, ca_id, type_id)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
+          console.log('상세정보', res);
+          setInfoDetail(res.data.item);
           setGetQuantity(res.data.item[0].making_cnt);
           setLoading(false);
         } else if (res.data.result === '1' && res.data.count <= 0) {
@@ -162,7 +182,9 @@ const Step04 = (props) => {
   const [quantityDirect, setQuantityDirect] = React.useState(null);
   const setOrderQuantity = (v) => {
     directRef.current.focus();
-    setQuantity(v);
+    let value = v.replace(/(^0+)/, '');
+    console.log('value', value);
+    setQuantity(value);
   };
 
   const [pattern, setPattern] = React.useState(true);
@@ -184,41 +206,7 @@ const Step04 = (props) => {
   const [directError, setDirectError] = React.useState(false);
 
   const toggleModal = () => {
-    if (
-      pWidth &&
-      pLength &&
-      pHeight !== '' &&
-      pWidth &&
-      pLength &&
-      pHeight !== null &&
-      quantity === 'direct' &&
-      quantityDirect !== '' &&
-      quantity === 'direct' &&
-      quantityDirect !== null &&
-      quantity !== 'direct' &&
-      quantity !== '' &&
-      quantity !== 'direct' &&
-      quantity !== null
-    ) {
-      setModalVisible(!isModalVisible);
-      dispatch(setUserPwidth(pWidth));
-      dispatch(setUserPlength(pLength));
-      dispatch(setUserPheight(pHeight));
-
-      if (quantity !== 'direct') {
-        dispatch(setUserCnt(quantity));
-        dispatch(setUserCntEtc(null));
-      } else {
-        dispatch(setUserCntEtc(quantityDirect));
-        dispatch(setUserCnt(null));
-      }
-
-      if (pattern) {
-        dispatch(setUserWoodPattern('Y'));
-      } else {
-        dispatch(setUserWoodPattern('N'));
-      }
-    } else if (pWidth === '' || pWidth === null) {
+    if (pWidth === '' || pWidth === null) {
       setPwidthError(true);
     } else if (pLength === '' || pLength === null) {
       setPlengthError(true);
@@ -235,15 +223,30 @@ const Step04 = (props) => {
     ) {
       setQuantityError(true);
     } else {
-      Alert.alert('입력하지 않은 입력란이 있습니다.', '확인해주세요.', [
-        {
-          text: '확인',
-        },
-      ]);
+      setModalVisible(!isModalVisible);
+      dispatch(setUserPwidth(pWidth));
+      dispatch(setUserPlength(pLength));
+      dispatch(setUserPheight(pHeight));
+
+      if (quantity !== 'direct') {
+        dispatch(setUserCnt(quantity));
+        dispatch(setUserCntEtc(0));
+      } else {
+        dispatch(setUserCntEtc(quantityDirect));
+        dispatch(setUserCnt(0));
+      }
+
+      if (pattern) {
+        dispatch(setUserWoodPattern('Y'));
+      } else {
+        dispatch(setUserWoodPattern('N'));
+      }
     }
 
     // dispatch(setUserEasyYn('Y'))
   };
+
+  console.log('infoDetail', infoDetail);
 
   const nextStep = (width, length, height) => {
     if (
@@ -257,6 +260,9 @@ const Step04 = (props) => {
     ) {
       setQuantityError(true);
     } else {
+      if (ca_id === '12') {
+        dispatch(setOrderDetails(infoDetail));
+      }
       dispatch(setUserPwidth(width));
       dispatch(setUserPlength(length));
       dispatch(setUserPheight(height));

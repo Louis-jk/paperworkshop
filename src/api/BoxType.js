@@ -12,11 +12,11 @@ export default {
       }),
     });
   },
-  getBoxTypeId(method, cate1, ca_id, type_id) {
+  getBoxTypeId(cate1, ca_id, type_id) {
     return Send({
       method: 'post',
       data: qs.stringify({
-        method,
+        method: 'proc_box_list',
         cate1,
         ca_id,
         type_id,
