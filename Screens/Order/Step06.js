@@ -100,6 +100,7 @@ const Step06 = (props) => {
     frmdata.append('cnt', quantity !== 'direct' ? quantity : '');
     frmdata.append('cnt_etc', quantity !== 'direct' ? quantityDirect : '');
     frmdata.append('wood_pattern', wood_pattern);
+    frmdata.append('easy_yn', easy_yn);
 
     OrderAPI.sendOrder(frmdata)
       .then((res) => console.log('간편견적 response', res))
@@ -238,8 +239,9 @@ const Step06 = (props) => {
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {type_details[0].park_processing.map((p) => (
+                    {type_details[0].park_processing.map((p, idx) => (
                       <TouchableOpacity
+                        key={idx}
                         activeOpacity={1}
                         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                         onPress={() => setFoilChoise(p)}
@@ -290,8 +292,9 @@ const Step06 = (props) => {
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {type_details[0].press_design.map((p) => (
+                    {type_details[0].press_design.map((p, idx) => (
                       <TouchableOpacity
+                        key={idx}
                         activeOpacity={1}
                         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                         onPress={() => setPressChoise(p)}
@@ -342,8 +345,9 @@ const Step06 = (props) => {
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {type_details[0].partial_silk.map((p) => (
+                    {type_details[0].partial_silk.map((p, idx) => (
                       <TouchableOpacity
+                        key={idx}
                         activeOpacity={1}
                         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                         onPress={() => setSilkChoise(p)}
@@ -394,8 +398,9 @@ const Step06 = (props) => {
                     alignItems: 'center',
                     flexWrap: 'wrap',
                   }}>
-                  {type_details[0].coating.map((c) => (
+                  {type_details[0].coating.map((c, idx) => (
                     <TouchableOpacity
+                      key={idx}
                       activeOpacity={1}
                       hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                       onPress={() => setLaminateChoise(c)}
