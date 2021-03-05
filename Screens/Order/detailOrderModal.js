@@ -92,7 +92,7 @@ const detailOrderModal = ({toggleModal, isVisible, goOrderComplete}) => {
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
-
+                  {/* sendOrderBefore */}
                   <TouchableWithoutFeedback onPress={goOrderComplete}>
                     <View
                       style={{

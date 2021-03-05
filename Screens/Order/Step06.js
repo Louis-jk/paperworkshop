@@ -75,38 +75,6 @@ const Step06 = (props) => {
     status,
   } = useSelector((state) => state.OrderReducer);
 
-  const sendOrder = () => {
-    const frmdata = new FormData();
-    frmdata.append('method', 'proc_estimate');
-    frmdata.append('cate1', cate1);
-    frmdata.append('ca_id', ca_id);
-    frmdata.append('type_id', type_id);
-    frmdata.append('pf_id', pf_id);
-    frmdata.append('pf_id2', pf_id2); // 내지 부눈 필수값?
-    frmdata.append('mb_id', mb_id);
-    frmdata.append('title', title);
-    frmdata.append('company', company ? company : '');
-    frmdata.append('mb_name', mb_name);
-    frmdata.append('mb_hp', mb_hp);
-    frmdata.append('design_print', design_print);
-    frmdata.append('favor_area', favor_area);
-    frmdata.append('delivery_date', delivery_date);
-    frmdata.append('estimate_date', estimate_date);
-    frmdata.append('pe_file[]', source ? source : '');
-    frmdata.append('memo', memo ? memo : '');
-    frmdata.append('pwidth', pWidth);
-    frmdata.append('plength', pLength);
-    frmdata.append('pheight', pHeight);
-    frmdata.append('cnt', quantity !== 'direct' ? quantity : '');
-    frmdata.append('cnt_etc', quantity !== 'direct' ? quantityDirect : '');
-    frmdata.append('wood_pattern', wood_pattern);
-    frmdata.append('easy_yn', easy_yn);
-
-    OrderAPI.sendOrder(frmdata)
-      .then((res) => console.log('간편견적 response', res))
-      .catch((err) => console.log(err));
-  };
-
   //  박가공 유무
   const [foil, setFoil] = React.useState('Y');
 
@@ -129,7 +97,7 @@ const Step06 = (props) => {
   };
 
   //  코팅 선택
-  const [laminate, setLaminate] = React.useState('none');
+  const [laminate, setLaminate] = React.useState(null);
 
   const setLaminateChoise = (v) => {
     setLaminate(v);
@@ -142,6 +110,7 @@ const Step06 = (props) => {
   };
 
   const goOrderComplete = async () => {
+    await sendOrderBefore();
     await setModalVisible(!isModalVisible);
     await navigation.navigate('OrderComplete');
   };
@@ -153,6 +122,72 @@ const Step06 = (props) => {
   };
 
   console.log('foil', foil);
+
+  const [source, setSource] = React.useState({});
+
+  const sendOrderBefore = () => {
+    if (pe_file_url && pe_file_type && pe_file_name !== null) {
+      setSource({
+        uri: pe_file_url,
+        type: pe_file_type,
+        name: pe_file_name,
+      });
+      sendOrder();
+    } else {
+      sendOrder();
+    }
+  };
+
+  const sendOrder = () => {
+    const frmdata = new FormData();
+    frmdata.append('method', 'proc_estimate');
+    frmdata.append('cate1', cate1);
+    frmdata.append('ca_id', ca_id);
+    frmdata.append('type_id', type_id);
+    frmdata.append('type_name', type_name);
+    frmdata.append('pf_id', pf_id);
+    frmdata.append('pd_id', pd_id);
+    frmdata.append('pn_id', pn_id);
+    frmdata.append('paper_name2', paper_name2);
+    frmdata.append('mb_id', mb_id);
+    frmdata.append('company_id', company_id);
+    frmdata.append('title', title);
+    frmdata.append('company', company ? company : '');
+    frmdata.append('mb_name', mb_name);
+    frmdata.append('mb_hp', mb_hp);
+    frmdata.append('design_print', design_print);
+    frmdata.append('favor_area', favor_area);
+    frmdata.append('delivery_date', delivery_date);
+    frmdata.append('estimate_date', estimate_date);
+    frmdata.append('pe_file[]', source ? source : '');
+    frmdata.append('memo', memo ? memo : '');
+    frmdata.append('pwidth', pwidth);
+    frmdata.append('plength', plength);
+    frmdata.append('pheight', pheight);
+    frmdata.append('cnt', cnt);
+    frmdata.append('cnt_etc', cnt_etc);
+    frmdata.append('easy_yn', easy_yn);
+    frmdata.append('wood_pattern', wood_pattern);
+    frmdata.append('paper_weight', paper_weight);
+    frmdata.append('paper_weight_etc', paper_weight_etc);
+    frmdata.append('paper_goal', paper_goal);
+    frmdata.append('paper_goal_etc', paper_goal_etc);
+    frmdata.append('paper_color', paper_color);
+    frmdata.append('paper_color_etc', paper_color_etc);
+    frmdata.append('print_frequency', print_frequency);
+    frmdata.append('proof_printing', proof_printing);
+    frmdata.append('print_supervision', print_supervision);
+    frmdata.append('park_processing', foil);
+    frmdata.append('press_design', press);
+    frmdata.append('partial_silk', silk);
+    frmdata.append('coating', laminate);
+    frmdata.append('outside', outside);
+    frmdata.append('status', status);
+
+    OrderAPI.sendOrder(frmdata)
+      .then((res) => console.log('세부견적 response', res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>

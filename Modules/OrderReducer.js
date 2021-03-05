@@ -109,51 +109,51 @@ export const setUserStatus = (payload) => ({type: SET_STATUS, payload});
 
 // initialize
 const initialize = {
-  cate1: null, // 분류아이디 (1차 카테고리('패키지','일반인쇄','기타인쇄'))
-  ca_id: null, // 1차분류아이디('패키지 -> 칼라박스, ~~박스', '일반인쇄 -> 접지 ~~ 등')
-  type_id: null, // 박스아이디
-  type_name: null, // 박스아이디
-  pf_id: null, // 지류아이디
-  pd_id: null, // 지종아이디
-  pn_id: null, // 지종상세아이디
-  paper_name2: null, // 지종상세(직접입력)
-  mb_id: null, // 회원 아이디
-  company_id: null, // 업체 아이디
-  title: null, // 제작명
-  company: null, // 회사명
-  mb_name: null, // 주문자명
-  mb_hp: null, // 주문자 휴대폰 번호
-  design_print: null, // 디자인의뢰
-  favor_area: null, // 지역
-  delivery_date: null, // 납품희망일자
-  estimate_date: null, // 견적마감일자
-  pe_file_url: null, // 첨부파일 url
-  pe_file_type: null, // 첨부파일 type
-  pe_file_name: null, // 첨부파일 name
-  pe_file_size: null, // 첨부파일 size
-  memo: null, // 메모
+  cate1: '', // 분류아이디 (1차 카테고리('패키지','일반인쇄','기타인쇄'))
+  ca_id: '', // 1차분류아이디('패키지 -> 칼라박스, ~~박스', '일반인쇄 -> 접지 ~~ 등')
+  type_id: '', // 박스아이디
+  type_name: '', // 박스아이디
+  pf_id: '', // 지류아이디
+  pd_id: '', // 지종아이디
+  pn_id: '', // 지종상세아이디
+  paper_name2: '', // 지종상세(직접입력)
+  mb_id: '', // 회원 아이디
+  company_id: '', // 업체 아이디
+  title: '', // 제작명
+  company: '', // 회사명
+  mb_name: '', // 주문자명
+  mb_hp: '', // 주문자 휴대폰 번호
+  design_print: '', // 디자인의뢰
+  favor_area: '', // 지역
+  delivery_date: '', // 납품희망일자
+  estimate_date: '', // 견적마감일자
+  pe_file_url: '', // 첨부파일 url
+  pe_file_type: '', // 첨부파일 type
+  pe_file_name: '', // 첨부파일 name
+  pe_file_size: '', // 첨부파일 size
+  memo: '', // 메모
   pwidth: 0, // 가로규격
   plength: 0, // 세로규격
   pheight: 0, // 높이규격
   cnt: 0, // 수량
   cnt_etc: 0, // 수량(직접입력)
-  wood_pattern: null, // 목형
-  easy_yn: null, // 간편견적여부
+  wood_pattern: '', // 목형
+  easy_yn: 'N', // 간편견적여부
   paper_weight: 0, // 평량
   paper_weight_etc: 0, // 평량(직접입력)
-  paper_goal: null, // 골
-  paper_goal_etc: null, // 골(직접입력)
-  paper_color: null, // 색상
-  paper_color_etc: null, // 색상(직접입력)
-  print_frequency: null, // 인쇄도수
-  proof_printing: null, // 인쇄교정
-  print_supervision: null, // 인쇄감리
-  park_processing: null, // 박가공
-  press_design: null, // 형압
-  partial_silk: null, // 부분실크
-  coating: null, // 코팅
-  outside: null, // 바깥면여부
-  status: null, // 상태
+  paper_goal: '', // 골
+  paper_goal_etc: '', // 골(직접입력)
+  paper_color: '', // 색상
+  paper_color_etc: '', // 색상(직접입력)
+  print_frequency: '', // 인쇄도수
+  proof_printing: '', // 인쇄교정
+  print_supervision: '', // 인쇄감리
+  park_processing: '', // 박가공
+  press_design: '', // 형압
+  partial_silk: '', // 부분실크
+  coating: '', // 코팅
+  outside: 'N', // 바깥면여부
+  status: 0, // 상태
 };
 
 // reducer create

@@ -93,6 +93,7 @@ const Step04 = (props) => {
     const frmdata = new FormData();
     frmdata.append('method', 'proc_estimate');
     frmdata.append('cate1', cate1);
+    frmdata.append('ca_id', ca_id);
     frmdata.append('type_id', type_id);
     frmdata.append('mb_id', mb_id);
     frmdata.append('title', title);
@@ -109,13 +110,17 @@ const Step04 = (props) => {
     frmdata.append('plength', pLength);
     frmdata.append('pheight', pHeight);
     frmdata.append('cnt', quantity !== 'direct' ? quantity : '');
-    frmdata.append('cnt_etc', quantity !== 'direct' ? quantityDirect : '');
+    frmdata.append('cnt_etc', quantity === 'direct' ? quantityDirect : '');
     frmdata.append('wood_pattern', wood_pattern);
     frmdata.append('easy_yn', 'Y');
 
     OrderAPI.sendOrder(frmdata)
       .then((res) => console.log('간편견적 response', res))
       .catch((err) => console.log(err));
+  };
+
+  const goEasyComplete = () => {
+    // await navigation.navigate('easyOrderComplete');
   };
 
   const [type, setType] = React.useState('');
@@ -153,11 +158,6 @@ const Step04 = (props) => {
     getType();
   }, []);
 
-  const goEasyComplete = async () => {
-    await setModalVisible(!isModalVisible);
-    await navigation.navigate('easyOrderComplete');
-  };
-
   const [quantity, setQuantity] = React.useState(null);
   const [quantityDirect, setQuantityDirect] = React.useState(null);
   const setOrderQuantity = (v) => {
@@ -173,28 +173,70 @@ const Step04 = (props) => {
   // 간단 견적 전 모달
   const [isModalVisible, setModalVisible] = React.useState(false);
 
+  console.log('pWidth', pWidth);
+  console.log('pLength', pLength);
+  console.log('pHeight', pHeight);
+
+  const [pWidthError, setPwidthError] = React.useState(false);
+  const [pLengthError, setPlengthError] = React.useState(false);
+  const [pHeightError, setPheightError] = React.useState(false);
+  const [directError, setDirectError] = React.useState(false);
+
   const toggleModal = () => {
-    dispatch(setUserPwidth(pWidth));
-    dispatch(setUserPlength(pLength));
-    dispatch(setUserPheight(pHeight));
+    if (
+      pWidth &&
+      pLength &&
+      pHeight !== '' &&
+      pWidth &&
+      pLength &&
+      pHeight !== null &&
+      quantity === 'direct' &&
+      quantityDirect !== '' &&
+      quantity === 'direct' &&
+      quantityDirect !== null &&
+      quantity !== 'direct' &&
+      quantity !== '' &&
+      quantity !== 'direct' &&
+      quantity !== null
+    ) {
+      setModalVisible(!isModalVisible);
+      dispatch(setUserPwidth(pWidth));
+      dispatch(setUserPlength(pLength));
+      dispatch(setUserPheight(pHeight));
 
-    if (quantity !== 'direct') {
-      dispatch(setUserCnt(quantity));
-      dispatch(setUserCntEtc(null));
-    } else {
-      dispatch(setUserCntEtc(quantityDirect));
-      dispatch(setUserCnt(null));
-    }
+      if (quantity !== 'direct') {
+        dispatch(setUserCnt(quantity));
+        dispatch(setUserCntEtc(null));
+      } else {
+        dispatch(setUserCntEtc(quantityDirect));
+        dispatch(setUserCnt(null));
+      }
 
-    if (pattern) {
-      dispatch(setUserWoodPattern('Y'));
+      if (pattern) {
+        dispatch(setUserWoodPattern('Y'));
+      } else {
+        dispatch(setUserWoodPattern('N'));
+      }
+    } else if (pWidth === '' || pWidth === null) {
+      setPwidthError(true);
+    } else if (pLength === '' || pLength === null) {
+      setPlengthError(true);
+    } else if (pHeight === '' || pHeight === null) {
+      setPheightError(true);
+    } else if (
+      (quantity === 'direct' && quantityDirect === null) ||
+      (quantity === 'direct' && quantityDirect === '')
+    ) {
+      setDirectError(true);
     } else {
-      dispatch(setUserWoodPattern('N'));
+      Alert.alert('입력하지 않은 입력란이 있습니다.', '확인해주세요.', [
+        {
+          text: '확인',
+        },
+      ]);
     }
 
     // dispatch(setUserEasyYn('Y'))
-
-    setModalVisible(!isModalVisible);
   };
 
   const nextStep = (width, length, height) => {
@@ -246,7 +288,7 @@ const Step04 = (props) => {
       <Modal
         isVisible={isModalVisible}
         toggleModal={toggleModal}
-        goEasyComplete={goEasyComplete}
+        goEasyComplete={easyOrderBefore}
       />
       {isLoading ? (
         <View
@@ -348,26 +390,39 @@ const Step04 = (props) => {
                       onChangeText={(value) => {
                         setPwidth(value);
                         formikProps.setFieldValue('order_width', value);
+                        setPwidthError(false);
                       }}
                       onBlur={formikProps.handleBlur('order_width')}
                       autoCapitalize="none"
                       keyboardType="number-pad"
                     />
                     {formikProps.touched.order_width &&
-                      formikProps.errors.order_width && (
-                        <Text
-                          style={{
-                            width: '100%',
-                            fontFamily: 'SCDream4',
-                            fontSize: 12,
-                            lineHeight: 18,
-                            color: '#366DE5',
-                            marginVertical: 5,
-                          }}>
-                          {formikProps.touched.order_width &&
-                            formikProps.errors.order_width}
-                        </Text>
-                      )}
+                    formikProps.errors.order_width ? (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        {formikProps.touched.order_width &&
+                          formikProps.errors.order_width}
+                      </Text>
+                    ) : pWidthError ? (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        가로 규격을 입력해주세요.
+                      </Text>
+                    ) : null}
                   </View>
                   {/* // 가로 규격 */}
 
@@ -410,26 +465,39 @@ const Step04 = (props) => {
                       onChangeText={(value) => {
                         setPlength(value);
                         formikProps.setFieldValue('order_length', value);
+                        setPlengthError(false);
                       }}
                       onBlur={formikProps.handleBlur('order_length')}
                       autoCapitalize="none"
                       keyboardType="number-pad"
                     />
                     {formikProps.touched.order_length &&
-                      formikProps.errors.order_length && (
-                        <Text
-                          style={{
-                            width: '100%',
-                            fontFamily: 'SCDream4',
-                            fontSize: 12,
-                            lineHeight: 18,
-                            color: '#366DE5',
-                            marginVertical: 5,
-                          }}>
-                          {formikProps.touched.order_length &&
-                            formikProps.errors.order_length}
-                        </Text>
-                      )}
+                    formikProps.errors.order_length ? (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        {formikProps.touched.order_length &&
+                          formikProps.errors.order_length}
+                      </Text>
+                    ) : pLengthError ? (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        세로 규격을 입력해주세요.
+                      </Text>
+                    ) : null}
                   </View>
                   {/* // 세로 규격 */}
 
@@ -472,26 +540,39 @@ const Step04 = (props) => {
                       onChangeText={(value) => {
                         setPheight(value);
                         formikProps.setFieldValue('order_height', value);
+                        setPheightError(false);
                       }}
                       onBlur={formikProps.handleBlur('order_height')}
                       autoCapitalize="none"
                       keyboardType="number-pad"
                     />
                     {formikProps.touched.order_height &&
-                      formikProps.errors.order_height && (
-                        <Text
-                          style={{
-                            width: '100%',
-                            fontFamily: 'SCDream4',
-                            fontSize: 12,
-                            lineHeight: 18,
-                            color: '#366DE5',
-                            marginVertical: 5,
-                          }}>
-                          {formikProps.touched.order_height &&
-                            formikProps.errors.order_height}
-                        </Text>
-                      )}
+                    formikProps.errors.order_height ? (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        {formikProps.touched.order_height &&
+                          formikProps.errors.order_height}
+                      </Text>
+                    ) : pHeightError ? (
+                      <Text
+                        style={{
+                          width: '100%',
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          lineHeight: 18,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        높이 규격을 입력해주세요.
+                      </Text>
+                    ) : null}
                   </View>
                   {/* // 높이 규격 */}
 
@@ -594,7 +675,10 @@ const Step04 = (props) => {
                         value={quantityDirect}
                         placeholder="직접 입력해주세요."
                         placeholderTextColor="#A2A2A2"
-                        onChangeText={(text) => setQuantityDirect(text)}
+                        onChangeText={(text) => {
+                          setQuantityDirect(text);
+                          setDirectError(false);
+                        }}
                         onFocus={() => {
                           setQuantity('direct');
                         }}
@@ -610,6 +694,19 @@ const Step04 = (props) => {
                         autoCapitalize="none"
                         keyboardType="number-pad"
                       />
+                      {directError && (
+                        <Text
+                          style={{
+                            width: '100%',
+                            fontFamily: 'SCDream4',
+                            fontSize: 12,
+                            lineHeight: 18,
+                            color: '#366DE5',
+                            marginVertical: 5,
+                          }}>
+                          수량을 입력해주세요.
+                        </Text>
+                      )}
                     </View>
                   </View>
                   {/* // 수량 */}
@@ -691,9 +788,7 @@ const Step04 = (props) => {
                   {/* // 목형 */}
 
                   <View style={{paddingHorizontal: 20}}>
-                    <TouchableOpacity
-                      onPress={easyOrderBefore}
-                      activeOpacity={0.8}>
+                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.8}>
                       <View style={[styles.submitBtn, {marginBottom: 10}]}>
                         <Text style={styles.submitBtnText}>간단 견적 제출</Text>
                       </View>
