@@ -17,6 +17,9 @@ import Dash from 'react-native-dash';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import Footer from '../Common/Footer';
 import Main from '../../src/api/Main';
+import {useDispatch} from 'react-redux';
+
+import {selectCate1} from '../../Modules/OrderReducer';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -28,6 +31,8 @@ const index = (props) => {
 
   const [mainBanners, setMainBanners] = React.useState([]); // 메인 최상단 슬라이더(배너)
   const [middleBanners, setMiddleBanners] = React.useState([]); // 메인 중간 슬라이더(배너)
+
+  const dispatch = useDispatch();
 
   // 슬라이더 (배너) progress bar 표현식
   const calculator = (name) => {
@@ -1354,12 +1359,13 @@ const index = (props) => {
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() =>
+            onPress={() => {
+              dispatch(selectCate1('1'));
               navigation.navigate('OrderPackage', {
                 screen: 'OrderPackage',
                 params: {screen: 'OrderPackage'},
-              })
-            }
+              });
+            }}
             style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
@@ -1425,12 +1431,13 @@ const index = (props) => {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() =>
+            onPress={() => {
+              dispatch(selectCate1('0'));
               navigation.navigate('OrderGeneral', {
                 screen: 'OrderGeneral',
                 params: {screen: 'OrderGeneral'},
-              })
-            }
+              });
+            }}
             style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
