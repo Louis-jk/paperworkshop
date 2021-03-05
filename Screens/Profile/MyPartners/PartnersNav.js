@@ -4,6 +4,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 const PartnersNav = (props) => {
   const navigation = props.navigation;
   const routeName = props.routeName;
+  console.log('PartnersNav props', props);
 
   const [isActiveLocation, setActiveLocation] = React.useState(false);
   const toggleLocation = () => {
@@ -34,7 +35,7 @@ const PartnersNav = (props) => {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-      {routeName === 'Partners' ? (
+      {routeName === 'Partners' || routeName === 'MyPartners' ? (
         <View style={{position: 'relative'}}>
           <Text
             style={[
@@ -62,8 +63,8 @@ const PartnersNav = (props) => {
       ) : (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Partners', {
-              screen: 'Partners',
+            navigation.navigate('MyPartners', {
+              screen: 'MyPartners',
               name: 'All',
             });
             setActiveLocation(false);
@@ -84,7 +85,7 @@ const PartnersNav = (props) => {
         </TouchableOpacity>
       )}
 
-      {routeName === 'Partners01' ? (
+      {routeName === 'MyPartnersSincere' ? (
         <View style={{position: 'relative'}}>
           <Text
             style={[
@@ -112,8 +113,8 @@ const PartnersNav = (props) => {
       ) : (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Partners01', {
-              screen: 'Partners01',
+            navigation.navigate('MyPartnersSincere', {
+              screen: 'MyPartnersSincere',
               name: 'All',
             });
             setActiveLocation(false);
@@ -134,7 +135,7 @@ const PartnersNav = (props) => {
         </TouchableOpacity>
       )}
 
-      {routeName === 'Partners02' ? (
+      {routeName === 'MyPartnersPopular' ? (
         <View style={{position: 'relative'}}>
           <Text
             style={[
@@ -162,8 +163,8 @@ const PartnersNav = (props) => {
       ) : (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Partners02', {
-              screen: 'Partners02',
+            navigation.navigate('MyPartnersPopular', {
+              screen: 'MyPartnersPopular',
               name: 'All',
             });
             setActiveLocation(false);
@@ -184,7 +185,7 @@ const PartnersNav = (props) => {
         </TouchableOpacity>
       )}
 
-      {routeName === 'Partners03' ? (
+      {routeName === 'MyPartnersLocal' ? (
         <View style={{position: 'relative'}}>
           <TouchableOpacity onPress={toggleLocation} activeOpacity={0.8}>
             <Text
@@ -250,8 +251,8 @@ const PartnersNav = (props) => {
                 style={{paddingHorizontal: 10, paddingVertical: 10}}
                 activeOpacity={0.7}
                 onPress={() => {
-                  navigation.navigate('Partners03', {
-                    screen: 'Partners03',
+                  navigation.navigate('MyPartnersLocal', {
+                    screen: 'MyPartnersLocal',
                     name: 'All',
                     location: v,
                   });

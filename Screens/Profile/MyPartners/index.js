@@ -28,7 +28,7 @@ const index = (props) => {
 
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
-  console.log('mb_id', mb_id);
+  console.log('routeName', routeName);
 
   const [partners, setPartners] = React.useState([]);
   const [pPackage, setPpackages] = React.useState([]);
@@ -55,7 +55,7 @@ const index = (props) => {
   const getPartnersPackage = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners(null, '1', null, null)
+    PartnersApi.getMyPartners(mb_id, null, '1', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPpackages(res.data.item);
@@ -71,7 +71,7 @@ const index = (props) => {
   const getPartnersGeneral = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners(null, '0', null, null)
+    PartnersApi.getMyPartners(mb_id, null, '0', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPgeneral(res.data.item);
@@ -87,7 +87,7 @@ const index = (props) => {
   const getPartnersEtc = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners(null, '2', null, null)
+    PartnersApi.getMyPartners(mb_id, null, '2', null, null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPetc(res.data.item);

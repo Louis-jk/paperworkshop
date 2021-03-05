@@ -41,6 +41,15 @@ const Header = (props) => {
       case 'MyPartners':
         setTitle('나의파트너스');
         break;
+      case 'MyPartnersSincere':
+        setTitle('나의파트너스');
+        break;
+      case 'MyPartnersPopular':
+        setTitle('나의파트너스');
+        break;
+      case 'MyPartnersLocal':
+        setTitle('나의파트너스');
+        break;
       case 'Gallery':
         setTitle('인쇄/패키지 갤러리');
         break;

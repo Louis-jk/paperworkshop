@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Image,
   Linking,
+  Alert,
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -42,13 +43,80 @@ const Detail = (props) => {
   const dispatch = useDispatch();
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
+  const [myFaverP, setMyFavorP] = React.useState([]);
   const [like, setLike] = React.useState(false);
+
   const onLikeBtn = (payload) => {
-    setLike((prev) => !prev);
+    // setLike((prev) => !prev);
     PartnersApi.setFavorPartner(mb_id, payload)
-      .then((res) => console.log('찜 결과', res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log('찜 결과', res);
+        if (
+          res.data.result === '1' &&
+          res.data.message === '찜하기가 취소되었습니다.'
+        ) {
+          setLike(false);
+          checkMyFavorP();
+        } else if (
+          res.data.result === '1' &&
+          res.data.message === '찜하기가 완료되었습니다.'
+        ) {
+          setLike(true);
+          checkMyFavorP();
+        }
+      })
+      .catch((err) => {
+        Alert.alert(res.data.message, err, [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
+
+  console.log('현재 파트너 ID', companyId);
+  // 찜한 파트너 확인
+  const checkFavor = () => {
+    console.log('myFaverP', myFaverP);
+
+    const a =
+      myFaverP.length !== 0 &&
+      myFaverP.some((element) => {
+        //유저정보가 들어와야
+        console.log(element.company_id);
+        return element.company_id === props.route.params.companyId;
+      });
+    return a;
+  };
+
+  // console.log('like ?', like);
+
+  const checkMyFavorP = () => {
+    PartnersApi.getMyPartners(mb_id, null, null, null, null)
+      .then((res) => {
+        console.log('내 찜 파트너 목록', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setMyFavorP(res.data.item);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(res.data.message, err, [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  React.useEffect(() => {
+    checkMyFavorP();
+  }, []);
 
   const carouselRef = React.useRef(null);
 
@@ -840,7 +908,7 @@ const Detail = (props) => {
             <View>
               <Image
                 source={
-                  !like
+                  !checkFavor()
                     ? require('../../src/assets/Dibson_off.png')
                     : require('../../src/assets/Dibson_on.png')
                 }

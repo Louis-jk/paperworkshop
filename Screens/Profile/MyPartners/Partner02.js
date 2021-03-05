@@ -10,20 +10,23 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
+import {useSelector} from 'react-redux';
 
-import Header from '../Common/Header';
+import Header from '../../Common/Header';
 
 import PartnersNav from './PartnersNav';
 import All from './Components/Tabs/All';
 import Package from './Components/Tabs/Package';
 import General from './Components/Tabs/General';
 import Etc from './Components/Tabs/Etc';
-import PartnersApi from '../../src/api/Partners';
+import PartnersApi from '../../../src/api/Partners';
 
 const Partner02 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-  const cateName = props.route.params.name;
+  // const cateName = props.route.params.name;
+
+  const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
   const [partners, setPartners] = React.useState([]);
   const [pPackage, setPpackages] = React.useState([]);
@@ -34,7 +37,7 @@ const Partner02 = (props) => {
   const getPartnersAll = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('popular', null, 'y', null)
+    PartnersApi.getMyPartners(mb_id, 'popular', null, 'y', null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
@@ -50,7 +53,7 @@ const Partner02 = (props) => {
   const getPartnersPackage = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('popular', '1', 'y', null)
+    PartnersApi.getMyPartners(mb_id, 'popular', '1', 'y', null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPpackages(res.data.item);
@@ -66,7 +69,7 @@ const Partner02 = (props) => {
   const getPartnersGeneral = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('popular', '0', 'y', null)
+    PartnersApi.getMyPartners(mb_id, 'popular', '0', 'y', null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPgeneral(res.data.item);
@@ -82,7 +85,7 @@ const Partner02 = (props) => {
   const getPartnersEtc = () => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('popular', '2', 'y', null)
+    PartnersApi.getMyPartners(mb_id, 'popular', '2', 'y', null)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPetc(res.data.item);
@@ -296,7 +299,7 @@ const Partner02 = (props) => {
           />
           <TouchableOpacity>
             <Image
-              source={require('../../src/assets/top_seach.png')}
+              source={require('../../../src/assets/top_seach.png')}
               resizeMode="contain"
               style={{width: 30, height: 30}}
             />

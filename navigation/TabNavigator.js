@@ -190,6 +190,18 @@ const TabNavigator = () => {
       <Stack.Screen name="Event" component={EventStackNavigator} />
       <Stack.Screen name="EventDetail" component={EventStackNavigator} />
       <Stack.Screen name="MyPartners" component={MyPartnersStackNavigator} />
+      <Stack.Screen
+        name="MyPartnersSincere"
+        component={MyPartnersStackNavigator}
+      />
+      <Stack.Screen
+        name="MyPartnersPopular"
+        component={MyPartnersStackNavigator}
+      />
+      <Stack.Screen
+        name="MyPartnersLocal"
+        component={MyPartnersStackNavigator}
+      />
       <Stack.Screen name="Search" component={SearchStackNavigator} />
     </Stack.Navigator>
   );

@@ -76,6 +76,9 @@ import ProfileEditScreen from '../Screens/Profile/Edit';
 
 // 나의 파트너스 SCREEN
 import MyPartnersScreen from '../Screens/Profile/MyPartners';
+import MyPartnersSincereScreen from '../Screens/Profile/MyPartners/Partner01';
+import MyPartnersPopularScreen from '../Screens/Profile/MyPartners/Partner02';
+import MyPartnersLocalScreen from '../Screens/Profile/MyPartners/Partner03';
 
 // 내 견적 SCREEN
 // 내 견적 메인
@@ -193,6 +196,7 @@ export const PartnersStackNavigator = () => {
       <Stack.Screen name="Partners" component={PartnersScreen} />
       <Stack.Screen name="ListPage" component={PartnersListPageScreen} />
       <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
+
       <Stack.Screen name="Partners01" component={Partners01Screen} />
       <Stack.Screen name="Partners02" component={Partners02Screen} />
       <Stack.Screen name="Partners03" component={Partners03Screen} />
@@ -204,6 +208,15 @@ export const MyPartnersStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
+      <Stack.Screen
+        name="MyPartnersSincere"
+        component={MyPartnersSincereScreen}
+      />
+      <Stack.Screen
+        name="MyPartnersPopular"
+        component={MyPartnersPopularScreen}
+      />
+      <Stack.Screen name="MyPartnersLocal" component={MyPartnersLocalScreen} />
     </Stack.Navigator>
   );
 };
