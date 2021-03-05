@@ -111,6 +111,7 @@ const Step04 = (props) => {
     frmdata.append('cnt', quantity !== 'direct' ? quantity : '');
     frmdata.append('cnt_etc', quantity !== 'direct' ? quantityDirect : '');
     frmdata.append('wood_pattern', wood_pattern);
+    frmdata.append('easy_yn', 'Y');
 
     OrderAPI.sendOrder(frmdata)
       .then((res) => console.log('간편견적 response', res))
@@ -200,11 +201,14 @@ const Step04 = (props) => {
     dispatch(setUserPwidth(width));
     dispatch(setUserPlength(length));
     dispatch(setUserPheight(height));
+    dispatch(setUserEasyYn('N'));
 
     if (quantity !== 'direct') {
       dispatch(setUserCnt(quantity));
+      dispatch(setUserCntEtc(0));
     } else {
       dispatch(setUserCntEtc(quantityDirect));
+      dispatch(setUserCnt(0));
     }
     if (pattern) {
       dispatch(setUserWoodPattern('Y'));
