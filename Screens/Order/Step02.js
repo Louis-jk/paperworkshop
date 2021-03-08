@@ -835,7 +835,7 @@ const Step02 = (props) => {
               {formikProps.isSubmitting ? (
                 <ActivityIndicator size="large" color="#275696" />
               ) : (
-                <View style={{paddingHorizontal: 20}}>
+                <View>
                   <View
                     style={{
                       flexDirection: 'row',
