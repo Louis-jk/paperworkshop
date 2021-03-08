@@ -140,18 +140,15 @@ const Step04 = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const [type, setType] = React.useState('');
-
   const directRef = React.useRef(null);
-
-  console.log('directRef?', directRef);
-
-  const checkType = (v) => {
-    setType(v);
-  };
 
   const [infoDetail, setInfoDetail] = React.useState(null);
   const [getQuantity, setGetQuantity] = React.useState([]);
+  const [pageCount, setPageCount] = React.useState([]); // 일반인쇄 - 카달로그 type_id 71일 경우 page count(페이지 수) 정보 담기
+  const [pageCountInner, setPageCountInner] = React.useState(''); // 일반인쇄 - 카달로그 type_id 71일 경우 page count(페이지 수) 정보 담기
+  const [pageCountText, setPageCountText] = React.useState(''); // 일반인쇄 - 카달로그 type_id 71일 경우 page count(페이지 수) 안내 문구 정보 담기
+  const [bindType, setBindType] = React.useState(''); // 일반인쇄 - 카달로그 type_id 71일 경우 bind_type(제본방식) 정보 담기
+  const [bindTypeText, setBindTypeText] = React.useState(''); // 일반인쇄 - 카달로그 type_id 71일 경우 bind_type(제본방식) 안내 문구 담기
   const [isLoading, setLoading] = React.useState(false);
 
   const getType = () => {
@@ -162,6 +159,17 @@ const Step04 = (props) => {
           console.log('상세정보', res);
           setInfoDetail(res.data.item);
           setGetQuantity(res.data.item[0].making_cnt);
+
+          if (res.data.item[0].type_id === '71') {
+            let pCnt = res.data.item[0].page_cnt.split(',');
+            let bType = res.data.item[0].bind_type.split(',');
+            setPageCount(pCnt);
+            setPageCountInner(res.data.item[0].page_cnt2);
+            setPageCountText(res.data.item[0].page_cnt_text);
+            setBindType(bType);
+            setBindTypeText(res.data.item[0].bind_type_text);
+          }
+
           setLoading(false);
         } else if (res.data.result === '1' && res.data.count <= 0) {
           setGetQuantity(null);
@@ -177,6 +185,8 @@ const Step04 = (props) => {
   React.useEffect(() => {
     getType();
   }, []);
+
+  console.log('bindType', bindType);
 
   const [quantity, setQuantity] = React.useState(null);
   const [quantityDirect, setQuantityDirect] = React.useState(null);
@@ -375,8 +385,217 @@ const Step04 = (props) => {
                     </View>
                   </View>
 
-                  {/* 가로 규격 */}
+                  {/* 일반 인쇄일 경우 */}
                   <View style={[styles.wrap]}>
+                    {type_id === '71' ? (
+                      <View
+                        style={{
+                          marginBottom: 20,
+                        }}>
+                        <Text
+                          style={[
+                            styles.mediumText,
+                            {
+                              fontSize: 15,
+                              color: '#000000',
+                              marginRight: 5,
+                              marginBottom: 10,
+                            },
+                          ]}>
+                          페이지수(표지)
+                        </Text>
+                        <View
+                          style={[
+                            styles.details,
+                            {
+                              marginBottom: pageCount ? 15 : 0,
+                            },
+                          ]}>
+                          {pageCount
+                            ? pageCount.map((q, idx) => (
+                                <TouchableOpacity
+                                  key={idx}
+                                  activeOpacity={1}
+                                  hitSlop={{
+                                    top: 10,
+                                    bottom: 10,
+                                    left: 10,
+                                    right: 10,
+                                  }}
+                                  onPress={() => {
+                                    setQuantity(q);
+                                    setQuantityDirect(null);
+                                    setQuantityError(false);
+                                  }}
+                                  style={[
+                                    styles.details,
+                                    {
+                                      marginRight: 20,
+                                    },
+                                  ]}>
+                                  <Image
+                                    source={
+                                      quantity === q
+                                        ? require('../../src/assets/radio_on.png')
+                                        : require('../../src/assets/radio_off.png')
+                                    }
+                                    resizeMode="contain"
+                                    style={{
+                                      width: 20,
+                                      height: 20,
+                                      marginRight: 5,
+                                    }}
+                                  />
+                                  <Text
+                                    style={[
+                                      styles.normalText,
+                                      {fontSize: 14, color: '#000'},
+                                    ]}>
+                                    {q}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))
+                            : null}
+                        </View>
+                        {type_id === '71' && pageCountText ? (
+                          <Text
+                            style={[
+                              styles.normalText,
+                              {fontSize: 12, color: '#B5B5B5', marginRight: 5},
+                            ]}>
+                            {pageCountText}
+                          </Text>
+                        ) : null}
+                      </View>
+                    ) : null}
+
+                    {type_id === '71' &&
+                    pageCountInner !== null &&
+                    pageCountInner === 'Y' ? (
+                      <View
+                        style={{
+                          marginBottom: 20,
+                        }}>
+                        <Text
+                          style={[
+                            styles.mediumText,
+                            {
+                              fontSize: 15,
+                              color: '#000000',
+                              marginRight: 5,
+                              marginBottom: 10,
+                            },
+                          ]}>
+                          페이지수(내지)
+                        </Text>
+                        <TextInput
+                          placeholder="페이지수를 직접 입력해주세요."
+                          placeholderTextColor="#A2A2A2"
+                          style={[
+                            styles.normalText,
+                            {
+                              borderWidth: 1,
+                              borderColor: '#E3E3E3',
+                              borderRadius: 4,
+                              paddingHorizontal: 10,
+                            },
+                          ]}
+                          onChangeText={(value) => {
+                            setPwidth(value);
+                            formikProps.setFieldValue('order_width', value);
+                            setPwidthError(false);
+                          }}
+                          onBlur={formikProps.handleBlur('order_width')}
+                          autoCapitalize="none"
+                          keyboardType="number-pad"
+                        />
+                      </View>
+                    ) : null}
+
+                    {type_id === '71' && bindType !== null ? (
+                      <View
+                        style={{
+                          marginBottom: 20,
+                        }}>
+                        <Text
+                          style={[
+                            styles.mediumText,
+                            {
+                              fontSize: 15,
+                              color: '#000000',
+                              marginRight: 5,
+                              marginBottom: 10,
+                            },
+                          ]}>
+                          제본방식
+                        </Text>
+                        <View
+                          style={[
+                            styles.details,
+                            {
+                              marginBottom: pageCount ? 15 : 0,
+                            },
+                          ]}>
+                          {bindType
+                            ? bindType.map((q, idx) => (
+                                <TouchableOpacity
+                                  key={idx}
+                                  activeOpacity={1}
+                                  hitSlop={{
+                                    top: 10,
+                                    bottom: 10,
+                                    left: 10,
+                                    right: 10,
+                                  }}
+                                  onPress={() => {
+                                    setQuantity(q);
+                                    setQuantityDirect(null);
+                                    setQuantityError(false);
+                                  }}
+                                  style={[
+                                    styles.details,
+                                    {
+                                      marginRight: 20,
+                                    },
+                                  ]}>
+                                  <Image
+                                    source={
+                                      quantity === q
+                                        ? require('../../src/assets/radio_on.png')
+                                        : require('../../src/assets/radio_off.png')
+                                    }
+                                    resizeMode="contain"
+                                    style={{
+                                      width: 20,
+                                      height: 20,
+                                      marginRight: 5,
+                                    }}
+                                  />
+                                  <Text
+                                    style={[
+                                      styles.normalText,
+                                      {fontSize: 14, color: '#000'},
+                                    ]}>
+                                    {q}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))
+                            : null}
+                        </View>
+                        {type_id === '71' && bindTypeText ? (
+                          <Text
+                            style={[
+                              styles.normalText,
+                              {fontSize: 12, color: '#B5B5B5', marginRight: 5},
+                            ]}>
+                            {bindTypeText}
+                          </Text>
+                        ) : null}
+                      </View>
+                    ) : null}
+                    {/* // 일반 인쇄일 경우 */}
+
+                    {/* 가로 규격 */}
                     <View
                       style={[
                         styles.details,
