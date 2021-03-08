@@ -18,10 +18,13 @@ import {TabView, SceneMap} from 'react-native-tab-view';
 import axios from 'axios';
 import qs from 'qs';
 import {useSelector, useDispatch} from 'react-redux';
-
 import DetailHeader from '../Common/DetailHeader';
 import Modal from '../Common/InfoModal';
-import SelectModal from '../Common/SelectModal';
+
+import SelectRigidBoxModal from '../Common/StepDetailModals/SelectRigidBoxModal';
+import CatalogModal from '../Common/StepDetailModals/CatalogModal';
+// import SelectLeafletModal from '../Common/SelectLeafletModal';
+
 import {
   selectTypeId,
   selectTypeName,
@@ -82,6 +85,8 @@ const Step03 = (props) => {
     getTypeDetail();
   }, []);
 
+  console.log('typeDetail', typeDetail);
+
   const [type, setType] = React.useState('');
   const [typeName, setTypeName] = React.useState('');
   const [directTypeName, setDirectTypeName] = React.useState('');
@@ -92,14 +97,24 @@ const Step03 = (props) => {
   };
 
   const [isModalVisible, setModalVisible] = React.useState(false);
-  const [isSelectModalVisible, setSelectModalVisible] = React.useState(false);
+  const [isSelectModalVisible, setSelectModalVisible] = React.useState(false); // 싸바리 박스 디테일 선택 모달
+  const [isCatalogModalVisible, setCatalogModalVisible] = React.useState(false); // 카달로그 디테일 선택 모달
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
+  // 싸바리 박스 디테일 선택 모달
   const toggleSelectModal = (type_id) => {
     setSelectModalVisible(!isSelectModalVisible);
+    if (type_id) {
+      setTypeId(type_id);
+    }
+  };
+
+  // 카달로그 박스 디테일 선택 모달
+  const toggleCatalogModal = (type_id) => {
+    setCatalogModalVisible(!isCatalogModalVisible);
     if (type_id) {
       setTypeId(type_id);
     }
@@ -127,13 +142,19 @@ const Step03 = (props) => {
   return (
     <>
       <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
-
-      <SelectModal
+      {/* 싸바리 박스 상세 선택 모달 */}
+      <SelectRigidBoxModal
         isVisible={isSelectModalVisible}
         toggleModal={toggleSelectModal}
         selectSabari={selectSabari}
         typeId={typeId}
       />
+      {/* 카달로그 상세 선택 모달 */}
+      <CatalogModal
+        isVisible={isCatalogModalVisible}
+        toggleModal={toggleCatalogModal}
+      />
+
       <DetailHeader
         title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
         navigation={navigation}
@@ -207,6 +228,7 @@ const Step03 = (props) => {
                         checkType(t.type_id);
                         setTypeName(t.type_name);
                         ca_id === '12' && toggleSelectModal(t.type_id);
+                        console.log('test', t.type_id);
                       }}
                       style={styles.categoryItem}>
                       {t.box_img ? (
