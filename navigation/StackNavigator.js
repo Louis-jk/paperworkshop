@@ -195,8 +195,6 @@ export const PartnersStackNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Partners" component={PartnersScreen} />
       <Stack.Screen name="ListPage" component={PartnersListPageScreen} />
-      <Stack.Screen name="MyPartners" component={MyPartnersScreen} />
-
       <Stack.Screen name="Partners01" component={Partners01Screen} />
       <Stack.Screen name="Partners02" component={Partners02Screen} />
       <Stack.Screen name="Partners03" component={Partners03Screen} />
