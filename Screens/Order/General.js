@@ -18,7 +18,8 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {selectCate1, selectCaId, setUserId} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
-import Modal from '../Common/InfoModal';
+import Modal from '../Common/GeneralInfoModal';
+// import Modal from '../Common/InfoModal';
 
 const General = (props) => {
   const navigation = props.navigation;
@@ -116,7 +117,7 @@ const General = (props) => {
                   style={styles.categoryItemImg}
                 />
                 <Text style={styles.categoryItemText}>
-                  카달로그/브로슈어/팜플렛
+                  카달로그/브로슈어/리플렛
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
