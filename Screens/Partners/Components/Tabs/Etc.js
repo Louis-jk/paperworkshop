@@ -11,7 +11,7 @@ const Etc = (props) => {
     return <List item={item} index={index} navigation={navigation} />;
   };
 
-  return partners ? (
+  return (
     <View style={{paddingHorizontal: 16}}>
       <FlatList
         data={partners}
@@ -23,18 +23,19 @@ const Etc = (props) => {
         showsVerticalScrollIndicator={false}
         progressViewOffset={true}
         refreshing={true}
+        ListEmptyComponent={
+          <View
+            style={{
+              flex: 1,
+              height: Dimensions.get('window').height - 300,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
+          </View>
+        }
         // onEndReached={handleLoadMore}
       />
-    </View>
-  ) : (
-    <View
-      style={{
-        flex: 1,
-        height: Dimensions.get('window').height,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text style={styles.normalText}>해당 업체가 없습니다.</Text>
     </View>
   );
 };
