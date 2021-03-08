@@ -13,29 +13,41 @@ import {
   Image,
   Alert,
   Platform,
+  FlatList,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import DetailHeader from '../../Common/DetailHeader';
+import OrderAPI from '../../../src/api/OrderAPI';
 
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  const [category01, setCategory01] = React.useState(null);
+  const {mb_id} = useSelector((state) => state.UserInfoReducer);
+  const [myOrders, setMyOrders] = React.useState([]);
 
-  let data = [
-    {
-      value: 'Banana',
-    },
-    {
-      value: 'Mango',
-    },
-    {
-      value: 'Pear',
-    },
-  ];
+  console.log('아이디', mb_id);
+
+  React.useEffect(() => {
+    OrderAPI.getMyOrder(mb_id)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setMyOrders(res.data.item);
+        } else {
+          setMyOrders(null);
+        }
+      })
+      .catch((err) =>
+        Alert.alert('문제가 있습니다.', err, [
+          {
+            text: '확인',
+          },
+        ]),
+      );
+  }, []);
 
   const [visibleStep01, setVisibleStep01] = React.useState(false);
   const [visibleStep02, setVisibleStep02] = React.useState(false);
@@ -48,6 +60,117 @@ const index = (props) => {
 
   const toggleMenu02 = () => {
     setVisibleStep02((prev) => !prev);
+  };
+
+  const renderRow = ({item, index}) => {
+    return (
+      <View>
+        <View style={{paddingHorizontal: 20}} key={index}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate('MyOrderReqDetailList')}
+            activeOpacity={0.8}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={styles.listWrap}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}>
+                  {item.status === '0' || item.status === '7' ? (
+                    <View style={styles.listStep02Badge}>
+                      <Text
+                        style={[
+                          styles.listStep02BadgeText,
+                          {color: '#275696'},
+                        ]}>
+                        {item.status === '0'
+                          ? '견적진행'
+                          : item.status === '7'
+                          ? '마감'
+                          : null}
+                      </Text>
+                    </View>
+                  ) : item.status === '1' || item.status === '2' ? (
+                    <View style={styles.listStep02BadgePayReq}>
+                      <Text
+                        style={[
+                          styles.listStep02BadgeText,
+                          {color: '#275696'},
+                        ]}>
+                        파트너스 최종 선정 (
+                        {item.status === '1'
+                          ? '견적 확정 대기'
+                          : item.status === '2'
+                          ? '계약금 입금대기'
+                          : null}
+                        )
+                      </Text>
+                    </View>
+                  ) : item.status === '3' ||
+                    item.status === '4' ||
+                    item.status === '5' ||
+                    item.status === '6' ? (
+                    <View style={styles.listStep02BadgePayComplete}>
+                      <Text
+                        style={[
+                          styles.listStep02BadgeText,
+                          {color: '#000000'},
+                        ]}>
+                        {item.status === '3'
+                          ? '계약금 입금 완료'
+                          : item.status === '4'
+                          ? '인쇄 제작 요청'
+                          : item.status === '5'
+                          ? '납품완료'
+                          : item.status === '6'
+                          ? '수령완료'
+                          : null}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {item.status === '0' && (
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 13, marginLeft: 5, color: '#000000'},
+                      ]}>
+                      {item.ecnt}건
+                    </Text>
+                  )}
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
+                    ]}>
+                    {item.new_yn === 'Y' ? 'NEW' : null}
+                  </Text>
+                </View>
+                <Text style={styles.listTitle}>{item.title}</Text>
+                <Text style={styles.listDesc}>{item.ca_name}</Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                }}>
+                {/* <Text style={styles.listStep02}>입찰중</Text> */}
+                <Text style={styles.listDday02}>{item.edate}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.line} />
+      </View>
+    );
   };
 
   return (
@@ -211,6 +334,29 @@ const index = (props) => {
         contentContainerStyle={{zIndex: -1000}}>
         {/* 리스트 출력 부분 */}
 
+        {myOrders ? (
+          <FlatList
+            data={myOrders}
+            renderItem={renderRow}
+            keyExtractor={(list, index) => index.toString()}
+            numColumns={1}
+            // pagingEnabled={true}
+            persistentScrollbar={true}
+            showsVerticalScrollIndicator={false}
+            progressViewOffset={true}
+            refreshing={true}
+            // contentContainerStyle={{paddingBottom: 20}}
+            // onEndReached={handleLoadMore}
+          />
+        ) : (
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <Text style={{fontFamily: 'SCDream4'}}>
+              견적 의뢰 건이 없습니다.
+            </Text>
+          </View>
+        )}
+
         {/* 입찰중 */}
         <View style={{paddingHorizontal: 20}}>
           <TouchableOpacity
@@ -261,7 +407,7 @@ const index = (props) => {
               </View>
               <View
                 style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                <Text style={styles.listStep02}>입찰중</Text>
+                {/* <Text style={styles.listStep02}>입찰중</Text> */}
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
@@ -313,7 +459,7 @@ const index = (props) => {
               </View>
               <View
                 style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                <Text style={styles.listStep02}>파트너 선정</Text>
+                {/* <Text style={styles.listStep02}>파트너 선정</Text> */}
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
@@ -365,7 +511,7 @@ const index = (props) => {
               </View>
               <View
                 style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                <Text style={styles.listStep02}>파트너 선정</Text>
+                {/* <Text style={styles.listStep02}>파트너 선정</Text> */}
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
@@ -417,7 +563,7 @@ const index = (props) => {
               </View>
               <View
                 style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                <Text style={styles.listStep02}>파트너 선정</Text>
+                {/* <Text style={styles.listStep02}>파트너 선정</Text> */}
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
@@ -511,7 +657,7 @@ const index = (props) => {
               </View>
               <View
                 style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                <Text style={[styles.listStep02, {color: '#000'}]}>마감</Text>
+                {/* <Text style={[styles.listStep02, {color: '#000'}]}>마감</Text> */}
                 <Text style={styles.listDday02}>20.11.10</Text>
               </View>
             </View>
