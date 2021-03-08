@@ -12,15 +12,35 @@ import {
 } from 'react-native';
 
 import Modal from 'react-native-modal';
+import {useSelector} from 'react-redux';
 
-const CatalogModal = ({toggleModal, isVisible, selectSabari, typeId}) => {
+const CatalogModal = ({
+  toggleModal,
+  isVisible,
+  selectDetail,
+  typeId,
+  wayEdit,
+  groundMethod,
+}) => {
   console.log('catalog modal props type id', typeId);
+  const {type_details} = useSelector((state) => state.OrderHandlerReducer);
+  const detailItem = type_details.filter((type) => type.type_id === typeId);
+  const [detailMenu, setDetailMenu] = React.useState([]);
+
+  React.useEffect(() => {
+    if (wayEdit) {
+      const menu = wayEdit.split(',');
+      setDetailMenu(menu);
+    }
+  }, [wayEdit]);
+  console.log('카달로그 모달 wayEdit', wayEdit);
+  console.log('detailMenu?', detailMenu);
+
   return (
     <View>
       <Modal isVisible={isVisible} onBackdropPress={toggleModal}>
         <View
           style={{
-            flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
@@ -29,7 +49,7 @@ const CatalogModal = ({toggleModal, isVisible, selectSabari, typeId}) => {
           <View
             style={{
               position: 'relative',
-              height: 370,
+              height: 310,
               backgroundColor: '#fff',
               borderRadius: 5,
             }}>
@@ -46,7 +66,7 @@ const CatalogModal = ({toggleModal, isVisible, selectSabari, typeId}) => {
                 borderTopLeftRadius: 5,
               }}>
               <Text style={[styles.mediumText, {fontSize: 16, color: '#fff'}]}>
-                싸바리 형태를 선택해주세요.
+                카달로그 형태를 선택해주세요.
               </Text>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -63,7 +83,7 @@ const CatalogModal = ({toggleModal, isVisible, selectSabari, typeId}) => {
                   elevation: 1,
                 }}>
                 <Image
-                  source={require('../../src/assets/icon_close03.png')}
+                  source={require('../../../src/assets/icon_close03.png')}
                   resizeMode="contain"
                   style={{
                     width: 22,
@@ -86,56 +106,17 @@ const CatalogModal = ({toggleModal, isVisible, selectSabari, typeId}) => {
                   paddingHorizontal: 20,
                   paddingVertical: 20,
                 }}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => selectSabari('2단 싸바리', typeId)}
-                  style={styles.partnerInfoBox}>
-                  <Text style={styles.partnerInfoTitle}>2단 싸바리</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => selectSabari('3단 싸바리', typeId)}
-                  style={styles.partnerInfoBox}>
-                  <Text style={styles.partnerInfoTitle}>3단 싸바리</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => selectSabari('표지싸바리(리본)', typeId)}
-                  style={styles.partnerInfoBox}>
-                  <Text style={styles.partnerInfoTitle}>표지싸바리(리본)</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => selectSabari('표지싸바리(자석)', typeId)}
-                  style={styles.partnerInfoBox}>
-                  <Text style={styles.partnerInfoTitle}>표지싸바리(자석)</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => selectSabari('커스텀싸바리', typeId)}
-                  style={styles.partnerInfoBox}>
-                  <Text style={styles.partnerInfoTitle}>커스텀싸바리</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
-                </TouchableOpacity>
+                {detailMenu
+                  ? detailMenu.map((menu) => (
+                      <TouchableOpacity
+                        key={menu}
+                        activeOpacity={0.8}
+                        onPress={() => selectDetail(menu, typeId)}
+                        style={styles.partnerInfoBox}>
+                        <Text style={styles.partnerInfoTitle}>{menu}</Text>
+                      </TouchableOpacity>
+                    ))
+                  : null}
               </View>
               {/* // 세부정보 안내 Area */}
             </ScrollView>
