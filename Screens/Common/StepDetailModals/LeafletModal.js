@@ -2,17 +2,13 @@ import * as React from 'react';
 import {
   View,
   Text,
-  TextInput,
-  Dimensions,
   TouchableOpacity,
   Image,
-  Alert,
   ScrollView,
   StyleSheet,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
 
 const LeafletModal = ({
   toggleModal,
@@ -22,8 +18,6 @@ const LeafletModal = ({
   groundMethod,
 }) => {
   console.log('catalog modal props type id', typeId);
-  const {type_details} = useSelector((state) => state.OrderHandlerReducer);
-  const detailItem = type_details.filter((type) => type.type_id === typeId);
   const [detailMenu, setDetailMenu] = React.useState([]);
 
   React.useEffect(() => {
