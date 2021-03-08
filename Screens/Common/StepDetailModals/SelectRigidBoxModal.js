@@ -13,7 +13,12 @@ import {
 
 import Modal from 'react-native-modal';
 
-const InfoModal = ({toggleModal, isVisible, selectSabari, typeId}) => {
+const SelectRigidBoxModal = ({
+  toggleModal,
+  isVisible,
+  selectSabari,
+  typeId,
+}) => {
   console.log('modal props type id', typeId);
   return (
     <View>
@@ -63,7 +68,7 @@ const InfoModal = ({toggleModal, isVisible, selectSabari, typeId}) => {
                   elevation: 1,
                 }}>
                 <Image
-                  source={require('../../src/assets/icon_close03.png')}
+                  source={require('../../../src/assets/icon_close03.png')}
                   resizeMode="contain"
                   style={{
                     width: 22,
@@ -177,4 +182,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InfoModal;
+export default SelectRigidBoxModal;
