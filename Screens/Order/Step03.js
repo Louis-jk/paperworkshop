@@ -162,10 +162,12 @@ const Step03 = (props) => {
 
     if (ca_id === '1' && typeId === '71') {
       dispatch(setUserWayEdit(detail.detail));
+      dispatch(setUserGroundMethod(''));
     }
 
     if (ca_id === '1' && typeId === '73') {
       dispatch(setUserGroundMethod(detail02.detail));
+      dispatch(setUserWayEdit(''));
     }
 
     navigation.navigate('OrderStep04', {
