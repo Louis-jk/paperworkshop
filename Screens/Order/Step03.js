@@ -23,16 +23,19 @@ import Modal from '../Common/InfoModal';
 
 import SelectRigidBoxModal from '../Common/StepDetailModals/SelectRigidBoxModal';
 import CatalogModal from '../Common/StepDetailModals/CatalogModal';
-// import SelectLeafletModal from '../Common/SelectLeafletModal';
+import SelectLeafletModal from '../Common/StepDetailModals/LeafletModal';
 
 import {
   selectTypeId,
   selectTypeName,
   setUserStype,
+  setUserGroundMethod,
+  setUserWayEdit,
 } from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
+import LeafletModal from '../Common/StepDetailModals/LeafletModal';
 
-const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
+import BoxType from '../../src/api/BoxType';
 
 const Step03 = (props) => {
   const navigation = props.navigation;
@@ -44,7 +47,9 @@ const Step03 = (props) => {
   const dispatch = useDispatch();
   const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
   const [typeDetail, setTypeDetail] = React.useState([]);
-  const [sabari, setSabari] = React.useState({});
+  const [sabari, setSabari] = React.useState({}); // 싸바리 박스(패키지) 세부 내용 담기
+  const [detail, setDetail] = React.useState({}); // 카달로그(일반인쇄) 세부 내용 담기
+  const [detail02, setDetail02] = React.useState({}); // 리플렛(일반인쇄) 세부 내용 담기
 
   console.log('sabari', sabari);
 
@@ -54,17 +59,21 @@ const Step03 = (props) => {
     toggleSelectModal();
   };
 
+  // 카달로그 세부 선택
+  const selectDetail = (v, type_id) => {
+    setDetail({type_id: type_id, detail: v});
+    toggleCatalogModal();
+  };
+
+  // 리플렛 세부 선택
+  const selectLeafletDetail = (v, type_id) => {
+    setDetail02({type_id: type_id, detail: v});
+    toggleLeafletModal();
+  };
+
   // 박스 정보 가져오기
   const getTypeDetail = () => {
-    axios({
-      url: `${baseUrl}`,
-      method: 'post',
-      data: qs.stringify({
-        method: 'proc_box_list',
-        cate1,
-        ca_id,
-      }),
-    })
+    BoxType.getBoxType(cate1, ca_id)
       .then((res) => {
         console.log('Step03 response', res);
         if (res.data.result === '1') {
@@ -91,6 +100,8 @@ const Step03 = (props) => {
   const [typeName, setTypeName] = React.useState('');
   const [directTypeName, setDirectTypeName] = React.useState('');
   const [typeId, setTypeId] = React.useState(''); // 타입아이디 담기
+  const [wayEdit, setWayEdit] = React.useState(''); // WayEdit 담기
+  const [groundMethod, setGroundMethod] = React.useState(''); // GroundMethod 담기
 
   const checkType = (v) => {
     setType(v);
@@ -99,6 +110,7 @@ const Step03 = (props) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [isSelectModalVisible, setSelectModalVisible] = React.useState(false); // 싸바리 박스 디테일 선택 모달
   const [isCatalogModalVisible, setCatalogModalVisible] = React.useState(false); // 카달로그 디테일 선택 모달
+  const [isLeafletModalVisible, setLeafletModalVisible] = React.useState(false); // 리플렛 디테일 선택 모달
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -113,10 +125,25 @@ const Step03 = (props) => {
   };
 
   // 카달로그 박스 디테일 선택 모달
-  const toggleCatalogModal = (type_id) => {
+  const toggleCatalogModal = (type_id, way_edit) => {
     setCatalogModalVisible(!isCatalogModalVisible);
+
     if (type_id) {
       setTypeId(type_id);
+    }
+    if (way_edit) {
+      setWayEdit(way_edit);
+    }
+  };
+
+  // 리플렛 박스 디테일 선택 모달
+  const toggleLeafletModal = (type_id, ground_method) => {
+    setLeafletModalVisible(!isLeafletModalVisible);
+    if (type_id) {
+      setTypeId(type_id);
+    }
+    if (ground_method) {
+      setGroundMethod(ground_method);
     }
   };
 
@@ -132,6 +159,15 @@ const Step03 = (props) => {
     if (ca_id === '12') {
       dispatch(setUserStype(sabari.sabari));
     }
+
+    if (ca_id === '1' && typeId === '71') {
+      dispatch(setUserWayEdit(detail.detail));
+    }
+
+    if (ca_id === '1' && typeId === '73') {
+      dispatch(setUserGroundMethod(detail02.detail));
+    }
+
     navigation.navigate('OrderStep04', {
       screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
     });
@@ -153,6 +189,17 @@ const Step03 = (props) => {
       <CatalogModal
         isVisible={isCatalogModalVisible}
         toggleModal={toggleCatalogModal}
+        selectDetail={selectDetail}
+        typeId={typeId}
+        wayEdit={wayEdit}
+      />
+      {/* 리플렛 상세 선택 모달 */}
+      <LeafletModal
+        isVisible={isLeafletModalVisible}
+        toggleModal={toggleLeafletModal}
+        selectDetail={selectLeafletDetail}
+        typeId={typeId}
+        groundMethod={groundMethod}
       />
 
       <DetailHeader
@@ -228,7 +275,11 @@ const Step03 = (props) => {
                         checkType(t.type_id);
                         setTypeName(t.type_name);
                         ca_id === '12' && toggleSelectModal(t.type_id);
-                        console.log('test', t.type_id);
+                        t.type_id === '71' &&
+                          toggleCatalogModal(t.type_id, t.way_edit);
+                        t.type_id === '73' &&
+                          toggleLeafletModal(t.type_id, t.ground_method);
+                        // console.log('test', t.type_id);
                       }}
                       style={styles.categoryItem}>
                       {t.box_img ? (
@@ -278,7 +329,13 @@ const Step03 = (props) => {
                             color: type === t.type_id ? '#275696' : '#000000',
                           },
                         ]}>
-                        {t.type_id === sabari.type_id ? sabari.sabari : null}
+                        {t.type_id === sabari.type_id
+                          ? sabari.sabari
+                          : t.type_id === detail.type_id
+                          ? detail.detail
+                          : t.type_id === detail02.type_id
+                          ? detail02.detail
+                          : null}
                       </Text>
                     </TouchableOpacity>
                   ))
