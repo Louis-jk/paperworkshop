@@ -430,8 +430,6 @@ const Step04 = (props) => {
                 order_height: '',
               }}
               onSubmit={(values, actions) => {
-                console.log('Hey');
-
                 nextStep(
                   values.order_width,
                   values.order_length,
