@@ -22,7 +22,7 @@ const SelectRigidBoxModal = ({
   console.log('modal props type id', typeId);
   return (
     <View>
-      <Modal isVisible={isVisible} onBackdropPress={toggleModal}>
+      <Modal isVisible={isVisible}>
         <View
           style={{
             flex: 1,
@@ -53,7 +53,7 @@ const SelectRigidBoxModal = ({
               <Text style={[styles.mediumText, {fontSize: 16, color: '#fff'}]}>
                 싸바리 형태를 선택해주세요.
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={toggleModal}
                 hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
@@ -75,7 +75,7 @@ const SelectRigidBoxModal = ({
                     height: 22,
                   }}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
 
             {/* 컨텐츠 */}

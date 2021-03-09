@@ -629,7 +629,6 @@ const Step05 = (props) => {
                         activeLabelStyle={{color: '#000'}}
                         activeItemStyle={{color: '#000'}}
                         selectedLabelStyle={{color: '#000'}}
-                        value={paperType}
                         dropDownMaxHeight={300}
                         items={type_details[0].board_tk.map((v, _i) => {
                           // setPfId(v.pf_id);
@@ -829,7 +828,6 @@ const Step05 = (props) => {
                       activeLabelStyle={{color: '#000'}}
                       activeItemStyle={{color: '#000'}}
                       selectedLabelStyle={{color: '#000'}}
-                      value={paperType}
                       dropDownMaxHeight={300}
                       items={paperDetail.map((v, _i) => {
                         // setPfId(v.pf_id);

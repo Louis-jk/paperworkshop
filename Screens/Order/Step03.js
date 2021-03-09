@@ -22,8 +22,7 @@ import DetailHeader from '../Common/DetailHeader';
 import Modal from '../Common/InfoModal';
 
 import SelectRigidBoxModal from '../Common/StepDetailModals/SelectRigidBoxModal';
-import CatalogModal from '../Common/StepDetailModals/CatalogModal';
-import SelectLeafletModal from '../Common/StepDetailModals/LeafletModal';
+import SelectDetailModal from '../Common/StepDetailModals/SelectDetailModal';
 
 import {
   selectTypeId,
@@ -33,7 +32,6 @@ import {
   setUserWayEdit,
 } from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
-import LeafletModal from '../Common/StepDetailModals/LeafletModal';
 
 import BoxType from '../../src/api/BoxType';
 
@@ -42,75 +40,26 @@ const Step03 = (props) => {
   const routeName = props.route.name;
   const propsScreenName = props.route.params.screen;
 
-  console.log('Step03 props', props);
-
   const dispatch = useDispatch();
   const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
   const [typeDetail, setTypeDetail] = React.useState([]);
   const [sabari, setSabari] = React.useState({}); // 싸바리 박스(패키지) 세부 내용 담기
-  const [detail, setDetail] = React.useState({}); // 카달로그(일반인쇄) 세부 내용 담기
-  const [detail02, setDetail02] = React.useState({}); // 리플렛(일반인쇄) 세부 내용 담기
+  const [detail, setDetail] = React.useState({}); // 일반인쇄 타입 세부 내용 담기
+  const [detail02, setDetail02] = React.useState({}); // 일반인쇄 타입 세부 내용 담기
 
-  console.log('sabari', sabari);
-
-  // 싸바리 선택
-  const selectSabari = (v, type_id) => {
-    setSabari({type_id: type_id, sabari: v});
-    toggleSelectModal();
-  };
-
-  // 카달로그 세부 선택
-  const selectDetail = (v, type_id) => {
-    setDetail({type_id: type_id, detail: v});
-    toggleCatalogModal();
-  };
-
-  // 리플렛 세부 선택
-  const selectLeafletDetail = (v, type_id) => {
-    setDetail02({type_id: type_id, detail: v});
-    toggleLeafletModal();
-  };
-
-  // 박스 정보 가져오기
-  const getTypeDetail = () => {
-    BoxType.getBoxType(cate1, ca_id)
-      .then((res) => {
-        console.log('Step03 response', res);
-        if (res.data.result === '1') {
-          setTypeDetail(res.data.item);
-          dispatch(setOrderDetails(res.data.item));
-        } else {
-          Alert.alert(res.data.message, '', [
-            {
-              text: '확인',
-            },
-          ]);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-
-  React.useEffect(() => {
-    getTypeDetail();
-  }, []);
-
-  console.log('typeDetail', typeDetail);
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [isSelectModalVisible, setSelectModalVisible] = React.useState(false); // 싸바리 박스 디테일 선택 모달
+  const [
+    isSelectDetailModalVisible,
+    setSelectDetailModalVisible,
+  ] = React.useState(false); // 타입 디테일 선택 모달
+  const [bindFix, setBindFix] = React.useState(null); // 리플렛 디테일 선택 모달
 
   const [type, setType] = React.useState('');
   const [typeName, setTypeName] = React.useState('');
   const [directTypeName, setDirectTypeName] = React.useState('');
-  const [typeId, setTypeId] = React.useState(''); // 타입아이디 담기
-  const [wayEdit, setWayEdit] = React.useState(''); // WayEdit 담기
-  const [groundMethod, setGroundMethod] = React.useState(''); // GroundMethod 담기
-
-  const checkType = (v) => {
-    setType(v);
-  };
-
-  const [isModalVisible, setModalVisible] = React.useState(false);
-  const [isSelectModalVisible, setSelectModalVisible] = React.useState(false); // 싸바리 박스 디테일 선택 모달
-  const [isCatalogModalVisible, setCatalogModalVisible] = React.useState(false); // 카달로그 디테일 선택 모달
-  const [isLeafletModalVisible, setLeafletModalVisible] = React.useState(false); // 리플렛 디테일 선택 모달
+  const [typeId, setTypeId] = React.useState(''); // 타입 아이디(type_id) 담기
+  const [options, setOptions] = React.useState(''); // 타입 옵션(way_edit, back_side, standard 등) 담기
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -124,27 +73,63 @@ const Step03 = (props) => {
     }
   };
 
-  // 카달로그 박스 디테일 선택 모달
-  const toggleCatalogModal = (type_id, way_edit) => {
-    setCatalogModalVisible(!isCatalogModalVisible);
+  // 싸바리 선택
+  const selectSabari = (v, type_id) => {
+    setSabari({type_id: type_id, sabari: v});
+    toggleSelectModal();
+  };
 
+  // 일반인쇄 디테일 선택 모달
+  const toggleSelectDetailModal = (type_id, payload) => {
+    setSelectDetailModalVisible(!isSelectDetailModalVisible);
     if (type_id) {
       setTypeId(type_id);
     }
-    if (way_edit) {
-      setWayEdit(way_edit);
+    if (payload) {
+      setOptions(payload);
     }
   };
 
-  // 리플렛 박스 디테일 선택 모달
-  const toggleLeafletModal = (type_id, ground_method) => {
-    setLeafletModalVisible(!isLeafletModalVisible);
-    if (type_id) {
-      setTypeId(type_id);
-    }
-    if (ground_method) {
-      setGroundMethod(ground_method);
-    }
+  // 일반인쇄 세부 선택
+  const selectDetail = (v, type_id) => {
+    setDetail({type_id: type_id, detail: v});
+    toggleSelectDetailModal();
+    setBindFix(null);
+  };
+
+  // 박스 정보 가져오기
+  const getTypeDetail = () => {
+    BoxType.getBoxType(cate1, ca_id)
+      .then((res) => {
+        if (res.data.result === '1') {
+          setTypeDetail(res.data.item);
+          dispatch(setOrderDetails(res.data.item));
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  React.useEffect(() => {
+    getTypeDetail();
+  }, []);
+
+  const checkType = (v) => {
+    setType(v);
+    setDetail({});
+    setDetail02({});
+    setBindFix(null);
   };
 
   const nextBtn = () => {
@@ -187,21 +172,14 @@ const Step03 = (props) => {
         selectSabari={selectSabari}
         typeId={typeId}
       />
-      {/* 카달로그 상세 선택 모달 */}
-      <CatalogModal
-        isVisible={isCatalogModalVisible}
-        toggleModal={toggleCatalogModal}
+
+      {/* 일반인쇄 상세 선택 모달 */}
+      <SelectDetailModal
+        isVisible={isSelectDetailModalVisible}
+        toggleModal={toggleSelectDetailModal}
         selectDetail={selectDetail}
         typeId={typeId}
-        wayEdit={wayEdit}
-      />
-      {/* 리플렛 상세 선택 모달 */}
-      <LeafletModal
-        isVisible={isLeafletModalVisible}
-        toggleModal={toggleLeafletModal}
-        selectDetail={selectLeafletDetail}
-        typeId={typeId}
-        groundMethod={groundMethod}
+        options={options}
       />
 
       <DetailHeader
@@ -277,11 +255,20 @@ const Step03 = (props) => {
                         checkType(t.type_id);
                         setTypeName(t.type_name);
                         ca_id === '12' && toggleSelectModal(t.type_id);
-                        t.type_id === '71' &&
-                          toggleCatalogModal(t.type_id, t.way_edit);
+                        t.type_id === '71' ||
+                        t.type_id === '74' ||
+                        t.type_id === '75' ||
+                        t.type_id === '90'
+                          ? toggleSelectDetailModal(t.type_id, t.way_edit)
+                          : null;
                         t.type_id === '73' &&
-                          toggleLeafletModal(t.type_id, t.ground_method);
-                        // console.log('test', t.type_id);
+                          toggleSelectDetailModal(t.type_id, t.ground_method);
+                        t.type_id === '76' && setBindFix(t.way_edit);
+                        t.type_id === '81' &&
+                          toggleSelectDetailModal(t.type_id, t.back_side);
+                        t.type_id === '83' || t.type_id === '84'
+                          ? toggleSelectDetailModal(t.type_id, t.geomancer)
+                          : null;
                       }}
                       style={styles.categoryItem}>
                       {t.box_img ? (
@@ -337,6 +324,8 @@ const Step03 = (props) => {
                           ? detail.detail
                           : t.type_id === detail02.type_id
                           ? detail02.detail
+                          : t.type_id === '76'
+                          ? bindFix
                           : null}
                       </Text>
                     </TouchableOpacity>
@@ -404,7 +393,12 @@ const Step03 = (props) => {
                 : '원하는 인쇄 타입을 직접 입력해주세요.'
             }
             placeholderTextColor="#A2A2A2"
-            onFocus={() => setType('0')}
+            onFocus={() => {
+              setType('0');
+              setDetail({});
+              setDetail02({});
+              setBindFix(null);
+            }}
             style={[
               styles.normalText,
               {
