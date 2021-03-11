@@ -11,12 +11,24 @@ export default {
       },
     });
   },
-  getMyOrder(mb_id) {
+  getMyOrder(mb_id, status, cate1, search) {
     return Send({
       method: 'post',
       data: qs.stringify({
         method: 'proc_my_estimate_list',
         mb_id,
+        status,
+        cate1,
+        search,
+      }),
+    });
+  },
+  getMyOrderDetail(pe_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_my_estimate_detail',
+        pe_id,
       }),
     });
   },
