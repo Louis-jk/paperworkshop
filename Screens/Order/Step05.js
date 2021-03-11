@@ -282,7 +282,13 @@ const Step05 = (props) => {
           ]);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   // 지류 정보 가져오기 (지류 아이디 필요 : pf_id)
@@ -315,7 +321,13 @@ const Step05 = (props) => {
           ]);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const setPaperChoise = (v) => {
@@ -384,7 +396,13 @@ const Step05 = (props) => {
           ]);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   // 평량 정보 가져오기
@@ -424,7 +442,13 @@ const Step05 = (props) => {
           ]);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   React.useEffect(() => {
