@@ -21,7 +21,7 @@ import FastImage from 'react-native-fast-image';
 import Main from '../../src/api/Main';
 
 const DrawerMenu = (props) => {
-  const navigation = props.navigation;
+  const {navigate, closeDrawer} = props.navigation;
 
   // Redux 에서 유저 정보 가져오기
   const {
@@ -67,7 +67,13 @@ const DrawerMenu = (props) => {
           setMainBanners(null);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   React.useEffect(() => {
@@ -80,29 +86,6 @@ const DrawerMenu = (props) => {
 
     getSliderBanners();
   }, [mb_profile_img]);
-
-  // const banners = [
-  //   {
-  //     id: 1,
-  //     image: require('../../src/images/ban01.png'),
-  //   },
-  //   {
-  //     id: 2,
-  //     image: require('../../src/images/ban01.png'),
-  //   },
-  //   {
-  //     id: 3,
-  //     image: require('../../src/images/ban01.png'),
-  //   },
-  //   {
-  //     id: 4,
-  //     image: require('../../src/images/ban01.png'),
-  //   },
-  //   {
-  //     id: 5,
-  //     image: require('../../src/images/ban01.png'),
-  //   },
-  // ];
 
   const [activeSlide, setActiveSlide] = React.useState(0);
   const sliderWidth = Dimensions.get('window').width;
@@ -167,7 +150,7 @@ const DrawerMenu = (props) => {
             }}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('Main')}>
+              onPress={() => navigate('Main')}>
               <Image
                 source={require('../../src/assets/home.png')}
                 resizeMode="cover"
@@ -176,7 +159,7 @@ const DrawerMenu = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.closeDrawer('right')}>
+              onPress={() => closeDrawer('right')}>
               <Image
                 source={require('../../src/assets/icon_close02.png')}
                 resizeMode="cover"
@@ -273,7 +256,7 @@ const DrawerMenu = (props) => {
                   </Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={() => navigation.navigate('ProfileEdit')}>
+                    onPress={() => navigate('ProfileEdit')}>
                     <View
                       style={{
                         paddingHorizontal: 10,
@@ -310,8 +293,7 @@ const DrawerMenu = (props) => {
               backgroundColor: '#fff',
               marginBottom: 20,
             }}>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('MyOrder')}>
+            <TouchableWithoutFeedback onPress={() => navigate('MyOrder')}>
               <View
                 style={{
                   flex: 1,
@@ -345,8 +327,7 @@ const DrawerMenu = (props) => {
             <View
               style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
             />
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('Message')}>
+            <TouchableWithoutFeedback onPress={() => navigate('Message')}>
               <View
                 style={{
                   flex: 1,
@@ -376,8 +357,9 @@ const DrawerMenu = (props) => {
             />
             <TouchableWithoutFeedback
               onPress={() =>
-                navigation.navigate('Home', {
+                navigate('Home', {
                   screen: 'MyPartners',
+                  value: 'reload',
                 })
               }>
               <View
@@ -408,7 +390,7 @@ const DrawerMenu = (props) => {
 
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => navigation.navigate('Order', {screen: 'Order'})}
+            onPress={() => navigate('Order', {screen: 'Order'})}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -462,7 +444,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Gallery',
                     params: {screen: 'GalleryPackage', params: {cate1: '1'}},
                   })
@@ -475,7 +457,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Gallery',
                     params: {screen: 'GalleryGeneral', params: {cate1: '0'}},
                   })
@@ -488,7 +470,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Gallery',
                     params: {screen: 'GalleryEtc', params: {cate1: '2'}},
                   })
@@ -538,7 +520,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Partners',
                     params: {screen: 'Partners01'},
                   })
@@ -551,7 +533,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Partners',
                     params: {screen: 'Partners02'},
                   })
@@ -564,7 +546,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Partners',
                     params: {screen: 'Partners03'},
                   })
@@ -616,7 +598,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Story',
                     params: {screen: 'Story'},
                   })
@@ -629,7 +611,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Story',
                     params: {screen: 'StoryTips'},
                   })
@@ -642,7 +624,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Story',
                     params: {screen: 'StoryCreateInfo'},
                   })
@@ -664,7 +646,7 @@ const DrawerMenu = (props) => {
 
           <View style={[styles.categoryTitle, styles.mV10]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Event')}
+              onPress={() => navigate('Event')}
               activeOpacity={0.8}>
               <Text style={[styles.mediumText, {fontSize: 16}]}>이벤트</Text>
             </TouchableOpacity>
@@ -708,7 +690,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Ccenter',
                     params: {screen: 'CCenterNotice'},
                   })
@@ -721,7 +703,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Ccenter',
                     params: {screen: 'CCenter'},
                   })
@@ -734,7 +716,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'Ccenter',
                     params: {screen: 'CCenterQnA'},
                   })
@@ -756,7 +738,7 @@ const DrawerMenu = (props) => {
 
           <View style={[styles.categoryTitle, styles.mV10]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('CompanyInfo')}
+              onPress={() => navigate('CompanyInfo')}
               activeOpacity={0.8}>
               <Text style={[styles.mediumText, {fontSize: 16}]}>회사소개</Text>
             </TouchableOpacity>
@@ -800,7 +782,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'PaperInfo',
                     params: {screen: 'PaperInfo'},
                   })
@@ -813,7 +795,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigation.navigate('Root', {
+                  navigate('Root', {
                     screen: 'PaperInfo',
                     params: {screen: 'PaperPrice'},
                   })
@@ -880,14 +862,13 @@ const DrawerMenu = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
               layout="default"
-              // autoplay={false}
-              // autoplayDelay={3000}
-              // autoplayInterval={1000}
+              autoplay={true}
+              autoplayDelay={3000}
+              autoplayInterval={1000}
               loop={true}
               onSnapToItem={(index) => {
                 setActiveSlide(index);
               }}
-              // containerCustomStyle={{ marginHorizontal: 20 }}
             />
             <Pagination
               dotsLength={banners.length}
