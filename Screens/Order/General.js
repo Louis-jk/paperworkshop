@@ -194,7 +194,9 @@ const General = (props) => {
                   resizeMode="cover"
                   style={styles.categoryItemImg}
                 />
-                <Text style={styles.categoryItemText}>봉투/명함</Text>
+                <Text style={styles.categoryItemText}>
+                  봉투/명함/카드/안내장
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
