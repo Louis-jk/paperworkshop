@@ -110,7 +110,7 @@ const index = (props) => {
                           {color: '#275696'},
                         ]}>
                         {item.status === '0'
-                          ? '견적진행'
+                          ? '입찰중'
                           : item.status === '7'
                           ? '마감'
                           : null}
@@ -321,6 +321,7 @@ const index = (props) => {
             ]}
             onChangeText={(text) => setKeyword(text)}
             onSubmitEditing={() => searchForm()}
+            autoCapitalize="none"
             keyboardType="ascii-capable"
           />
           <TouchableOpacity
