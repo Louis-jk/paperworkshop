@@ -11,10 +11,45 @@ import {
 } from 'react-native';
 import DetailHeader from '../../Common/DetailHeader';
 import Modal from './CancelModal';
+import OrderAPI from '../../../src/api/OrderAPI';
 
 const ReqDetailList = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const pe_id = props.route.params.orderId;
+
+  const [myOrderDetail, setMyOrderDetail] = React.useState([]);
+
+  console.log('OrderDetail props', props);
+
+  const getMyOrderDetailAPI = () => {
+    OrderAPI.getMyOrderDetail(pe_id)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setMyOrderDetail(res.data.item[0]);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  React.useEffect(() => {
+    getMyOrderDetailAPI();
+    return () => {
+      getMyOrderDetailAPI();
+    };
+  }, []);
 
   const [isModalVisible, setModalVisible] = React.useState(false);
 
@@ -44,26 +79,48 @@ const ReqDetailList = (props) => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
           <View style={styles.infoBox}>
-            <Text style={styles.infoStepDesc}>입찰중</Text>
-            <Text style={styles.infoStepTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.infoStepDesc}>
+              {myOrderDetail.status === '0'
+                ? '입찰중'
+                : myOrderDetail.status === '1'
+                ? '파트너스최종선정 (견적확정대기)'
+                : myOrderDetail.status === '2'
+                ? '파트너스최종선정 (계약금입금대기)'
+                : myOrderDetail.status === '3'
+                ? '파트너스최종선정 (계약금입금완료)'
+                : myOrderDetail.status === '4'
+                ? '인쇄제작요청'
+                : myOrderDetail.status === '5'
+                ? '납품완료'
+                : myOrderDetail.status === '6'
+                ? '수령완료'
+                : myOrderDetail.status === '7'
+                ? '마감'
+                : null}
+            </Text>
+            <Text style={styles.infoStepTitle}>{myOrderDetail.title}</Text>
             <View style={styles.line} />
             <View style={styles.details}>
               <Text style={styles.detailsTitle}>분류</Text>
-              <Text style={styles.detailsDesc}>단상자/선물세트/쇼핑백</Text>
+              <Text style={styles.detailsDesc}>{myOrderDetail.ca_name}</Text>
             </View>
             <View style={styles.details}>
               <Text style={styles.detailsTitle}>견적 마감일</Text>
-              <Text style={styles.detailsDesc}>2020.11.01</Text>
+              <Text style={styles.detailsDesc}>
+                {myOrderDetail.estimate_date}
+              </Text>
             </View>
             <View style={styles.detailsEnd}>
               <View style={styles.detailsEnd}>
                 <Text style={styles.detailsTitle}>납품 희망일</Text>
-                <Text style={styles.detailsDesc}>2020.12.01</Text>
+                <Text style={styles.detailsDesc}>
+                  {myOrderDetail.delivery_date}
+                </Text>
               </View>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('OrderDetail')}
-                style={{ alignSelf: 'flex-end' }}>
+                style={{alignSelf: 'flex-end'}}>
                 <Text
                   style={[
                     styles.normalText,
@@ -80,7 +137,7 @@ const ReqDetailList = (props) => {
           </View>
 
           <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-            <View style={[styles.submitBtn, { marginTop: 20 }]}>
+            <View style={[styles.submitBtn, {marginTop: 20}]}>
               <Text style={styles.submitBtnText}>요청 포기</Text>
             </View>
           </TouchableOpacity>
@@ -111,8 +168,12 @@ const ReqDetailList = (props) => {
                 alignItems: 'center',
                 marginBottom: 15,
               }}>
-              <Text style={[styles.orderInfoTitle, { marginRight: 10 }]}>입찰업체</Text>
-              <Text style={[styles.orderInfoTitleRow, { color: '#275696' }]}>총 견적 3</Text>
+              <Text style={[styles.orderInfoTitle, {marginRight: 10}]}>
+                입찰업체
+              </Text>
+              <Text style={[styles.orderInfoTitleRow, {color: '#275696'}]}>
+                총 견적 {myOrderDetail.ecnt}
+              </Text>
             </View>
             {/* 입찰업체 리스트 */}
             <View
@@ -148,16 +209,24 @@ const ReqDetailList = (props) => {
                       borderColor: '#e5e5e5',
                     }}
                   />
-                  <Text style={[styles.mediumText, { fontSize: 14, color: '#000000' }]}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {fontSize: 14, color: '#000000'},
+                    ]}>
                     삼보인쇄
                   </Text>
                 </View>
               </View>
-              <View style={{ paddingHorizontal: 20 }}>
+              <View style={{paddingHorizontal: 20}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 14, color: '#111111', lineHeight: 20 }]}>
-                  안녕하세요. 20년 인쇄업체 전통을 자랑하는 삼보인쇄입니다. 제작 요청하신 중소기업
-                  선물용 쇼핑백 30건 이상 진행했습니다. 선물세트 추가 비용 5만원입니다.
+                  style={[
+                    styles.normalText,
+                    {fontSize: 14, color: '#111111', lineHeight: 20},
+                  ]}>
+                  안녕하세요. 20년 인쇄업체 전통을 자랑하는 삼보인쇄입니다. 제작
+                  요청하신 중소기업 선물용 쇼핑백 30건 이상 진행했습니다.
+                  선물세트 추가 비용 5만원입니다.
                 </Text>
               </View>
               <View
@@ -181,7 +250,11 @@ const ReqDetailList = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.normalText, { fontSize: 12, color: '#275696' }]}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 12, color: '#275696'},
+                    ]}>
                     견적제안보기
                   </Text>
                 </TouchableOpacity>
@@ -198,13 +271,16 @@ const ReqDetailList = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.normalText, { fontSize: 12, color: '#fff' }]}>
+                  <Text
+                    style={[styles.normalText, {fontSize: 12, color: '#fff'}]}>
                     파트너 선정
                   </Text>
                 </TouchableOpacity>
               </View>
 
-              <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
+              <View
+                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
+              />
               <View
                 style={{
                   flexDirection: 'row',
@@ -222,11 +298,15 @@ const ReqDetailList = (props) => {
                   <Text
                     style={[
                       styles.mediumText,
-                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                      {fontSize: 14, color: '#111111', marginRight: 10},
                     ]}>
                     견적 금액
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, color: '#366DE5' }]}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 14, color: '#366DE5'},
+                    ]}>
                     200,000원
                   </Text>
                 </View>
@@ -239,11 +319,17 @@ const ReqDetailList = (props) => {
                   <Text
                     style={[
                       styles.mediumText,
-                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                      {fontSize: 14, color: '#111111', marginRight: 10},
                     ]}>
                     계약금(선금)
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, color: '#A2A2A2' }]}>10%</Text>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 14, color: '#A2A2A2'},
+                    ]}>
+                    10%
+                  </Text>
                 </View>
               </View>
             </View>
@@ -282,16 +368,24 @@ const ReqDetailList = (props) => {
                       borderColor: '#e5e5e5',
                     }}
                   />
-                  <Text style={[styles.mediumText, { fontSize: 14, color: '#000000' }]}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {fontSize: 14, color: '#000000'},
+                    ]}>
                     경주인쇄
                   </Text>
                 </View>
               </View>
-              <View style={{ paddingHorizontal: 20 }}>
+              <View style={{paddingHorizontal: 20}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 14, color: '#111111', lineHeight: 20 }]}>
-                  안녕하세요. 100년 인쇄업체 전통을 자랑하는 경주인쇄입니다. 제작 요청하신 중소기업
-                  선물용 쇼핑백 30건 이상 진행했습니다. 선물세트 추가 비용 5만원입니다.
+                  style={[
+                    styles.normalText,
+                    {fontSize: 14, color: '#111111', lineHeight: 20},
+                  ]}>
+                  안녕하세요. 100년 인쇄업체 전통을 자랑하는 경주인쇄입니다.
+                  제작 요청하신 중소기업 선물용 쇼핑백 30건 이상 진행했습니다.
+                  선물세트 추가 비용 5만원입니다.
                 </Text>
               </View>
               <View
@@ -315,7 +409,11 @@ const ReqDetailList = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.normalText, { fontSize: 12, color: '#275696' }]}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 12, color: '#275696'},
+                    ]}>
                     견적제안보기
                   </Text>
                 </TouchableOpacity>
@@ -332,13 +430,16 @@ const ReqDetailList = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.normalText, { fontSize: 12, color: '#fff' }]}>
+                  <Text
+                    style={[styles.normalText, {fontSize: 12, color: '#fff'}]}>
                     파트너 선정
                   </Text>
                 </TouchableOpacity>
               </View>
 
-              <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
+              <View
+                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
+              />
               <View
                 style={{
                   flexDirection: 'row',
@@ -356,11 +457,15 @@ const ReqDetailList = (props) => {
                   <Text
                     style={[
                       styles.mediumText,
-                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                      {fontSize: 14, color: '#111111', marginRight: 10},
                     ]}>
                     견적 금액
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, color: '#366DE5' }]}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 14, color: '#366DE5'},
+                    ]}>
                     200,000원
                   </Text>
                 </View>
@@ -373,11 +478,17 @@ const ReqDetailList = (props) => {
                   <Text
                     style={[
                       styles.mediumText,
-                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                      {fontSize: 14, color: '#111111', marginRight: 10},
                     ]}>
                     계약금(선금)
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, color: '#A2A2A2' }]}>10%</Text>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 14, color: '#A2A2A2'},
+                    ]}>
+                    10%
+                  </Text>
                 </View>
               </View>
             </View>
@@ -416,16 +527,24 @@ const ReqDetailList = (props) => {
                       borderColor: '#e5e5e5',
                     }}
                   />
-                  <Text style={[styles.mediumText, { fontSize: 14, color: '#000000' }]}>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {fontSize: 14, color: '#000000'},
+                    ]}>
                     미래엔인쇄서비스
                   </Text>
                 </View>
               </View>
-              <View style={{ paddingHorizontal: 20 }}>
+              <View style={{paddingHorizontal: 20}}>
                 <Text
-                  style={[styles.normalText, { fontSize: 14, color: '#111111', lineHeight: 20 }]}>
-                  안녕하세요. 미래엔인쇄서비스입니다. 중소기업 선물용 쇼핑백 제작 전문
-                  인쇄업체입니다. 믿고 맡겨주세요. 제작 의뢰 컴플레인 0건을 자랑합니다.
+                  style={[
+                    styles.normalText,
+                    {fontSize: 14, color: '#111111', lineHeight: 20},
+                  ]}>
+                  안녕하세요. 미래엔인쇄서비스입니다. 중소기업 선물용 쇼핑백
+                  제작 전문 인쇄업체입니다. 믿고 맡겨주세요. 제작 의뢰 컴플레인
+                  0건을 자랑합니다.
                 </Text>
               </View>
               <View
@@ -449,7 +568,11 @@ const ReqDetailList = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.normalText, { fontSize: 12, color: '#275696' }]}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 12, color: '#275696'},
+                    ]}>
                     견적제안보기
                   </Text>
                 </TouchableOpacity>
@@ -466,13 +589,16 @@ const ReqDetailList = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.normalText, { fontSize: 12, color: '#fff' }]}>
+                  <Text
+                    style={[styles.normalText, {fontSize: 12, color: '#fff'}]}>
                     파트너 선정
                   </Text>
                 </TouchableOpacity>
               </View>
 
-              <View style={{ width: '100%', height: 1, backgroundColor: '#E3E3E3' }} />
+              <View
+                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
+              />
               <View
                 style={{
                   flexDirection: 'row',
@@ -490,11 +616,15 @@ const ReqDetailList = (props) => {
                   <Text
                     style={[
                       styles.mediumText,
-                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                      {fontSize: 14, color: '#111111', marginRight: 10},
                     ]}>
                     견적 금액
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, color: '#366DE5' }]}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 14, color: '#366DE5'},
+                    ]}>
                     200,000원
                   </Text>
                 </View>
@@ -507,11 +637,17 @@ const ReqDetailList = (props) => {
                   <Text
                     style={[
                       styles.mediumText,
-                      { fontSize: 14, color: '#111111', marginRight: 10 },
+                      {fontSize: 14, color: '#111111', marginRight: 10},
                     ]}>
                     계약금(선금)
                   </Text>
-                  <Text style={[styles.normalText, { fontSize: 14, color: '#A2A2A2' }]}>10%</Text>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 14, color: '#A2A2A2'},
+                    ]}>
+                    10%
+                  </Text>
                 </View>
               </View>
             </View>
