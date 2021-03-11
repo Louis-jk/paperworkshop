@@ -392,7 +392,8 @@ const Step04 = (props) => {
           (type_id === '77' ||
             type_id === '78' ||
             type_id === '79' ||
-            type_id === '80')) // 전단지, 포스터
+            type_id === '80')) || // 전단지, 포스터
+        (ca_id === '7' && (type_id === '85' || type_id === '86')) // 규격봉투 ,자켓봉투
       ) {
         if (
           (quantity === 'direct' && quantityDirect === null) ||
@@ -438,6 +439,41 @@ const Step04 = (props) => {
           setSizeDirectError(true);
         } else if (thomsonCur === null || thomsonCur === '') {
           setThomsonCurError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (ca_id === '7' && type_id === '90') {
+        // 카드/안내장
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (size === null || size === '') {
+          setSizeDirectError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (
+        ca_id === '7' &&
+        (type_id === '87' || type_id === '88' || type_id === '89')
+      ) {
+        // 맞춤/칼라봉투
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
         } else {
           setModalVisible(!isModalVisible);
         }
@@ -1791,6 +1827,20 @@ const Step04 = (props) => {
                                   marginVertical: 5,
                                 }}>
                                 규격을 지정해주세요.
+                              </Text>
+                            ) : null}
+                            {size === 'direct' &&
+                            ((ca_id === '7' && type_id === '85') ||
+                              (ca_id === '7' && type_id === '86')) ? (
+                              <Text
+                                style={{
+                                  fontFamily: 'SCDream4',
+                                  fontSize: 12,
+                                  color: '#b5b5b5',
+                                  marginVertical: 5,
+                                }}>
+                                ※ 가로, 세로 사이즈는 펼치기 기준, 총 길이로
+                                입력해주세요.
                               </Text>
                             ) : null}
                           </View>
