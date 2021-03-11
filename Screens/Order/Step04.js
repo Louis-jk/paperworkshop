@@ -73,6 +73,9 @@ const Step04 = (props) => {
   const [pLength, setPlength] = React.useState(null);
   const [pHeight, setPheight] = React.useState(null);
 
+  // 간단 견적 전 모달
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
   const easyOrderBefore = () => {
     if (
       pe_file_url &&
@@ -252,9 +255,6 @@ const Step04 = (props) => {
   const setIsPattern = (b) => {
     setPattern(b);
   };
-
-  // 간단 견적 전 모달
-  const [isModalVisible, setModalVisible] = React.useState(false);
 
   const [pWidthError, setPwidthError] = React.useState(false);
   const [pLengthError, setPlengthError] = React.useState(false);
