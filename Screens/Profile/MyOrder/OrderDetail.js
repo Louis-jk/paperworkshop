@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { View, Text, ScrollView, StyleSheet, Dimensions, Image } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  Image,
+} from 'react-native';
 import DetailHeader from '../../Common/DetailHeader';
 
 const OrderDetail = (props) => {
@@ -11,12 +18,18 @@ const OrderDetail = (props) => {
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
-          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+          <Text
+            style={[
+              styles.mediumText,
+              {fontSize: 16, color: '#275696', marginBottom: 10},
+            ]}>
             기본 정보
           </Text>
-          <View style={[styles.infoBox, { marginBottom: 20 }]}>
+          <View style={[styles.infoBox, {marginBottom: 20}]}>
             <Text style={styles.infoStepDesc}>제목</Text>
-            <Text style={styles.infoStepTitle}>중소기업 선물용 쇼핑백 제작 요청합니다.</Text>
+            <Text style={styles.infoStepTitle}>
+              중소기업 선물용 쇼핑백 제작 요청합니다.
+            </Text>
             <View style={styles.line} />
             <View style={styles.details}>
               <Text style={styles.detailsTitle}>분류</Text>
@@ -39,7 +52,11 @@ const OrderDetail = (props) => {
               <Text style={styles.detailsDesc}>서울</Text>
             </View>
           </View>
-          <Text style={[styles.normalText, { fontSize: 14, color: '#A2A2A2', marginBottom: 10 }]}>
+          <Text
+            style={[
+              styles.normalText,
+              {fontSize: 14, color: '#A2A2A2', marginBottom: 10},
+            ]}>
             첨부파일
           </Text>
           <View
@@ -98,8 +115,12 @@ const OrderDetail = (props) => {
         />
         {/* // 경계 라인 */}
 
-        <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+        <View style={[styles.wrap, {marginVertical: 10}]}>
+          <Text
+            style={[
+              styles.mediumText,
+              {fontSize: 16, color: '#275696', marginBottom: 10},
+            ]}>
             타입 선택
           </Text>
           <View
@@ -108,8 +129,12 @@ const OrderDetail = (props) => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>박스 타입</Text>
-            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>B형 십자</Text>
+            <Text style={[styles.normalText, {fontSize: 16, color: '#000000'}]}>
+              박스 타입
+            </Text>
+            <Text style={[styles.normalText, {fontSize: 16, color: '#000000'}]}>
+              B형 십자
+            </Text>
           </View>
         </View>
 
@@ -130,13 +155,19 @@ const OrderDetail = (props) => {
         />
         {/* // 경계 라인 */}
 
-        <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+        <View style={[styles.wrap, {marginVertical: 10}]}>
+          <Text
+            style={[
+              styles.mediumText,
+              {fontSize: 16, color: '#275696', marginBottom: 10},
+            ]}>
             제작 정보
           </Text>
-          <View style={[styles.infoBox, { marginBottom: 10 }]}>
+          <View style={[styles.infoBox, {marginBottom: 10}]}>
             <View style={styles.details}>
-              <Text style={styles.detailsTitle02}>가로/세로/높이 규격 (단위:mm)</Text>
+              <Text style={styles.detailsTitle02}>
+                가로/세로/높이 규격 (단위:mm)
+              </Text>
               <Text style={styles.detailsDesc}>10/10/10</Text>
             </View>
             <View style={styles.details}>
@@ -167,8 +198,12 @@ const OrderDetail = (props) => {
         />
         {/* // 경계 라인 */}
 
-        <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+        <View style={[styles.wrap, {marginVertical: 10}]}>
+          <Text
+            style={[
+              styles.mediumText,
+              {fontSize: 16, color: '#275696', marginBottom: 10},
+            ]}>
             지류 선택
           </Text>
           <View
@@ -177,8 +212,10 @@ const OrderDetail = (props) => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>구분</Text>
-            <Text style={[styles.normalText, { fontSize: 16, color: '#000000' }]}>
+            <Text style={[styles.normalText, {fontSize: 16, color: '#000000'}]}>
+              구분
+            </Text>
+            <Text style={[styles.normalText, {fontSize: 16, color: '#000000'}]}>
               일반(백판지,마닐라류)
             </Text>
           </View>
@@ -201,11 +238,15 @@ const OrderDetail = (props) => {
         />
         {/* // 경계 라인 */}
 
-        <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+        <View style={[styles.wrap, {marginVertical: 10}]}>
+          <Text
+            style={[
+              styles.mediumText,
+              {fontSize: 16, color: '#275696', marginBottom: 10},
+            ]}>
             인쇄도수/교정/감리 선택
           </Text>
-          <View style={[styles.infoBox, { marginBottom: 10 }]}>
+          <View style={[styles.infoBox, {marginBottom: 10}]}>
             <View style={styles.details}>
               <Text style={styles.detailsTitle02}>인쇄도수</Text>
               <Text style={styles.detailsDesc}>(전면) 1도</Text>
@@ -238,11 +279,15 @@ const OrderDetail = (props) => {
         />
         {/* // 경계 라인 */}
 
-        <View style={[styles.wrap, { marginVertical: 10 }]}>
-          <Text style={[styles.mediumText, { fontSize: 16, color: '#275696', marginBottom: 10 }]}>
+        <View style={[styles.wrap, {marginVertical: 10}]}>
+          <Text
+            style={[
+              styles.mediumText,
+              {fontSize: 16, color: '#275696', marginBottom: 10},
+            ]}>
             후가공
           </Text>
-          <View style={[styles.infoBox, { marginBottom: 10 }]}>
+          <View style={[styles.infoBox, {marginBottom: 10}]}>
             <View style={styles.details}>
               <Text style={styles.detailsTitle02}>박가공</Text>
               <Text style={styles.detailsDesc}>있음</Text>
