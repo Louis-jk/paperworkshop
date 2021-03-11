@@ -28,11 +28,23 @@ const index = (props) => {
 
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
   const [myOrders, setMyOrders] = React.useState([]);
+  const [visibleStep01, setVisibleStep01] = React.useState(false);
+  const [visibleStep02, setVisibleStep02] = React.useState(false);
+  const [step01, setStep01] = React.useState(''); // 셀렉트 박스(진행현황) 표시될 선택된 값 담기
+  const [status, setStatus] = React.useState(''); // 셀렉트 박스(진행현황) 중 API 호출 값 담기
+  const [step02, setStep02] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 표시될 선택된 값 담기
+  const [cate1, setCate1] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
+  const [keyword, setKeyword] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
+  const [search, setSearch] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
 
-  console.log('아이디', mb_id);
+  const searchForm = async () => {
+    console.log('search Input keyword', keyword);
+    await setSearch(keyword);
+    await getMyOrderAPI();
+  };
 
-  React.useEffect(() => {
-    OrderAPI.getMyOrder(mb_id)
+  const getMyOrderAPI = () => {
+    OrderAPI.getMyOrder(mb_id, status, cate1, search)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setMyOrders(res.data.item);
@@ -40,19 +52,23 @@ const index = (props) => {
           setMyOrders(null);
         }
       })
-      .catch((err) =>
-        Alert.alert('문제가 있습니다.', err, [
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
           {
             text: '확인',
           },
-        ]),
-      );
-  }, []);
+        ]);
+      });
+  };
 
-  const [visibleStep01, setVisibleStep01] = React.useState(false);
-  const [visibleStep02, setVisibleStep02] = React.useState(false);
-  const [step01, setStep01] = React.useState('');
-  const [step02, setStep02] = React.useState('');
+  console.log('myOrders', myOrders);
+
+  React.useEffect(() => {
+    getMyOrderAPI();
+    return () => {
+      getMyOrderAPI();
+    };
+  }, [status, cate1, search]);
 
   const toggleMenu01 = () => {
     setVisibleStep01((prev) => !prev);
@@ -68,7 +84,9 @@ const index = (props) => {
         <View style={{paddingHorizontal: 20}} key={index}>
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() => navigation.navigate('MyOrderReqDetailList')}
+            onPress={() =>
+              navigation.navigate('MyOrderReqDetailList', {orderId: item.pe_id})
+            }
             activeOpacity={0.8}>
             <View
               style={{
@@ -196,7 +214,7 @@ const index = (props) => {
             style={{
               zIndex: 2000,
               position: 'relative',
-              width: '49%',
+              width: '59%',
               borderWidth: 1,
               borderColor: '#E3E3E3',
               borderTopRightRadius: 4,
@@ -241,7 +259,7 @@ const index = (props) => {
             style={{
               zIndex: 2000,
               position: 'relative',
-              width: '49%',
+              width: '39%',
               borderWidth: 1,
               borderColor: '#E3E3E3',
               borderTopRightRadius: 4,
@@ -287,390 +305,78 @@ const index = (props) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <View
+          <TextInput
+            placeholder="제목을 입력하세요."
+            style={[
+              styles.normalText,
+              {
+                borderWidth: 1,
+                borderColor: '#E3E3E3',
+                borderRadius: 4,
+                backgroundColor: '#fff',
+                paddingHorizontal: 15,
+                flex: 2,
+                marginRight: 5,
+              },
+            ]}
+            onChangeText={(text) => setKeyword(text)}
+            onSubmitEditing={() => searchForm()}
+            keyboardType="ascii-capable"
+          />
+          <TouchableOpacity
+            onPress={() => searchForm()}
             style={{
-              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#275696',
+              borderRadius: 4,
+              height: 50,
             }}>
-            <TextInput
-              placeholder="제목을 입력하세요."
+            <Text
               style={[
                 styles.normalText,
-                {
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  backgroundColor: '#fff',
-                  paddingHorizontal: 15,
-                  flex: 2,
-                  marginRight: 5,
-                },
-              ]}
-            />
-            <TouchableWithoutFeedback>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: '#275696',
-                  borderRadius: 4,
-                }}>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {color: '#fff', paddingHorizontal: 20},
-                  ]}>
-                  검색
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
+                {color: '#fff', paddingHorizontal: 20},
+              ]}>
+              검색
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       {/* // 카테고리 선택 및 검색 부분 */}
 
-      <ScrollView
-        style={styles.container}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{zIndex: -1000}}>
+      <View style={{zIndex: -1000, backgroundColor: '#fff'}}>
         {/* 리스트 출력 부분 */}
 
-        {myOrders ? (
-          <FlatList
-            data={myOrders}
-            renderItem={renderRow}
-            keyExtractor={(list, index) => index.toString()}
-            numColumns={1}
-            // pagingEnabled={true}
-            persistentScrollbar={true}
-            showsVerticalScrollIndicator={false}
-            progressViewOffset={true}
-            refreshing={true}
-            // contentContainerStyle={{paddingBottom: 20}}
-            // onEndReached={handleLoadMore}
-          />
-        ) : (
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text style={{fontFamily: 'SCDream4'}}>
-              견적 의뢰 건이 없습니다.
-            </Text>
-          </View>
-        )}
-
-        {/* 입찰중 */}
-        <View style={{paddingHorizontal: 20}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.navigate('MyOrderReqDetailList')}
-            activeOpacity={0.8}>
+        <FlatList
+          data={myOrders}
+          nestedScrollEnabled={true}
+          renderItem={renderRow}
+          keyExtractor={(list, index) => index.toString()}
+          persistentScrollbar={true}
+          showsVerticalScrollIndicator={false}
+          progressViewOffset={true}
+          refreshing={true}
+          ListEmptyComponent={
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                justifyContent: 'center',
                 alignItems: 'center',
+                flex: 1,
+                height: Dimensions.get('window').height - 300,
               }}>
-              <View style={styles.listWrap}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View style={styles.listStep02Badge}>
-                    <Text
-                      style={[styles.listStep02BadgeText, {color: '#275696'}]}>
-                      견적진행
-                    </Text>
-                  </View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 13, marginLeft: 5, color: '#000000'},
-                    ]}>
-                    3건
-                  </Text>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
-                    ]}>
-                    NEW
-                  </Text>
-                </View>
-                <Text style={styles.listTitle}>
-                  중소기업 선물용 쇼핑백 제작 요청합니다.
-                </Text>
-                <Text style={styles.listDesc}>
-                  칼라 박스 - B형 십자 (경기/김성규)
-                </Text>
-              </View>
-              <View
-                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                {/* <Text style={styles.listStep02}>입찰중</Text> */}
-                <Text style={styles.listDday02}>20.11.10</Text>
-              </View>
+              <Text style={{fontFamily: 'SCDream4'}}>
+                견적 의뢰 건이 없습니다.
+              </Text>
             </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.line} />
-        {/* // 입찰중 */}
-
-        {/* 파트너 선정 - 선금 입금 요청 대기 */}
-        <View style={{paddingHorizontal: 20}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.navigate('SelectPartnerStep01')}
-            activeOpacity={0.8}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View style={styles.listWrap}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View style={styles.listStep02BadgePayReq}>
-                    <Text
-                      style={[styles.listStep02BadgeText, {color: '#275696'}]}>
-                      선금 입금 요청 대기
-                    </Text>
-                  </View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
-                    ]}>
-                    NEW
-                  </Text>
-                </View>
-                <Text style={styles.listTitle}>
-                  중소기업 선물용 쇼핑백 제작 요청합니다.
-                </Text>
-                <Text style={styles.listDesc}>
-                  칼라 박스 - B형 십자 (경기/김성규)
-                </Text>
-              </View>
-              <View
-                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                {/* <Text style={styles.listStep02}>파트너 선정</Text> */}
-                <Text style={styles.listDday02}>20.11.10</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.line} />
-        {/* // 파트너 선정 - 선금 입금 요청 대기 */}
-
-        {/* 파트너 선정 - 계약금 입금 대기 */}
-        <View style={{paddingHorizontal: 20}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.navigate('SelectPartnerStep02')}
-            activeOpacity={0.8}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View style={styles.listWrap}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View style={styles.listStep02BadgePayReq}>
-                    <Text
-                      style={[styles.listStep02BadgeText, {color: '#275696'}]}>
-                      계약금 입금 대기
-                    </Text>
-                  </View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
-                    ]}>
-                    NEW
-                  </Text>
-                </View>
-                <Text style={styles.listTitle}>
-                  중소기업 선물용 쇼핑백 제작 요청합니다.
-                </Text>
-                <Text style={styles.listDesc}>
-                  칼라 박스 - B형 십자 (경기/김성규)
-                </Text>
-              </View>
-              <View
-                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                {/* <Text style={styles.listStep02}>파트너 선정</Text> */}
-                <Text style={styles.listDday02}>20.11.10</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.line} />
-        {/* // 파트너 선정 - 계약금 입금 대기 */}
-
-        {/* 파트너 선정 - 계약금 입금 완료 */}
-        <View style={{paddingHorizontal: 20}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.navigate('SelectPartnerStep03')}
-            activeOpacity={0.8}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View style={styles.listWrap}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View style={styles.listStep02BadgePayComplete}>
-                    <Text
-                      style={[styles.listStep02BadgeText, {color: '#000000'}]}>
-                      계약금 입금 완료
-                    </Text>
-                  </View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 13, marginLeft: 5, color: '#366DE5'},
-                    ]}>
-                    NEW
-                  </Text>
-                </View>
-                <Text style={styles.listTitle}>
-                  중소기업 선물용 쇼핑백 제작 요청합니다.
-                </Text>
-                <Text style={styles.listDesc}>
-                  칼라 박스 - B형 십자 (경기/김성규)
-                </Text>
-              </View>
-              <View
-                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                {/* <Text style={styles.listStep02}>파트너 선정</Text> */}
-                <Text style={styles.listDday02}>20.11.10</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.line} />
-        {/* // 파트너 선정 - 계약금 입금 완료 */}
-
-        {/* 납품 완료 */}
-        <View style={{paddingHorizontal: 20}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.navigate('Receive')}
-            activeOpacity={0.8}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View style={styles.listWrap}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View style={styles.listStep02BadgePayComplete}>
-                    <Text
-                      style={[styles.listStep02BadgeText, {color: '#000000'}]}>
-                      납품 완료
-                    </Text>
-                  </View>
-                  {/* <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text> */}
-                </View>
-                <Text style={styles.listTitle}>
-                  중소기업 선물용 쇼핑백 제작 요청합니다.
-                </Text>
-                <Text style={styles.listDesc}>
-                  칼라 박스 - B형 십자 (경기/김성규)
-                </Text>
-              </View>
-              <View
-                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                <Text style={[styles.listStep02, {color: '#000'}]}>
-                  납품 완료
-                </Text>
-                <Text style={styles.listDday02}>20.11.10</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.line} />
-        {/* // 납품 완료 */}
-
-        {/* 마감 */}
-        <View style={{paddingHorizontal: 20}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.navigate('Done')}
-            activeOpacity={0.8}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View style={styles.listWrap}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}>
-                  <View style={styles.listStep02BadgeTimeOver}>
-                    <Text
-                      style={[styles.listStep02BadgeText, {color: '#000000'}]}>
-                      수령 완료
-                    </Text>
-                  </View>
-                  {/* <Text style={{ fontSize: 13, marginLeft: 5, color: '#366DE5' }}>NEW</Text> */}
-                </View>
-                <Text style={styles.listTitle}>
-                  중소기업 선물용 쇼핑백 제작 요청합니다.
-                </Text>
-                <Text style={styles.listDesc}>
-                  칼라 박스 - B형 십자 (경기/김성규)
-                </Text>
-              </View>
-              <View
-                style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                {/* <Text style={[styles.listStep02, {color: '#000'}]}>마감</Text> */}
-                <Text style={styles.listDday02}>20.11.10</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.line} />
-        {/* // 마감 */}
+          }
+        />
 
         {/* // 리스트 출력 부분 */}
-      </ScrollView>
+      </View>
 
       {visibleStep01 && (
         <ScrollView
+          nestedScrollEnabled={true}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{zIndex: 1000}}
           style={{
@@ -678,7 +384,6 @@ const index = (props) => {
             top: 126,
             left: 20,
             backgroundColor: '#fff',
-            width: '43.5%',
             zIndex: 1000,
             borderWidth: 1,
             borderColor: '#E3E3E3',
@@ -693,7 +398,21 @@ const index = (props) => {
               paddingHorizontal: 10,
             }}
             onPress={() => {
+              setStep01('전체');
+              setStatus('');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
               setStep01('입찰중');
+              setStatus('0');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>입찰중</Text>
@@ -705,11 +424,12 @@ const index = (props) => {
               paddingHorizontal: 10,
             }}
             onPress={() => {
-              setStep01('파트너선정');
+              setStep01('파트너최종선정(견적확정대기)');
+              setStatus('1');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
-              파트너선정
+              파트너최종선정(견적확정대기)
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -719,10 +439,13 @@ const index = (props) => {
               paddingHorizontal: 10,
             }}
             onPress={() => {
-              setStep01('마감');
+              setStep01('파트너최종선정(계약금입금대기)');
+              setStatus('2');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>마감</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              파트너최종선정(계약금입금대기)
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -731,10 +454,28 @@ const index = (props) => {
               paddingHorizontal: 10,
             }}
             onPress={() => {
-              setStep01('제작요청');
+              setStep01('파트너최종선정(계약금입금완료)');
+              setStatus('3');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>제작요청</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              파트너최종선정(계약금입금완료)
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('인쇄제작요청');
+              setStatus('4');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              인쇄제작요청
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -744,6 +485,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('납품완료');
+              setStatus('5');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>납품완료</Text>
@@ -756,15 +498,30 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('수령완료');
+              setStatus('6');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>수령완료</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('마감');
+              setStatus('7');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>마감</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
 
       {visibleStep02 && (
         <ScrollView
+          nestedScrollEnabled={true}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{zIndex: 1000}}
           style={{
@@ -772,7 +529,7 @@ const index = (props) => {
             top: 126,
             right: 20,
             backgroundColor: '#fff',
-            width: '43.5%',
+            width: '35.2%',
             zIndex: 1000,
             borderWidth: 1,
             borderColor: '#E3E3E3',
@@ -787,7 +544,21 @@ const index = (props) => {
               paddingHorizontal: 10,
             }}
             onPress={() => {
+              setStep02('전체');
+              setCate1('');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
               setStep02('패키지');
+              setCate1('1');
               setVisibleStep02(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
@@ -800,6 +571,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep02('일반인쇄물');
+              setCate1('0');
               setVisibleStep02(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
@@ -814,6 +586,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep02('기타인쇄물');
+              setCate1('2');
               setVisibleStep02(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
