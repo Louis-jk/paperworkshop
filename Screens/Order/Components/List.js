@@ -114,7 +114,7 @@ const List = (props) => {
 
 const styles = StyleSheet.create({
   categoryItem: {
-    height: 170,
+    // height: 170,
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 20,
