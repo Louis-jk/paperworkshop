@@ -171,7 +171,7 @@ const Step04 = (props) => {
 
   // 스티커(ca_id 6)
   const [thomsonType, setThomsonType] = React.useState([]); // 톰슨모양 정보 담기
-  const [thomsonCur, setThomsonCur] = React.useState([]); // 톰슨모양 선택값 담기
+  const [thomsonCur, setThomsonCur] = React.useState(''); // 톰슨모양 선택값 담기
 
   const [isLoading, setLoading] = React.useState(false);
   const [prepareCover, setPrepareCover] = React.useState(false); // 표지간지색상 표시여부
@@ -269,6 +269,7 @@ const Step04 = (props) => {
   const [writeingCurError, setWriteingCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 간지종류 선택 값 없을 시 에러
   const [coverColorCurError, setCoverColorCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 표지간지색상 선택 값 없을 시 에러
   const [sectionColorCurError, setSectionColorCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 섹션간지색상 선택 값 없을 시 에러
+  const [thomsonCurError, setThomsonCurError] = React.useState(false); // 일반인쇄 - 스티커 - 톰슨타입 선택 값 없을 시 에러
 
   console.log('pageCountCur', pageCountCur);
 
@@ -413,6 +414,30 @@ const Step04 = (props) => {
           (size !== 'direct' && size === '')
         ) {
           setSizeError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (
+        ca_id === '6' &&
+        (type_id === '81' ||
+          type_id === '82' ||
+          type_id === '83' ||
+          type_id === '84')
+      ) {
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (size === null || size === '') {
+          setSizeDirectError(true);
+        } else if (thomsonCur === null || thomsonCur === '') {
+          setThomsonCurError(true);
         } else {
           setModalVisible(!isModalVisible);
         }
@@ -1813,6 +1838,7 @@ const Step04 = (props) => {
                             ]}
                             onChangeText={(value) => {
                               setSize(value);
+                              setSizeDirectError(false);
                             }}
                             autoCapitalize="none"
                             keyboardType="decimal-pad"
@@ -1827,6 +1853,19 @@ const Step04 = (props) => {
                                 color: '#B5B5B5',
                               }}>
                               {infoDetail[0].standard_text}
+                            </Text>
+                          ) : null}
+                          {sizeDirectError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              규격을 입력해주세요.
                             </Text>
                           ) : null}
                         </View>
@@ -1874,6 +1913,7 @@ const Step04 = (props) => {
                                         right: 10,
                                       }}
                                       onPress={() => {
+                                        setThomsonCurError(false);
                                         setThomsonCur(q);
                                       }}
                                       style={[
@@ -1906,6 +1946,19 @@ const Step04 = (props) => {
                                     </TouchableOpacity>
                                   ))
                                 : null}
+                              {thomsonCurError ? (
+                                <Text
+                                  style={{
+                                    width: '100%',
+                                    fontFamily: 'SCDream4',
+                                    fontSize: 12,
+                                    lineHeight: 18,
+                                    color: '#366DE5',
+                                    marginVertical: 5,
+                                  }}>
+                                  톰슨모양을 선택해주세요.
+                                </Text>
+                              ) : null}
                             </View>
                           </View>
                         </View>
