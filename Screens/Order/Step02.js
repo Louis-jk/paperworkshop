@@ -42,10 +42,21 @@ import {
 } from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
 
+import OrderAPI from '../../src/api/OrderAPI';
+import Modal from './EtcOrderModal';
+
 const Step02 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const propsScreenName = props.route.params.screen;
+
+  const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
+  const {mb_id} = useSelector((state) => state.UserInfoReducer);
+
+  const titleRef = React.useRef(null); // 제작명 TextInpu
+  const nameRef = React.useRef(null); // 고객명 TextInpu
+  const mobileRef = React.useRef(null); // 휴대폰번호 TextInpu
+  const memoRef = React.useRef(null); // 메모 TextInpu
 
   console.log('Step02 props', props);
 
@@ -57,14 +68,23 @@ const Step02 = (props) => {
   const [show01, setShow01] = React.useState(false);
   const [show02, setShow02] = React.useState(false);
 
-  // const [title, setTitle] = React.useState(null); // 제작명 (필수)
-  // const [name, setName] = React.useState(null); // 고객명 (필수)
-  // const [mobile, setMobile] = React.useState(null); // 휴대폰 번호 (필수)
+  // 기타인쇄물 견적 전 모달
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const [title, setTitle] = React.useState(null); // 제작명 (필수)
+  const [name, setName] = React.useState(null); // 고객명 (필수)
+  const [mobile, setMobile] = React.useState(null); // 휴대폰 번호 (필수)
   const [company, setCompany] = React.useState(null); // 회사명 (선택)
   const [designOrder, setDesignOrder] = React.useState('P'); // 디자인 의뢰 (필수) : 인쇄만 의뢰/인쇄+디자인의뢰
   const [location, setLocation] = React.useState(null); // 인쇄 업체 선호 지역 (필수)
   const [deliveryDate, setDeliveryDate] = React.useState(new Date()); // 납품 희망일 (필수)
   const [estimateDate, setEstimateDate] = React.useState(new Date()); // 견적 마감일 (필수)
+
+  const [titleError, setTitleError] = React.useState(false); // 제작명 (필수) 값 없을 때 에러 표시
+  const [nameError, setNameError] = React.useState(false); // 고객명 (필수) 값 없을 때 에러 표시
+  const [mobileError, setMobileError] = React.useState(false); // 휴대폰 번호 (필수) 값 없을 때 에러 표시
+  const [memoError, setMemoError] = React.useState(false); // 기타인쇄일 경우 메모(필수) 값 없을 때 에러 표시
+
   // const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
   const [memo, setMemo] = React.useState(null); // 메모 (선택)
 
@@ -159,6 +179,76 @@ const Step02 = (props) => {
     }
   };
 
+  const [source, setSource] = React.useState('');
+  // const [deliDate, setDeliDate] = React.useState('');
+  // const [estiDate, setEstiDate] = React.useState('');
+
+  const sendOrderBefore = () => {
+    let deli = moment(deliveryDate).format('YYYY-MM-DD'); // 납품 희망일 형식 변환
+    let esti = moment(estimateDate).format('YYYY-MM-DD'); // 견적 마감일 형식 변환
+    // setDeliDate(deli);
+    // setEstiDate(esti);
+
+    if (fileUrlCurrent && fileTypeCurrent && fileNameCurrent !== null) {
+      setSource({
+        uri: fileUrlCurrent,
+        type: fileTypeCurrent,
+        name: fileNameCurrent,
+      });
+      sendOrderAPI(deli, esti);
+    } else {
+      sendOrderAPI(deli, esti);
+    }
+  };
+
+  const sendOrderAPI = (deli, esti) => {
+    const frmdata = new FormData();
+    frmdata.append('method', 'proc_estimate_etc');
+    frmdata.append('cate1', cate1);
+    frmdata.append('ca_id', ca_id);
+    frmdata.append('mb_id', mb_id);
+    frmdata.append('title', title);
+    frmdata.append('company', company ? company : '');
+    frmdata.append('mb_name', name);
+    frmdata.append('mb_hp', mobile);
+    frmdata.append('design_print', designOrder);
+    frmdata.append('favor_area', location);
+    frmdata.append('memo', memo);
+    frmdata.append('delivery_date', deli);
+    frmdata.append('estimate_date', esti);
+    frmdata.append('pe_file[]', source);
+    frmdata.append('status', '0');
+    // console.log(frmdata);
+
+    OrderAPI.sendOrder(frmdata)
+      .then((res) => {
+        console.log('기타인쇄 견적', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setModalVisible(!isModalVisible);
+          navigation.navigate('easyOrderComplete');
+        } else if (res.data.result === '1' && res.data.count <= 0) {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
   // 유효성 체크
   const validationSchema = yup.object().shape({
     order_title: yup.string().required('제작명을 입력해주세요.').label('Title'),
@@ -168,8 +258,6 @@ const Step02 = (props) => {
       .required('휴대폰 번호를 입력해주세요.')
       .label('Mobile'),
   });
-
-  console.log('deliveryDate', deliveryDate);
 
   // 다음 스텝
   const nextStep = (title, name, mobile) => {
@@ -191,8 +279,41 @@ const Step02 = (props) => {
     });
   };
 
+  // 기타인쇄 견적신청
+  const toggleModal = () => {
+    // Alert.alert('기타인쇄 견적을 신청하시겠습니까?');
+    if (title === null) {
+      setTitleError(true);
+      titleRef.current.focus();
+    } else if (name === null) {
+      setNameError(true);
+      nameRef.current.focus();
+    } else if (mobile === null) {
+      setMobileError(true);
+      mobileRef.current.focus();
+    } else if (location === null) {
+      Alert.alert('인쇄 업체 선호 지역을 선택해주세요.', '', [
+        {
+          text: '확인',
+        },
+      ]);
+    } else if (memo === null) {
+      setMemoError(true);
+      memoRef.current.focus();
+    } else {
+      setModalVisible(!isModalVisible);
+    }
+    // setModalVisible(!isModalVisible);
+  };
+
+  console.log('ca_id는?', ca_id);
   return (
     <>
+      <Modal
+        isVisible={isModalVisible}
+        toggleModal={toggleModal}
+        sendOrder={sendOrderBefore}
+      />
       <DetailHeader
         title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
         navigation={navigation}
@@ -238,6 +359,7 @@ const Step02 = (props) => {
                 </View>
                 <TextInput
                   // value={title}
+                  ref={titleRef}
                   placeholder="제작명을 입력해주세요."
                   placeholderTextColor="#A2A2A2"
                   style={[
@@ -252,10 +374,28 @@ const Step02 = (props) => {
                     },
                   ]}
                   // onChangeText={(text) => setTitle(text)}
-                  onChangeText={formikProps.handleChange('order_title')}
+                  // onChangeText={formikProps.handleChange('order_title')}
+                  onChangeText={(value) => {
+                    setTitle(value);
+                    setTitleError(false);
+                    formikProps.setFieldValue('order_title', value);
+                  }}
                   autoCapitalize="none"
                   onBlur={formikProps.handleBlur('order_title')}
                 />
+                {titleError && (
+                  <Text
+                    style={{
+                      width: '100%',
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      lineHeight: 18,
+                      color: '#366DE5',
+                      marginBottom: 5,
+                    }}>
+                    제작명을 입력해주세요.
+                  </Text>
+                )}
                 {formikProps.touched.order_title &&
                   formikProps.errors.order_title && (
                     <Text
@@ -289,6 +429,7 @@ const Step02 = (props) => {
                 </View>
                 <TextInput
                   // value={name}
+                  ref={nameRef}
                   placeholder="고객명을 입력해주세요."
                   placeholderTextColor="#A2A2A2"
                   style={[
@@ -302,10 +443,28 @@ const Step02 = (props) => {
                       marginBottom: 5,
                     },
                   ]}
-                  onChangeText={formikProps.handleChange('order_name')}
+                  // onChangeText={formikProps.handleChange('order_name')}
+                  onChangeText={(value) => {
+                    setName(value);
+                    setNameError(false);
+                    formikProps.setFieldValue('order_name', value);
+                  }}
                   autoCapitalize="none"
                   onBlur={formikProps.handleBlur('order_name')}
                 />
+                {nameError && (
+                  <Text
+                    style={{
+                      width: '100%',
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      lineHeight: 18,
+                      color: '#366DE5',
+                      marginBottom: 5,
+                    }}>
+                    고객명을 입력해주세요.
+                  </Text>
+                )}
                 {formikProps.touched.order_name &&
                   formikProps.errors.order_name && (
                     <Text
@@ -340,6 +499,7 @@ const Step02 = (props) => {
                 </View>
                 <TextInput
                   // value={mobile}
+                  ref={mobileRef}
                   placeholder="휴대폰 번호를 입력해주세요."
                   placeholderTextColor="#A2A2A2"
                   style={[
@@ -353,11 +513,29 @@ const Step02 = (props) => {
                       marginBottom: 5,
                     },
                   ]}
-                  onChangeText={formikProps.handleChange('order_mobile')}
+                  // onChangeText={formikProps.handleChange('order_mobile')}
+                  onChangeText={(value) => {
+                    setMobile(value);
+                    setMobileError(false);
+                    formikProps.setFieldValue('order_mobile', value);
+                  }}
                   autoCapitalize="none"
                   onBlur={formikProps.handleBlur('order_mobile')}
                   keyboardType="number-pad"
                 />
+                {mobileError && (
+                  <Text
+                    style={{
+                      width: '100%',
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      lineHeight: 18,
+                      color: '#366DE5',
+                      marginBottom: 5,
+                    }}>
+                    휴대폰 번호를 입력해주세요.
+                  </Text>
+                )}
                 {formikProps.touched.order_mobile &&
                   formikProps.errors.order_mobile && (
                     <Text
@@ -802,15 +980,43 @@ const Step02 = (props) => {
                     marginBottom: 10,
                   }}>
                   <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                    메모
+                    {ca_id === '8' ||
+                    ca_id === '15' ||
+                    ca_id === '16' ||
+                    ca_id === '17' ||
+                    ca_id === '18' ||
+                    ca_id === '19'
+                      ? '희망인쇄물 기입사항'
+                      : '메모'}
                   </Text>
-                  <Text style={[styles.profileRequired, {color: '#707070'}]}>
-                    (선택)
-                  </Text>
+                  {ca_id === '8' ||
+                  ca_id === '15' ||
+                  ca_id === '16' ||
+                  ca_id === '17' ||
+                  ca_id === '18' ||
+                  ca_id === '19' ? (
+                    <Text style={[styles.profileRequired, {color: '#366DE5'}]}>
+                      (필수)
+                    </Text>
+                  ) : (
+                    <Text style={[styles.profileRequired, {color: '#707070'}]}>
+                      (선택)
+                    </Text>
+                  )}
                 </View>
                 <TextInput
+                  ref={memoRef}
                   value={memo}
-                  placeholder="메모를 입력해주세요."
+                  placeholder={
+                    ca_id === '8' ||
+                    ca_id === '15' ||
+                    ca_id === '16' ||
+                    ca_id === '17' ||
+                    ca_id === '18' ||
+                    ca_id === '19'
+                      ? '희망하시는 인쇄물에 대한 상세한 설명을 적어주세요.'
+                      : '메모를 입력해주세요.'
+                  }
                   placeholderTextColor="#A2A2A2"
                   style={[
                     styles.normalText,
@@ -824,10 +1030,26 @@ const Step02 = (props) => {
                       paddingVertical: 10,
                     },
                   ]}
-                  onChangeText={(text) => setMemo(text)}
+                  onChangeText={(text) => {
+                    setMemoError(false);
+                    setMemo(text);
+                  }}
                   multiline={true}
                   autoCapitalize="none"
                 />
+                {memoError && (
+                  <Text
+                    style={{
+                      width: '100%',
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      lineHeight: 18,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    희망인쇄물 기입사항을 입력해주세요.
+                  </Text>
+                )}
               </View>
               {/* // 메모  */}
 
@@ -836,87 +1058,102 @@ const Step02 = (props) => {
                 <ActivityIndicator size="large" color="#275696" />
               ) : (
                 <View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderWidth: 1,
-                      borderColor: '#E3E3E3',
-                      borderRadius: 5,
-                      backgroundColor: '#fff',
-                      marginBottom: 20,
-                    }}>
-                    <View
-                      style={{
-                        borderWidth: 0.5,
-                        height: '100%',
-                        borderColor: '#E3E3E3',
-                      }}
-                    />
-                    <TouchableWithoutFeedback
-                      onPress={() => navigation.goBack()}>
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          paddingVertical: 15,
-                        }}>
-                        <Image
-                          source={require('../../src/assets/prevUnActiveArrow.png')}
-                          resizeMode="contain"
-                          style={{width: 16, height: 16, marginRight: 7}}
-                        />
-                        <Text
-                          style={[
-                            styles.normalText,
-                            {
-                              fontSize: 14,
-                              color: '#707070',
-                              letterSpacing: -1,
-                            },
-                          ]}>
-                          이전
+                  {ca_id === '8' ||
+                  ca_id === '15' ||
+                  ca_id === '16' ||
+                  ca_id === '17' ||
+                  ca_id === '18' ||
+                  ca_id === '19' ? (
+                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.8}>
+                      <View style={[styles.submitBtn, {marginBottom: 10}]}>
+                        <Text style={styles.submitBtnText}>
+                          기타인쇄물 견적 제출
                         </Text>
                       </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
+                  ) : (
                     <View
                       style={{
-                        borderWidth: 0.5,
-                        height: '100%',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
                         borderColor: '#E3E3E3',
-                      }}
-                    />
-                    <TouchableWithoutFeedback
-                      onPress={formikProps.handleSubmit}>
+                        borderRadius: 5,
+                        backgroundColor: '#fff',
+                        marginBottom: 20,
+                      }}>
                       <View
                         style={{
-                          flex: 1,
-                          flexDirection: 'row-reverse',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          paddingVertical: 15,
-                        }}>
-                        <Image
-                          source={require('../../src/assets/nextActiveArrow.png')}
-                          resizeMode="contain"
-                          style={{width: 16, height: 16, marginLeft: 7}}
-                        />
-                        <Text
-                          style={[
-                            styles.normalText,
-                            {
-                              fontSize: 14,
-                              letterSpacing: -1,
-                            },
-                          ]}>
-                          다음
-                        </Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  </View>
+                          borderWidth: 0.5,
+                          height: '100%',
+                          borderColor: '#E3E3E3',
+                        }}
+                      />
+                      <TouchableWithoutFeedback
+                        onPress={() => navigation.goBack()}>
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            paddingVertical: 15,
+                          }}>
+                          <Image
+                            source={require('../../src/assets/prevUnActiveArrow.png')}
+                            resizeMode="contain"
+                            style={{width: 16, height: 16, marginRight: 7}}
+                          />
+                          <Text
+                            style={[
+                              styles.normalText,
+                              {
+                                fontSize: 14,
+                                color: '#707070',
+                                letterSpacing: -1,
+                              },
+                            ]}>
+                            이전
+                          </Text>
+                        </View>
+                      </TouchableWithoutFeedback>
+                      <View
+                        style={{
+                          borderWidth: 0.5,
+                          height: '100%',
+                          borderColor: '#E3E3E3',
+                        }}
+                      />
+                      <TouchableWithoutFeedback
+                        onPress={formikProps.handleSubmit}>
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: 'row-reverse',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            paddingVertical: 15,
+                          }}>
+                          <Image
+                            source={require('../../src/assets/nextActiveArrow.png')}
+                            resizeMode="contain"
+                            style={{width: 16, height: 16, marginLeft: 7}}
+                          />
+                          <Text
+                            style={[
+                              styles.normalText,
+                              {
+                                fontSize: 14,
+                                letterSpacing: -1,
+                              },
+                            ]}>
+                            다음
+                          </Text>
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                  )}
                 </View>
               )}
               {/* // 이전, 다음 버튼 부분 (Prev, Next) */}
