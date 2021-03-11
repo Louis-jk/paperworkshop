@@ -351,13 +351,13 @@ const Step04 = (props) => {
         } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
           setPageInnerCountError(true);
         } else if (writeingCur === null || writeingCur === '') {
-          // 일반인쇄 - 책자 서적류 - "출판류/서적/도서류" 간지종류
+          // 일반인쇄 - 간지종류
           setWriteingCurError(true);
         } else if (coverColorCur === null || coverColorCur === '') {
-          // 일반인쇄 - 책자 서적류 - "출판류/서적/도서류" 표지간지색상
+          // 일반인쇄 - 표지간지색상
           setCoverColorCurError(true);
         } else if (sectionColorCur === null || sectionColorCur === '') {
-          // 일반인쇄 - 책자 서적류 - "출판류/서적/도서류" 섹션간지색상
+          // 일반인쇄 - 섹션간지색상
           setSectionColorCurError(true);
         } else if (bindTypeCur === null || bindTypeCur === '') {
           setBindTypeCurError(true);
@@ -385,10 +385,14 @@ const Step04 = (props) => {
           setModalVisible(!isModalVisible);
         }
       } else if (
-        (ca_id === '1' && type_id === '72') ||
-        (ca_id === '1' && type_id === '73')
-      ) {
         // 팜플렛, 리플렛
+        (ca_id === '1' && (type_id === '72' || type_id === '73')) ||
+        (ca_id === '5' &&
+          (type_id === '77' ||
+            type_id === '78' ||
+            type_id === '79' ||
+            type_id === '80')) // 전단지, 포스터
+      ) {
         if (
           (quantity === 'direct' && quantityDirect === null) ||
           (quantity === 'direct' && quantityDirect === '')
