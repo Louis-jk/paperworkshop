@@ -351,6 +351,7 @@ const Step03 = (props) => {
         </View>
 
         {/* 이전, 다음 버튼 부분 (Prev, Next) */}
+
         <View style={{paddingHorizontal: 20}}>
           <View
             style={{
@@ -364,7 +365,11 @@ const Step03 = (props) => {
               marginBottom: 20,
             }}>
             <View
-              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+              style={{
+                borderWidth: 0.5,
+                height: '100%',
+                borderColor: '#E3E3E3',
+              }}
             />
             <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
               <View
@@ -394,7 +399,11 @@ const Step03 = (props) => {
               </View>
             </TouchableWithoutFeedback>
             <View
-              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+              style={{
+                borderWidth: 0.5,
+                height: '100%',
+                borderColor: '#E3E3E3',
+              }}
             />
             <TouchableWithoutFeedback onPress={() => nextBtn()}>
               <View
@@ -424,6 +433,7 @@ const Step03 = (props) => {
             </TouchableWithoutFeedback>
           </View>
         </View>
+
         {/* // 이전, 다음 버튼 부분 (Prev, Next) */}
       </ScrollView>
     </>
