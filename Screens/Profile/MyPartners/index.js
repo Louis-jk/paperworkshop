@@ -26,9 +26,12 @@ const index = (props) => {
   const routeName = props.route.name;
   // const cateName = props.route.params.name;
 
+  console.log('MyPartners props', props);
+
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
   console.log('routeName', routeName);
+  console.log('favor', favor);
 
   const [partners, setPartners] = React.useState([]);
   const [pPackage, setPpackages] = React.useState([]);
@@ -41,6 +44,7 @@ const index = (props) => {
 
     PartnersApi.getMyPartners(mb_id, null, null, null, null)
       .then((res) => {
+        console.log('getPartnersAll', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
           setIsLoading(false);
@@ -49,7 +53,13 @@ const index = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersPackage = () => {
@@ -65,7 +75,13 @@ const index = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersGeneral = () => {
@@ -81,7 +97,13 @@ const index = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersEtc = () => {
@@ -97,15 +119,38 @@ const index = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   React.useEffect(() => {
-    getPartnersAll();
-    getPartnersPackage();
-    getPartnersGeneral();
-    getPartnersEtc();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getPartnersAll();
+      getPartnersPackage();
+      getPartnersGeneral();
+      getPartnersEtc();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const unsubscribe = navigation.addListener('focus', () => {
+  //       getPartnersAll();
+  //       getPartnersPackage();
+  //       getPartnersGeneral();
+  //       getPartnersEtc();
+  //     });
+
+  //     return () => unsubscribe();
+  //   }, [partners])
+  // );
 
   const initialLayout = {width: Dimensions.get('window').width};
 
@@ -329,48 +374,43 @@ const index = (props) => {
           <ActivityIndicator size="large" color="#275696" />
         </View>
       )}
-      <View
-        style={{
-          position: 'relative',
-          flex: 1,
-
-          paddingTop: 20,
-          backgroundColor: '#fff',
-          // paddingBottom: 10,
-        }}>
+      {!isLoading && (
         <View
           style={{
-            paddingHorizontal: 20,
+            position: 'relative',
+            flex: 1,
+
+            paddingTop: 20,
+            backgroundColor: '#fff',
+            // paddingBottom: 10,
           }}>
-          <PartnersNav navigation={navigation} routeName={routeName} />
+          <View
+            style={{
+              paddingHorizontal: 20,
+            }}>
+            <PartnersNav navigation={navigation} routeName={routeName} />
+          </View>
+
+          {/* TabView */}
+          <TabView
+            renderTabBar={(props) => (
+              <TabBar
+                {...props}
+                navigation={navigation}
+                setTabIndex={setTabIndex}
+                tabIndex={tabIndex}
+                onIndexChange={setIndex}
+              />
+            )}
+            navigationState={{index, routes}}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={initialLayout}
+            swipeEnabled={false}
+          />
+          {/* // TabView */}
         </View>
-        {/* <CategoryNav
-          navigation={navigation}
-          routeName={routeName}
-          cateName={cateName}
-        /> */}
-
-        {/* TabView */}
-
-        <TabView
-          renderTabBar={(props) => (
-            <TabBar
-              {...props}
-              navigation={navigation}
-              setTabIndex={setTabIndex}
-              tabIndex={tabIndex}
-              onIndexChange={setIndex}
-            />
-          )}
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={initialLayout}
-          swipeEnabled={false}
-        />
-
-        {/* // TabView */}
-      </View>
+      )}
 
       {/* <Footer navigation={navigation} /> */}
       {/* </ScrollView> */}

@@ -63,7 +63,13 @@ const index = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   // 메인 중간 슬라이더(배너) API 연동
@@ -82,7 +88,13 @@ const index = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   // 실시간 견적 처리 현황
@@ -96,13 +108,13 @@ const index = (props) => {
           setAllOrders(null);
         }
       })
-      .catch((err) =>
-        Alert.alert('문제가 있습니다.', err, [
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
           {
             text: '확인',
           },
-        ]),
-      );
+        ]);
+      });
   };
 
   const renderRow = ({item, index}) => {
@@ -1303,7 +1315,7 @@ const index = (props) => {
       <Animated.ScrollView
         style={{backgroundColor: '#fff'}}
         showsVerticalScrollIndicator={false}
-        nestedScrollEnabled={true}
+        // nestedScrollEnabled={true}
         // onScroll={handleScroll}
         scrollEventThrottle={16}
         onScroll={Animated.event(
@@ -1897,6 +1909,7 @@ const index = (props) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flex: 1,
+                    height: 200,
                   }}>
                   <Text style={{fontFamily: 'SCDream4'}}>
                     실시간 견적 처리 현황 리스트가 없습니다.

@@ -11,6 +11,21 @@ import {
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import {useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
+
+function Profile({userId}) {
+  const [user, setUser] = React.useState(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = API.subscribe(userId, (user) => setUser(user));
+
+      return () => unsubscribe();
+    }, [userId]),
+  );
+
+  return <ProfileContent user={user} />;
+}
 
 import Header from '../../Common/Header';
 
@@ -51,7 +66,13 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersPackage = () => {
@@ -67,7 +88,13 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersGeneral = () => {
@@ -83,7 +110,13 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersEtc = () => {
@@ -99,8 +132,28 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
+
+  // React.useEffect(
+  //   React.useCallback(() => {
+  //     const unsubscribe = navigation.addListener('focus', () => {
+  //       getPartnersAll();
+  //       getPartnersPackage();
+  //       getPartnersGeneral();
+  //       getPartnersEtc();
+  //     });
+
+  //     return () => unsubscribe();
+  //   }, [location]),
+  //   [navigation],
+  // );
 
   React.useEffect(() => {
     getPartnersAll();
@@ -108,6 +161,17 @@ const Partner03 = (props) => {
     getPartnersGeneral();
     getPartnersEtc();
   }, [location]);
+
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     getPartnersAll();
+  //     getPartnersPackage();
+  //     getPartnersGeneral();
+  //     getPartnersEtc();
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation, location]);
 
   // const renderRow = ({item, index}) => {
   //   return <List item={item} index={index} navigation={navigation} />;

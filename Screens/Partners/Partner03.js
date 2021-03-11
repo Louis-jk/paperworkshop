@@ -48,7 +48,13 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersPackage = () => {
@@ -64,7 +70,13 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersGeneral = () => {
@@ -80,7 +92,13 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersEtc = () => {
@@ -96,7 +114,13 @@ const Partner03 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   React.useEffect(() => {

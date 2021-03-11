@@ -47,7 +47,13 @@ const index = (props) => {
           setPartners(null);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   React.useEffect(() => {
@@ -97,26 +103,29 @@ const index = (props) => {
           routeName={routeName}
           cateName={cateName}
         />
-
-        {partners ? (
-          <FlatList
-            data={partners}
-            renderItem={renderRow}
-            keyExtractor={(list, index) => index.toString()}
-            numColumns={2}
-            // pagingEnabled={true}
-            persistentScrollbar={true}
-            showsVerticalScrollIndicator={false}
-            progressViewOffset={true}
-            refreshing={true}
-            // onEndReached={handleLoadMore}
-          />
-        ) : (
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
-          </View>
-        )}
+        <FlatList
+          data={partners}
+          renderItem={renderRow}
+          keyExtractor={(list, index) => index.toString()}
+          numColumns={2}
+          // pagingEnabled={true}
+          persistentScrollbar={true}
+          showsVerticalScrollIndicator={false}
+          progressViewOffset={true}
+          refreshing={true}
+          ListEmptyComponent={
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+              }}>
+              <Text style={{fontFamily: 'SCDream4'}}>
+                해당 업체가 없습니다.
+              </Text>
+            </View>
+          }
+        />
       </View>
 
       {/* <Footer navigation={navigation} /> */}

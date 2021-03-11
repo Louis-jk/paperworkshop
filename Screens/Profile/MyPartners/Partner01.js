@@ -48,7 +48,13 @@ const Partner01 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersPackage = () => {
@@ -64,7 +70,13 @@ const Partner01 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersGeneral = () => {
@@ -80,7 +92,13 @@ const Partner01 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const getPartnersEtc = () => {
@@ -96,15 +114,25 @@ const Partner01 = (props) => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   React.useEffect(() => {
-    getPartnersAll();
-    getPartnersPackage();
-    getPartnersGeneral();
-    getPartnersEtc();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getPartnersAll();
+      getPartnersPackage();
+      getPartnersGeneral();
+      getPartnersEtc();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   // const renderRow = ({item, index}) => {
   //   return <List item={item} index={index} navigation={navigation} />;

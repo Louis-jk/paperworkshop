@@ -98,7 +98,13 @@ const Register = (props) => {
             IdAlertMsg();
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>
+          Alert.alert('문제가 있습니다.', err, [
+            {
+              text: '확인',
+            },
+          ]),
+        );
     }
   };
 
@@ -173,7 +179,13 @@ const Register = (props) => {
           }
           console.log('휴대폰 인증 response', res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>
+          Alert.alert('문제가 있습니다.', err, [
+            {
+              text: '확인',
+            },
+          ]),
+        );
     }
   };
 
@@ -227,7 +239,13 @@ const Register = (props) => {
           }
           console.log('휴대폰 인증 response', res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>
+          Alert.alert('문제가 있습니다.', err, [
+            {
+              text: '확인',
+            },
+          ]),
+        );
     }
   };
 
@@ -279,7 +297,13 @@ const Register = (props) => {
             ]);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>
+          Alert.alert('문제가 있습니다.', err, [
+            {
+              text: '확인',
+            },
+          ]),
+        );
     }
   };
 

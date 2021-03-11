@@ -30,13 +30,13 @@ const Estimate = (props) => {
           setAllOrders(null);
         }
       })
-      .catch((err) =>
-        Alert.alert('문제가 있습니다.', err, [
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
           {
             text: '확인',
           },
-        ]),
-      );
+        ]);
+      });
   };
 
   React.useEffect(() => {
@@ -172,6 +172,7 @@ const Estimate = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flex: 1,
+                height: Dimensions.get('window').height - 300,
               }}>
               <Text style={{fontFamily: 'SCDream4'}}>
                 실시간 견적 처리 현황 리스트가 없습니다.

@@ -48,7 +48,13 @@ const Etc = (props) => {
           setGalleries(null);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   React.useEffect(() => {
@@ -92,28 +98,30 @@ const Etc = (props) => {
         }}>
         <GalleryNav navigation={navigation} routeName={routeName} />
 
-        {galleries ? (
-          <FlatList
-            data={galleries}
-            renderItem={renderRow}
-            keyExtractor={(list, index) => index.toString()}
-            numColumns={2}
-            // pagingEnabled={true}
-            persistentScrollbar={true}
-            showsVerticalScrollIndicator={false}
-            progressViewOffset={true}
-            refreshing={true}
-            // contentContainerStyle={{paddingBottom: 20}}
-            // onEndReached={handleLoadMore}
-          />
-        ) : (
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text style={{fontFamily: 'SCDream4'}}>
-              해당 갤러리가 없습니다.
-            </Text>
-          </View>
-        )}
+        <FlatList
+          data={galleries}
+          renderItem={renderRow}
+          keyExtractor={(list, index) => index.toString()}
+          numColumns={2}
+          // pagingEnabled={true}
+          persistentScrollbar={true}
+          showsVerticalScrollIndicator={false}
+          progressViewOffset={true}
+          refreshing={true}
+          ListEmptyComponent={
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+                height: Dimensions.get('window').height - 300,
+              }}>
+              <Text style={{fontFamily: 'SCDream4'}}>
+                해당 갤러리가 없습니다.
+              </Text>
+            </View>
+          }
+        />
       </View>
     </>
   );
