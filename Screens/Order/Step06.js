@@ -123,13 +123,13 @@ const Step06 = (props) => {
         type: pe_file_type,
         name: pe_file_name,
       });
-      sendOrder();
+      sendOrderAPI();
     } else {
-      sendOrder();
+      sendOrderAPI();
     }
   };
 
-  const sendOrder = () => {
+  const sendOrderAPI = () => {
     const frmdata = new FormData();
     frmdata.append('method', 'proc_estimate');
     frmdata.append('cate1', cate1);

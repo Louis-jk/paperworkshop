@@ -91,18 +91,6 @@ const Step05 = (props) => {
   const [paperColor, setPaperColor] = React.useState(null); //  색상 지정 index
   const [paperColorName, setPaperColorName] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로)
 
-  // console.log('paperColor', paperColor);
-  // console.log('paperColorName', paperColorName);
-  // console.log('paperDetail', paperDetail);
-  // console.log('paperDetail2', paperDetail2);
-  // console.log('paper', paper);
-  // console.log('isDirect01', isDirect01);
-  // console.log('isDirect', isDirect);
-  // console.log('directPaperName', directPaperName);
-  // console.log('getPaperColors', getPaperColors);
-  // console.log('paperColor', paperColor);
-  // console.log('인쇄도수 print', print);
-
   //////////////////////////
   /////// FUNCTIONS ///////
   /////////////////////////
