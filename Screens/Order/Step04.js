@@ -136,7 +136,13 @@ const Step04 = (props) => {
           ]);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const directRef = React.useRef(null); // 수량 직접 입력폼 ref
@@ -148,9 +154,9 @@ const Step04 = (props) => {
   // 일반인쇄
   // 카달로그(ca_id 1) 또는 책자, 서적류(ca_id 4)일 경우
   const [pageCount, setPageCount] = React.useState([]); // page count(페이지수 표지) 정보 담기
-  const [pageCountCur, setPageCountCur] = React.useState([]); // page count(페이지수 표지) 선택값 담기
+  const [pageCountCur, setPageCountCur] = React.useState(''); // page count(페이지수 표지) 선택값 담기
   const [pageCountInner, setPageCountInner] = React.useState(''); // page_cnt2(페이지수 내지) 정보 담기
-  const [pageCountInnerCur, setPageCountInnerCur] = React.useState(''); // 페이지수(페이지수 내지) 선택값 담기
+  const [pageInnerCountCur, setPageInnerCountCur] = React.useState(''); // 페이지수(페이지수 내지) 선택값 담기
   const [pageCountText, setPageCountText] = React.useState(''); // page count(페이지 수) 안내 문구 정보 담기
   const [bindType, setBindType] = React.useState([]); // bind_type(제본방식) 정보 담기
   const [bindTypeText, setBindTypeText] = React.useState(''); // bind_type(제본방식) 안내 문구 담기
@@ -170,8 +176,6 @@ const Step04 = (props) => {
   const [isLoading, setLoading] = React.useState(false);
   const [prepareCover, setPrepareCover] = React.useState(false); // 표지간지색상 표시여부
   const [prepareSection, setPrepareSection] = React.useState(false); // 섹션간지색상 표시여부
-
-  console.log('ca_id 는 ?', ca_id);
 
   const getType = () => {
     setLoading(true);
@@ -201,7 +205,6 @@ const Step04 = (props) => {
             res.data.item[0].cate1 === '0' &&
             res.data.item[0].ca_id === '6'
           ) {
-            console.log('스티커 출력!');
             setThomsonType(res.data.item[0].thomson_type);
           }
 
@@ -226,9 +229,6 @@ const Step04 = (props) => {
   React.useEffect(() => {
     getType();
   }, []);
-
-  console.log('thomsonType ?', thomsonType);
-  console.log('standard ?', standard);
 
   // 규격 입력 (일반 인쇄)
   const [size, setSize] = React.useState(null);
@@ -260,45 +260,174 @@ const Step04 = (props) => {
   const [pLengthError, setPlengthError] = React.useState(false);
   const [pHeightError, setPheightError] = React.useState(false);
   const [quantityError, setQuantityError] = React.useState(false); // 수량 지정 안했을 때 유효성 체크
-  const [directError, setDirectError] = React.useState(false); // 수량 직접 입력 선택 후 입력 없을 시 에러
+  const [directError, setQuantityDirectError] = React.useState(false); // 수량 직접 입력 선택 후 입력 없을 시 에러
+  const [pageCountError, setPageCountError] = React.useState(false); // 일반인쇄 - 카달로그/브로슈어 "페이지수(표지)" 선택값 없을 시 에러
+  const [pageInnerCountError, setPageInnerCountError] = React.useState(false); // 일반인쇄 - 카달로그/브로슈어 "페이지수(내지)" 입력값 없을 시 에러
+  const [bindTypeCurError, setBindTypeCurError] = React.useState(false); // 일반인쇄 - 카달로그/브로슈어 "제본방식" 지정 값 없을 시 에러
   const [sizeError, setSizeError] = React.useState(false); // 규격 지정 안했을 때 유효성 체크
   const [sizeDirectError, setSizeDirectError] = React.useState(false); // 규격 직접 입력 선택 후 입력 없을 시 에러
+  const [writeingCurError, setWriteingCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 간지종류 선택 값 없을 시 에러
+  const [coverColorCurError, setCoverColorCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 표지간지색상 선택 값 없을 시 에러
+  const [sectionColorCurError, setSectionColorCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 섹션간지색상 선택 값 없을 시 에러
+
+  console.log('pageCountCur', pageCountCur);
 
   const toggleModal = () => {
-    if (pWidth === '' || pWidth === null) {
-      setPwidthError(true);
-    } else if (pLength === '' || pLength === null) {
-      setPlengthError(true);
-    } else if (pHeight === '' || pHeight === null) {
-      setPheightError(true);
-    } else if (
-      (quantity === 'direct' && quantityDirect === null) ||
-      (quantity === 'direct' && quantityDirect === '')
-    ) {
-      setDirectError(true);
-    } else if (
-      (quantity !== 'direct' && quantity === null) ||
-      (quantity !== 'direct' && quantity === '')
-    ) {
-      setQuantityError(true);
-    } else {
-      setModalVisible(!isModalVisible);
-      dispatch(setUserPwidth(pWidth));
-      dispatch(setUserPlength(pLength));
-      dispatch(setUserPheight(pHeight));
-
-      if (quantity !== 'direct') {
-        dispatch(setUserCnt(quantity));
-        dispatch(setUserCntEtc(0));
+    if (cate1 === '1') {
+      if (pWidth === '' || pWidth === null) {
+        setPwidthError(true);
+      } else if (pLength === '' || pLength === null) {
+        setPlengthError(true);
+      } else if (pHeight === '' || pHeight === null) {
+        setPheightError(true);
+      } else if (
+        (quantity === 'direct' && quantityDirect === null) ||
+        (quantity === 'direct' && quantityDirect === '')
+      ) {
+        setQuantityDirectError(true);
+      } else if (
+        (quantity !== 'direct' && quantity === null) ||
+        (quantity !== 'direct' && quantity === '')
+      ) {
+        setQuantityError(true);
       } else {
-        dispatch(setUserCntEtc(quantityDirect));
-        dispatch(setUserCnt(0));
+        setModalVisible(!isModalVisible);
+        dispatch(setUserPwidth(pWidth));
+        dispatch(setUserPlength(pLength));
+        dispatch(setUserPheight(pHeight));
+
+        if (quantity !== 'direct') {
+          dispatch(setUserCnt(quantity));
+          dispatch(setUserCntEtc(0));
+        } else {
+          dispatch(setUserCntEtc(quantityDirect));
+          dispatch(setUserCnt(0));
+        }
+
+        if (pattern) {
+          dispatch(setUserWoodPattern('Y'));
+        } else {
+          dispatch(setUserWoodPattern('N'));
+        }
       }
-
-      if (pattern) {
-        dispatch(setUserWoodPattern('Y'));
+    } else if (cate1 === '0') {
+      if (ca_id === '1' && type_id === '71') {
+        // 카달로그/브로슈어
+        if (pageCountCur === null || pageCountCur === '') {
+          setPageCountError(true);
+        } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
+          setPageInnerCountError(true);
+        } else if (bindTypeCur === null || bindTypeCur === '') {
+          setBindTypeCurError(true);
+        } else if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (
+          (size === 'direct' && sizeDirect === null) ||
+          (size === 'direct' && sizeDirect === '')
+        ) {
+          setSizeDirectError(true);
+        } else if (
+          (size !== 'direct' && size === null) ||
+          (size !== 'direct' && size === '')
+        ) {
+          setSizeError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (ca_id === '4' && type_id === '74') {
+        if (pageCountCur === null || pageCountCur === '') {
+          setPageCountError(true);
+        } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
+          setPageInnerCountError(true);
+        } else if (writeingCur === null || writeingCur === '') {
+          // 일반인쇄 - 책자 서적류 - "출판류/서적/도서류" 간지종류
+          setWriteingCurError(true);
+        } else if (coverColorCur === null || coverColorCur === '') {
+          // 일반인쇄 - 책자 서적류 - "출판류/서적/도서류" 표지간지색상
+          setCoverColorCurError(true);
+        } else if (sectionColorCur === null || sectionColorCur === '') {
+          // 일반인쇄 - 책자 서적류 - "출판류/서적/도서류" 섹션간지색상
+          setSectionColorCurError(true);
+        } else if (bindTypeCur === null || bindTypeCur === '') {
+          setBindTypeCurError(true);
+        } else if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (
+          (size === 'direct' && sizeDirect === null) ||
+          (size === 'direct' && sizeDirect === '')
+        ) {
+          setSizeDirectError(true);
+        } else if (
+          (size !== 'direct' && size === null) ||
+          (size !== 'direct' && size === '')
+        ) {
+          setSizeError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (
+        (ca_id === '1' && type_id === '72') ||
+        (ca_id === '1' && type_id === '73')
+      ) {
+        // 팜플렛, 리플렛
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (
+          (size === 'direct' && sizeDirect === null) ||
+          (size === 'direct' && sizeDirect === '')
+        ) {
+          setSizeDirectError(true);
+        } else if (
+          (size !== 'direct' && size === null) ||
+          (size !== 'direct' && size === '')
+        ) {
+          setSizeError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
       } else {
-        dispatch(setUserWoodPattern('N'));
+        setModalVisible(!isModalVisible);
+        dispatch(setUserPwidth(pWidth));
+        dispatch(setUserPlength(pLength));
+        dispatch(setUserPheight(pHeight));
+
+        if (quantity !== 'direct') {
+          dispatch(setUserCnt(quantity));
+          dispatch(setUserCntEtc(0));
+        } else {
+          dispatch(setUserCntEtc(quantityDirect));
+          dispatch(setUserCnt(0));
+        }
+
+        if (pattern) {
+          dispatch(setUserWoodPattern('Y'));
+        } else {
+          dispatch(setUserWoodPattern('N'));
+        }
       }
     }
 
@@ -311,7 +440,7 @@ const Step04 = (props) => {
       (quantity === 'direct' && quantityDirect === null) ||
       (quantity === 'direct' && quantityDirect === '')
     ) {
-      setDirectError(true);
+      setQuantityDirectError(true);
     } else if (
       (quantity !== 'direct' && quantity === null) ||
       (quantity !== 'direct' && quantity === '')
@@ -442,914 +571,40 @@ const Step04 = (props) => {
               }}
               validationSchema={validationSchema}>
               {(formikProps) => (
-                <View>
-                  <View style={styles.wrap}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}>
-                      <Text
-                        style={[
-                          styles.boldText,
-                          {fontSize: 16, color: '#000000'},
-                        ]}>
-                        제작 정보
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={[styles.wrap]}>
-                    {/* 일반인쇄일 경우 - 표지, 내지 */}
-                    {(cate1 === '0' && ca_id == '1') ||
-                    (cate1 === '0' && ca_id == '4') ? (
+                <View
+                  style={{
+                    flex: 1,
+                    height: Dimensions.get('window').height - 57,
+                  }}>
+                  <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.wrap}>
                       <View
                         style={{
-                          marginBottom: 25,
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
                         }}>
                         <Text
                           style={[
-                            styles.mediumText,
-                            {
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                              marginBottom: 10,
-                            },
+                            styles.boldText,
+                            {fontSize: 16, color: '#000000'},
                           ]}>
-                          페이지수(표지)
+                          제작 정보
                         </Text>
-                        <View
-                          style={[
-                            styles.details,
-                            {
-                              marginBottom: pageCount ? 15 : 0,
-                            },
-                          ]}>
-                          {pageCount
-                            ? pageCount.map((q, idx) => (
-                                <TouchableOpacity
-                                  key={idx}
-                                  activeOpacity={1}
-                                  hitSlop={{
-                                    top: 10,
-                                    bottom: 10,
-                                    left: 10,
-                                    right: 10,
-                                  }}
-                                  onPress={() => {
-                                    setPageCountCur(q);
-                                  }}
-                                  style={[
-                                    styles.details,
-                                    {
-                                      marginRight: 20,
-                                    },
-                                  ]}>
-                                  <Image
-                                    source={
-                                      pageCountCur === q
-                                        ? require('../../src/assets/radio_on.png')
-                                        : require('../../src/assets/radio_off.png')
-                                    }
-                                    resizeMode="contain"
-                                    style={{
-                                      width: 20,
-                                      height: 20,
-                                      marginRight: 5,
-                                    }}
-                                  />
-                                  <Text
-                                    style={[
-                                      styles.normalText,
-                                      {fontSize: 14, color: '#000'},
-                                    ]}>
-                                    {q}
-                                  </Text>
-                                </TouchableOpacity>
-                              ))
-                            : null}
-                        </View>
-                        {cate1 === '0' && pageCountText ? (
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 12, color: '#B5B5B5', marginRight: 5},
-                            ]}>
-                            {pageCountText}
-                          </Text>
-                        ) : null}
-                      </View>
-                    ) : null}
-
-                    {/* 페이지수(내지) 직접입력 폼 */}
-                    {cate1 === '0' &&
-                    pageCountInner !== null &&
-                    pageCountInner !== '' &&
-                    pageCountInner === 'Y' ? (
-                      <View
-                        style={{
-                          marginBottom: 25,
-                        }}>
-                        <Text
-                          style={[
-                            styles.mediumText,
-                            {
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          페이지수(내지)
-                        </Text>
-                        <TextInput
-                          value={pageCountInnerCur}
-                          placeholder="페이지수를 직접 입력해주세요."
-                          placeholderTextColor="#A2A2A2"
-                          style={[
-                            styles.normalText,
-                            {
-                              borderWidth: 1,
-                              borderColor: '#E3E3E3',
-                              borderRadius: 4,
-                              paddingHorizontal: 10,
-                            },
-                          ]}
-                          onChangeText={(value) => {
-                            setPageCountInnerCur(value);
-                          }}
-                          autoCapitalize="none"
-                          keyboardType="decimal-pad"
-                        />
-                      </View>
-                    ) : null}
-                    {/* // 페이지수(내지) 직접입력 폼 */}
-
-                    {/* // 일반인쇄일 경우 - 표지, 내지 */}
-
-                    {/* 일반인쇄 - 책자, 서적류일 경우 간지종류 */}
-                    {cate1 === '0' &&
-                    ca_id === '4' &&
-                    writeing !== null &&
-                    writeing !== '' ? (
-                      <View style={{width: '100%', marginBottom: 25}}>
-                        <Text
-                          style={[
-                            styles.mediumText,
-                            {
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          간지종류
-                        </Text>
-                        <DropDownPicker
-                          value={writeingCur}
-                          placeholder="간지종류를 선택해주세요."
-                          placeholderStyle={{
-                            fontSize: 14,
-                            color: '#A2A2A2',
-                            fontWeight: '400',
-                          }}
-                          activeLabelStyle={{color: '#000'}}
-                          activeItemStyle={{color: '#000'}}
-                          selectedLabelStyle={{color: '#000'}}
-                          dropDownMaxHeight={300}
-                          items={writeing.map((v, _i) => {
-                            // setPfId(v.pf_id);
-                            return {value: v, label: v};
-                          })}
-                          containerStyle={{height: 50}}
-                          style={{
-                            backgroundColor: '#fff',
-                            borderTopRightRadius: 4,
-                            borderTopLeftRadius: 4,
-                            borderBottomRightRadius: 4,
-                            borderBottomLeftRadius: 4,
-                          }}
-                          itemStyle={{
-                            justifyContent: 'flex-start',
-                            paddingVertical: 10,
-                          }}
-                          labelStyle={{
-                            fontFamily: 'SCDream4',
-                            color: '#A2A2A2',
-                          }}
-                          dropDownStyle={{backgroundColor: '#fff'}}
-                          onChangeItem={(item) => {
-                            setWriteingCur(item.value);
-                          }}
-                          onOpen={() => {
-                            setPrepareCover(true);
-                            setPrepareSection(true);
-                          }}
-                          onClose={() => {
-                            setPrepareCover(false);
-                            setPrepareSection(false);
-                          }}
-                          customArrowDown={() => (
-                            <Image
-                              source={require('../../src/assets/arr01.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                          customArrowUp={() => (
-                            <Image
-                              source={require('../../src/assets/arr01_top.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                        />
-                      </View>
-                    ) : null}
-                    {/*  // 일반인쇄 - 책자, 서적류일 경우 간지종류*/}
-
-                    {/* 일반인쇄 - 책자, 서적류일 경우 표지간지색상 */}
-                    {prepareCover === false &&
-                    cate1 === '0' &&
-                    ca_id === '4' &&
-                    coverColor !== null &&
-                    coverColor !== '' ? (
-                      <View style={{width: '100%', marginBottom: 25}}>
-                        <Text
-                          style={[
-                            styles.mediumText,
-                            {
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          표지간지색상
-                        </Text>
-                        <DropDownPicker
-                          value={coverColorCur}
-                          placeholder="표지간지색상을 선택해주세요."
-                          placeholderStyle={{
-                            fontSize: 14,
-                            color: '#A2A2A2',
-                            fontWeight: '400',
-                          }}
-                          activeLabelStyle={{color: '#000'}}
-                          activeItemStyle={{color: '#000'}}
-                          selectedLabelStyle={{color: '#000'}}
-                          dropDownMaxHeight={300}
-                          items={coverColor.map((v, _i) => {
-                            // setPfId(v.pf_id);
-                            return {value: v, label: v};
-                          })}
-                          containerStyle={{height: 50}}
-                          style={{
-                            backgroundColor: '#fff',
-                            borderTopRightRadius: 4,
-                            borderTopLeftRadius: 4,
-                            borderBottomRightRadius: 4,
-                            borderBottomLeftRadius: 4,
-                          }}
-                          itemStyle={{
-                            justifyContent: 'flex-start',
-                            paddingVertical: 10,
-                          }}
-                          labelStyle={{
-                            fontFamily: 'SCDream4',
-                            color: '#A2A2A2',
-                          }}
-                          dropDownStyle={{backgroundColor: '#fff'}}
-                          onChangeItem={(item) => {
-                            setCoverColorCur(item.value);
-                          }}
-                          onOpen={() => setPrepareSection(true)}
-                          onClose={() => setPrepareSection(false)}
-                          customArrowDown={() => (
-                            <Image
-                              source={require('../../src/assets/arr01.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                          customArrowUp={() => (
-                            <Image
-                              source={require('../../src/assets/arr01_top.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                        />
-                      </View>
-                    ) : null}
-                    {/*  // 일반인쇄 - 책자, 서적류일 경우 표지간지색상 */}
-
-                    {/* 일반인쇄 - 책자, 서적류일 경우 섹션간지색상 */}
-                    {prepareSection === false &&
-                    cate1 === '0' &&
-                    ca_id === '4' &&
-                    sectionColor !== null &&
-                    sectionColor !== '' ? (
-                      <View style={{width: '100%', marginBottom: 25}}>
-                        <Text
-                          style={[
-                            styles.mediumText,
-                            {
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          섹션간지색상
-                        </Text>
-                        <DropDownPicker
-                          value={sectionColorCur}
-                          placeholder="섹션간지색상을 선택해주세요."
-                          placeholderStyle={{
-                            fontSize: 14,
-                            color: '#A2A2A2',
-                            fontWeight: '400',
-                          }}
-                          activeLabelStyle={{color: '#000'}}
-                          activeItemStyle={{color: '#000'}}
-                          selectedLabelStyle={{color: '#000'}}
-                          dropDownMaxHeight={300}
-                          items={sectionColor.map((v, _i) => {
-                            // setPfId(v.pf_id);
-                            return {value: v, label: v};
-                          })}
-                          containerStyle={{height: 50}}
-                          style={{
-                            backgroundColor: '#fff',
-                            borderTopRightRadius: 4,
-                            borderTopLeftRadius: 4,
-                            borderBottomRightRadius: 4,
-                            borderBottomLeftRadius: 4,
-                          }}
-                          itemStyle={{
-                            justifyContent: 'flex-start',
-                            paddingVertical: 10,
-                          }}
-                          labelStyle={{
-                            fontFamily: 'SCDream4',
-                            color: '#A2A2A2',
-                          }}
-                          dropDownStyle={{backgroundColor: '#fff'}}
-                          onChangeItem={(item) => {
-                            setSectionColorCur(item.value);
-                            // setIsLoading01(true);
-
-                            // setIsLoading02(true);
-                          }}
-                          customArrowDown={() => (
-                            <Image
-                              source={require('../../src/assets/arr01.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                          customArrowUp={() => (
-                            <Image
-                              source={require('../../src/assets/arr01_top.png')}
-                              style={{width: 25, height: 25}}
-                              resizeMode="contain"
-                            />
-                          )}
-                        />
-                      </View>
-                    ) : null}
-                    {/*  // 일반인쇄 - 책자, 서적류일 경우 섹션간지색상 */}
-
-                    {/* 일반인쇄 - 제본방식 */}
-                    {(cate1 === '0' &&
-                      ca_id == '1' &&
-                      bindType !== null &&
-                      bindType !== '') ||
-                    (cate1 === '0' &&
-                      ca_id == '4' &&
-                      bindType !== null &&
-                      bindType !== '') ? (
-                      <View
-                        style={{
-                          marginBottom: 25,
-                        }}>
-                        <Text
-                          style={[
-                            styles.mediumText,
-                            {
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          제본방식
-                        </Text>
-                        <View
-                          style={[
-                            styles.details,
-                            {
-                              flexWrap: 'wrap',
-                              marginBottom:
-                                cate1 === '0' &&
-                                ca_id === '4' &&
-                                type_id === '76'
-                                  ? 0
-                                  : 10,
-                            },
-                          ]}>
-                          {bindType
-                            ? bindType.map((q, idx) => (
-                                <TouchableOpacity
-                                  key={idx}
-                                  activeOpacity={1}
-                                  hitSlop={{
-                                    top: 10,
-                                    bottom: 10,
-                                    left: 10,
-                                    right: 10,
-                                  }}
-                                  onPress={() => {
-                                    setBindTypeCur(q);
-                                  }}
-                                  style={[
-                                    styles.details,
-                                    {
-                                      marginRight: 20,
-                                      marginBottom: 15,
-                                    },
-                                  ]}>
-                                  <Image
-                                    source={
-                                      bindTypeCur === q
-                                        ? require('../../src/assets/radio_on.png')
-                                        : require('../../src/assets/radio_off.png')
-                                    }
-                                    resizeMode="contain"
-                                    style={{
-                                      width: 20,
-                                      height: 20,
-                                      marginRight: 5,
-                                    }}
-                                  />
-                                  <Text
-                                    style={[
-                                      styles.normalText,
-                                      {fontSize: 14, color: '#000'},
-                                    ]}>
-                                    {q}
-                                  </Text>
-                                </TouchableOpacity>
-                              ))
-                            : null}
-                        </View>
-                        {cate1 === '0' && bindTypeText ? (
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 12, color: '#B5B5B5', marginRight: 5},
-                            ]}>
-                            {bindTypeText}
-                          </Text>
-                        ) : cate1 === '0' &&
-                          ca_id === '4' &&
-                          type_id === '76' ? (
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'flex-start',
-                              alignItems: 'flex-start',
-                            }}>
-                            <Text
-                              style={[
-                                styles.normalText,
-                                {
-                                  fontSize: 12,
-                                  color: '#B5B5B5',
-                                  marginRight: 5,
-                                },
-                              ]}>
-                              ※
-                            </Text>
-                            <View>
-                              <Text
-                                style={[
-                                  styles.normalText,
-                                  {
-                                    fontSize: 12,
-                                    color: '#B5B5B5',
-                                    marginRight: 5,
-                                  },
-                                ]}>
-                                학위논문 인쇄의 경우, 제본방향은 세로좌철,
-                              </Text>
-                              <Text
-                                style={[
-                                  styles.normalText,
-                                  {
-                                    fontSize: 12,
-                                    color: '#B5B5B5',
-                                    marginRight: 5,
-                                  },
-                                ]}>
-                                제본방식은 양장제본입니다.
-                              </Text>
-                            </View>
-                          </View>
-                        ) : null}
-                      </View>
-                    ) : null}
-                    {/*  // 일반인쇄 - 제본방식 */}
-
-                    {/* 가로 규격 */}
-                    {cate1 === '1' && (
-                      <View style={{marginBottom: 25}}>
-                        <View
-                          style={[
-                            styles.details,
-                            {
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          <Text
-                            style={[
-                              styles.mediumText,
-                              {fontSize: 15, color: '#000000', marginRight: 5},
-                            ]}>
-                            가로 규격
-                          </Text>
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 14, color: '#000000'},
-                            ]}>
-                            (mm)
-                          </Text>
-                        </View>
-                        <TextInput
-                          placeholder="예) 10"
-                          placeholderTextColor="#A2A2A2"
-                          style={[
-                            styles.normalText,
-                            {
-                              borderWidth: 1,
-                              borderColor: '#E3E3E3',
-                              borderRadius: 4,
-                              paddingHorizontal: 10,
-                            },
-                          ]}
-                          onChangeText={(value) => {
-                            setPwidth(value);
-                            formikProps.setFieldValue('order_width', value);
-                            setPwidthError(false);
-                          }}
-                          onBlur={formikProps.handleBlur('order_width')}
-                          autoCapitalize="none"
-                          keyboardType="number-pad"
-                        />
-                        {formikProps.touched.order_width &&
-                        formikProps.errors.order_width ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            {formikProps.touched.order_width &&
-                              formikProps.errors.order_width}
-                          </Text>
-                        ) : pWidthError ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            가로 규격을 입력해주세요.
-                          </Text>
-                        ) : null}
-                      </View>
-                    )}
-                    {/* // 가로 규격 */}
-
-                    {/* 세로 규격 */}
-                    {cate1 === '1' && (
-                      <View style={{marginBottom: 25}}>
-                        <View
-                          style={[
-                            styles.details,
-                            {
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          <Text
-                            style={[
-                              styles.mediumText,
-                              {fontSize: 15, color: '#000000', marginRight: 5},
-                            ]}>
-                            세로 규격
-                          </Text>
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 14, color: '#000000'},
-                            ]}>
-                            (mm)
-                          </Text>
-                        </View>
-                        <TextInput
-                          placeholder="예) 10"
-                          placeholderTextColor="#A2A2A2"
-                          style={[
-                            styles.normalText,
-                            {
-                              borderWidth: 1,
-                              borderColor: '#E3E3E3',
-                              borderRadius: 4,
-                              paddingHorizontal: 10,
-                            },
-                          ]}
-                          onChangeText={(value) => {
-                            setPlength(value);
-                            formikProps.setFieldValue('order_length', value);
-                            setPlengthError(false);
-                          }}
-                          onBlur={formikProps.handleBlur('order_length')}
-                          autoCapitalize="none"
-                          keyboardType="number-pad"
-                        />
-                        {formikProps.touched.order_length &&
-                        formikProps.errors.order_length ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            {formikProps.touched.order_length &&
-                              formikProps.errors.order_length}
-                          </Text>
-                        ) : pLengthError ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            세로 규격을 입력해주세요.
-                          </Text>
-                        ) : null}
-                      </View>
-                    )}
-                    {/* // 세로 규격 */}
-
-                    {/* 높이 규격 */}
-                    {cate1 === '1' && (
-                      <View style={{marginBottom: 25}}>
-                        <View
-                          style={[
-                            styles.details,
-                            {
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          <Text
-                            style={[
-                              styles.mediumText,
-                              {fontSize: 15, color: '#000000', marginRight: 5},
-                            ]}>
-                            높이 규격
-                          </Text>
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 14, color: '#000000'},
-                            ]}>
-                            (mm)
-                          </Text>
-                        </View>
-                        <TextInput
-                          placeholder="예) 10"
-                          placeholderTextColor="#A2A2A2"
-                          style={[
-                            styles.normalText,
-                            {
-                              borderWidth: 1,
-                              borderColor: '#E3E3E3',
-                              borderRadius: 4,
-                              paddingHorizontal: 10,
-                            },
-                          ]}
-                          onChangeText={(value) => {
-                            setPheight(value);
-                            formikProps.setFieldValue('order_height', value);
-                            setPheightError(false);
-                          }}
-                          onBlur={formikProps.handleBlur('order_height')}
-                          autoCapitalize="none"
-                          keyboardType="number-pad"
-                        />
-                        {formikProps.touched.order_height &&
-                        formikProps.errors.order_height ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            {formikProps.touched.order_height &&
-                              formikProps.errors.order_height}
-                          </Text>
-                        ) : pHeightError ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            높이 규격을 입력해주세요.
-                          </Text>
-                        ) : null}
-                      </View>
-                    )}
-                    {/* // 높이 규격 */}
-
-                    {/* 수량 */}
-                    <View style={{marginBottom: 25}}>
-                      <View style={{marginBottom: 5}}>
-                        <Text
-                          style={[
-                            styles.mediumText,
-                            {fontSize: 15, color: '#000000', marginRight: 5},
-                          ]}>
-                          수량
-                        </Text>
-                      </View>
-
-                      <View
-                        style={[
-                          styles.details,
-                          {
-                            flexWrap: 'wrap',
-                            marginBottom: getQuantity ? 5 : 0,
-                          },
-                        ]}>
-                        {getQuantity
-                          ? getQuantity.map((q, idx) => (
-                              <TouchableOpacity
-                                key={idx}
-                                activeOpacity={1}
-                                hitSlop={{
-                                  top: 10,
-                                  bottom: 10,
-                                  left: 10,
-                                  right: 10,
-                                }}
-                                onPress={() => {
-                                  setQuantity(q);
-                                  setQuantityDirect(null);
-                                  setQuantityError(false);
-                                }}
-                                style={[
-                                  styles.details,
-                                  {
-                                    marginRight: 20,
-                                    marginBottom: 10,
-                                  },
-                                ]}>
-                                <Image
-                                  source={
-                                    quantity === q
-                                      ? require('../../src/assets/radio_on.png')
-                                      : require('../../src/assets/radio_off.png')
-                                  }
-                                  resizeMode="contain"
-                                  style={{
-                                    width: 20,
-                                    height: 20,
-                                    marginRight: 5,
-                                  }}
-                                />
-                                <Text
-                                  style={[
-                                    styles.normalText,
-                                    {fontSize: 14, color: '#000'},
-                                  ]}>
-                                  {q}
-                                </Text>
-                              </TouchableOpacity>
-                            ))
-                          : null}
-                      </View>
-                      <View>
-                        <TouchableOpacity
-                          activeOpacity={1}
-                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                          onPress={() => setOrderQuantity('direct')}
-                          style={[
-                            styles.details,
-                            {
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          <Image
-                            source={
-                              quantity === 'direct'
-                                ? require('../../src/assets/radio_on.png')
-                                : require('../../src/assets/radio_off.png')
-                            }
-                            resizeMode="contain"
-                            style={{width: 20, height: 20, marginRight: 5}}
-                          />
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 14, color: '#000'},
-                            ]}>
-                            직접 입력
-                          </Text>
-                        </TouchableOpacity>
-                        <TextInput
-                          ref={directRef}
-                          value={quantityDirect}
-                          placeholder="수량을 직접 입력해주세요."
-                          placeholderTextColor="#A2A2A2"
-                          onChangeText={(text) => {
-                            setQuantityDirect(text);
-                            setDirectError(false);
-                          }}
-                          onFocus={() => {
-                            setQuantity('direct');
-                          }}
-                          style={[
-                            styles.normalText,
-                            {
-                              borderWidth: 1,
-                              borderColor: '#E3E3E3',
-                              borderRadius: 4,
-                              paddingHorizontal: 10,
-                            },
-                          ]}
-                          autoCapitalize="none"
-                          keyboardType="number-pad"
-                        />
-                        {directError ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            수량을 입력해주세요.
-                          </Text>
-                        ) : quantityError ? (
-                          <Text
-                            style={{
-                              width: '100%',
-                              fontFamily: 'SCDream4',
-                              fontSize: 12,
-                              lineHeight: 18,
-                              color: '#366DE5',
-                              marginVertical: 5,
-                            }}>
-                            수량을 지정해주세요.
-                          </Text>
-                        ) : null}
                       </View>
                     </View>
-                    {/* // 수량 */}
 
-                    {/* 일반인쇄 - 규격 */}
-                    {cate1 === '0' && standard !== null && standard !== '' ? (
-                      <View
-                        style={{
-                          marginBottom: 25,
-                        }}>
-                        <View>
+                    <View style={[styles.wrap]}>
+                      {/* 일반인쇄일 경우 - 표지, 내지 */}
+                      {(cate1 === '0' &&
+                        ca_id == '1' &&
+                        type_id !== '73' &&
+                        type_id !== '72') ||
+                      (cate1 === '0' && ca_id == '4') ? (
+                        <View
+                          style={{
+                            marginBottom: 25,
+                          }}>
                           <Text
                             style={[
                               styles.mediumText,
@@ -1357,21 +612,20 @@ const Step04 = (props) => {
                                 fontSize: 15,
                                 color: '#000000',
                                 marginRight: 5,
-                                marginBottom: 5,
+                                marginBottom: 10,
                               },
                             ]}>
-                            규격
+                            페이지수(표지)
                           </Text>
                           <View
                             style={[
                               styles.details,
                               {
-                                flexWrap: 'wrap',
-                                marginBottom: standard ? 5 : 0,
+                                marginBottom: pageCount ? 10 : 0,
                               },
                             ]}>
-                            {standard !== '' && standard !== null
-                              ? standard.map((q, idx) => (
+                            {pageCount
+                              ? pageCount.map((q, idx) => (
                                   <TouchableOpacity
                                     key={idx}
                                     activeOpacity={1}
@@ -1382,20 +636,18 @@ const Step04 = (props) => {
                                       right: 10,
                                     }}
                                     onPress={() => {
-                                      setSize(q);
-                                      setSizeDirect(null);
-                                      setSizeError(false);
+                                      setPageCountCur(q);
+                                      setPageCountError(false);
                                     }}
                                     style={[
                                       styles.details,
                                       {
                                         marginRight: 20,
-                                        marginBottom: 10,
                                       },
                                     ]}>
                                     <Image
                                       source={
-                                        size === q
+                                        pageCountCur === q
                                           ? require('../../src/assets/radio_on.png')
                                           : require('../../src/assets/radio_off.png')
                                       }
@@ -1417,12 +669,854 @@ const Step04 = (props) => {
                                 ))
                               : null}
                           </View>
+                          {cate1 === '0' && pageCountText ? (
+                            <Text
+                              style={[
+                                styles.normalText,
+                                {
+                                  fontSize: 12,
+                                  color: '#B5B5B5',
+                                  marginRight: 5,
+                                },
+                              ]}>
+                              {pageCountText}
+                            </Text>
+                          ) : null}
+                          {pageCountError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              페이지수(표지)를 선택해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : null}
+
+                      {/* 페이지수(내지) 직접입력 폼 */}
+                      {cate1 === '0' &&
+                      type_id !== '73' &&
+                      type_id !== '72' &&
+                      pageCountInner !== null &&
+                      pageCountInner !== '' &&
+                      pageCountInner === 'Y' ? (
+                        <View
+                          style={{
+                            marginBottom: 25,
+                          }}>
+                          <Text
+                            style={[
+                              styles.mediumText,
+                              {
+                                fontSize: 15,
+                                color: '#000000',
+                                marginRight: 5,
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            페이지수(내지)
+                          </Text>
+                          <TextInput
+                            value={pageInnerCountCur}
+                            placeholder="페이지수를 직접 입력해주세요."
+                            placeholderTextColor="#A2A2A2"
+                            style={[
+                              styles.normalText,
+                              {
+                                borderWidth: 1,
+                                borderColor: '#E3E3E3',
+                                borderRadius: 4,
+                                paddingHorizontal: 10,
+                              },
+                            ]}
+                            onChangeText={(value) => {
+                              setPageInnerCountCur(value);
+                              setPageInnerCountError(false);
+                            }}
+                            autoCapitalize="none"
+                            keyboardType="decimal-pad"
+                          />
+                          {pageInnerCountError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              페이지수(내지)를 입력해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : null}
+                      {/* // 페이지수(내지) 직접입력 폼 */}
+
+                      {/* // 일반인쇄일 경우 - 표지, 내지 */}
+
+                      {/* 일반인쇄 - 책자, 서적류일 경우 간지종류 */}
+                      {cate1 === '0' &&
+                      ca_id === '4' &&
+                      writeing !== null &&
+                      writeing !== '' ? (
+                        <View style={{width: '100%', marginBottom: 25}}>
+                          <Text
+                            style={[
+                              styles.mediumText,
+                              {
+                                fontSize: 15,
+                                color: '#000000',
+                                marginRight: 5,
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            간지종류
+                          </Text>
+                          <DropDownPicker
+                            value={writeingCur}
+                            placeholder="간지종류를 선택해주세요."
+                            placeholderStyle={{
+                              fontSize: 14,
+                              color: '#A2A2A2',
+                              fontWeight: '400',
+                            }}
+                            activeLabelStyle={{color: '#000'}}
+                            activeItemStyle={{color: '#000'}}
+                            selectedLabelStyle={{color: '#000'}}
+                            dropDownMaxHeight={300}
+                            items={writeing.map((v, _i) => {
+                              // setPfId(v.pf_id);
+                              return {value: v, label: v};
+                            })}
+                            containerStyle={{height: 50}}
+                            style={{
+                              backgroundColor: '#fff',
+                              borderTopRightRadius: 4,
+                              borderTopLeftRadius: 4,
+                              borderBottomRightRadius: 4,
+                              borderBottomLeftRadius: 4,
+                            }}
+                            itemStyle={{
+                              justifyContent: 'flex-start',
+                              paddingVertical: 10,
+                            }}
+                            labelStyle={{
+                              fontFamily: 'SCDream4',
+                              color: '#A2A2A2',
+                            }}
+                            dropDownStyle={{backgroundColor: '#fff'}}
+                            onChangeItem={(item) => {
+                              setWriteingCur(item.value);
+                              setWriteingCurError(false);
+                            }}
+                            onOpen={() => {
+                              setPrepareCover(true);
+                              setPrepareSection(true);
+                            }}
+                            onClose={() => {
+                              setPrepareCover(false);
+                              setPrepareSection(false);
+                            }}
+                            customArrowDown={() => (
+                              <Image
+                                source={require('../../src/assets/arr01.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
+                            customArrowUp={() => (
+                              <Image
+                                source={require('../../src/assets/arr01_top.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
+                          />
+                          {writeingCurError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              간지종류를 선택해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : null}
+
+                      {/*  // 일반인쇄 - 책자, 서적류일 경우 간지종류*/}
+
+                      {/* 일반인쇄 - 책자, 서적류일 경우 표지간지색상 */}
+                      {prepareCover === false &&
+                      cate1 === '0' &&
+                      ca_id === '4' &&
+                      coverColor !== null &&
+                      coverColor !== '' ? (
+                        <View style={{width: '100%', marginBottom: 25}}>
+                          <Text
+                            style={[
+                              styles.mediumText,
+                              {
+                                fontSize: 15,
+                                color: '#000000',
+                                marginRight: 5,
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            표지간지색상
+                          </Text>
+                          <DropDownPicker
+                            value={coverColorCur}
+                            placeholder="표지간지색상을 선택해주세요."
+                            placeholderStyle={{
+                              fontSize: 14,
+                              color: '#A2A2A2',
+                              fontWeight: '400',
+                            }}
+                            activeLabelStyle={{color: '#000'}}
+                            activeItemStyle={{color: '#000'}}
+                            selectedLabelStyle={{color: '#000'}}
+                            dropDownMaxHeight={300}
+                            items={coverColor.map((v, _i) => {
+                              // setPfId(v.pf_id);
+                              return {value: v, label: v};
+                            })}
+                            containerStyle={{height: 50}}
+                            style={{
+                              backgroundColor: '#fff',
+                              borderTopRightRadius: 4,
+                              borderTopLeftRadius: 4,
+                              borderBottomRightRadius: 4,
+                              borderBottomLeftRadius: 4,
+                            }}
+                            itemStyle={{
+                              justifyContent: 'flex-start',
+                              paddingVertical: 10,
+                            }}
+                            labelStyle={{
+                              fontFamily: 'SCDream4',
+                              color: '#A2A2A2',
+                            }}
+                            dropDownStyle={{backgroundColor: '#fff'}}
+                            onChangeItem={(item) => {
+                              setCoverColorCur(item.value);
+                              setCoverColorCurError(false);
+                            }}
+                            onOpen={() => setPrepareSection(true)}
+                            onClose={() => setPrepareSection(false)}
+                            customArrowDown={() => (
+                              <Image
+                                source={require('../../src/assets/arr01.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
+                            customArrowUp={() => (
+                              <Image
+                                source={require('../../src/assets/arr01_top.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
+                          />
+                          {coverColorCurError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              표지간지색상을 선택해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : null}
+                      {/*  // 일반인쇄 - 책자, 서적류일 경우 표지간지색상 */}
+
+                      {/* 일반인쇄 - 책자, 서적류일 경우 섹션간지색상 */}
+                      {prepareSection === false &&
+                      cate1 === '0' &&
+                      ca_id === '4' &&
+                      sectionColor !== null &&
+                      sectionColor !== '' ? (
+                        <View style={{width: '100%', marginBottom: 25}}>
+                          <Text
+                            style={[
+                              styles.mediumText,
+                              {
+                                fontSize: 15,
+                                color: '#000000',
+                                marginRight: 5,
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            섹션간지색상
+                          </Text>
+                          <DropDownPicker
+                            value={sectionColorCur}
+                            placeholder="섹션간지색상을 선택해주세요."
+                            placeholderStyle={{
+                              fontSize: 14,
+                              color: '#A2A2A2',
+                              fontWeight: '400',
+                            }}
+                            activeLabelStyle={{color: '#000'}}
+                            activeItemStyle={{color: '#000'}}
+                            selectedLabelStyle={{color: '#000'}}
+                            dropDownMaxHeight={300}
+                            items={sectionColor.map((v, _i) => {
+                              // setPfId(v.pf_id);
+                              return {value: v, label: v};
+                            })}
+                            containerStyle={{height: 50}}
+                            style={{
+                              backgroundColor: '#fff',
+                              borderTopRightRadius: 4,
+                              borderTopLeftRadius: 4,
+                              borderBottomRightRadius: 4,
+                              borderBottomLeftRadius: 4,
+                            }}
+                            itemStyle={{
+                              justifyContent: 'flex-start',
+                              paddingVertical: 10,
+                            }}
+                            labelStyle={{
+                              fontFamily: 'SCDream4',
+                              color: '#A2A2A2',
+                            }}
+                            dropDownStyle={{backgroundColor: '#fff'}}
+                            onChangeItem={(item) => {
+                              setSectionColorCur(item.value);
+                              setSectionColorCurError(false);
+                              // setIsLoading01(true);
+
+                              // setIsLoading02(true);
+                            }}
+                            customArrowDown={() => (
+                              <Image
+                                source={require('../../src/assets/arr01.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
+                            customArrowUp={() => (
+                              <Image
+                                source={require('../../src/assets/arr01_top.png')}
+                                style={{width: 25, height: 25}}
+                                resizeMode="contain"
+                              />
+                            )}
+                          />
+                          {sectionColorCurError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              섹션간지색상을 선택해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : null}
+                      {/*  // 일반인쇄 - 책자, 서적류일 경우 섹션간지색상 */}
+
+                      {/* 일반인쇄 - 제본방식 */}
+                      {(cate1 === '0' &&
+                        ca_id == '1' &&
+                        bindType !== null &&
+                        bindType !== '') ||
+                      (cate1 === '0' &&
+                        ca_id == '4' &&
+                        bindType !== null &&
+                        bindType !== '') ? (
+                        <View
+                          style={{
+                            marginBottom: 25,
+                          }}>
+                          <Text
+                            style={[
+                              styles.mediumText,
+                              {
+                                fontSize: 15,
+                                color: '#000000',
+                                marginRight: 5,
+                                marginBottom: 5,
+                              },
+                            ]}>
+                            제본방식
+                          </Text>
+                          <View
+                            style={[
+                              styles.details,
+                              {
+                                flexWrap: 'wrap',
+                                marginBottom:
+                                  cate1 === '0' &&
+                                  ca_id === '4' &&
+                                  type_id === '76'
+                                    ? 0
+                                    : 5,
+                              },
+                            ]}>
+                            {bindType
+                              ? bindType.map((q, idx) => (
+                                  <TouchableOpacity
+                                    key={idx}
+                                    activeOpacity={1}
+                                    hitSlop={{
+                                      top: 10,
+                                      bottom: 10,
+                                      left: 10,
+                                      right: 10,
+                                    }}
+                                    onPress={() => {
+                                      setBindTypeCur(q);
+                                      setBindTypeCurError(false);
+                                    }}
+                                    style={[
+                                      styles.details,
+                                      {
+                                        marginRight: 20,
+                                        marginBottom: 10,
+                                      },
+                                    ]}>
+                                    <Image
+                                      source={
+                                        bindTypeCur === q
+                                          ? require('../../src/assets/radio_on.png')
+                                          : require('../../src/assets/radio_off.png')
+                                      }
+                                      resizeMode="contain"
+                                      style={{
+                                        width: 20,
+                                        height: 20,
+                                        marginRight: 5,
+                                      }}
+                                    />
+                                    <Text
+                                      style={[
+                                        styles.normalText,
+                                        {fontSize: 14, color: '#000'},
+                                      ]}>
+                                      {q}
+                                    </Text>
+                                  </TouchableOpacity>
+                                ))
+                              : null}
+                          </View>
+                          {cate1 === '0' && bindTypeText ? (
+                            <Text
+                              style={[
+                                styles.normalText,
+                                {
+                                  fontSize: 12,
+                                  color: '#B5B5B5',
+                                  marginRight: 5,
+                                },
+                              ]}>
+                              {bindTypeText}
+                            </Text>
+                          ) : cate1 === '0' &&
+                            ca_id === '4' &&
+                            type_id === '76' ? (
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'flex-start',
+                                alignItems: 'flex-start',
+                              }}>
+                              <Text
+                                style={[
+                                  styles.normalText,
+                                  {
+                                    fontSize: 12,
+                                    color: '#B5B5B5',
+                                    marginRight: 5,
+                                  },
+                                ]}>
+                                ※
+                              </Text>
+                              <View>
+                                <Text
+                                  style={[
+                                    styles.normalText,
+                                    {
+                                      fontSize: 12,
+                                      color: '#B5B5B5',
+                                      marginRight: 5,
+                                    },
+                                  ]}>
+                                  학위논문 인쇄의 경우, 제본방향은 세로좌철,
+                                </Text>
+                                <Text
+                                  style={[
+                                    styles.normalText,
+                                    {
+                                      fontSize: 12,
+                                      color: '#B5B5B5',
+                                      marginRight: 5,
+                                    },
+                                  ]}>
+                                  제본방식은 양장제본입니다.
+                                </Text>
+                              </View>
+                            </View>
+                          ) : null}
+
+                          {bindTypeCurError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              제본방식을 선택해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : null}
+                      {/*  // 일반인쇄 - 제본방식 */}
+
+                      {/* 가로 규격 */}
+                      {cate1 === '1' && (
+                        <View style={{marginBottom: 25}}>
+                          <View
+                            style={[
+                              styles.details,
+                              {
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            <Text
+                              style={[
+                                styles.mediumText,
+                                {
+                                  fontSize: 15,
+                                  color: '#000000',
+                                  marginRight: 5,
+                                },
+                              ]}>
+                              가로 규격
+                            </Text>
+                            <Text
+                              style={[
+                                styles.normalText,
+                                {fontSize: 14, color: '#000000'},
+                              ]}>
+                              (mm)
+                            </Text>
+                          </View>
+                          <TextInput
+                            placeholder="예) 10"
+                            placeholderTextColor="#A2A2A2"
+                            style={[
+                              styles.normalText,
+                              {
+                                borderWidth: 1,
+                                borderColor: '#E3E3E3',
+                                borderRadius: 4,
+                                paddingHorizontal: 10,
+                              },
+                            ]}
+                            onChangeText={(value) => {
+                              setPwidth(value);
+                              formikProps.setFieldValue('order_width', value);
+                              setPwidthError(false);
+                            }}
+                            onBlur={formikProps.handleBlur('order_width')}
+                            autoCapitalize="none"
+                            keyboardType="number-pad"
+                          />
+                          {formikProps.touched.order_width &&
+                          formikProps.errors.order_width ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              {formikProps.touched.order_width &&
+                                formikProps.errors.order_width}
+                            </Text>
+                          ) : pWidthError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              가로 규격을 입력해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      )}
+                      {/* // 가로 규격 */}
+
+                      {/* 세로 규격 */}
+                      {cate1 === '1' && (
+                        <View style={{marginBottom: 25}}>
+                          <View
+                            style={[
+                              styles.details,
+                              {
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            <Text
+                              style={[
+                                styles.mediumText,
+                                {
+                                  fontSize: 15,
+                                  color: '#000000',
+                                  marginRight: 5,
+                                },
+                              ]}>
+                              세로 규격
+                            </Text>
+                            <Text
+                              style={[
+                                styles.normalText,
+                                {fontSize: 14, color: '#000000'},
+                              ]}>
+                              (mm)
+                            </Text>
+                          </View>
+                          <TextInput
+                            placeholder="예) 10"
+                            placeholderTextColor="#A2A2A2"
+                            style={[
+                              styles.normalText,
+                              {
+                                borderWidth: 1,
+                                borderColor: '#E3E3E3',
+                                borderRadius: 4,
+                                paddingHorizontal: 10,
+                              },
+                            ]}
+                            onChangeText={(value) => {
+                              setPlength(value);
+                              formikProps.setFieldValue('order_length', value);
+                              setPlengthError(false);
+                            }}
+                            onBlur={formikProps.handleBlur('order_length')}
+                            autoCapitalize="none"
+                            keyboardType="number-pad"
+                          />
+                          {formikProps.touched.order_length &&
+                          formikProps.errors.order_length ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              {formikProps.touched.order_length &&
+                                formikProps.errors.order_length}
+                            </Text>
+                          ) : pLengthError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              세로 규격을 입력해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      )}
+                      {/* // 세로 규격 */}
+
+                      {/* 높이 규격 */}
+                      {cate1 === '1' && (
+                        <View style={{marginBottom: 25}}>
+                          <View
+                            style={[
+                              styles.details,
+                              {
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            <Text
+                              style={[
+                                styles.mediumText,
+                                {
+                                  fontSize: 15,
+                                  color: '#000000',
+                                  marginRight: 5,
+                                },
+                              ]}>
+                              높이 규격
+                            </Text>
+                            <Text
+                              style={[
+                                styles.normalText,
+                                {fontSize: 14, color: '#000000'},
+                              ]}>
+                              (mm)
+                            </Text>
+                          </View>
+                          <TextInput
+                            placeholder="예) 10"
+                            placeholderTextColor="#A2A2A2"
+                            style={[
+                              styles.normalText,
+                              {
+                                borderWidth: 1,
+                                borderColor: '#E3E3E3',
+                                borderRadius: 4,
+                                paddingHorizontal: 10,
+                              },
+                            ]}
+                            onChangeText={(value) => {
+                              setPheight(value);
+                              formikProps.setFieldValue('order_height', value);
+                              setPheightError(false);
+                            }}
+                            onBlur={formikProps.handleBlur('order_height')}
+                            autoCapitalize="none"
+                            keyboardType="number-pad"
+                          />
+                          {formikProps.touched.order_height &&
+                          formikProps.errors.order_height ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              {formikProps.touched.order_height &&
+                                formikProps.errors.order_height}
+                            </Text>
+                          ) : pHeightError ? (
+                            <Text
+                              style={{
+                                width: '100%',
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                lineHeight: 18,
+                                color: '#366DE5',
+                                marginVertical: 5,
+                              }}>
+                              높이 규격을 입력해주세요.
+                            </Text>
+                          ) : null}
+                        </View>
+                      )}
+                      {/* // 높이 규격 */}
+
+                      {/* 수량 */}
+                      <View style={{marginBottom: 25}}>
+                        <View style={{marginBottom: 5}}>
+                          <Text
+                            style={[
+                              styles.mediumText,
+                              {fontSize: 15, color: '#000000', marginRight: 5},
+                            ]}>
+                            수량
+                          </Text>
+                        </View>
+
+                        <View
+                          style={[
+                            styles.details,
+                            {
+                              flexWrap: 'wrap',
+                              marginBottom: getQuantity ? 5 : 0,
+                            },
+                          ]}>
+                          {getQuantity
+                            ? getQuantity.map((q, idx) => (
+                                <TouchableOpacity
+                                  key={idx}
+                                  activeOpacity={1}
+                                  hitSlop={{
+                                    top: 10,
+                                    bottom: 10,
+                                    left: 10,
+                                    right: 10,
+                                  }}
+                                  onPress={() => {
+                                    setQuantity(q);
+                                    setQuantityDirect(null);
+                                    setQuantityError(false);
+                                    setQuantityDirectError(false);
+                                  }}
+                                  style={[
+                                    styles.details,
+                                    {
+                                      marginRight: 20,
+                                      marginBottom: 10,
+                                    },
+                                  ]}>
+                                  <Image
+                                    source={
+                                      quantity === q
+                                        ? require('../../src/assets/radio_on.png')
+                                        : require('../../src/assets/radio_off.png')
+                                    }
+                                    resizeMode="contain"
+                                    style={{
+                                      width: 20,
+                                      height: 20,
+                                      marginRight: 5,
+                                    }}
+                                  />
+                                  <Text
+                                    style={[
+                                      styles.normalText,
+                                      {fontSize: 14, color: '#000'},
+                                    ]}>
+                                    {q}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))
+                            : null}
                         </View>
                         <View>
                           <TouchableOpacity
                             activeOpacity={1}
                             hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                            onPress={() => setOrderSize('direct')}
+                            onPress={() => {
+                              setQuantityError(false);
+                              setQuantityDirectError(false);
+                              setOrderQuantity('direct');
+                            }}
                             style={[
                               styles.details,
                               {
@@ -1431,7 +1525,7 @@ const Step04 = (props) => {
                             ]}>
                             <Image
                               source={
-                                size === 'direct'
+                                quantity === 'direct'
                                   ? require('../../src/assets/radio_on.png')
                                   : require('../../src/assets/radio_off.png')
                               }
@@ -1443,20 +1537,21 @@ const Step04 = (props) => {
                                 styles.normalText,
                                 {fontSize: 14, color: '#000'},
                               ]}>
-                              직접 입력 {cate1 === '0' ? '(가로 X 세로)' : null}
+                              직접 입력
                             </Text>
                           </TouchableOpacity>
                           <TextInput
-                            ref={directSizeRef}
-                            value={sizeDirect}
-                            placeholder="규격을 직접 입력해주세요."
+                            ref={directRef}
+                            value={quantityDirect}
+                            placeholder="수량을 직접 입력해주세요."
                             placeholderTextColor="#A2A2A2"
                             onChangeText={(text) => {
-                              setSizeDirect(text);
-                              setSizeDirectError(false);
+                              setQuantityDirect(text);
+                              setQuantityError(false);
+                              setQuantityDirectError(false);
                             }}
                             onFocus={() => {
-                              setSize('direct');
+                              setQuantity('direct');
                             }}
                             style={[
                               styles.normalText,
@@ -1470,7 +1565,7 @@ const Step04 = (props) => {
                             autoCapitalize="none"
                             keyboardType="number-pad"
                           />
-                          {sizeDirectError ? (
+                          {directError ? (
                             <Text
                               style={{
                                 width: '100%',
@@ -1480,9 +1575,9 @@ const Step04 = (props) => {
                                 color: '#366DE5',
                                 marginVertical: 5,
                               }}>
-                              규격을 입력해주세요.
+                              수량을 입력해주세요.
                             </Text>
-                          ) : sizeError ? (
+                          ) : quantityError ? (
                             <Text
                               style={{
                                 width: '100%',
@@ -1492,24 +1587,192 @@ const Step04 = (props) => {
                                 color: '#366DE5',
                                 marginVertical: 5,
                               }}>
-                              규격을 지정해주세요.
+                              수량을 지정해주세요.
                             </Text>
                           ) : null}
                         </View>
                       </View>
-                    ) : null}
-                    {/* // 일반인쇄 - 규격 */}
+                      {/* // 수량 */}
 
-                    {/* 스티커 - 도무송 */}
-                    {cate1 === '0' &&
-                    ca_id === '6' &&
-                    thomsonType !== null &&
-                    thomsonType !== '' ? (
-                      <View
-                        style={{
-                          marginBottom: 25,
-                        }}>
-                        <View>
+                      {/* 일반인쇄 - 규격 */}
+                      {cate1 === '0' &&
+                      standard !== null &&
+                      standard !== '' &&
+                      standard.length > 0 ? (
+                        <View
+                          style={{
+                            marginBottom: 25,
+                          }}>
+                          <View>
+                            <Text
+                              style={[
+                                styles.mediumText,
+                                {
+                                  fontSize: 15,
+                                  color: '#000000',
+                                  marginRight: 5,
+                                  marginBottom: 5,
+                                },
+                              ]}>
+                              규격
+                            </Text>
+                            <View
+                              style={[
+                                styles.details,
+                                {
+                                  flexWrap: 'wrap',
+                                  marginBottom: standard ? 5 : 0,
+                                },
+                              ]}>
+                              {standard !== '' && standard !== null
+                                ? standard.map((q, idx) => (
+                                    <TouchableOpacity
+                                      key={idx}
+                                      activeOpacity={1}
+                                      hitSlop={{
+                                        top: 10,
+                                        bottom: 10,
+                                        left: 10,
+                                        right: 10,
+                                      }}
+                                      onPress={() => {
+                                        setSize(q);
+                                        setSizeDirect(null);
+                                        setSizeError(false);
+                                        setSizeDirectError(false);
+                                      }}
+                                      style={[
+                                        styles.details,
+                                        {
+                                          marginRight: 20,
+                                          marginBottom: 10,
+                                        },
+                                      ]}>
+                                      <Image
+                                        source={
+                                          size === q
+                                            ? require('../../src/assets/radio_on.png')
+                                            : require('../../src/assets/radio_off.png')
+                                        }
+                                        resizeMode="contain"
+                                        style={{
+                                          width: 20,
+                                          height: 20,
+                                          marginRight: 5,
+                                        }}
+                                      />
+                                      <Text
+                                        style={[
+                                          styles.normalText,
+                                          {fontSize: 14, color: '#000'},
+                                        ]}>
+                                        {q}
+                                      </Text>
+                                    </TouchableOpacity>
+                                  ))
+                                : null}
+                            </View>
+                          </View>
+                          <View>
+                            <TouchableOpacity
+                              activeOpacity={1}
+                              hitSlop={{
+                                top: 10,
+                                bottom: 10,
+                                left: 10,
+                                right: 10,
+                              }}
+                              onPress={() => {
+                                setSizeError(false);
+                                setSizeDirectError(false);
+                                setOrderSize('direct');
+                              }}
+                              style={[
+                                styles.details,
+                                {
+                                  marginBottom: 10,
+                                },
+                              ]}>
+                              <Image
+                                source={
+                                  size === 'direct'
+                                    ? require('../../src/assets/radio_on.png')
+                                    : require('../../src/assets/radio_off.png')
+                                }
+                                resizeMode="contain"
+                                style={{width: 20, height: 20, marginRight: 5}}
+                              />
+                              <Text
+                                style={[
+                                  styles.normalText,
+                                  {fontSize: 14, color: '#000'},
+                                ]}>
+                                직접 입력{' '}
+                                {cate1 === '0' ? '(가로 X 세로)' : null}
+                              </Text>
+                            </TouchableOpacity>
+                            <TextInput
+                              ref={directSizeRef}
+                              value={sizeDirect}
+                              placeholder="규격을 직접 입력해주세요."
+                              placeholderTextColor="#A2A2A2"
+                              onChangeText={(text) => {
+                                setSizeDirect(text);
+                                setSizeDirectError(false);
+                              }}
+                              onFocus={() => {
+                                setSize('direct');
+                                setSizeError(false);
+                              }}
+                              style={[
+                                styles.normalText,
+                                {
+                                  borderWidth: 1,
+                                  borderColor: '#E3E3E3',
+                                  borderRadius: 4,
+                                  paddingHorizontal: 10,
+                                },
+                              ]}
+                              autoCapitalize="none"
+                              keyboardType="number-pad"
+                            />
+                            {sizeDirectError ? (
+                              <Text
+                                style={{
+                                  width: '100%',
+                                  fontFamily: 'SCDream4',
+                                  fontSize: 12,
+                                  lineHeight: 18,
+                                  color: '#366DE5',
+                                  marginVertical: 5,
+                                }}>
+                                규격을 입력해주세요.
+                              </Text>
+                            ) : sizeError ? (
+                              <Text
+                                style={{
+                                  width: '100%',
+                                  fontFamily: 'SCDream4',
+                                  fontSize: 12,
+                                  lineHeight: 18,
+                                  color: '#366DE5',
+                                  marginVertical: 5,
+                                }}>
+                                규격을 지정해주세요.
+                              </Text>
+                            ) : null}
+                          </View>
+                        </View>
+                      ) : null}
+                      {/* // 일반인쇄 - 규격 */}
+
+                      {/* 일반인쇄 - 카드/안내장(type_id 90) 또는 스티커 (ca_id 6) 직접입력 폼 */}
+                      {(cate1 === '0' && type_id === '90') ||
+                      (cate1 === '0' && ca_id === '6') ? (
+                        <View
+                          style={{
+                            marginBottom: 25,
+                          }}>
                           <Text
                             style={[
                               styles.mediumText,
@@ -1517,351 +1780,429 @@ const Step04 = (props) => {
                                 fontSize: 15,
                                 color: '#000000',
                                 marginRight: 5,
-                                marginBottom: 5,
+                                marginBottom: 10,
                               },
                             ]}>
-                            톰슨모양
+                            규격 (가로 X 세로)
                           </Text>
-                          <View
-                            style={[
-                              styles.details,
-                              {
-                                flexWrap: 'wrap',
-                              },
-                            ]}>
-                            {thomsonType !== '' && thomsonType !== null
-                              ? thomsonType.map((q, idx) => (
-                                  <TouchableOpacity
-                                    key={idx}
-                                    activeOpacity={1}
-                                    hitSlop={{
-                                      top: 10,
-                                      bottom: 10,
-                                      left: 10,
-                                      right: 10,
-                                    }}
-                                    onPress={() => {
-                                      setThomsonCur(q);
-                                    }}
-                                    style={[
-                                      styles.details,
-                                      {
-                                        marginRight: 20,
-                                        marginBottom: 10,
-                                      },
-                                    ]}>
-                                    <Image
-                                      source={
-                                        thomsonCur === q
-                                          ? require('../../src/assets/radio_on.png')
-                                          : require('../../src/assets/radio_off.png')
-                                      }
-                                      resizeMode="contain"
-                                      style={{
-                                        width: 20,
-                                        height: 20,
-                                        marginRight: 5,
-                                      }}
-                                    />
-                                    <Text
-                                      style={[
-                                        styles.normalText,
-                                        {fontSize: 14, color: '#000'},
-                                      ]}>
-                                      {q}
-                                    </Text>
-                                  </TouchableOpacity>
-                                ))
-                              : null}
-                          </View>
-                        </View>
-                      </View>
-                    ) : null}
-                    {/* // 스티커 - 도무송 */}
-
-                    {/* 목형 */}
-                    {cate1 === '1' && (
-                      <View style={{marginBottom: 25}}>
-                        <View
-                          style={[
-                            styles.details,
-                            {
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          <Text
-                            style={{
-                              fontFamily: 'SCDream5',
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                            }}>
-                            목형
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                          }}>
-                          <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => setIsPattern(true)}
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderWidth: 1,
-                              borderColor: pattern ? '#275696' : '#E3E3E3',
-                              borderRadius: 4,
-                              backgroundColor: '#fff',
-                              width: '49%',
-                              paddingVertical: 15,
-                            }}>
-                            <Text
-                              style={[
-                                pattern ? styles.mediumText : styles.normalText,
-                                {
-                                  fontSize: 14,
-                                  color: pattern ? '#275696' : '#A2A2A2',
-                                },
-                              ]}>
-                              있음
-                            </Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => setIsPattern(false)}
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderWidth: 1,
-                              borderColor: !pattern ? '#275696' : '#E3E3E3',
-                              borderRadius: 4,
-                              backgroundColor: '#fff',
-                              width: '49%',
-                              paddingVertical: 15,
-                            }}>
-                            <Text
-                              style={[
-                                !pattern
-                                  ? styles.mediumText
-                                  : styles.normalText,
-                                {
-                                  fontSize: 14,
-                                  color: !pattern ? '#275696' : '#A2A2A2',
-                                },
-                              ]}>
-                              없음
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    )}
-                    {/* // 목형 */}
-
-                    {/* 첨부파일 */}
-                    {ca_id !== '9' && (
-                      <View style={{marginBottom: 25}}>
-                        <View
-                          style={[
-                            styles.details,
-                            {
-                              marginBottom: 10,
-                            },
-                          ]}>
-                          <Text
-                            style={{
-                              fontFamily: 'SCDream5',
-                              fontSize: 15,
-                              color: '#000000',
-                              marginRight: 5,
-                            }}>
-                            첨부파일
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            marginBottom: 20,
-                          }}>
                           <TextInput
-                            value={
-                              fileNameCurrent
-                                ? `${fileNameCurrent}.${
-                                    extension === 'jpeg' ? 'jpg' : extension
-                                  }`
-                                : null
-                            }
-                            placeholder="파일을 선택해주세요."
+                            value={size}
+                            placeholder="규격을 직접 입력해주세요."
                             placeholderTextColor="#A2A2A2"
                             style={[
                               styles.normalText,
                               {
-                                flex: 1,
                                 borderWidth: 1,
                                 borderColor: '#E3E3E3',
                                 borderRadius: 4,
                                 paddingHorizontal: 10,
-                                marginRight: 10,
+                                marginBottom:
+                                  infoDetail &&
+                                  infoDetail[0].standard_text !== null &&
+                                  infoDetail[0].standard_text !== ''
+                                    ? 5
+                                    : 0,
                               },
                             ]}
-                            editable={false}
+                            onChangeText={(value) => {
+                              setSize(value);
+                            }}
+                            autoCapitalize="none"
+                            keyboardType="decimal-pad"
                           />
-                          <TouchableOpacity
-                            activeOpacity={0.8}
-                            onPress={filePicker}
+                          {infoDetail &&
+                          infoDetail[0].standard_text !== null &&
+                          infoDetail[0].standard_text !== '' ? (
+                            <Text
+                              style={{
+                                fontFamily: 'SCDream4',
+                                fontSize: 12,
+                                color: '#B5B5B5',
+                              }}>
+                              {infoDetail[0].standard_text}
+                            </Text>
+                          ) : null}
+                        </View>
+                      ) : null}
+                      {/* //일반인쇄 - 카드/안내장(type_id 90) 또는 스티커 (ca_id 6) 직접입력 폼 */}
+
+                      {/* 스티커 - 도무송 */}
+                      {cate1 === '0' &&
+                      ca_id === '6' &&
+                      thomsonType !== null &&
+                      thomsonType !== '' ? (
+                        <View
+                          style={{
+                            marginBottom: 25,
+                          }}>
+                          <View>
+                            <Text
+                              style={[
+                                styles.mediumText,
+                                {
+                                  fontSize: 15,
+                                  color: '#000000',
+                                  marginRight: 5,
+                                  marginBottom: 5,
+                                },
+                              ]}>
+                              톰슨모양
+                            </Text>
+                            <View
+                              style={[
+                                styles.details,
+                                {
+                                  flexWrap: 'wrap',
+                                },
+                              ]}>
+                              {thomsonType !== '' && thomsonType !== null
+                                ? thomsonType.map((q, idx) => (
+                                    <TouchableOpacity
+                                      key={idx}
+                                      activeOpacity={1}
+                                      hitSlop={{
+                                        top: 10,
+                                        bottom: 10,
+                                        left: 10,
+                                        right: 10,
+                                      }}
+                                      onPress={() => {
+                                        setThomsonCur(q);
+                                      }}
+                                      style={[
+                                        styles.details,
+                                        {
+                                          marginRight: 20,
+                                          marginBottom: 10,
+                                        },
+                                      ]}>
+                                      <Image
+                                        source={
+                                          thomsonCur === q
+                                            ? require('../../src/assets/radio_on.png')
+                                            : require('../../src/assets/radio_off.png')
+                                        }
+                                        resizeMode="contain"
+                                        style={{
+                                          width: 20,
+                                          height: 20,
+                                          marginRight: 5,
+                                        }}
+                                      />
+                                      <Text
+                                        style={[
+                                          styles.normalText,
+                                          {fontSize: 14, color: '#000'},
+                                        ]}>
+                                        {q}
+                                      </Text>
+                                    </TouchableOpacity>
+                                  ))
+                                : null}
+                            </View>
+                          </View>
+                        </View>
+                      ) : null}
+                      {/* // 스티커 - 도무송 */}
+
+                      {/* 목형 */}
+                      {cate1 === '1' && (
+                        <View style={{marginBottom: 25}}>
+                          <View
+                            style={[
+                              styles.details,
+                              {
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            <Text
+                              style={{
+                                fontFamily: 'SCDream5',
+                                fontSize: 15,
+                                color: '#000000',
+                                marginRight: 5,
+                              }}>
+                              목형
+                            </Text>
+                          </View>
+                          <View
                             style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                            }}>
+                            <TouchableOpacity
+                              activeOpacity={1}
+                              onPress={() => setIsPattern(true)}
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 1,
+                                borderColor: pattern ? '#275696' : '#E3E3E3',
+                                borderRadius: 4,
+                                backgroundColor: '#fff',
+                                width: '49%',
+                                paddingVertical: 15,
+                              }}>
+                              <Text
+                                style={[
+                                  pattern
+                                    ? styles.mediumText
+                                    : styles.normalText,
+                                  {
+                                    fontSize: 14,
+                                    color: pattern ? '#275696' : '#A2A2A2',
+                                  },
+                                ]}>
+                                있음
+                              </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              activeOpacity={1}
+                              onPress={() => setIsPattern(false)}
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 1,
+                                borderColor: !pattern ? '#275696' : '#E3E3E3',
+                                borderRadius: 4,
+                                backgroundColor: '#fff',
+                                width: '49%',
+                                paddingVertical: 15,
+                              }}>
+                              <Text
+                                style={[
+                                  !pattern
+                                    ? styles.mediumText
+                                    : styles.normalText,
+                                  {
+                                    fontSize: 14,
+                                    color: !pattern ? '#275696' : '#A2A2A2',
+                                  },
+                                ]}>
+                                없음
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      )}
+                      {/* // 목형 */}
+
+                      {/* 첨부파일 */}
+                      {ca_id !== '9' && (
+                        <View style={{marginBottom: 25}}>
+                          <View
+                            style={[
+                              styles.details,
+                              {
+                                marginBottom: 10,
+                              },
+                            ]}>
+                            <Text
+                              style={{
+                                fontFamily: 'SCDream5',
+                                fontSize: 15,
+                                color: '#000000',
+                                marginRight: 5,
+                              }}>
+                              첨부파일
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginBottom: 20,
+                            }}>
+                            <TextInput
+                              value={
+                                fileNameCurrent
+                                  ? `${fileNameCurrent}.${
+                                      extension === 'jpeg' ? 'jpg' : extension
+                                    }`
+                                  : null
+                              }
+                              placeholder="파일을 선택해주세요."
+                              placeholderTextColor="#A2A2A2"
+                              style={[
+                                styles.normalText,
+                                {
+                                  flex: 1,
+                                  borderWidth: 1,
+                                  borderColor: '#E3E3E3',
+                                  borderRadius: 4,
+                                  paddingHorizontal: 10,
+                                  marginRight: 10,
+                                },
+                              ]}
+                              editable={false}
+                            />
+                            <TouchableOpacity
+                              activeOpacity={0.8}
+                              onPress={filePicker}
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: '#275696',
+                                borderRadius: 4,
+                                height: 50,
+                                paddingHorizontal: 20,
+                              }}>
+                              <Text
+                                style={[
+                                  styles.normalText,
+                                  {color: '#fff', textAlign: 'center'},
+                                ]}>
+                                파일 선택
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      )}
+                      {/* // 첨부파일 */}
+                    </View>
+                  </ScrollView>
+                  {/* 하단 버튼 Wrap */}
+                  <View
+                    style={{
+                      // position: 'absolute',
+                      // bottom: 0,
+                      paddingTop: 10,
+                      backgroundColor: '#fff',
+                    }}>
+                    <View style={{paddingHorizontal: 20}}>
+                      <TouchableOpacity
+                        onPress={toggleModal}
+                        activeOpacity={0.8}>
+                        <View style={[styles.submitBtn, {marginBottom: 10}]}>
+                          <Text style={styles.submitBtnText}>
+                            간단 견적 제출
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+
+                    {/* 이전, 다음 버튼 부분 (Prev, Next) */}
+                    <View style={{paddingHorizontal: 20}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderWidth: 1,
+                          borderColor: '#E3E3E3',
+                          borderRadius: 5,
+                          backgroundColor: '#fff',
+                          marginBottom: 15,
+                        }}>
+                        <View
+                          style={{
+                            borderWidth: 0.5,
+                            height: '100%',
+                            borderColor: '#E3E3E3',
+                          }}
+                        />
+                        <TouchableWithoutFeedback
+                          onPress={() => navigation.goBack()}>
+                          <View
+                            style={{
+                              flex: 1,
+                              flexDirection: 'row',
                               justifyContent: 'center',
                               alignItems: 'center',
-                              backgroundColor: '#275696',
-                              borderRadius: 4,
-                              height: 50,
-                              paddingHorizontal: 20,
+                              paddingVertical: 15,
                             }}>
+                            <Image
+                              source={require('../../src/assets/prevUnActiveArrow.png')}
+                              resizeMode="contain"
+                              style={{width: 16, height: 16, marginRight: 7}}
+                            />
                             <Text
                               style={[
                                 styles.normalText,
-                                {color: '#fff', textAlign: 'center'},
+                                {
+                                  fontSize: 14,
+                                  color: '#707070',
+                                  letterSpacing: -1,
+                                },
                               ]}>
-                              파일 선택
+                              이전
                             </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    )}
-                    {/* // 첨부파일 */}
-                  </View>
-
-                  <View style={{paddingHorizontal: 20}}>
-                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.8}>
-                      <View style={[styles.submitBtn, {marginBottom: 10}]}>
-                        <Text style={styles.submitBtnText}>간단 견적 제출</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-
-                  {/* 이전, 다음 버튼 부분 (Prev, Next) */}
-                  <View style={{paddingHorizontal: 20}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderWidth: 1,
-                        borderColor: '#E3E3E3',
-                        borderRadius: 5,
-                        backgroundColor: '#fff',
-                        marginBottom: 35,
-                      }}>
-                      <View
-                        style={{
-                          borderWidth: 0.5,
-                          height: '100%',
-                          borderColor: '#E3E3E3',
-                        }}
-                      />
-                      <TouchableWithoutFeedback
-                        onPress={() => navigation.goBack()}>
+                          </View>
+                        </TouchableWithoutFeedback>
                         <View
                           style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingVertical: 15,
-                          }}>
-                          <Image
-                            source={require('../../src/assets/prevUnActiveArrow.png')}
-                            resizeMode="contain"
-                            style={{width: 16, height: 16, marginRight: 7}}
-                          />
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {
-                                fontSize: 14,
-                                color: '#707070',
-                                letterSpacing: -1,
-                              },
-                            ]}>
-                            이전
-                          </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
+                            borderWidth: 0.5,
+                            height: '100%',
+                            borderColor: '#E3E3E3',
+                          }}
+                        />
+                        <TouchableWithoutFeedback
+                          onPress={formikProps.handleSubmit}>
+                          <View
+                            style={{
+                              flex: 1,
+                              flexDirection: 'row-reverse',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              paddingVertical: 15,
+                            }}>
+                            <Image
+                              source={require('../../src/assets/nextActiveArrow.png')}
+                              resizeMode="contain"
+                              style={{width: 16, height: 16, marginLeft: 7}}
+                            />
+                            <Text
+                              style={[
+                                styles.normalText,
+                                {
+                                  fontSize: 14,
+                                  letterSpacing: -1,
+                                },
+                              ]}>
+                              세부 견적 작성
+                            </Text>
+                          </View>
+                        </TouchableWithoutFeedback>
+                      </View>
+                    </View>
+                    {/* // 이전, 다음 버튼 부분 (Prev, Next) */}
+                    {/* 간단 견적 제출시 안내 멘트 - 하단 */}
+                    <View style={{backgroundColor: '#F5F5F5'}}>
                       <View
                         style={{
-                          borderWidth: 0.5,
-                          height: '100%',
-                          borderColor: '#E3E3E3',
-                        }}
-                      />
-                      <TouchableWithoutFeedback
-                        onPress={formikProps.handleSubmit}>
-                        <View
-                          style={{
-                            flex: 1,
-                            flexDirection: 'row-reverse',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingVertical: 15,
-                          }}>
-                          <Image
-                            source={require('../../src/assets/nextActiveArrow.png')}
-                            resizeMode="contain"
-                            style={{width: 16, height: 16, marginLeft: 7}}
-                          />
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {
-                                fontSize: 14,
-                                letterSpacing: -1,
-                              },
-                            ]}>
-                            세부 견적 작성
-                          </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
+                          paddingHorizontal: 20,
+                          paddingVertical: 30,
+                          flexDirection: 'row',
+                          alignItems: 'flex-start',
+                          justifyContent: 'flex-start',
+                        }}>
+                        <Text
+                          style={[
+                            styles.normalText,
+                            {
+                              fontSize: 12,
+                              color: '#707070',
+                              lineHeight: 18,
+                              marginRight: 5,
+                            },
+                          ]}>
+                          -
+                        </Text>
+                        <Text
+                          style={[
+                            styles.normalText,
+                            {fontSize: 12, color: '#707070', lineHeight: 18},
+                          ]}>
+                          간단 견적 제출 시, 최고관리자가 확인 및 추가 입력 후,
+                          입찰할 파트너스 회원들을 지정합니다.
+                        </Text>
+                      </View>
                     </View>
+                    {/* // 간단 견적 제출시 안내 멘트 - 하단 */}
                   </View>
-
-                  {/* 간단 견적 제출시 안내 멘트 - 하단 */}
-                  <View style={{backgroundColor: '#F5F5F5'}}>
-                    <View
-                      style={{
-                        paddingHorizontal: 20,
-                        paddingVertical: 30,
-                        flexDirection: 'row',
-                        alignItems: 'flex-start',
-                        justifyContent: 'flex-start',
-                      }}>
-                      <Text
-                        style={[
-                          styles.normalText,
-                          {
-                            fontSize: 12,
-                            color: '#707070',
-                            lineHeight: 18,
-                            marginRight: 5,
-                          },
-                        ]}>
-                        -
-                      </Text>
-                      <Text
-                        style={[
-                          styles.normalText,
-                          {fontSize: 12, color: '#707070', lineHeight: 18},
-                        ]}>
-                        간단 견적 제출 시, 최고관리자가 확인 및 추가 입력 후,
-                        입찰할 파트너스 회원들을 지정합니다.
-                      </Text>
-                    </View>
-                  </View>
-                  {/* // 간단 견적 제출시 안내 멘트 - 하단 */}
-                  {/* // 이전, 다음 버튼 부분 (Prev, Next) */}
+                  {/* // 하단 버튼 Wrap */}
                 </View>
               )}
             </Formik>
