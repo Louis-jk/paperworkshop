@@ -342,7 +342,10 @@ const Step04 = (props) => {
         } else {
           setModalVisible(!isModalVisible);
         }
-      } else if (ca_id === '4' && type_id === '74') {
+      } else if (
+        ca_id === '4' &&
+        (type_id === '74' || type_id === '75' || type_id === '76')
+      ) {
         if (pageCountCur === null || pageCountCur === '') {
           setPageCountError(true);
         } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
