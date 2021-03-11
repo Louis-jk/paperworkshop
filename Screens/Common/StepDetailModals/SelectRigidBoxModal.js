@@ -2,11 +2,7 @@ import * as React from 'react';
 import {
   View,
   Text,
-  TextInput,
-  Dimensions,
   TouchableOpacity,
-  Image,
-  Alert,
   ScrollView,
   StyleSheet,
 } from 'react-native';
@@ -19,7 +15,6 @@ const SelectRigidBoxModal = ({
   selectSabari,
   typeId,
 }) => {
-  console.log('modal props type id', typeId);
   return (
     <View>
       <Modal isVisible={isVisible}>
@@ -29,8 +24,6 @@ const SelectRigidBoxModal = ({
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {/* <Button title="Show modal" onPress={toggleModal} /> */}
-
           <View
             style={{
               position: 'relative',
@@ -53,29 +46,6 @@ const SelectRigidBoxModal = ({
               <Text style={[styles.mediumText, {fontSize: 16, color: '#fff'}]}>
                 싸바리 형태를 선택해주세요.
               </Text>
-              {/* <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={toggleModal}
-                hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
-                style={{
-                  backgroundColor: '#E5E5E5',
-                  padding: 7,
-                  borderRadius: 30,
-                  position: 'absolute',
-                  top: -15,
-                  right: -15,
-                  zIndex: 1,
-                  elevation: 1,
-                }}>
-                <Image
-                  source={require('../../../src/assets/icon_close03.png')}
-                  resizeMode="contain"
-                  style={{
-                    width: 22,
-                    height: 22,
-                  }}
-                />
-              </TouchableOpacity> */}
             </View>
 
             {/* 컨텐츠 */}
@@ -96,50 +66,30 @@ const SelectRigidBoxModal = ({
                   onPress={() => selectSabari('2단 싸바리', typeId)}
                   style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>2단 싸바리</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={() => selectSabari('3단 싸바리', typeId)}
                   style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>3단 싸바리</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={() => selectSabari('표지싸바리(리본)', typeId)}
                   style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>표지싸바리(리본)</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={() => selectSabari('표지싸바리(자석)', typeId)}
                   style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>표지싸바리(자석)</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={() => selectSabari('커스텀싸바리', typeId)}
                   style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>커스텀싸바리</Text>
-                  {/* <Text style={styles.partnerInfoDesc}>
-                    세부 정보 안내 내용입니다. 세부 정보 안내 내용입니다. 세부
-                    정보 안내 내용입니다.
-                  </Text> */}
                 </TouchableOpacity>
               </View>
               {/* // 세부정보 안내 Area */}
