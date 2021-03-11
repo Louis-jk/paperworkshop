@@ -16,6 +16,7 @@ import {
   FlatList,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -65,10 +66,15 @@ const index = (props) => {
 
   React.useEffect(() => {
     getMyOrderAPI();
-    return () => {
-      getMyOrderAPI();
-    };
   }, [status, cate1, search]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getMyOrderAPI();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const toggleMenu01 = () => {
     setVisibleStep01((prev) => !prev);
@@ -363,9 +369,9 @@ const index = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flex: 1,
-                height: Dimensions.get('window').height - 300,
+                height: Dimensions.get('window').height,
               }}>
-              <Text style={{fontFamily: 'SCDream4'}}>
+              <Text style={{marginTop: -300, fontFamily: 'SCDream4'}}>
                 견적 의뢰 건이 없습니다.
               </Text>
             </View>

@@ -41,4 +41,13 @@ export default {
       }),
     });
   },
+  delOrder(pe_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_my_estimate_status',
+        pe_id,
+      }),
+    });
+  },
 };

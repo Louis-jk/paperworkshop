@@ -69,9 +69,9 @@ const Step04 = (props) => {
 
   // 간단 견적 제출 func
   const [source, setSource] = React.useState('');
-  const [pWidth, setPwidth] = React.useState(null);
-  const [pLength, setPlength] = React.useState(null);
-  const [pHeight, setPheight] = React.useState(null);
+  const [pWidth, setPwidth] = React.useState('');
+  const [pLength, setPlength] = React.useState('');
+  const [pHeight, setPheight] = React.useState('');
 
   // 간단 견적 전 모달
   const [isModalVisible, setModalVisible] = React.useState(false);
@@ -150,6 +150,9 @@ const Step04 = (props) => {
 
   const directRef = React.useRef(null); // 수량 직접 입력폼 ref
   const directSizeRef = React.useRef(null); // 규격 직접 입력폼 ref
+  const pWidthRef = React.useRef(null); // 가로규격 직접 입력폼 ref
+  const pLengthRef = React.useRef(null); // 세로규격 직접 입력폼 ref
+  const pHeightRef = React.useRef(null); // 높이규격 직접 입력폼 ref
 
   const [infoDetail, setInfoDetail] = React.useState(null);
   const [getQuantity, setGetQuantity] = React.useState([]);
@@ -277,15 +280,19 @@ const Step04 = (props) => {
     if (cate1 === '1') {
       if (pWidth === '' || pWidth === null) {
         setPwidthError(true);
+        pWidthRef.current.focus();
       } else if (pLength === '' || pLength === null) {
         setPlengthError(true);
+        pLengthRef.current.focus();
       } else if (pHeight === '' || pHeight === null) {
         setPheightError(true);
+        pHeightRef.current.focus();
       } else if (
         (quantity === 'direct' && quantityDirect === null) ||
         (quantity === 'direct' && quantityDirect === '')
       ) {
         setQuantityDirectError(true);
+        directRef.current.focus();
       } else if (
         (quantity !== 'direct' && quantity === null) ||
         (quantity !== 'direct' && quantity === '')
@@ -293,6 +300,250 @@ const Step04 = (props) => {
         setQuantityError(true);
       } else {
         setModalVisible(!isModalVisible);
+        dispatch(setUserPwidth(pWidth));
+        dispatch(setUserPlength(pLength));
+        dispatch(setUserPheight(pHeight));
+
+        if (quantity !== 'direct') {
+          dispatch(setUserCnt(quantity));
+          dispatch(setUserCntEtc(0));
+        } else {
+          dispatch(setUserCntEtc(quantityDirect));
+          dispatch(setUserCnt(0));
+        }
+
+        if (pattern) {
+          dispatch(setUserWoodPattern('Y'));
+        } else {
+          dispatch(setUserWoodPattern('N'));
+        }
+      }
+    } else if (cate1 === '0') {
+      if (ca_id === '1' && type_id === '71') {
+        // 카달로그/브로슈어
+        if (pageCountCur === null || pageCountCur === '') {
+          setPageCountError(true);
+        } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
+          setPageInnerCountError(true);
+        } else if (bindTypeCur === null || bindTypeCur === '') {
+          setBindTypeCurError(true);
+        } else if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+          directRef.current.focus();
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (
+          (size === 'direct' && sizeDirect === null) ||
+          (size === 'direct' && sizeDirect === '')
+        ) {
+          setSizeDirectError(true);
+        } else if (
+          (size !== 'direct' && size === null) ||
+          (size !== 'direct' && size === '')
+        ) {
+          setSizeError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (
+        ca_id === '4' &&
+        (type_id === '74' || type_id === '75' || type_id === '76')
+      ) {
+        if (pageCountCur === null || pageCountCur === '') {
+          setPageCountError(true);
+        } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
+          setPageInnerCountError(true);
+        } else if (writeingCur === null || writeingCur === '') {
+          // 일반인쇄 - 간지종류
+          setWriteingCurError(true);
+        } else if (coverColorCur === null || coverColorCur === '') {
+          // 일반인쇄 - 표지간지색상
+          setCoverColorCurError(true);
+        } else if (sectionColorCur === null || sectionColorCur === '') {
+          // 일반인쇄 - 섹션간지색상
+          setSectionColorCurError(true);
+        } else if (bindTypeCur === null || bindTypeCur === '') {
+          setBindTypeCurError(true);
+        } else if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+          directRef.current.focus();
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (
+          (size === 'direct' && sizeDirect === null) ||
+          (size === 'direct' && sizeDirect === '')
+        ) {
+          setSizeDirectError(true);
+        } else if (
+          (size !== 'direct' && size === null) ||
+          (size !== 'direct' && size === '')
+        ) {
+          setSizeError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (
+        // 팜플렛, 리플렛
+        (ca_id === '1' && (type_id === '72' || type_id === '73')) ||
+        (ca_id === '5' &&
+          (type_id === '77' ||
+            type_id === '78' ||
+            type_id === '79' ||
+            type_id === '80')) || // 전단지, 포스터
+        (ca_id === '7' && (type_id === '85' || type_id === '86')) // 규격봉투 ,자켓봉투
+      ) {
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+          directRef.current.focus();
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (
+          (size === 'direct' && sizeDirect === null) ||
+          (size === 'direct' && sizeDirect === '')
+        ) {
+          setSizeDirectError(true);
+        } else if (
+          (size !== 'direct' && size === null) ||
+          (size !== 'direct' && size === '')
+        ) {
+          setSizeError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (
+        ca_id === '6' &&
+        (type_id === '81' ||
+          type_id === '82' ||
+          type_id === '83' ||
+          type_id === '84')
+      ) {
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+          directRef.current.focus();
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (size === null || size === '') {
+          setSizeDirectError(true);
+        } else if (thomsonCur === null || thomsonCur === '') {
+          setThomsonCurError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (ca_id === '7' && type_id === '90') {
+        // 카드/안내장
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+          directRef.current.focus();
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else if (size === null || size === '') {
+          setSizeDirectError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else if (
+        ca_id === '7' &&
+        (type_id === '87' || type_id === '88' || type_id === '89')
+      ) {
+        // 맞춤/칼라봉투
+        if (
+          (quantity === 'direct' && quantityDirect === null) ||
+          (quantity === 'direct' && quantityDirect === '')
+        ) {
+          setQuantityDirectError(true);
+          directRef.current.focus();
+        } else if (
+          (quantity !== 'direct' && quantity === null) ||
+          (quantity !== 'direct' && quantity === '')
+        ) {
+          setQuantityError(true);
+        } else {
+          setModalVisible(!isModalVisible);
+        }
+      } else {
+        setModalVisible(!isModalVisible);
+        dispatch(setUserPwidth(pWidth));
+        dispatch(setUserPlength(pLength));
+        dispatch(setUserPheight(pHeight));
+
+        if (quantity !== 'direct') {
+          dispatch(setUserCnt(quantity));
+          dispatch(setUserCntEtc(0));
+        } else {
+          dispatch(setUserCntEtc(quantityDirect));
+          dispatch(setUserCnt(0));
+        }
+
+        if (pattern) {
+          dispatch(setUserWoodPattern('Y'));
+        } else {
+          dispatch(setUserWoodPattern('N'));
+        }
+      }
+    }
+
+    // dispatch(setUserEasyYn('Y'))
+  };
+
+  // 다음 스텝 이동
+  const nextStep = (width, length, height) => {
+    // start
+
+    if (cate1 === '1') {
+      if (pWidth === '' || pWidth === null) {
+        setPwidthError(true);
+        pWidthRef.current.focus();
+      } else if (pLength === '' || pLength === null) {
+        setPlengthError(true);
+        pLengthRef.current.focus();
+      } else if (pHeight === '' || pHeight === null) {
+        setPheightError(true);
+        pHeightRef.current.focus();
+      } else if (
+        (quantity === 'direct' && quantityDirect === null) ||
+        (quantity === 'direct' && quantityDirect === '')
+      ) {
+        setQuantityDirectError(true);
+        directRef.current.focus();
+      } else if (
+        (quantity !== 'direct' && quantity === null) ||
+        (quantity !== 'direct' && quantity === '')
+      ) {
+        setQuantityError(true);
+      } else {
+        navigation.navigate('OrderStep05', {
+          screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+        });
         dispatch(setUserPwidth(pWidth));
         dispatch(setUserPlength(pLength));
         dispatch(setUserPheight(pHeight));
@@ -341,7 +592,9 @@ const Step04 = (props) => {
         ) {
           setSizeError(true);
         } else {
-          setModalVisible(!isModalVisible);
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
         }
       } else if (
         ca_id === '4' &&
@@ -383,7 +636,9 @@ const Step04 = (props) => {
         ) {
           setSizeError(true);
         } else {
-          setModalVisible(!isModalVisible);
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
         }
       } else if (
         // 팜플렛, 리플렛
@@ -416,7 +671,9 @@ const Step04 = (props) => {
         ) {
           setSizeError(true);
         } else {
-          setModalVisible(!isModalVisible);
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
         }
       } else if (
         ca_id === '6' &&
@@ -440,7 +697,10 @@ const Step04 = (props) => {
         } else if (thomsonCur === null || thomsonCur === '') {
           setThomsonCurError(true);
         } else {
-          setModalVisible(!isModalVisible);
+          // setModalVisible(!isModalVisible);
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
         }
       } else if (ca_id === '7' && type_id === '90') {
         // 카드/안내장
@@ -457,7 +717,9 @@ const Step04 = (props) => {
         } else if (size === null || size === '') {
           setSizeDirectError(true);
         } else {
-          setModalVisible(!isModalVisible);
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
         }
       } else if (
         ca_id === '7' &&
@@ -475,10 +737,14 @@ const Step04 = (props) => {
         ) {
           setQuantityError(true);
         } else {
-          setModalVisible(!isModalVisible);
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
         }
       } else {
-        setModalVisible(!isModalVisible);
+        navigation.navigate('OrderStep05', {
+          screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+        });
         dispatch(setUserPwidth(pWidth));
         dispatch(setUserPlength(pLength));
         dispatch(setUserPheight(pHeight));
@@ -499,47 +765,43 @@ const Step04 = (props) => {
       }
     }
 
-    // dispatch(setUserEasyYn('Y'))
-  };
+    // end
+    // if (
+    //   (quantity === 'direct' && quantityDirect === null) ||
+    //   (quantity === 'direct' && quantityDirect === '')
+    // ) {
+    //   setQuantityDirectError(true);
+    // } else if (
+    //   (quantity !== 'direct' && quantity === null) ||
+    //   (quantity !== 'direct' && quantity === '')
+    // ) {
+    //   setQuantityError(true);
+    // } else {
+    //   if (ca_id === '12') {
+    //     dispatch(setOrderDetails(infoDetail));
+    //   }
+    //   dispatch(setUserPwidth(width));
+    //   dispatch(setUserPlength(length));
+    //   dispatch(setUserPheight(height));
+    //   dispatch(setUserEasyYn('N'));
 
-  // 다음 스텝 이동
-  const nextStep = (width, length, height) => {
-    if (
-      (quantity === 'direct' && quantityDirect === null) ||
-      (quantity === 'direct' && quantityDirect === '')
-    ) {
-      setQuantityDirectError(true);
-    } else if (
-      (quantity !== 'direct' && quantity === null) ||
-      (quantity !== 'direct' && quantity === '')
-    ) {
-      setQuantityError(true);
-    } else {
-      if (ca_id === '12') {
-        dispatch(setOrderDetails(infoDetail));
-      }
-      dispatch(setUserPwidth(width));
-      dispatch(setUserPlength(length));
-      dispatch(setUserPheight(height));
-      dispatch(setUserEasyYn('N'));
+    //   if (quantity !== 'direct') {
+    //     dispatch(setUserCnt(quantity));
+    //     dispatch(setUserCntEtc(0));
+    //   } else {
+    //     dispatch(setUserCntEtc(quantityDirect));
+    //     dispatch(setUserCnt(0));
+    //   }
+    //   if (pattern) {
+    //     dispatch(setUserWoodPattern('Y'));
+    //   } else {
+    //     dispatch(setUserWoodPattern('N'));
+    //   }
 
-      if (quantity !== 'direct') {
-        dispatch(setUserCnt(quantity));
-        dispatch(setUserCntEtc(0));
-      } else {
-        dispatch(setUserCntEtc(quantityDirect));
-        dispatch(setUserCnt(0));
-      }
-      if (pattern) {
-        dispatch(setUserWoodPattern('Y'));
-      } else {
-        dispatch(setUserWoodPattern('N'));
-      }
-
-      navigation.navigate('OrderStep05', {
-        screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-      });
-    }
+    //   navigation.navigate('OrderStep05', {
+    //     screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+    //   });
+    // }
   };
 
   // 파일 업로드 (document picker)
@@ -1295,6 +1557,7 @@ const Step04 = (props) => {
                             </Text>
                           </View>
                           <TextInput
+                            ref={pWidthRef}
                             placeholder="예) 10"
                             placeholderTextColor="#A2A2A2"
                             style={[
@@ -1376,6 +1639,7 @@ const Step04 = (props) => {
                             </Text>
                           </View>
                           <TextInput
+                            ref={pLengthRef}
                             placeholder="예) 10"
                             placeholderTextColor="#A2A2A2"
                             style={[
@@ -1457,6 +1721,7 @@ const Step04 = (props) => {
                             </Text>
                           </View>
                           <TextInput
+                            ref={pHeightRef}
                             placeholder="예) 10"
                             placeholderTextColor="#A2A2A2"
                             style={[
@@ -2248,8 +2513,8 @@ const Step04 = (props) => {
                             borderColor: '#E3E3E3',
                           }}
                         />
-                        <TouchableWithoutFeedback
-                          onPress={formikProps.handleSubmit}>
+
+                        <TouchableWithoutFeedback onPress={() => nextStep()}>
                           <View
                             style={{
                               flex: 1,

@@ -8,6 +8,8 @@ target 'paper_workshop' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-custom-ui-toast', :path => '../node_modules/react-native-custom-ui-toast'
+
   target 'paper_workshopTests' do
     inherit! :complete
     # Pods for testing

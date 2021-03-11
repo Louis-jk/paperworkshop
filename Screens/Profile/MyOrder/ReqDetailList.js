@@ -57,9 +57,33 @@ const ReqDetailList = (props) => {
     setModalVisible(!isModalVisible);
   };
 
-  const goCancelOrder = async () => {
-    await setModalVisible(!isModalVisible);
-    await navigation.navigate('CancelOrder');
+  const goCancelOrder = () => {
+    delOrderAPI();
+  };
+
+  const delOrderAPI = () => {
+    OrderAPI.delOrder(pe_id)
+      .then((res) => {
+        console.log('요청 취소 결과값', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setModalVisible(!isModalVisible);
+          navigation.navigate('CancelOrder');
+        }
+        //  else {
+        //   Alert.alert(res.data.message, '', [
+        //     {
+        //       text: '확인',
+        //     },
+        //   ]);
+        // }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   const goCopyOrder = async () => {
@@ -135,12 +159,13 @@ const ReqDetailList = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-
-          <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-            <View style={[styles.submitBtn, {marginTop: 20}]}>
-              <Text style={styles.submitBtnText}>요청 포기</Text>
-            </View>
-          </TouchableOpacity>
+          {myOrderDetail.status !== '7' && (
+            <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+              <View style={[styles.submitBtn, {marginTop: 20}]}>
+                <Text style={styles.submitBtnText}>요청 포기</Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
         {/* 경계 라인 */}
         <View

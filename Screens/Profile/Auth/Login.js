@@ -13,8 +13,7 @@ import {
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {useDispatch, useSelector} from 'react-redux';
-import axios from 'axios';
-import qs from 'qs';
+
 import {setFcmToken} from '../../../Modules/InfoReducer';
 import {
   UserId,
@@ -27,10 +26,7 @@ import {
   UserProfileImg,
   UserEstimateCnt,
 } from '../../../Modules/UserInfoReducer';
-
 import Auth from '../../../src/api/Auth.js';
-
-// const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
 const Login = (props) => {
   const navigation = props.navigation;
@@ -74,9 +70,7 @@ const Login = (props) => {
       setCheckPlatform('aos');
     }
 
-    messaging().onMessage(async (remoteMessage) => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
+    // foregroundListener()
   }, []);
 
   // 로그인 API

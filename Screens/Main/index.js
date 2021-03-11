@@ -1251,6 +1251,7 @@ const index = (props) => {
         </View>
       )}
       <StatusBar hidden={true} />
+
       <Animated.View
         style={{
           position: 'absolute',
