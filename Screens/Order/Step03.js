@@ -13,6 +13,7 @@ import {
   Image,
   Alert,
   ImageBackground,
+  FlatList,
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import axios from 'axios';
@@ -34,6 +35,7 @@ import {
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 
 import BoxType from '../../src/api/BoxType';
+import List from './Components/List';
 
 const Step03 = (props) => {
   const navigation = props.navigation;
@@ -162,6 +164,27 @@ const Step03 = (props) => {
 
   const directInput = React.useRef(null);
 
+  const renderRow = ({item, index}) => {
+    return (
+      <List
+        item={item}
+        index={index}
+        navigation={navigation}
+        ca_id={ca_id}
+        sabari={sabari}
+        detail={detail}
+        detail02={detail02}
+        bindFix={bindFix}
+        checkType={checkType}
+        type={type}
+        setTypeName={setTypeName}
+        toggleSelectModal={toggleSelectModal}
+        toggleSelectDetailModal={toggleSelectDetailModal}
+        setBindFix={setBindFix}
+      />
+    );
+  };
+
   return (
     <>
       <Modal isVisible={isModalVisible} toggleModal={toggleModal} />
@@ -186,7 +209,10 @@ const Step03 = (props) => {
         title={propsScreenName === 'DirectOrder' ? propsScreenName : routeName}
         navigation={navigation}
       />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled={true}>
         <View style={styles.wrap}>
           <View
             style={{
@@ -237,7 +263,7 @@ const Step03 = (props) => {
               1. 선택형
             </Text>
             <Text style={[styles.normalText, {fontSize: 14, color: '#366DE5'}]}>
-              원하는 {cate1 === '1' ? '박스' : '인쇄'}
+              원하시는 세부 {cate1 === '1' ? '박스' : '인쇄'}
               타입을 선택해주세요.
             </Text>
           </View>
@@ -246,130 +272,39 @@ const Step03 = (props) => {
           <View style={{marginBottom: 20}}>
             <View style={styles.categoryWrap}>
               {/* {console.log('TypeDetail', typeDetail)} */}
-              {typeDetail
-                ? typeDetail.map((t) => (
-                    <TouchableOpacity
-                      key={t.type_id}
-                      activeOpacity={0.8}
-                      onPress={() => {
-                        checkType(t.type_id);
-                        setTypeName(t.type_name);
-                        ca_id === '12' && toggleSelectModal(t.type_id);
-                        t.type_id === '71' ||
-                        t.type_id === '74' ||
-                        t.type_id === '75' ||
-                        t.type_id === '90'
-                          ? toggleSelectDetailModal(t.type_id, t.way_edit)
-                          : null;
-                        t.type_id === '73' &&
-                          toggleSelectDetailModal(t.type_id, t.ground_method);
-                        t.type_id === '76' && setBindFix(t.way_edit);
-                        t.type_id === '81' &&
-                          toggleSelectDetailModal(t.type_id, t.back_side);
-                        t.type_id === '83' || t.type_id === '84'
-                          ? toggleSelectDetailModal(t.type_id, t.geomancer)
-                          : null;
-                      }}
-                      style={styles.categoryItem}>
-                      {t.box_img ? (
-                        <ImageBackground
-                          source={{uri: `${t.box_img}`}}
-                          resizeMode="cover"
-                          style={styles.categoryItemImg}>
-                          {type === t.type_id && (
-                            <Image
-                              source={require('../../src/images/box_on.png')}
-                              resizeMode="cover"
-                              style={styles.categoryItemImgHover}
-                            />
-                          )}
-                        </ImageBackground>
-                      ) : (
-                        <ImageBackground
-                          source={require('../../src/assets/photo.png')}
-                          resizeMode="cover"
-                          style={[
-                            styles.categoryItemImg,
-                            {borderWidth: 0.5, borderColor: '#E5E5E5'},
-                          ]}>
-                          {type === t.type_id && (
-                            <Image
-                              source={require('../../src/images/box_on.png')}
-                              resizeMode="cover"
-                              style={styles.categoryItemImgHover}
-                            />
-                          )}
-                        </ImageBackground>
-                      )}
-
-                      <Text
-                        style={[
-                          styles.categoryItemText,
-                          {
-                            color: type === t.type_id ? '#275696' : '#000000',
-                          },
-                        ]}>
-                        {t.type_name}
-                      </Text>
-                      <Text
-                        style={[
-                          styles.categoryItemText02,
-                          {
-                            color: type === t.type_id ? '#275696' : '#000000',
-                          },
-                        ]}>
-                        {t.type_id === sabari.type_id
-                          ? sabari.sabari
-                          : t.type_id === detail.type_id
-                          ? detail.detail
-                          : t.type_id === detail02.type_id
-                          ? detail02.detail
-                          : t.type_id === '76'
-                          ? bindFix
-                          : null}
-                      </Text>
-                    </TouchableOpacity>
-                  ))
-                : null}
-
-              {/* 기타(직접인력) */}
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => {
-                  checkType('0');
-                  setTypeName(typeName);
-                  directInput.current.focus();
+              <FlatList
+                data={typeDetail}
+                renderItem={renderRow}
+                keyExtractor={(list, index) => index.toString()}
+                numColumns={2}
+                nestedScrollEnabled={true}
+                persistentScrollbar={true}
+                showsVerticalScrollIndicator={false}
+                progressViewOffset={true}
+                refreshing={true}
+                contentContainerStyle={{
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
                 }}
-                style={styles.categoryItem}>
-                <ImageBackground
-                  source={require('../../src/assets/photo.png')}
-                  resizeMode="cover"
-                  style={[
-                    styles.categoryItemImg,
-                    {borderWidth: 0.5, borderColor: '#E5E5E5'},
-                  ]}>
-                  {type === '0' && (
-                    <Image
-                      source={require('../../src/images/box_on.png')}
-                      resizeMode="cover"
-                      style={styles.categoryItemImgHover}
-                    />
-                  )}
-                </ImageBackground>
-
-                <Text
-                  style={[
-                    styles.categoryItemText,
-                    {color: type === '0' ? '#275696' : '#000000'},
-                  ]}>
-                  기타
-                </Text>
-              </TouchableOpacity>
+                ListEmptyComponent={
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flex: 1,
+                      height: Dimensions.get('window').height - 300,
+                    }}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      해당 인쇄 타입이 없습니다.
+                    </Text>
+                  </View>
+                }
+              />
             </View>
           </View>
           {/* // 타입 부분 */}
 
-          <View
+          {/* 직접 입력 부분 <View
             style={{
               flexDirection: 'row',
               justifyContent: 'flex-start',
@@ -412,7 +347,7 @@ const Step03 = (props) => {
             onChangeText={(text) => setDirectTypeName(text)}
             autoCapitalize="none"
             // isFocused={true}
-          />
+          /> */}
         </View>
 
         {/* 이전, 다음 버튼 부분 (Prev, Next) */}
@@ -576,15 +511,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E3E3E3',
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 20,
     borderRadius: 5,
     marginBottom: 10,
   },
   categoryItem: {
-    height: 150,
+    height: 170,
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 40,
+    marginVertical: 20,
   },
   categoryItemImg: {
     position: 'relative',
