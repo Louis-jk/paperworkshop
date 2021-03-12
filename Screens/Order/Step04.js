@@ -67,89 +67,6 @@ const Step04 = (props) => {
     wood_pattern,
   } = useSelector((state) => state.OrderReducer);
 
-  // 간단 견적 제출 func
-  const [source, setSource] = React.useState('');
-  const [pWidth, setPwidth] = React.useState('');
-  const [pLength, setPlength] = React.useState('');
-  const [pHeight, setPheight] = React.useState('');
-
-  // 간단 견적 전 모달
-  const [isModalVisible, setModalVisible] = React.useState(false);
-
-  const easyOrderBefore = () => {
-    if (
-      pe_file_url &&
-      pe_file_type &&
-      pe_file_name !== null &&
-      pe_file_name !== ''
-    ) {
-      setSource({
-        uri: pe_file_url,
-        type: pe_file_type,
-        name: pe_file_name,
-      });
-      easyOrderSubmit();
-    } else {
-      easyOrderSubmit();
-    }
-  };
-
-  const easyOrderSubmit = () => {
-    const frmdata = new FormData();
-    frmdata.append('method', 'proc_estimate');
-    frmdata.append('cate1', cate1);
-    frmdata.append('ca_id', ca_id);
-    frmdata.append('type_id', type_id);
-    frmdata.append('mb_id', mb_id);
-    frmdata.append('title', title);
-    frmdata.append('company', company ? company : '');
-    frmdata.append('mb_name', mb_name);
-    frmdata.append('mb_hp', mb_hp);
-    frmdata.append('design_print', design_print);
-    frmdata.append('favor_area', favor_area);
-    frmdata.append('delivery_date', delivery_date);
-    frmdata.append('estimate_date', estimate_date);
-    frmdata.append('pe_file[]', source);
-    frmdata.append('memo', memo ? memo : '');
-    frmdata.append('pwidth', pWidth);
-    frmdata.append('plength', pLength);
-    frmdata.append('pheight', pHeight);
-    frmdata.append('cnt', quantity !== 'direct' ? quantity : '');
-    frmdata.append('cnt_etc', quantity === 'direct' ? quantityDirect : '');
-    frmdata.append('wood_pattern', wood_pattern);
-    frmdata.append('easy_yn', 'Y');
-
-    console.log('간단견적제출시 frmdata', frmdata);
-
-    OrderAPI.sendOrder(frmdata)
-      .then((res) => {
-        console.log('간편견적', res);
-        if (res.data.result === '1' && res.data.count > 0) {
-          setModalVisible(!isModalVisible);
-          navigation.navigate('easyOrderComplete');
-        } else if (res.data.result === '1' && res.data.count <= 0) {
-          Alert.alert(res.data.message, '', [
-            {
-              text: '확인',
-            },
-          ]);
-        } else {
-          Alert.alert(res.data.message, '관리자에게 문의하세요', [
-            {
-              text: '확인',
-            },
-          ]);
-        }
-      })
-      .catch((err) => {
-        Alert.alert(err, '관리자에게 문의하세요', [
-          {
-            text: '확인',
-          },
-        ]);
-      });
-  };
-
   const directRef = React.useRef(null); // 수량 직접 입력폼 ref
   const directSizeRef = React.useRef(null); // 규격 직접 입력폼 ref
   const pWidthRef = React.useRef(null); // 가로규격 직접 입력폼 ref
@@ -920,7 +837,8 @@ const Step04 = (props) => {
 
   const [fileUrlCurrent, setFileUrlCurrent] = React.useState(null);
   const [fileTypeCurrent, setFileTypeCurrent] = React.useState(null);
-  const [fileNameCurrent, setFileNameCurrent] = React.useState(null);
+  const [fileNameCurrent, setFileNameCurrent] = React.useState(null); // 확장자 분리 이미지명
+  const [fileName, setFileName] = React.useState(null); // 확장자 달린 이미지명
   const [fileSizeCurrent, setFileSizeCurrent] = React.useState(null);
   const [extension, setExtension] = React.useState(null);
 
@@ -935,6 +853,7 @@ const Step04 = (props) => {
       setFileUrlCurrent(res.uri);
       setFileTypeCurrent(res.type);
       setFileNameCurrent(imgName[0]);
+      setFileName(res.name);
       setFileSizeCurrent(res.size);
       setExtension(extArray[1]);
     } catch (err) {
@@ -944,6 +863,104 @@ const Step04 = (props) => {
         throw err;
       }
     }
+  };
+
+  // 간단 견적 제출 func
+  const [source, setSource] = React.useState(''); // 1차 파일첨부 (Redux에 올라가져 있는 파일 담기용)
+  const [source02, setSource02] = React.useState(''); // 2차 파일첨부
+  const [pWidth, setPwidth] = React.useState('');
+  const [pLength, setPlength] = React.useState('');
+  const [pHeight, setPheight] = React.useState('');
+
+  // 간단 견적 전 모달
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const easyOrderBefore = () => {
+    if (
+      pe_file_url &&
+      pe_file_type &&
+      pe_file_name !== null &&
+      pe_file_name !== ''
+    ) {
+      setSource({
+        uri: pe_file_url,
+        type: pe_file_type,
+        name: pe_file_name,
+      });
+    } else if (fileUrlCurrent && fileTypeCurrent && fileName) {
+      setSource02({
+        uri: fileUrlCurrent,
+        type: fileTypeCurrent,
+        name: fileName,
+      });
+    } else {
+      easyOrderSubmit();
+    }
+    easyOrderSubmit();
+  };
+
+  const easyOrderSubmit = () => {
+    const frmdata = new FormData();
+    frmdata.append('method', 'proc_estimate');
+    frmdata.append('cate1', cate1);
+    frmdata.append('ca_id', ca_id);
+    frmdata.append('type_id', type_id);
+    frmdata.append('mb_id', mb_id);
+    frmdata.append('title', title);
+    frmdata.append('company', company ? company : '');
+    frmdata.append('mb_name', mb_name);
+    frmdata.append('mb_hp', mb_hp);
+    frmdata.append('design_print', design_print);
+    frmdata.append('favor_area', favor_area);
+    frmdata.append('delivery_date', delivery_date);
+    frmdata.append('estimate_date', estimate_date);
+    frmdata.append('pe_file[]', source);
+    frmdata.append('memo', memo ? memo : '');
+    frmdata.append('pwidth', pWidth);
+    frmdata.append('plength', pLength);
+    frmdata.append('pheight', pHeight);
+    frmdata.append('cnt', quantity !== 'direct' ? quantity : '');
+    frmdata.append('cnt_etc', quantity === 'direct' ? quantityDirect : '');
+    frmdata.append('wood_pattern', wood_pattern);
+    frmdata.append('page_cnt', pageCountCur);
+    frmdata.append('page_cnt2', pageInnerCountCur);
+    frmdata.append('bind_type', bindType);
+    frmdata.append('standard', size !== null ? size : sizeDirect);
+    frmdata.append('writeing_paper', writeingCur);
+    frmdata.append('cover_color', coverColorCur);
+    frmdata.append('section_color', sectionColorCur);
+    frmdata.append('pe_file2[]', source02);
+    frmdata.append('easy_yn', 'Y');
+
+    console.log('간단견적제출시 frmdata', frmdata);
+
+    OrderAPI.sendOrder(frmdata)
+      .then((res) => {
+        console.log('간편견적', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setModalVisible(!isModalVisible);
+          navigation.navigate('easyOrderComplete');
+        } else if (res.data.result === '1' && res.data.count <= 0) {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   // 유효성 체크
