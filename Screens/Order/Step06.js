@@ -94,7 +94,8 @@ const Step06 = (props) => {
   };
 
   //  코팅 선택
-  const [laminate, setLaminate] = React.useState(null);
+  const [laminate, setLaminate] = React.useState('');
+  const [laminateError, setLaminateError] = React.useState(false);
 
   const setLaminateChoise = (v) => {
     setLaminate(v);
@@ -103,7 +104,11 @@ const Step06 = (props) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
 
   const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+    if (ca_id !== '10' && laminate === '') {
+      setLaminateError(true);
+    } else {
+      setModalVisible(!isModalVisible);
+    }
   };
 
   const [isInfoModalVisible, setInfoModalVisible] = React.useState(false);
@@ -439,7 +444,7 @@ const Step06 = (props) => {
                     marginBottom: 10,
                   }}>
                   <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                    코팅
+                    코팅 {ca_id === '13' || ca_id === '14' ? '<바깥면>' : null}
                   </Text>
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
@@ -455,7 +460,10 @@ const Step06 = (props) => {
                       key={idx}
                       activeOpacity={1}
                       hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                      onPress={() => setLaminateChoise(c)}
+                      onPress={() => {
+                        setLaminateError(false);
+                        setLaminateChoise(c);
+                      }}
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'flex-start',
@@ -478,6 +486,19 @@ const Step06 = (props) => {
                     </TouchableOpacity>
                   ))}
                 </View>
+                {laminateError ? (
+                  <Text
+                    style={{
+                      width: '100%',
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      lineHeight: 18,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    코팅을 선택해주세요.
+                  </Text>
+                ) : null}
               </View>
             ) : null}
             {/* // 코팅  */}

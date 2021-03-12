@@ -119,10 +119,12 @@ const Step04 = (props) => {
     frmdata.append('wood_pattern', wood_pattern);
     frmdata.append('easy_yn', 'Y');
 
+    console.log('간단견적제출시 frmdata', frmdata);
+
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
+        console.log('간편견적', res);
         if (res.data.result === '1' && res.data.count > 0) {
-          // console.log('간편견적', res);
           setModalVisible(!isModalVisible);
           navigation.navigate('easyOrderComplete');
         } else if (res.data.result === '1' && res.data.count <= 0) {
@@ -298,6 +300,11 @@ const Step04 = (props) => {
         (quantity !== 'direct' && quantity === '')
       ) {
         setQuantityError(true);
+        Alert.alert('수량을 지정해주세요.', '', [
+          {
+            text: '확인',
+          },
+        ]);
       } else {
         setModalVisible(!isModalVisible);
         dispatch(setUserPwidth(pWidth));
@@ -338,16 +345,27 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (
           (size === 'direct' && sizeDirect === null) ||
           (size === 'direct' && sizeDirect === '')
         ) {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (
           (size !== 'direct' && size === null) ||
           (size !== 'direct' && size === '')
         ) {
           setSizeError(true);
+          Alert.alert('규격을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           setModalVisible(!isModalVisible);
         }
@@ -381,16 +399,27 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (
           (size === 'direct' && sizeDirect === null) ||
           (size === 'direct' && sizeDirect === '')
         ) {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (
           (size !== 'direct' && size === null) ||
           (size !== 'direct' && size === '')
         ) {
           setSizeError(true);
+          Alert.alert('규격을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           setModalVisible(!isModalVisible);
         }
@@ -415,16 +444,27 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (
           (size === 'direct' && sizeDirect === null) ||
           (size === 'direct' && sizeDirect === '')
         ) {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (
           (size !== 'direct' && size === null) ||
           (size !== 'direct' && size === '')
         ) {
           setSizeError(true);
+          Alert.alert('규격을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           setModalVisible(!isModalVisible);
         }
@@ -446,8 +486,14 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (size === null || size === '') {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (thomsonCur === null || thomsonCur === '') {
           setThomsonCurError(true);
         } else {
@@ -466,8 +512,14 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (size === null || size === '') {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else {
           setModalVisible(!isModalVisible);
         }
@@ -487,6 +539,11 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           setModalVisible(!isModalVisible);
         }
@@ -540,6 +597,11 @@ const Step04 = (props) => {
         (quantity !== 'direct' && quantity === '')
       ) {
         setQuantityError(true);
+        Alert.alert('수량을 지정해주세요.', '', [
+          {
+            text: '확인',
+          },
+        ]);
       } else {
         navigation.navigate('OrderStep05', {
           screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -581,16 +643,27 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (
           (size === 'direct' && sizeDirect === null) ||
           (size === 'direct' && sizeDirect === '')
         ) {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (
           (size !== 'direct' && size === null) ||
           (size !== 'direct' && size === '')
         ) {
           setSizeError(true);
+          Alert.alert('규격을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -625,16 +698,27 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (
           (size === 'direct' && sizeDirect === null) ||
           (size === 'direct' && sizeDirect === '')
         ) {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (
           (size !== 'direct' && size === null) ||
           (size !== 'direct' && size === '')
         ) {
           setSizeError(true);
+          Alert.alert('규격을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -660,16 +744,27 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (
           (size === 'direct' && sizeDirect === null) ||
           (size === 'direct' && sizeDirect === '')
         ) {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (
           (size !== 'direct' && size === null) ||
           (size !== 'direct' && size === '')
         ) {
           setSizeError(true);
+          Alert.alert('규격을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -692,8 +787,14 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (size === null || size === '') {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else if (thomsonCur === null || thomsonCur === '') {
           setThomsonCurError(true);
         } else {
@@ -714,8 +815,14 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else if (size === null || size === '') {
           setSizeDirectError(true);
+          // directSizeRef.current.focus();
         } else {
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -736,6 +843,11 @@ const Step04 = (props) => {
           (quantity !== 'direct' && quantity === '')
         ) {
           setQuantityError(true);
+          Alert.alert('수량을 지정해주세요.', '', [
+            {
+              text: '확인',
+            },
+          ]);
         } else {
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -1574,6 +1686,7 @@ const Step04 = (props) => {
                               formikProps.setFieldValue('order_width', value);
                               setPwidthError(false);
                             }}
+                            onSubmitEditing={() => pLengthRef.current.focus()}
                             onBlur={formikProps.handleBlur('order_width')}
                             autoCapitalize="none"
                             keyboardType="number-pad"
@@ -1656,6 +1769,7 @@ const Step04 = (props) => {
                               formikProps.setFieldValue('order_length', value);
                               setPlengthError(false);
                             }}
+                            onSubmitEditing={() => pHeightRef.current.focus()}
                             onBlur={formikProps.handleBlur('order_length')}
                             autoCapitalize="none"
                             keyboardType="number-pad"

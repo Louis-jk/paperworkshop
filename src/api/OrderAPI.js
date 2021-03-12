@@ -32,6 +32,15 @@ export default {
       }),
     });
   },
+  getMyOrderParticulars(method, pe_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method,
+        pe_id,
+      }),
+    });
+  },
   getAllOrders(type) {
     return Send({
       method: 'post',

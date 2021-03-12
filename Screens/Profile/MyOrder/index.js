@@ -38,10 +38,9 @@ const index = (props) => {
   const [keyword, setKeyword] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
   const [search, setSearch] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
 
-  const searchForm = async () => {
-    console.log('search Input keyword', keyword);
-    await setSearch(keyword);
-    await getMyOrderAPI();
+  const searchForm = () => {
+    setSearch(keyword);
+    getMyOrderAPI();
   };
 
   const getMyOrderAPI = () => {

@@ -25,6 +25,7 @@ const ReqDetailList = (props) => {
   const getMyOrderDetailAPI = () => {
     OrderAPI.getMyOrderDetail(pe_id)
       .then((res) => {
+        console.log('ReqDetail 결과값', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setMyOrderDetail(res.data.item[0]);
         } else {
@@ -50,6 +51,8 @@ const ReqDetailList = (props) => {
       getMyOrderDetailAPI();
     };
   }, []);
+
+  console.log('myOrderDetail', myOrderDetail);
 
   const [isModalVisible, setModalVisible] = React.useState(false);
 
@@ -126,7 +129,17 @@ const ReqDetailList = (props) => {
             <View style={styles.line} />
             <View style={styles.details}>
               <Text style={styles.detailsTitle}>분류</Text>
-              <Text style={styles.detailsDesc}>{myOrderDetail.ca_name}</Text>
+              <Text style={styles.detailsDesc}>
+                {myOrderDetail.ca_name} (
+                {myOrderDetail.cate1 === '0'
+                  ? '일반인쇄'
+                  : myOrderDetail.cate1 === '1'
+                  ? '패키지'
+                  : myOrderDetail.cate1 === '2'
+                  ? '기타인쇄'
+                  : null}
+                )
+              </Text>
             </View>
             <View style={styles.details}>
               <Text style={styles.detailsTitle}>견적 마감일</Text>
@@ -143,7 +156,12 @@ const ReqDetailList = (props) => {
               </View>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('OrderDetail')}
+                onPress={() =>
+                  navigation.navigate('OrderDetail', {
+                    pe_id: pe_id,
+                    cate1: myOrderDetail.cate1,
+                  })
+                }
                 style={{alignSelf: 'flex-end'}}>
                 <Text
                   style={[

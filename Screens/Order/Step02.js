@@ -56,6 +56,7 @@ const Step02 = (props) => {
   const titleRef = React.useRef(null); // 제작명 TextInpu
   const nameRef = React.useRef(null); // 고객명 TextInpu
   const mobileRef = React.useRef(null); // 휴대폰번호 TextInpu
+  const companyRef = React.useRef(null); // 휴대폰번호 TextInpu
   const memoRef = React.useRef(null); // 메모 TextInpu
 
   console.log('Step02 props', props);
@@ -152,7 +153,8 @@ const Step02 = (props) => {
 
   const [fileUrlCurrent, setFileUrlCurrent] = React.useState(null);
   const [fileTypeCurrent, setFileTypeCurrent] = React.useState(null);
-  const [fileNameCurrent, setFileNameCurrent] = React.useState(null);
+  const [fileNameCurrent, setFileNameCurrent] = React.useState(null); // 확장자 분리 이미지명
+  const [fileName, setFileName] = React.useState(null); // 확장자 달린 이미지명
   const [fileSizeCurrent, setFileSizeCurrent] = React.useState(null);
   const [extension, setExtension] = React.useState(null);
 
@@ -167,6 +169,7 @@ const Step02 = (props) => {
       const extArray = res.type.split('/');
       setFileUrlCurrent(res.uri);
       setFileTypeCurrent(res.type);
+      setFileName(res.name);
       setFileNameCurrent(imgName[0]);
       setFileSizeCurrent(res.size);
       setExtension(extArray[1]);
@@ -189,11 +192,11 @@ const Step02 = (props) => {
     // setDeliDate(deli);
     // setEstiDate(esti);
 
-    if (fileUrlCurrent && fileTypeCurrent && fileNameCurrent !== null) {
+    if (fileUrlCurrent && fileTypeCurrent && fileName !== null) {
       setSource({
         uri: fileUrlCurrent,
         type: fileTypeCurrent,
-        name: fileNameCurrent,
+        name: fileName,
       });
       sendOrderAPI(deli, esti);
     } else {
@@ -255,7 +258,10 @@ const Step02 = (props) => {
     order_name: yup.string().required('고객명을 입력해주세요.').label('Name'),
     order_mobile: yup
       .string()
+      .matches(/^\d+$/, '숫자만 입력 가능합니다.')
       .required('휴대폰 번호를 입력해주세요.')
+      .min(10, '휴대폰 번호를 정확히 입력해주세요.')
+      .max(11, '휴대폰 번호를 정확히 입력해주세요.')
       .label('Mobile'),
   });
 
@@ -270,7 +276,7 @@ const Step02 = (props) => {
     dispatch(setUserDelivery(moment(deliveryDate).format('YYYY-MM-DD')));
     dispatch(setUserEstimate(moment(estimateDate).format('YYYY-MM-DD')));
     dispatch(setUserFileUrl(fileUrlCurrent));
-    dispatch(setUserFileName(fileNameCurrent));
+    dispatch(setUserFileName(fileName));
     dispatch(setUserFileType(fileTypeCurrent));
     dispatch(setUserFileSize(fileSizeCurrent));
     dispatch(setUserMemo(memo));
@@ -306,7 +312,6 @@ const Step02 = (props) => {
     // setModalVisible(!isModalVisible);
   };
 
-  console.log('ca_id는?', ca_id);
   return (
     <>
       <Modal
@@ -326,7 +331,13 @@ const Step02 = (props) => {
             order_mobile: '',
           }}
           onSubmit={(values, actions) => {
-            if (location) {
+            if (!location) {
+              Alert.alert('인쇄 업체 선호 지역을 선택해주세요.', '', [
+                {
+                  text: '확인',
+                },
+              ]);
+            } else {
               nextStep(
                 values.order_title,
                 values.order_name,
@@ -373,13 +384,12 @@ const Step02 = (props) => {
                       marginBottom: 5,
                     },
                   ]}
-                  // onChangeText={(text) => setTitle(text)}
-                  // onChangeText={formikProps.handleChange('order_title')}
                   onChangeText={(value) => {
                     setTitle(value);
                     setTitleError(false);
                     formikProps.setFieldValue('order_title', value);
                   }}
+                  onSubmitEditing={() => nameRef.current.focus()}
                   autoCapitalize="none"
                   onBlur={formikProps.handleBlur('order_title')}
                 />
@@ -443,12 +453,12 @@ const Step02 = (props) => {
                       marginBottom: 5,
                     },
                   ]}
-                  // onChangeText={formikProps.handleChange('order_name')}
                   onChangeText={(value) => {
                     setName(value);
                     setNameError(false);
                     formikProps.setFieldValue('order_name', value);
                   }}
+                  onSubmitEditing={() => mobileRef.current.focus()}
                   autoCapitalize="none"
                   onBlur={formikProps.handleBlur('order_name')}
                 />
@@ -513,12 +523,12 @@ const Step02 = (props) => {
                       marginBottom: 5,
                     },
                   ]}
-                  // onChangeText={formikProps.handleChange('order_mobile')}
                   onChangeText={(value) => {
                     setMobile(value);
                     setMobileError(false);
                     formikProps.setFieldValue('order_mobile', value);
                   }}
+                  onSubmitEditing={() => companyRef.current.focus()}
                   autoCapitalize="none"
                   onBlur={formikProps.handleBlur('order_mobile')}
                   keyboardType="number-pad"
@@ -571,6 +581,7 @@ const Step02 = (props) => {
                   </Text>
                 </View>
                 <TextInput
+                  ref={companyRef}
                   value={company}
                   placeholder="회사명을 입력해주세요."
                   placeholderTextColor="#A2A2A2"
@@ -986,7 +997,7 @@ const Step02 = (props) => {
                     ca_id === '17' ||
                     ca_id === '18' ||
                     ca_id === '19'
-                      ? '희망인쇄물 기입사항'
+                      ? '희망 인쇄물 기입사항'
                       : '메모'}
                   </Text>
                   {ca_id === '8' ||
@@ -1047,7 +1058,7 @@ const Step02 = (props) => {
                       color: '#366DE5',
                       marginVertical: 5,
                     }}>
-                    희망인쇄물 기입사항을 입력해주세요.
+                    희망 인쇄물 기입사항을 입력해주세요.
                   </Text>
                 )}
               </View>

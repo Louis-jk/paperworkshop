@@ -346,10 +346,14 @@ const Register = (props) => {
     register_name: yup.string().required('성함을 입력해주세요.').label('Name'),
     register_mobile: yup
       .string()
-      .required('휴대전화번호를 입력해주세요.')
+      .matches(/^\d+$/, '숫자만 입력 가능합니다.')
+      .required('휴대폰 번호를 입력해주세요.')
+      .min(10, '휴대폰 번호를 정확히 입력해주세요.')
+      .max(11, '휴대폰 번호를 정확히 입력해주세요.')
       .label('Mobile'),
     register_confirmMobile: yup
       .string()
+      .matches(/^\d+$/, '숫자만 입력 가능합니다.')
       .required('인증번호를 입력해주세요.')
       .label('Mobile Confirm'),
     register_email: yup
