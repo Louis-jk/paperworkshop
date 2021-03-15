@@ -32,6 +32,14 @@ import {
   setUserCntEtc,
   setUserWoodPattern,
   setUserEasyYn,
+  setUserPageCnt,
+  setUserPageCnt2,
+  setUserBindType,
+  setUserStandard,
+  setUserFile02Url,
+  setUserFile02Type,
+  setUserFile02Name,
+  setUserFile02Size,
 } from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 import BoxType from '../../src/api/BoxType';
@@ -582,6 +590,29 @@ const Step04 = (props) => {
             },
           ]);
         } else {
+          dispatch(setUserPageCnt(pageCountCur));
+          dispatch(setUserPageCnt2(pageInnerCountCur));
+          dispatch(setUserBindType(bindTypeCur));
+          dispatch(setUserStandard(size !== '' ? size : sizeDirect));
+          dispatch(setUserFile02Url(fileUrlCurrent));
+          dispatch(setUserFile02Type(fileTypeCurrent));
+          dispatch(setUserFile02Name(fileName));
+          dispatch(setUserFile02Size(fileSizeCurrent));
+
+          if (size !== 'direct') {
+            dispatch(setUserStandard(size));
+          } else {
+            dispatch(setUserStandard(sizeDirect));
+          }
+
+          if (quantity !== 'direct') {
+            dispatch(setUserCnt(quantity));
+            dispatch(setUserCntEtc(0));
+          } else {
+            dispatch(setUserCntEtc(quantityDirect));
+            dispatch(setUserCnt(0));
+          }
+
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
           });
@@ -777,6 +808,14 @@ const Step04 = (props) => {
         dispatch(setUserPwidth(pWidth));
         dispatch(setUserPlength(pLength));
         dispatch(setUserPheight(pHeight));
+        dispatch(setUserPageCnt(pageCountCur));
+        dispatch(setUserPageCnt2(pageInnerCountCur));
+        dispatch(setUserBindType(bindTypeCur));
+        dispatch(setUserStandard(size !== '' ? size : sizeDirect));
+        dispatch(setUserFile02Url(fileUrlCurrent));
+        dispatch(setUserFile02Type(fileTypeCurrent));
+        dispatch(setUserFile02Name(fileName));
+        dispatch(setUserFile02Size(fileSizeCurrent));
 
         if (quantity !== 'direct') {
           dispatch(setUserCnt(quantity));
@@ -784,12 +823,6 @@ const Step04 = (props) => {
         } else {
           dispatch(setUserCntEtc(quantityDirect));
           dispatch(setUserCnt(0));
-        }
-
-        if (pattern) {
-          dispatch(setUserWoodPattern('Y'));
-        } else {
-          dispatch(setUserWoodPattern('N'));
         }
       }
     }
