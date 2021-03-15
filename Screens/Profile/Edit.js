@@ -48,6 +48,8 @@ const Edit = (props) => {
     mb_profile_img,
   } = useSelector((state) => state.UserInfoReducer);
 
+  console.log('프로필 이미지', mb_profile_img);
+
   const [profileImg, setProfileImg] = React.useState(null);
 
   const [source, setSource] = React.useState({});
@@ -281,7 +283,16 @@ const Edit = (props) => {
 
   const [imgMime, setImgMime] = React.useState(null);
 
-  React.useEffect(() => {
+  // React.useEffect(() => {
+  //   if (mb_profile_img) {
+  //     const sliceImg = mb_profile_img.slice(mb_profile_img.lastIndexOf('.'));
+  //     if (sliceImg === '.gif') {
+  //       setImgMime('gif');
+  //     }
+  //   }
+  // }, [mb_profile_img]);
+
+  const getProfileInf = React.useCallback(() => {
     if (mb_profile_img) {
       const sliceImg = mb_profile_img.slice(mb_profile_img.lastIndexOf('.'));
       if (sliceImg === '.gif') {
@@ -289,6 +300,16 @@ const Edit = (props) => {
       }
     }
   }, [mb_profile_img]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getProfileInf();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  console.log('프로필 이미지 점검 후', mb_profile_img);
 
   const onSubmit = () => {
     axios({
