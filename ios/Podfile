@@ -10,6 +10,8 @@ target 'paper_workshop' do
 
   pod 'react-native-custom-ui-toast', :path => '../node_modules/react-native-custom-ui-toast'
 
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
   target 'paper_workshopTests' do
     inherit! :complete
     # Pods for testing
