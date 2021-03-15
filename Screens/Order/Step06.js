@@ -21,10 +21,23 @@ import Modal from './detailOrderModal';
 import InfoModal from '../Common/infoModal02';
 import OrderAPI from '../../src/api/OrderAPI';
 
+import {
+  setUserParkProc,
+  setUserParkProc2,
+  setUserPressDgn,
+  setUserPressDgn2,
+  setUserPartialSilk,
+  setUserPartialSilk2,
+  setUserCoating,
+  setUserCoating2,
+} from '../../Modules/OrderReducer';
+
 const Step06 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const propsScreenName = props.route.params.screen;
+
+  const dispatch = useDispatch();
 
   const {type_details} = useSelector((state) => state.OrderHandlerReducer);
   const {
@@ -59,6 +72,19 @@ const Step06 = (props) => {
     stype,
     board_tk,
     easy_yn,
+    page_cnt,
+    page_cnt2,
+    bind_type,
+    standard,
+    thomson_type,
+    writeing_paper,
+    cover_color,
+    section_color,
+    back_side,
+    geomancer,
+    pe_file02_url,
+    pe_file02_type,
+    pe_file02_name,
     paper_weight,
     paper_weight_etc,
     paper_goal,
@@ -66,7 +92,9 @@ const Step06 = (props) => {
     paper_color,
     paper_color_etc,
     print_frequency,
+    print_frequency2,
     proof_printing,
+    proof_printing2,
     print_supervision,
     outside,
     status,
@@ -77,6 +105,7 @@ const Step06 = (props) => {
 
   const setFoilChoise = (v) => {
     setFoil(v);
+    dispatch(setUserParkProc(v));
   };
 
   //  형압 유무
@@ -84,6 +113,7 @@ const Step06 = (props) => {
 
   const setPressChoise = (v) => {
     setPress(v);
+    dispatch(setUserPressDgn(v));
   };
 
   //  부분 실크 유무
@@ -91,6 +121,7 @@ const Step06 = (props) => {
 
   const setSilkChoise = (v) => {
     setSilk(v);
+    dispatch(setUserPartialSilk(v));
   };
 
   //  코팅 선택
@@ -99,6 +130,7 @@ const Step06 = (props) => {
 
   const setLaminateChoise = (v) => {
     setLaminate(v);
+    dispatch(setUserCoating(v));
   };
 
   const [isModalVisible, setModalVisible] = React.useState(false);
@@ -120,6 +152,7 @@ const Step06 = (props) => {
   console.log('foil', foil);
 
   const [source, setSource] = React.useState('');
+  const [source02, setSource02] = React.useState('');
 
   const sendOrderBefore = () => {
     if (pe_file_url && pe_file_type && pe_file_name !== null) {
@@ -128,10 +161,16 @@ const Step06 = (props) => {
         type: pe_file_type,
         name: pe_file_name,
       });
-      sendOrderAPI();
-    } else {
-      sendOrderAPI();
     }
+
+    if (pe_file02_url && pe_file02_type && pe_file02_name !== null) {
+      setSource02({
+        uri: pe_file02_url,
+        type: pe_file02_type,
+        name: pe_file02_name,
+      });
+    }
+    sendOrderAPI();
   };
 
   const sendOrderAPI = () => {
@@ -163,6 +202,17 @@ const Step06 = (props) => {
     frmdata.append('cnt', cnt);
     frmdata.append('cnt_etc', cnt_etc);
     frmdata.append('easy_yn', easy_yn);
+    frmdata.append('page_cnt', page_cnt);
+    frmdata.append('page_cnt2', page_cnt2);
+    frmdata.append('bind_type', bind_type);
+    frmdata.append('standard', standard);
+    frmdata.append('thomson_type', thomson_type);
+    frmdata.append('writeing_paper', writeing_paper);
+    frmdata.append('cover_color', cover_color);
+    frmdata.append('section_color', section_color);
+    frmdata.append('back_side', back_side);
+    frmdata.append('geomancer', geomancer);
+    frmdata.append('pe_file2[]', source02);
     frmdata.append('wood_pattern', wood_pattern);
     frmdata.append('stype', stype);
     frmdata.append('board_tk', board_tk);
@@ -173,7 +223,9 @@ const Step06 = (props) => {
     frmdata.append('paper_color', paper_color);
     frmdata.append('paper_color_etc', paper_color_etc);
     frmdata.append('print_frequency', print_frequency);
+    frmdata.append('print_frequency2', print_frequency2);
     frmdata.append('proof_printing', proof_printing);
+    frmdata.append('proof_printing2', proof_printing2);
     frmdata.append('print_supervision', print_supervision);
     frmdata.append('park_processing', foil);
     frmdata.append('press_design', press);
@@ -181,6 +233,8 @@ const Step06 = (props) => {
     frmdata.append('coating', laminate);
     frmdata.append('outside', outside);
     frmdata.append('status', status);
+
+    console.log('frmdata', frmdata);
 
     OrderAPI.sendOrder(frmdata)
       .then((res) => {

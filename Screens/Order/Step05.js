@@ -205,6 +205,7 @@ const Step05 = (props) => {
           },
         ]);
       } else {
+        console.log('directPaperName', directPaperName);
         dispatch(selectPfId(paper));
         dispatch(selectPdId(paperType));
         dispatch(selectPnId(paperTypeDetail));
@@ -216,6 +217,7 @@ const Step05 = (props) => {
         dispatch(setUserPrinting(color));
         dispatch(setUserPrintSup(check));
         dispatch(setOrderDetails(paperDetail2));
+        // dispatch(selectPaperName(paperTypeDetail));
 
         navigation.navigate('OrderStep06', {
           screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -270,16 +272,21 @@ const Step05 = (props) => {
           },
         ]);
       } else {
+        console.log('directPaperName', directPaperName);
         dispatch(selectPfId(paper));
         dispatch(selectPdId(paperType));
         dispatch(selectPnId(paperTypeDetail));
-        dispatch(setUserWeight(weight));
-        dispatch(setUserGoal(goal));
-        dispatch(setUserColor(paperColor));
+        dispatch(selectPaperName(directPaperName));
+        dispatch(setUserWeightEtc(directWeight));
+        dispatch(setUserGoalEtc(directGoal));
+        dispatch(setUserColorEtc(directColor));
         dispatch(setUserFrequency(print));
         dispatch(setUserPrinting(color));
         dispatch(setUserPrintSup(check));
         dispatch(setOrderDetails(paperDetail2));
+        dispatch(setUserWeight(weight));
+        dispatch(setUserGoal(goal));
+        dispatch(setUserColor(paperColor));
         dispatch(setUserBoardTk(boardTk));
 
         navigation.navigate('OrderStep06', {
@@ -511,6 +518,9 @@ const Step05 = (props) => {
     if (v === '직접입력') {
       setIsDirect(v);
       setIsLoading03(false);
+    } else {
+      console.log('아님', v);
+      setDirectPaperName(v);
     }
   };
 
@@ -1171,7 +1181,7 @@ const Step05 = (props) => {
                         setWeightChoise(item.value);
                       }}
                       onOpen={() => {
-                        setDirectPaperName(null);
+                        // setDirectPaperName(null);
                         setWeight(null);
                       }}
                       customArrowDown={() => (
@@ -1285,7 +1295,7 @@ const Step05 = (props) => {
                       setGoalChoise(item.value);
                     }}
                     onOpen={() => {
-                      setDirectPaperName(null);
+                      // setDirectPaperName(null);
                       setGoal(null);
                     }}
                     customArrowDown={() => (
