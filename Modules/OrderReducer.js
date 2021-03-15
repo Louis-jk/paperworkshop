@@ -49,6 +49,29 @@ const SET_COATING = 'SET_COATING';
 const SET_OUTSIDE = 'SET_OUTSIDE';
 const SET_STATUS = 'SET_STATUS';
 
+/////////// 추가 건
+const SET_PAGE_CNT = 'SET_PAGE_CNT';
+const SET_PAGE_CNT2 = 'SET_PAGE_CNT2';
+const SET_BIND_TYPE = 'SET_BIND_TYPE';
+const SET_STANDARD = 'SET_STANDARD';
+const SET_THOMSON_TYPE = 'SET_THOMSON_TYPE';
+const SET_WRITEING_PAPER = 'SET_WRITEING_PAPER';
+const SET_COVER_COLOR = 'SET_COVER_COLOR';
+const SET_SECTION_COLOR = 'SET_SECTION_COLOR';
+const SET_BACK_SIDE = 'SET_BACK_SIDE';
+const SET_GEOMANCER = 'SET_GEOMANCER';
+const SET_FILE02_URL = 'SET_FILE02_URL';
+const SET_FILE02_TYPE = 'SET_FILE02_TYPE';
+const SET_FILE02_NAME = 'SET_FILE02_NAME';
+const SET_FILE02_SIZE = 'SET_FILE02_SIZE';
+const SET_WEIGHT2 = 'SET_WEIGHT2';
+const SET_FREQUENCY2 = 'SET_FREQUENCY2';
+const SET_PRINTING2 = 'SET_PRINTING2';
+const SET_PARK_PROCESSING2 = 'SET_PARK_PROCESSING2';
+const SET_PRESS_DESIGN2 = 'SET_PRESS_DESIGN2';
+const SET_PARTIAL_SILK2 = 'SET_PARTIAL_SILK2';
+const SET_COATING2 = 'SET_COATING2';
+
 // action method
 export const selectCate1 = (payload) => ({type: SELECT_CATE1, payload});
 export const selectCaId = (payload) => ({type: SELECT_CA_ID, payload});
@@ -105,18 +128,70 @@ export const setUserPrintSup = (payload) => ({
   type: SET_PRINT_SUPERVISION,
   payload,
 });
+
+export const setUserOutside = (payload) => ({type: SET_OUTSIDE, payload});
+export const setUserStatus = (payload) => ({type: SET_STATUS, payload});
+
+export const setUserPageCnt = (payload) => ({type: SET_PAGE_CNT, payload});
+export const setUserPageCnt2 = (payload) => ({type: SET_PAGE_CNT2, payload});
+export const setUserBindType = (payload) => ({type: SET_BIND_TYPE, payload});
+export const setUserStandard = (payload) => ({type: SET_STANDARD, payload});
+export const setUserThomsonType = (payload) => ({
+  type: SET_THOMSON_TYPE,
+  payload,
+});
+export const setUserWriteP = (payload) => ({type: SET_WRITEING_PAPER, payload});
+export const setUserCoverColor = (payload) => ({
+  type: SET_COVER_COLOR,
+  payload,
+});
+export const setUserSectionColor = (payload) => ({
+  type: SET_SECTION_COLOR,
+  payload,
+});
+export const setUserBackSide = (payload) => ({type: SET_BACK_SIDE, payload});
+export const setUserGeomancer = (payload) => ({type: SET_GEOMANCER, payload});
+export const setUserFile02Url = (payload) => ({type: SET_FILE02_URL, payload});
+export const setUserFile02Type = (payload) => ({
+  type: SET_FILE02_TYPE,
+  payload,
+});
+export const setUserFile02Name = (payload) => ({
+  type: SET_FILE02_NAME,
+  payload,
+});
+export const setUserFile02Size = (payload) => ({
+  type: SET_FILE02_SIZE,
+  payload,
+});
+export const setUserWeight2 = (payload) => ({type: SET_WEIGHT2, payload});
+export const setUserFrequency2 = (payload) => ({type: SET_FREQUENCY2, payload});
+export const setUserPrinting2 = (payload) => ({type: SET_PRINTING2, payload});
+
+/////////// 후가공
 export const setUserParkProc = (payload) => ({
   type: SET_PARK_PROCESSING,
   payload,
 });
+export const setUserParkProc2 = (payload) => ({
+  type: SET_PARK_PROCESSING2,
+  payload,
+});
 export const setUserPressDgn = (payload) => ({type: SET_PRESS_DESIGN, payload});
+export const setUserPressDgn2 = (payload) => ({
+  type: SET_PRESS_DESIGN2,
+  payload,
+});
 export const setUserPartialSilk = (payload) => ({
   type: SET_PARTIAL_SILK,
   payload,
 });
+export const setUserPartialSilk2 = (payload) => ({
+  type: SET_PARTIAL_SILK2,
+  payload,
+});
 export const setUserCoating = (payload) => ({type: SET_COATING, payload});
-export const setUserOutside = (payload) => ({type: SET_OUTSIDE, payload});
-export const setUserStatus = (payload) => ({type: SET_STATUS, payload});
+export const setUserCoating2 = (payload) => ({type: SET_COATING2, payload});
 
 // initialize
 const initialize = {
@@ -143,32 +218,53 @@ const initialize = {
   pe_file_name: '', // 첨부파일 name
   pe_file_size: '', // 첨부파일 size
   memo: '', // 메모
-  pwidth: 0, // 가로규격
-  plength: 0, // 세로규격
-  pheight: 0, // 높이규격
-  cnt: 0, // 수량
-  cnt_etc: 0, // 수량(직접입력)
+  pwidth: '', // 가로규격
+  plength: '', // 세로규격
+  pheight: '', // 높이규격
+  cnt: '', // 수량
+  cnt_etc: '', // 수량(직접입력)
   wood_pattern: '', // 목형
   stype: '', // 싸바리형태
   board_tk: '', // 속지 판지두께
   ground_method: '', // 접지방법
   way_edit: '', // 편집방법
   easy_yn: 'N', // 간편견적여부
-  paper_weight: 0, // 평량
-  paper_weight_etc: 0, // 평량(직접입력)
+  page_cnt: '', // 페이지수 -- 추가
+  page_cnt2: '', // 페이지수(내지) -- 추가
+  bind_type: '', // 제본방식 -- 추가
+  standard: '', // 규격 -- 추가
+  thomson_type: '', // 톰슨모양 -- 추가
+  writeing_paper: '', // 간지 -- 추가
+  cover_color: '', // 표지간지색상 -- 추가
+  section_color: '', // 섹션간지색상 -- 추가
+  back_side: '', // 후면반칼형 -- 추가
+  geomancer: '', // 지관 -- 추가
+  pe_file02_url: '', // 첨부파일02 url -- 추가
+  pe_file02_type: '', // 첨부파일02 type -- 추가
+  pe_file02_name: '', // 첨부파일02 name -- 추가
+  pe_file02_size: '', // 첨부파일02 size -- 추가
+  paper_weight: '', // 평량
+  paper_weight2: '', // 평량(내지) -- 추가
+  paper_weight_etc: '', // 평량(직접입력)
   paper_goal: '', // 골
   paper_goal_etc: '', // 골(직접입력)
   paper_color: '', // 색상
   paper_color_etc: '', // 색상(직접입력)
   print_frequency: '', // 인쇄도수
+  print_frequency2: '', // 인쇄도수(내지) -- 추가
   proof_printing: '', // 인쇄교정
+  proof_printing2: '', // 인쇄교정(내지) -- 추가
   print_supervision: '', // 인쇄감리
   park_processing: '', // 박가공
+  park_processing2: '', // 박가공 -- 추가
   press_design: '', // 형압
+  press_design2: '', // 형압 -- 추가
   partial_silk: '', // 부분실크
+  partial_silk2: '', // 부분실크(내지) -- 추가
   coating: '', // 코팅
+  coating2: '', // 코팅(내지) -- 추가
   outside: 'N', // 바깥면여부
-  status: 0, // 상태
+  status: '', // 상태
 };
 
 // reducer create
@@ -418,6 +514,111 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         status: action.payload,
+      };
+    case SET_PAGE_CNT:
+      return {
+        ...state,
+        page_cnt: action.payload,
+      };
+    case SET_PAGE_CNT2:
+      return {
+        ...state,
+        page_cnt2: action.payload,
+      };
+    case SET_BIND_TYPE:
+      return {
+        ...state,
+        bind_type: action.payload,
+      };
+    case SET_STANDARD:
+      return {
+        ...state,
+        standard: action.payload,
+      };
+    case SET_THOMSON_TYPE:
+      return {
+        ...state,
+        thomson_type: action.payload,
+      };
+    case SET_WRITEING_PAPER:
+      return {
+        ...state,
+        writeing_paper: action.payload,
+      };
+    case SET_COVER_COLOR:
+      return {
+        ...state,
+        cover_color: action.payload,
+      };
+    case SET_SECTION_COLOR:
+      return {
+        ...state,
+        section_color: action.payload,
+      };
+    case SET_BACK_SIDE:
+      return {
+        ...state,
+        back_side: action.payload,
+      };
+    case SET_GEOMANCER:
+      return {
+        ...state,
+        geomancer: action.payload,
+      };
+    case SET_FILE02_URL:
+      return {
+        ...state,
+        pe_file02_url: action.payload,
+      };
+    case SET_FILE02_TYPE:
+      return {
+        ...state,
+        pe_file02_type: action.payload,
+      };
+    case SET_FILE02_NAME:
+      return {
+        ...state,
+        pe_file02_name: action.payload,
+      };
+    case SET_FILE02_SIZE:
+      return {
+        ...state,
+        pe_file02_size: action.payload,
+      };
+    case SET_WEIGHT2:
+      return {
+        ...state,
+        paper_weight2: action.payload,
+      };
+    case SET_FREQUENCY2:
+      return {
+        ...state,
+        print_frequency2: action.payload,
+      };
+    case SET_PRINTING2:
+      return {
+        ...state,
+        proof_printing2: action.payload,
+      };
+    case SET_PARK_PROCESSING2:
+      return {
+        ...state,
+        park_processing2: action.payload,
+      };
+    case SET_PRESS_DESIGN2:
+      return {
+        ...state,
+        press_design2: action.payload,
+      };
+    case SET_PARTIAL_SILK2:
+      return {
+        ...state,
+        partial_silk2: action.payload,
+      };
+    case SET_COATING2:
+      return {
+        ...state,
+        coating2: action.payload,
       };
     default:
       return state;
