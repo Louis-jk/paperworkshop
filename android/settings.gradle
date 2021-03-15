@@ -1,6 +1,8 @@
 rootProject.name = '페이퍼공작소'
-include ':react-native-custom-ui-toast'
-project(':react-native-custom-ui-toast').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-custom-ui-toast/android')
+include ':rn-fetch-blob'
+project(':rn-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/rn-fetch-blob/android')
+//include ':react-native-custom-ui-toast'
+//project(':react-native-custom-ui-toast').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-custom-ui-toast/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 
