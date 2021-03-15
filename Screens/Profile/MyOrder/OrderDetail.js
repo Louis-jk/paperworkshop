@@ -8,10 +8,15 @@ import {
   Image,
   ActivityIndicator,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob'; // 파일 다운로드 패키지
+import Modal from 'react-native-modal';
+import AutoHeightImage from 'react-native-auto-height-image';
+import FastImage from 'react-native-fast-image';
+
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const OrderDetail = (props) => {
   const navigation = props.navigation;
@@ -69,6 +74,86 @@ const OrderDetail = (props) => {
     getMyOrderParticularsAPI();
   }, []);
 
+  // 파일 다운로드 핸들러
+  const fileDownloadHandler = (filePath, fileName) => {
+    Alert.alert('파일을 다운로드 하시겠습니까?', '', [
+      {
+        text: '다운드로',
+        onPress: () => downloader(filePath, fileName),
+      },
+      {
+        text: '취소',
+      },
+    ]);
+  };
+
+  // 파일 다운로드 메소드
+  const downloader = async (filePath, fileName) => {
+    await RNFetchBlob.config({
+      addAndroidDownloads: {
+        useDownloadManager: true,
+        notification: true,
+        path: `${RNFetchBlob.fs.dirs.DownloadDir}/${fileName}`,
+      },
+    })
+      .fetch('GET', filePath)
+      .then((res) => {
+        Alert.alert('다운로드 되었습니다.', '내파일에서 확인해주세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+        console.log('The file saved to ', res.path());
+      });
+  };
+
+  // 이미지 모달창
+  const ImageModal = ({toggleModal, isVisible, imgPath}) => {
+    return (
+      <View>
+        <Modal
+          isVisible={isVisible}
+          // onBackdropPress={toggleModal}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View style={{marginBottom: 20}}>
+            <AutoHeightImage
+              width={Dimensions.get('window').width - 40}
+              source={{uri: `${imgPath}`}}
+            />
+          </View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={toggleModal}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 4,
+              borderWidth: 1,
+              borderColor: '#fff',
+              paddingHorizontal: 14,
+              paddingVertical: 7,
+            }}>
+            <Text style={{fontFamily: 'SCDream4', fontSize: 13, color: '#fff'}}>
+              닫기
+            </Text>
+          </TouchableOpacity>
+        </Modal>
+      </View>
+    );
+  };
+
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [imgPath, setImgPath] = React.useState(false);
+
+  // 이미지 모달 핸들러
+  const imageModalHandler = (path) => {
+    setModalVisible(!isModalVisible);
+    setImgPath(path);
+  };
+
   console.log('details', details);
   console.log('info01', info01);
   console.log('info02', info02);
@@ -99,6 +184,11 @@ const OrderDetail = (props) => {
 
       <DetailHeader title={routeName} navigation={navigation} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <ImageModal
+          imgPath={imgPath}
+          isVisible={isModalVisible}
+          toggleModal={imageModalHandler}
+        />
         <View style={styles.wrap}>
           <Text
             style={[
@@ -181,21 +271,42 @@ const OrderDetail = (props) => {
             }}>
             {details.pe_file &&
             (details.type_name === 'jpg' || details.type_name === 'png') ? (
-              <Image
-                source={{uri: `${details.pe_file}`}}
-                resizeMode="cover"
-                style={{
-                  width: 114,
-                  height: 114,
-                  borderRadius: 5,
-                  marginRight: 10,
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => imageModalHandler(details.pe_file)}>
+                <Image
+                  source={{uri: `${details.pe_file}`}}
+                  resizeMode="cover"
+                  style={{
+                    width: 114,
+                    height: 114,
+                    borderRadius: 5,
+                    marginRight: 10,
+                  }}
+                />
+              </TouchableOpacity>
+            ) : details.pe_file && details.type_name === 'gif' ? (
+              <TouchableOpacity
+                onPress={() => imageModalHandler(details.pe_file)}>
+                <FastImage
+                  source={{uri: `${details.pe_file}`}}
+                  resizeMode={FastImage.resizeMode.cover}
+                  style={{
+                    width: 114,
+                    height: 114,
+                    borderRadius: 5,
+                    marginRight: 10,
+                  }}
+                />
+              </TouchableOpacity>
             ) : details.pe_file &&
               (details.type_name !== 'jpg' ||
                 details.type_name !== 'png' ||
                 details.type_name !== 'gif') ? (
               <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() =>
+                  fileDownloadHandler(details.pe_file, details.pe_source_file)
+                }
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
@@ -495,21 +606,31 @@ const OrderDetail = (props) => {
                 }}>
                 {info01.pe_file2 &&
                 (info01.type_name2 === 'jpg' || info01.type_name2 === 'png') ? (
-                  <Image
-                    source={{uri: `${info01.pe_file2}`}}
-                    resizeMode="cover"
-                    style={{
-                      width: 114,
-                      height: 114,
-                      borderRadius: 5,
-                      marginRight: 10,
-                    }}
-                  />
+                  <TouchableOpacity
+                    onPress={() => imageModalHandler(info01.pe_file2)}>
+                    <Image
+                      source={{uri: `${info01.pe_file2}`}}
+                      resizeMode="cover"
+                      style={{
+                        width: 114,
+                        height: 114,
+                        borderRadius: 5,
+                        marginRight: 10,
+                      }}
+                    />
+                  </TouchableOpacity>
                 ) : info01.pe_file2 &&
                   (details.type_name !== 'jpg' ||
                     info01.type_name !== 'png' ||
                     info01.type_name !== 'gif') ? (
                   <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      fileDownloadHandler(
+                        info01.pe_file2,
+                        info01.pe_source_file2,
+                      )
+                    }
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
