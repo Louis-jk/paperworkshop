@@ -4,6 +4,8 @@ import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 const List = ({item, index, navigation}) => {
   // console.log('List item', item);
 
+  console.log('파트너 리스트', item);
+
   return (
     <TouchableOpacity
       key={item.id}
@@ -23,6 +25,7 @@ const List = ({item, index, navigation}) => {
             used: item.used,
             cate1: item.cate1,
             companyId: item.company_id,
+            location: item.location,
           },
         })
       }

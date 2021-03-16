@@ -23,6 +23,7 @@ const List = ({item, index, navigation}) => {
             used: item.used,
             cate1: item.cate1,
             companyId: item.company_id,
+            location: item.location,
           },
         })
       }

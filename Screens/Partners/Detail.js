@@ -22,6 +22,7 @@ import Header from '../Common/DetailHeader';
 import Footer from '../Common/Footer';
 
 import {setCompanyId} from '../../Modules/OrderReducer';
+import {setPartnerLocation} from '../../Modules/OrderHandlerReducer';
 import PartnersApi from '../../src/api/Partners';
 
 const Detail = (props) => {
@@ -39,6 +40,9 @@ const Detail = (props) => {
   const closedDay = props.route.params.closedDay;
   const cate1 = props.route.params.cate1;
   const companyId = props.route.params.companyId;
+  const location = props.route.params.location;
+
+  console.log('파트너 디테일', props);
 
   const dispatch = useDispatch();
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
@@ -873,11 +877,17 @@ const Detail = (props) => {
             activeOpacity={0.9}
             onPress={() => {
               dispatch(setCompanyId(companyId));
+              dispatch(setPartnerLocation(location));
               navigation.navigate('Home', {
                 screen: 'Order',
                 params: {
                   screen: 'DirectOrder',
-                  params: {bName: bName, name: name, cate1: cate1},
+                  params: {
+                    bName: bName,
+                    name: name,
+                    cate1: cate1,
+                    location: location,
+                  },
                 },
               });
             }}

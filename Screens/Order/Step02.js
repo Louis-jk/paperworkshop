@@ -51,6 +51,7 @@ const Step02 = (props) => {
   const propsScreenName = props.route.params.screen;
 
   const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
+  const {partner_location} = useSelector((state) => state.OrderHandlerReducer);
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
 
   const titleRef = React.useRef(null); // 제작명 TextInpu
@@ -77,6 +78,7 @@ const Step02 = (props) => {
   const [mobile, setMobile] = React.useState(null); // 휴대폰 번호 (필수)
   const [company, setCompany] = React.useState(null); // 회사명 (선택)
   const [designOrder, setDesignOrder] = React.useState('P'); // 디자인 의뢰 (필수) : 인쇄만 의뢰/인쇄+디자인의뢰
+  const [defaultLocat, setDefaultLocat] = React.useState([]); // 다일렉트 견적일 경우 해당 파트너스 등록 지역 초기 담기
   const [location, setLocation] = React.useState(null); // 인쇄 업체 선호 지역 (필수)
   const [deliveryDate, setDeliveryDate] = React.useState(new Date()); // 납품 희망일 (필수)
   const [estimateDate, setEstimateDate] = React.useState(new Date()); // 견적 마감일 (필수)
@@ -88,6 +90,15 @@ const Step02 = (props) => {
 
   // const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
   const [memo, setMemo] = React.useState(null); // 메모 (선택)
+
+  React.useEffect(() => {
+    if (props.route.params.screen === 'DirectOrder') {
+      let pLocation = partner_location.split(',');
+      setDefaultLocat(pLocation);
+    }
+  }, []);
+
+  console.log('defaultLocat', defaultLocat);
 
   const onChange01 = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -685,64 +696,159 @@ const Step02 = (props) => {
                   </Text>
                   <Text style={[styles.profileRequired]}>(필수)</Text>
                 </View>
-                <DropDownPicker
-                  placeholder={'선호지역을 입력해주세요.'}
-                  placeholderStyle={{
-                    fontSize: 14,
-                    color: '#A2A2A2',
-                    fontWeight: '400',
-                  }}
-                  value={location}
-                  activeLabelStyle={{color: '#000'}}
-                  activeItemStyle={{color: '#000'}}
-                  selectedLabelStyle={{color: '#000'}}
-                  items={[
-                    {label: '서울', value: 'seoul'},
-                    {label: '부산', value: 'busan'},
-                    {label: '대구', value: 'daegu'},
-                    {label: '인천', value: 'incheon'},
-                    {label: '광주', value: 'gwangju'},
-                    {label: '세종/대전/청주', value: 'sejong'},
-                    {label: '울산', value: 'ulsan'},
-                    {label: '경기', value: 'gyeongi'},
-                    {label: '강원', value: 'gangwon'},
-                    {label: '충청', value: 'choongcheong'},
-                    {label: '전라', value: 'jeonra'},
-                    {label: '경상', value: 'gyeongsang'},
-                    {label: '제주', value: 'jeju'},
-                  ]}
-                  containerStyle={{height: 50}}
-                  style={{
-                    backgroundColor: '#fff',
-                    borderTopRightRadius: 4,
-                    borderTopLeftRadius: 4,
-                    borderBottomRightRadius: 4,
-                    borderBottomLeftRadius: 4,
-                  }}
-                  itemStyle={{
-                    justifyContent: 'flex-start',
-                    paddingVertical: 10,
-                  }}
-                  labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
-                  dropDownStyle={{backgroundColor: '#fff'}}
-                  onChangeItem={(item) => setLocation(item.value)}
-                  autoCapitalize="none"
-                  onBlur={formikProps.handleBlur('order_location')}
-                  customArrowDown={() => (
-                    <Image
-                      source={require('../../src/assets/arr01.png')}
-                      style={{width: 25, height: 25}}
-                      resizeMode="contain"
-                    />
-                  )}
-                  customArrowUp={() => (
-                    <Image
-                      source={require('../../src/assets/arr01_top.png')}
-                      style={{width: 25, height: 25}}
-                      resizeMode="contain"
-                    />
-                  )}
-                />
+                {propsScreenName !== 'DirectOrder' ? (
+                  <DropDownPicker
+                    placeholder={'선호지역을 입력해주세요.'}
+                    placeholderStyle={{
+                      fontSize: 14,
+                      color: '#A2A2A2',
+                      fontWeight: '400',
+                    }}
+                    value={location}
+                    activeLabelStyle={{color: '#000'}}
+                    activeItemStyle={{color: '#000'}}
+                    selectedLabelStyle={{color: '#000'}}
+                    items={[
+                      {label: '서울', value: 'seoul'},
+                      {label: '부산', value: 'busan'},
+                      {label: '대구', value: 'daegu'},
+                      {label: '인천', value: 'incheon'},
+                      {label: '광주', value: 'gwangju'},
+                      {label: '세종/대전/청주', value: 'sejong'},
+                      {label: '울산', value: 'ulsan'},
+                      {label: '경기', value: 'gyeongi'},
+                      {label: '강원', value: 'gangwon'},
+                      {label: '충청', value: 'choongcheong'},
+                      {label: '전라', value: 'jeonra'},
+                      {label: '경상', value: 'gyeongsang'},
+                      {label: '제주', value: 'jeju'},
+                    ]}
+                    containerStyle={{height: 50}}
+                    style={{
+                      backgroundColor: '#fff',
+                      borderTopRightRadius: 4,
+                      borderTopLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      borderBottomLeftRadius: 4,
+                    }}
+                    itemStyle={{
+                      justifyContent: 'flex-start',
+                      paddingVertical: 10,
+                    }}
+                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                    dropDownStyle={{backgroundColor: '#fff'}}
+                    onChangeItem={(item) => setLocation(item.value)}
+                    autoCapitalize="none"
+                    onBlur={formikProps.handleBlur('order_location')}
+                    customArrowDown={() => (
+                      <Image
+                        source={require('../../src/assets/arr01.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                    customArrowUp={() => (
+                      <Image
+                        source={require('../../src/assets/arr01_top.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                  />
+                ) : (
+                  <DropDownPicker
+                    placeholder={'선호지역을 입력해주세요.'}
+                    placeholderStyle={{
+                      fontSize: 14,
+                      color: '#A2A2A2',
+                      fontWeight: '400',
+                    }}
+                    value={location}
+                    activeLabelStyle={{color: '#000'}}
+                    activeItemStyle={{color: '#000'}}
+                    selectedLabelStyle={{color: '#000'}}
+                    items={defaultLocat.map((v, _i) => {
+                      // setPfId(v.pf_id);
+                      let krChg = '';
+                      switch (v) {
+                        case 'seoul':
+                          krChg = '서울';
+                          break;
+                        case 'busan':
+                          krChg = '부산';
+                          break;
+                        case 'daegu':
+                          krChg = '대구';
+                          break;
+                        case 'incheon':
+                          krChg = '인천';
+                          break;
+                        case 'gwangju':
+                          krChg = '광주';
+                          break;
+                        case 'sejong':
+                          krChg = '세종/대전/청주';
+                          break;
+                        case 'ulsan':
+                          krChg = '울산';
+                          break;
+                        case 'gyeongi':
+                          krChg = '경기';
+                          break;
+                        case 'gangwon':
+                          krChg = '강원';
+                          break;
+                        case 'choongcheong':
+                          krChg = '충청';
+                          break;
+                        case 'jeonra':
+                          krChg = '전라';
+                          break;
+                        case 'gyeongsang':
+                          krChg = '경상';
+                          break;
+                        case 'jeju':
+                          krChg = '제주';
+                          break;
+                        default:
+                          krChg = '';
+                          break;
+                      }
+                      return {value: v, label: krChg};
+                    })}
+                    containerStyle={{height: 50}}
+                    style={{
+                      backgroundColor: '#fff',
+                      borderTopRightRadius: 4,
+                      borderTopLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      borderBottomLeftRadius: 4,
+                    }}
+                    itemStyle={{
+                      justifyContent: 'flex-start',
+                      paddingVertical: 10,
+                    }}
+                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                    dropDownStyle={{backgroundColor: '#fff'}}
+                    onChangeItem={(item) => setLocation(item.value)}
+                    autoCapitalize="none"
+                    onBlur={formikProps.handleBlur('order_location')}
+                    customArrowDown={() => (
+                      <Image
+                        source={require('../../src/assets/arr01.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                    customArrowUp={() => (
+                      <Image
+                        source={require('../../src/assets/arr01_top.png')}
+                        style={{width: 25, height: 25}}
+                        resizeMode="contain"
+                      />
+                    )}
+                  />
+                )}
                 {!location && (
                   <Text
                     style={{
