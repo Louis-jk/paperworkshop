@@ -147,7 +147,7 @@ const Step03 = (props) => {
       dispatch(setUserStype(sabari.sabari));
     }
 
-    if (ca_id === '1' && typeId === '71') {
+    if ((ca_id === '1' && typeId === '71') || ca_id === '6') {
       dispatch(setUserWayEdit(detail.detail));
       dispatch(setUserGroundMethod(''));
     }
