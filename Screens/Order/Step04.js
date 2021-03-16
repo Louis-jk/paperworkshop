@@ -40,6 +40,7 @@ import {
   setUserFile02Type,
   setUserFile02Name,
   setUserFile02Size,
+  setUserThomsonType,
 } from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 import BoxType from '../../src/api/BoxType';
@@ -747,6 +748,16 @@ const Step04 = (props) => {
           setThomsonCurError(true);
         } else {
           // setModalVisible(!isModalVisible);
+          // dispatch('hello');
+          dispatch(setUserCnt(quantity));
+          dispatch(setUserCntEtc(quantityDirect));
+          dispatch(setUserStandard(sizeDirect));
+          dispatch(setUserThomsonType(thomsonCur));
+          dispatch(setUserFile02Url(fileUrlCurrent));
+          dispatch(setUserFile02Type(fileTypeCurrent));
+          dispatch(setUserFile02Name(fileName));
+          dispatch(setUserFile02Size(fileSizeCurrent));
+
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
           });
@@ -920,14 +931,13 @@ const Step04 = (props) => {
         type: pe_file_type,
         name: pe_file_name,
       });
-    } else if (fileUrlCurrent && fileTypeCurrent && fileName) {
+    }
+    if (fileUrlCurrent && fileTypeCurrent && fileName) {
       setSource02({
         uri: fileUrlCurrent,
         type: fileTypeCurrent,
         name: fileName,
       });
-    } else {
-      easyOrderSubmit();
     }
     easyOrderSubmit();
   };
@@ -2320,7 +2330,7 @@ const Step04 = (props) => {
                               setSizeDirectError(false);
                             }}
                             autoCapitalize="none"
-                            keyboardType="decimal-pad"
+                            keyboardType="default"
                           />
                           {infoDetail &&
                           infoDetail[0].standard_text !== null &&
