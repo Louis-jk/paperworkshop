@@ -31,7 +31,7 @@ const index = (props) => {
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
   console.log('routeName', routeName);
-  console.log('favor', favor);
+  // console.log('favor', favor);
 
   const [partners, setPartners] = React.useState([]);
   const [pPackage, setPpackages] = React.useState([]);
