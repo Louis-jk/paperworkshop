@@ -3,29 +3,84 @@ import {
   View,
   Text,
   SafeAreaView,
-  ImageBackground,
   Dimensions,
   ScrollView,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
   StyleSheet,
-  Image,
-  Linking,
+  ActivityIndicator,
 } from 'react-native';
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
 import Header from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
+import Info from '../../src/api/Info';
 
 const QnADetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const status = props.route.params.status;
+  const qa_id = props.route.params.qa_id;
+
+  const [isLoading, setLoading] = React.useState(false);
+  const [detail, setDetail] = React.useState({});
+
+  const getQnaDetailAPI = () => {
+    setLoading(true);
+    Info.getQnaDetail(qa_id)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setDetail(res.data.item[0]);
+          console.log(res);
+          setLoading(false);
+        } else {
+          Alert.alert(
+            '잘못된 경로로 들어오셨습니다.',
+            '관리자에게 문의하세요',
+            [
+              {
+                text: '확인',
+              },
+            ],
+          );
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+        setLoading(false);
+      });
+  };
+
+  React.useEffect(() => {
+    getQnaDetailAPI();
+  }, []);
+
+  console.log('detail', detail);
 
   return (
     <>
       <Header title={routeName} navigation={navigation} />
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={{paddingHorizontal: 20}}>
           <View style={styles.categoryWrap}>
@@ -36,12 +91,26 @@ const QnADetail = (props) => {
                 alignItems: 'center',
                 marginBottom: 10,
               }}>
-              <Text style={styles.new}>NEW</Text>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
+              <Text style={styles.new}>
+                {detail.new_yn === 'Y' ? 'NEW' : null}
+              </Text>
+              <Text style={styles.categoryDate}>{detail.qa_datetime}</Text>
             </View>
-            <Text style={styles.categoryTitle}>
-              문의제목 문의제목 문의제목 문의제목 문의제목 문 의제목문의제목
-              문의제목 문의제목 입니다.
+            <Text
+              style={[
+                styles.boldText,
+                {
+                  fontSize: 16,
+                  color: '#000',
+                  lineHeight: 28,
+                  width: '100%',
+                  marginBottom: 5,
+                },
+              ]}>
+              제목
+            </Text>
+            <Text style={[styles.categoryTitle, {marginBottom: 10}]}>
+              {detail.qa_subject}
             </Text>
           </View>
         </View>
@@ -58,23 +127,30 @@ const QnADetail = (props) => {
         {/* 1:1 문의 내용 */}
         <View style={{paddingHorizontal: 20}}>
           <View style={{marginTop: 15}}>
-            <AutoHeightImage
-              source={require('../../src/images/inline_cImg.png')}
-              width={Dimensions.get('window').width - 40}
-              style={{marginBottom: 20}}
-            />
+            <Text
+              style={[
+                styles.boldText,
+                {
+                  fontSize: 16,
+                  color: '#000',
+                  width: '100%',
+                  marginBottom: 10,
+                },
+              ]}>
+              내용
+            </Text>
             <Text
               style={[
                 styles.normalText,
                 {
                   fontSize: 15,
                   color: '#333333',
-                  lineHeight: 28,
+                  lineHeight: 22,
                   width: '100%',
                   marginBottom: 20,
                 },
               ]}>
-              내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다
+              {detail.qa_content}
             </Text>
           </View>
         </View>
@@ -99,26 +175,25 @@ const QnADetail = (props) => {
                 {
                   fontSize: 16,
                   color: '#000',
-                  lineHeight: 28,
                   width: '100%',
-                  marginBottom: 5,
+                  marginBottom: 10,
                 },
               ]}>
               답변
             </Text>
-            {status === 'done' ? (
+            {detail.qa_status === '1' ? (
               <Text
                 style={[
                   styles.normalText,
                   {
                     fontSize: 15,
                     color: '#333333',
-                    lineHeight: 28,
+                    lineHeight: 22,
                     width: '100%',
                     marginBottom: 20,
                   },
                 ]}>
-                답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다답변내용입니다.
+                {detail.re_content}
               </Text>
             ) : (
               <Text
