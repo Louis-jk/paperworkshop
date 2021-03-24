@@ -12,6 +12,8 @@ import {
   Image,
   Linking,
   Alert,
+  ActivityIndicator,
+  FlatList,
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -24,23 +26,13 @@ import Footer from '../Common/Footer';
 import {setCompanyId} from '../../Modules/OrderReducer';
 import {setPartnerLocation} from '../../Modules/OrderHandlerReducer';
 import PartnersApi from '../../src/api/Partners';
+import {ReviewStackNavigator} from '../../navigation/StackNavigator';
 
 const Detail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  const name = props.route.params.name;
-  const bName = props.route.params.bName;
-  const rating = props.route.params.rating;
-  const portfolioImg = props.route.params.portfolioImg;
-  const mobile = props.route.params.mobile;
-  const description = props.route.params.description;
-  const used = props.route.params.used;
-  const openingTime = props.route.params.openingTime;
-  const closedDay = props.route.params.closedDay;
-  const cate1 = props.route.params.cate1;
   const companyId = props.route.params.companyId;
-  const location = props.route.params.location;
 
   console.log('파트너 디테일', props);
 
@@ -48,7 +40,66 @@ const Detail = (props) => {
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
   const [myFaverP, setMyFavorP] = React.useState([]);
+  const [isLoading, setLoading] = React.useState(false);
   const [like, setLike] = React.useState(false);
+  const [detail, setDetail] = React.useState({});
+  const [reviews, setReviews] = React.useState([]);
+
+  // 파트너 상세 가져오기
+  const getPartnerDetail = () => {
+    setLoading(true);
+    PartnersApi.getPartnerChoise(companyId, mb_id)
+      .then((res) => {
+        if (res.data.result === '1') {
+          setDetail(res.data.item[0]);
+          setLoading(false);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+        setLoading(false);
+      });
+  };
+
+  // 파트너 고객후기 가져오기
+  const getReview = () => {
+    // setLoading(true);
+    PartnersApi.getReview(companyId)
+      .then((res) => {
+        console.log('review res', res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          setReviews(res.data.item);
+        } else {
+          setReviews(null);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  React.useEffect(() => {
+    getPartnerDetail();
+    getReview();
+  }, []);
+
+  console.log('review', reviews);
+  console.log('review[0]', reviews[0]);
 
   const onLikeBtn = (payload) => {
     // setLike((prev) => !prev);
@@ -60,13 +111,13 @@ const Detail = (props) => {
           res.data.message === '찜하기가 취소되었습니다.'
         ) {
           setLike(false);
-          checkMyFavorP();
+          // checkMyFavorP();
         } else if (
           res.data.result === '1' &&
           res.data.message === '찜하기가 완료되었습니다.'
         ) {
           setLike(true);
-          checkMyFavorP();
+          // checkMyFavorP();
         }
       })
       .catch((err) => {
@@ -78,7 +129,6 @@ const Detail = (props) => {
       });
   };
 
-  console.log('현재 파트너 ID', companyId);
   // 찜한 파트너 확인
   const checkFavor = () => {
     console.log('myFaverP', myFaverP);
@@ -93,7 +143,7 @@ const Detail = (props) => {
     return a;
   };
 
-  // console.log('like ?', like);
+  console.log('like ?', like);
 
   const checkMyFavorP = () => {
     PartnersApi.getMyPartners(mb_id, null, null, null, null)
@@ -140,9 +190,156 @@ const Detail = (props) => {
 
   console.log('Detail props', props);
 
+  const renderRow = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('ReviewDetail')}
+        style={{
+          borderWidth: 1,
+          borderColor: '#E3E3E3',
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            marginBottom: 20,
+            paddingTop: 20,
+            paddingHorizontal: 20,
+            paddingBottom: 10,
+          }}>
+          <ImageBackground
+            source={require('../../src/images/w02.jpg')}
+            resizeMode="cover"
+            style={{width: 75, height: 70, position: 'relative'}}>
+            <Text
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                fontSize: 10,
+                backgroundColor: 'rgba(0,0,0,0.45)',
+                color: '#fff',
+                padding: 5,
+              }}>
+              +6
+            </Text>
+          </ImageBackground>
+          <View style={{flexShrink: 2, marginLeft: 20}}>
+            <Text style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
+              신세계세상(정*주 고객님)
+            </Text>
+            <Text style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
+              퀄리티 하나는 정말 끝내줍니다. 믿고 맡기는 업체로 선정한 지 꽤
+              됩니다.
+            </Text>
+          </View>
+        </View>
+        <View style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}} />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+          }}>
+          <View>
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 12, color: '#707070', marginBottom: 7},
+              ]}>
+              소통만족도
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../../src/images/rating04.png')}
+                resizeMode="cover"
+                style={{width: 55, height: 15, marginRight: 5}}
+              />
+              <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 12, color: '#707070', marginBottom: 7},
+              ]}>
+              품질만족도
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../../src/images/rating.png')}
+                resizeMode="cover"
+                style={{width: 55, height: 15, marginRight: 5}}
+              />
+              <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 12, color: '#707070', marginBottom: 7},
+              ]}>
+              납기만족도
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../../src/images/rating04.png')}
+                resizeMode="cover"
+                style={{width: 55, height: 15, marginRight: 5}}
+              />
+              <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <>
       <Header title={routeName} navigation={navigation} />
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View
           style={{
@@ -151,10 +348,10 @@ const Detail = (props) => {
             justifyContent: 'flex-start',
             marginBottom: 20,
           }}>
-          {portfolioImg ? (
+          {detail.portfolioImg ? (
             <Carousel
               ref={carouselRef}
-              data={portfolioImg ? portfolioImg : null}
+              data={detail.portfolioImg}
               renderItem={renderItem}
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
@@ -169,7 +366,7 @@ const Detail = (props) => {
           )}
 
           {/* Swipe Prev,Next 버튼 Custom */}
-          {portfolioImg ? (
+          {detail.portfolioImg ? (
             <View
               style={{
                 position: 'absolute',
@@ -246,14 +443,14 @@ const Detail = (props) => {
               />
               <Text
                 style={[styles.mediumText, {fontSize: 20, marginBottom: 5}]}>
-                {bName}
+                {detail.businessName}
               </Text>
               <Text
                 style={[
                   styles.mediumText,
                   {fontSize: 12, marginBottom: 12, color: '#707070'},
                 ]}>
-                담당자 {name}
+                담당자 editName
               </Text>
               <View
                 style={{
@@ -266,12 +463,12 @@ const Detail = (props) => {
                   emptyStar={require('../../src/assets/star_off.png')}
                   fullStar={require('../../src/assets/star_on.png')}
                   maxStars={5}
-                  rating={Math.floor(rating)}
+                  rating={Math.floor(detail.rate)}
                   starSize={13}
                 />
                 <Text
                   style={[styles.normalText, {fontSize: 12, marginLeft: 5}]}>
-                  {rating}
+                  {detail.rate}
                 </Text>
               </View>
             </View>
@@ -291,7 +488,7 @@ const Detail = (props) => {
               marginBottom: 10,
             }}>
             <TouchableWithoutFeedback
-              onPress={() => Linking.openURL(`tel:${mobile}`)}>
+              onPress={() => Linking.openURL(`tel:${detail.mobile}`)}>
               <View
                 style={{
                   flex: 1,
@@ -359,8 +556,8 @@ const Detail = (props) => {
                 styles.normalText,
                 {fontSize: 14, lineHeight: 22, marginBottom: 5},
               ]}>
-              {description
-                ? description
+              {detail.description
+                ? detail.description
                 : '업체 소개글이 등록되어 있지 않습니다.'}
             </Text>
 
@@ -368,12 +565,12 @@ const Detail = (props) => {
               <Text
                 style={[styles.normalText, {fontSize: 14, marginBottom: 5}]}>
                 * 업무시간 :
-                {openingTime ? openingTime : ' 현재 미등록 상태입니다.'}
+                {detail.mb_7 ? detail.mb_7 : ' 현재 미등록 상태입니다.'}
                 {/* 평일 09:00 ~ 18:00 */}
               </Text>
               <Text style={[styles.normalText, {fontSize: 14}]}>
                 * 휴무일 안내 :
-                {closedDay ? closedDay : ' 현재 미등록 상태입니다.'}
+                {detail.mb_8 ? detail.mb_8 : ' 현재 미등록 상태입니다.'}
                 {/* * 토, 일, 공휴일 휴무 */}
               </Text>
             </View>
@@ -397,7 +594,7 @@ const Detail = (props) => {
               styles.normalText,
               {fontSize: 14, lineHeight: 24, marginBottom: 5},
             ]}>
-            {used ? used : '영업품목이 등록되어 있지 않습니다.'}
+            {detail.used ? detail.used : '영업품목이 등록되어 있지 않습니다.'}
           </Text>
         </View>
         {/* // 영업품목 */}
@@ -425,138 +622,36 @@ const Detail = (props) => {
               총 리뷰수 26
             </Text>
           </View>
-          {/* 고객후기 리스트 박스 */}
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate('ReviewDetail')}
-            style={{
-              borderWidth: 1,
-              borderColor: '#E3E3E3',
-              borderRadius: 5,
-              marginBottom: 10,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-                marginBottom: 20,
-                paddingTop: 20,
-                paddingHorizontal: 20,
-                paddingBottom: 10,
-              }}>
-              <ImageBackground
-                source={require('../../src/images/w01.jpg')}
-                resizeMode="cover"
-                style={{width: 75, height: 70, position: 'relative'}}>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {
-                      position: 'absolute',
-                      bottom: 0,
-                      right: 0,
-                      fontSize: 10,
-                      backgroundColor: 'rgba(0,0,0,0.45)',
-                      color: '#fff',
-                      padding: 5,
-                    },
-                  ]}>
-                  +6
-                </Text>
-              </ImageBackground>
-              <View style={{flexShrink: 2, marginLeft: 20}}>
-                <Text
-                  style={[styles.boldText, {fontSize: 14, marginBottom: 10}]}>
-                  하나로세상(김*미 고객님)
-                </Text>
-                <Text
-                  style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
-                  배송도 빠르고 프린트 퀄리티도 너무 좋아요 배송도 빠르고 프린트
-                  퀄리티도 너무 좋아요
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
+
+          {/* 리뷰 */}
+          {reviews !== null || reviews.length > 0 ? (
+            <FlatList
+              data={reviews}
+              renderItem={renderRow}
+              keyExtractor={(list, index) => index.toString()}
+              numColumns={1}
+              // pagingEnabled={true}
+              persistentScrollbar={true}
+              showsVerticalScrollIndicator={false}
+              progressViewOffset={true}
+              refreshing={true}
+              style={{backgroundColor: '#fff'}}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 1,
+                    height: Dimensions.get('window').height - 300,
+                  }}>
+                  <Text style={{fontFamily: 'SCDream4'}}>
+                    문의하신 내역이 없습니다.
+                  </Text>
+                </View>
+              }
             />
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-              }}>
-              <View>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {fontSize: 12, color: '#707070', marginBottom: 7},
-                  ]}>
-                  소통만족도
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={require('../../src/images/rating04.png')}
-                    resizeMode="cover"
-                    style={{width: 55, height: 15, marginRight: 5}}
-                  />
-                  <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
-                </View>
-              </View>
-              <View>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {fontSize: 12, color: '#707070', marginBottom: 7},
-                  ]}>
-                  품질만족도
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={require('../../src/images/rating.png')}
-                    resizeMode="cover"
-                    style={{width: 55, height: 15, marginRight: 5}}
-                  />
-                  <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
-                </View>
-              </View>
-              <View>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {fontSize: 12, color: '#707070', marginBottom: 7},
-                  ]}>
-                  납기만족도
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={require('../../src/images/rating.png')}
-                    resizeMode="cover"
-                    style={{width: 55, height: 15, marginRight: 5}}
-                  />
-                  <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-          {/* // 고객후기 리스트 박스 */}
+          ) : null}
+          {/* // 리뷰 */}
           {/* 고객후기 리스트 박스 */}
           <TouchableOpacity
             activeOpacity={0.8}
@@ -877,21 +972,21 @@ const Detail = (props) => {
             activeOpacity={0.9}
             onPress={() => {
               dispatch(setCompanyId(companyId));
-              dispatch(setPartnerLocation(location));
+              dispatch(setPartnerLocation(detail.location));
               navigation.navigate('Home', {
                 screen: 'Order',
                 params: {
                   screen: 'DirectOrder',
                   params: {
-                    bName: bName,
-                    name: name,
-                    cate1: cate1,
-                    location: location,
+                    bName: detail.businessName,
+                    name: detail.name,
+                    cate1: detail.cate1,
+                    location: detail.location,
                   },
                 },
               });
             }}
-            // onPress={() => navigation.navigate('DirectOrder')}
+            onPress={() => navigation.navigate('DirectOrder')}
             style={{width: '85%'}}>
             <View style={[styles.submitBtn]}>
               <View
