@@ -33,9 +33,12 @@ const Login = (props) => {
 
   const dispatch = useDispatch();
 
+  const loginIdRef = React.useRef(null);
+  const loginPwdRef = React.useRef(null);
+
   const [fFcmToken, setFfcmToken] = React.useState(null); // fcmtoken 현재 페이지 저장
   const [checkPlatform, setCheckPlatform] = React.useState(null); // OS 체크
-  const [userId, setUserId] = React.useState(null);
+  const [loginId, setLoginId] = React.useState(null);
   const [userPwd, setUserPwd] = React.useState(null);
 
   const [autoLogin, setAutoLogin] = React.useState(false); // 자동 로그인
@@ -75,7 +78,7 @@ const Login = (props) => {
 
   // 로그인 API
   const login = () => {
-    Auth.onLogin(userId, userPwd, fFcmToken, checkPlatform)
+    Auth.onLogin(loginId, userPwd, fFcmToken, checkPlatform)
       .then((res) => {
         if (res.data.result === '1') {
           dispatch(UserId(res.data.item.mb_id));
@@ -92,6 +95,7 @@ const Login = (props) => {
           Alert.alert(res.data.message, '다시 시도해주세요.', [
             {
               text: '확인',
+              onPress: () => loginIdRef.current.focus(),
             },
           ]);
         }
@@ -141,10 +145,13 @@ const Login = (props) => {
                   height: 50,
                 }}>
                 <TextInput
+                  ref={loginIdRef}
+                  value={loginId}
                   placeholder="아이디"
                   style={[styles.normalText, {width: '80%'}]}
-                  onChangeText={(text) => setUserId(text)}
+                  onChangeText={(text) => setLoginId(text)}
                   autoCapitalize="none"
+                  onSubmitEditing={() => loginPwdRef.current.focus()}
                 />
               </View>
               <View
@@ -160,6 +167,7 @@ const Login = (props) => {
                   height: 50,
                 }}>
                 <TextInput
+                  ref={loginPwdRef}
                   value={userPwd}
                   placeholder="비밀번호"
                   placeholderTextColor="#A2A2A2"

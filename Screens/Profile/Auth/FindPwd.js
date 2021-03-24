@@ -22,6 +22,9 @@ const FindPwd = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
+  const mobileRef = React.useRef(null);
+  const mobileCertNumRef = React.useRef(null);
+
   // 인증시 카운터
   const [minutes, setMinutes] = React.useState(0);
   const [seconds, setSeconds] = React.useState(0);
@@ -83,6 +86,7 @@ const FindPwd = (props) => {
                   onPress: () => {
                     setIsSend(true);
                     confirmCount(30);
+                    mobileCertNumRef.current.focus();
                   },
                 },
               ],
@@ -185,6 +189,7 @@ const FindPwd = (props) => {
               onChangeText={(text) => setUserId(text)}
               autoCapitalize="none"
               keyboardType="email-address"
+              onSubmitEditing={() => mobileRef.current.focus()}
             />
           </View>
           {/* // 이메일 */}
@@ -202,6 +207,7 @@ const FindPwd = (props) => {
                 marginBottom: 5,
               }}>
               <TextInput
+                ref={mobileRef}
                 value={userMobile}
                 placeholder="휴대전화번호를 입력해주세요."
                 placeholderTextColor="#A2A2A2"
@@ -223,6 +229,7 @@ const FindPwd = (props) => {
                 editable={!isSend ? true : false}
                 keyboardType="number-pad"
                 autoCapitalize="none"
+                onSubmitEditing={() => getUserIdStep01()}
               />
               <TouchableOpacity
                 onPress={() => getUserIdStep01()}
@@ -262,6 +269,7 @@ const FindPwd = (props) => {
                 marginBottom: 5,
               }}>
               <TextInput
+                ref={mobileCertNumRef}
                 value={mobileCertNum}
                 placeholder="인증번호를 입력해주세요."
                 placeholderTextColor="#A2A2A2"
@@ -284,6 +292,7 @@ const FindPwd = (props) => {
                 keyboardType="number-pad"
                 autoCapitalize="none"
                 editable={isMobileConfimed ? false : true}
+                onSubmitEditing={() => getUserIdStep02()}
               />
               {/* <TouchableOpacity
                 activeOpacity={0.8}

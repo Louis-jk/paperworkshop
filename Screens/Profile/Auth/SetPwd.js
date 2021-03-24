@@ -23,10 +23,9 @@ const SetPwd = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const userId = props.route.params.mb_id;
-  console.log('setPwd props:', props);
 
-  const [newPwd, setNewPwd] = React.useState(null);
-  const [newPwdRe, setNewPwdRe] = React.useState(null);
+  const pwdReRef = React.useRef(null);
+  console.log('setPwd props:', props);
 
   // 유효성 체크
   const validationSchema = yup.object().shape({
@@ -142,6 +141,7 @@ const SetPwd = (props) => {
                       autoCapitalize="none"
                       onBlur={formikProps.handleBlur('register_pw')}
                       secureTextEntry={pwdEyes}
+                      onSubmitEditing={() => pwdReRef.current.focus()}
                     />
                     <TouchableOpacity
                       activeOpacity={0.8}
@@ -205,6 +205,7 @@ const SetPwd = (props) => {
                       height: 50,
                     }}>
                     <TextInput
+                      ref={pwdReRef}
                       placeholder="새로운 비밀번호를 재입력해주세요."
                       placeholderTextColor="#A2A2A2"
                       style={[styles.normalText, {width: '90%'}]}
