@@ -3,18 +3,10 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
   Dimensions,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-
-import axios from 'axios';
-import qs from 'qs';
 
 import Header from '../Common/Header';
 import GalleryNav from './GalleryNav';
@@ -46,6 +38,7 @@ const Etc = (props) => {
           setGalleries(null);
         } else {
           setGalleries(null);
+          setIsLoading(false);
         }
       })
       .catch((err) => {
@@ -54,6 +47,7 @@ const Etc = (props) => {
             text: '확인',
           },
         ]);
+        setIsLoading(false);
       });
   };
 
