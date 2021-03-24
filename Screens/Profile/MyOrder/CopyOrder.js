@@ -45,11 +45,15 @@ const CopyOrder = (props) => {
     setShow01(Platform.OS === 'ios');
 
     if (selectedDate < date) {
-      Alert.alert('오늘 이전 날짜는 선택이 불가능 합니다.', '날짜를 다시 선택해주세요.', [
-        {
-          text: '확인',
-        },
-      ]);
+      Alert.alert(
+        '오늘 이전 날짜는 선택이 불가능 합니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
       setdDayDate(date);
     } else {
       setArriveDate(currentDate);
@@ -61,11 +65,15 @@ const CopyOrder = (props) => {
     setShow02(Platform.OS === 'ios');
 
     if (selectedDate < date) {
-      Alert.alert('오늘 이전 날짜는 선택이 불가능 합니다.', '날짜를 다시 선택해주세요.', [
-        {
-          text: '확인',
-        },
-      ]);
+      Alert.alert(
+        '오늘 이전 날짜는 선택이 불가능 합니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
       setdDayDate(date);
     } else {
       setdDayDate(currentDate);
@@ -114,16 +122,20 @@ const CopyOrder = (props) => {
           <Image
             source={require('../../../src/assets/icon_bikkuri_blue.png')}
             resizeMode="contain"
-            style={{ width: 30, height: 30, marginBottom: 12 }}
+            style={{width: 30, height: 30, marginBottom: 12}}
           />
-          <Text style={[styles.normalText, { fontSize: 14, color: '#275696', marginBottom: 2 }]}>
+          <Text
+            style={[
+              styles.normalText,
+              {fontSize: 14, color: '#275696', marginBottom: 2},
+            ]}>
             견적 내용을 확인 하신 후, 변경하실 정보를 입력해주세요.
           </Text>
-          <Text style={[styles.normalText, { fontSize: 14, color: '#275696' }]}>
+          <Text style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
             재접수를 하시면 기존 입찰 업체는 모두 사라집니다.
           </Text>
         </View>
-        <View style={styles.wrap}>
+        {/* <View style={styles.wrap}>
           <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.9}>
             <View style={[styles.cancelBtn, { marginTop: 10, marginBottom: 5 }]}>
               <Text style={styles.cancelBtnText}>계약 포기 취소</Text>
@@ -134,9 +146,9 @@ const CopyOrder = (props) => {
               <Text style={styles.submitBtnText}>최종 선택 포기</Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
         {/* 경계 라인 */}
-        <View
+        {/* <View
           style={{
             height: 1,
             backgroundColor: '#E3E3E3',
@@ -149,7 +161,7 @@ const CopyOrder = (props) => {
             backgroundColor: '#F5F5F5',
             width: Dimensions.get('window').width,
           }}
-        />
+        /> */}
         {/* // 경계 라인 */}
 
         <View style={styles.wrap}>
@@ -161,11 +173,13 @@ const CopyOrder = (props) => {
                 alignItems: 'center',
                 marginBottom: 20,
               }}>
-              <Text style={[styles.orderInfoTitle, { marginRight: 10 }]}>기존 정보</Text>
+              <Text style={[styles.orderInfoTitle, {marginRight: 10}]}>
+                기존 정보
+              </Text>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('OrderDetail')}
-                style={{ alignSelf: 'flex-end' }}>
+                style={{alignSelf: 'flex-end'}}>
                 <Text
                   style={[
                     styles.normalText,
@@ -181,8 +195,8 @@ const CopyOrder = (props) => {
             </View>
 
             {/* 제목 */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={[styles.profileTitle, { marginBottom: 7 }]}>제목</Text>
+            <View style={{marginBottom: 15}}>
+              <Text style={[styles.profileTitle, {marginBottom: 7}]}>제목</Text>
               <TextInput
                 placeholder="중소기업 선물용 쇼핑백 제작 요청합니다."
                 placeholderTextColor="#000000"
@@ -202,8 +216,8 @@ const CopyOrder = (props) => {
             {/* // 제목 */}
 
             {/* 분류 */}
-            <View style={{ marginBottom: 15 }}>
-              <Text style={[styles.profileTitle, { marginBottom: 7 }]}>분류</Text>
+            <View style={{marginBottom: 15}}>
+              <Text style={[styles.profileTitle, {marginBottom: 7}]}>분류</Text>
               <TextInput
                 placeholder="단상자/선물세트/쇼핑백"
                 placeholderTextColor="#000000"
@@ -223,7 +237,7 @@ const CopyOrder = (props) => {
             {/* // 분류 */}
 
             {/* 납품 희망일 */}
-            <View style={{ marginBottom: 15 }}>
+            <View style={{marginBottom: 15}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -231,7 +245,9 @@ const CopyOrder = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>납품 희망일</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  납품 희망일
+                </Text>
                 <Text style={[styles.profileRequired]}>(필수)</Text>
               </View>
               <TouchableOpacity
@@ -263,11 +279,14 @@ const CopyOrder = (props) => {
                 <Image
                   source={require('../../../src/assets/icon03.png')}
                   resizeMode="contain"
-                  style={{ width: 30, height: 30, marginRight: 10 }}
+                  style={{width: 30, height: 30, marginRight: 10}}
                 />
               </TouchableOpacity>
               <Text
-                style={[styles.profileRequired, { fontSize: 13, marginTop: 5, marginBottom: 5 }]}>
+                style={[
+                  styles.profileRequired,
+                  {fontSize: 13, marginTop: 5, marginBottom: 5},
+                ]}>
                 * 납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.
               </Text>
               {show01 && (
@@ -284,7 +303,7 @@ const CopyOrder = (props) => {
             {/* // 납품 희망일 */}
 
             {/* 견적 마감일 */}
-            <View style={{ marginBottom: 15 }}>
+            <View style={{marginBottom: 15}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -292,7 +311,9 @@ const CopyOrder = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.profileTitle, { marginRight: 5 }]}>견적 마감일</Text>
+                <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                  견적 마감일
+                </Text>
                 <Text style={[styles.profileRequired]}>(필수)</Text>
               </View>
               <TouchableOpacity
@@ -324,7 +345,7 @@ const CopyOrder = (props) => {
                 <Image
                   source={require('../../../src/assets/icon03.png')}
                   resizeMode="contain"
-                  style={{ width: 30, height: 30, marginRight: 10 }}
+                  style={{width: 30, height: 30, marginRight: 10}}
                 />
               </TouchableOpacity>
               {show02 && (
@@ -339,8 +360,10 @@ const CopyOrder = (props) => {
               )}
             </View>
             {/* // 견적 마감일 */}
-            <View style={{ marginVertical: 10 }} />
-            <TouchableOpacity onPress={() => Alert.alert('복사 후 재등록')} activeOpacity={0.9}>
+            <View style={{marginVertical: 10}} />
+            <TouchableOpacity
+              onPress={() => Alert.alert('복사 후 재등록')}
+              activeOpacity={0.9}>
               <View style={[styles.submitBtn]}>
                 <Text style={styles.submitBtnText}>복사 후 재등록</Text>
               </View>
