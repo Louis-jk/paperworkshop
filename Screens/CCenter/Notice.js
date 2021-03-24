@@ -10,24 +10,111 @@ import {
   TouchableOpacity,
   ImageBackground,
   TextInput,
+  Alert,
+  ActivityIndicator,
+  FlatList,
 } from 'react-native';
 
 import Header from '../Common/Header';
+import Info from '../../src/api/Info';
 
 const Notice = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  const [visibleStep01, setVisibleStep01] = React.useState(false);
-  const [step01, setStep01] = React.useState('');
+  const [isLoading, setLoading] = React.useState(false);
+  const [list, setList] = React.useState([]);
 
-  const toggleMenu01 = () => {
-    setVisibleStep01((prev) => !prev);
+  const getNoticeList = () => {
+    setLoading(true);
+    Info.getNoticeList()
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setList(res.data.item);
+          setLoading(false);
+        } else {
+          setList(null);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+        setLoading(false);
+      });
+  };
+
+  React.useEffect(() => {
+    getNoticeList();
+  }, []);
+
+  const renderRow = ({item, index}) => {
+    return (
+      <>
+        <TouchableOpacity
+          style={{paddingHorizontal: 20}}
+          activeOpacity={0.8}
+          onPress={() =>
+            navigation.navigate('CCenterNoticeDetail', {wr_id: item.wr_id})
+          }>
+          <View style={styles.categoryWrap}>
+            <View
+              style={{
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginBottom: 12,
+                }}>
+                <Text style={styles.categoryTitle}>{item.wr_subject}</Text>
+                <Text style={styles.new}>
+                  {item.new_yn === 'Y' ? 'NEW' : null}
+                </Text>
+              </View>
+              <Text style={styles.categoryDate}>{item.wr_datetime}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
+        />
+      </>
+    );
   };
 
   return (
     <>
       <Header title={routeName} navigation={navigation} />
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
           style={{
@@ -132,227 +219,33 @@ const Notice = (props) => {
         </View>
       </View>
 
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* 공지사항 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}>
-                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 공지사항 리스트 */}
-        {/* 공지사항 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}>
-                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 공지사항 리스트 */}
-        {/* 공지사항 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}>
-                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 공지사항 리스트 */}
-        {/* 공지사항 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}>
-                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 공지사항 리스트 */}
-        {/* 공지사항 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('CCenterNoticeDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}>
-                <Text style={styles.categoryTitle}>공지사항 제목입니다.</Text>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 공지사항 리스트 */}
-      </ScrollView>
-      {visibleStep01 && (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{zIndex: 1000}}
-          style={{
-            position: 'absolute',
-            top: 164,
-            left: 20,
-            backgroundColor: '#fff',
-            width: '27.1%',
-            zIndex: 1000,
-            borderWidth: 1,
-            borderColor: '#E3E3E3',
-            borderBottomRightRadius: 4,
-            borderBottomLeftRadius: 4,
-          }}>
-          <TouchableOpacity
-            activeOpacity={1}
+      {/* 공지사항 리스트 */}
+      <FlatList
+        data={list}
+        renderItem={renderRow}
+        keyExtractor={(list, index) => index.toString()}
+        numColumns={1}
+        // pagingEnabled={true}
+        persistentScrollbar={true}
+        showsVerticalScrollIndicator={false}
+        progressViewOffset={true}
+        refreshing={true}
+        style={{backgroundColor: '#fff'}}
+        ListEmptyComponent={
+          <View
             style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep01('일반인쇄');
-              setVisibleStep01(false);
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>일반인쇄</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep01('패키지');
-              setVisibleStep01(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep01('기타인쇄');
-              setVisibleStep01(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>기타인쇄</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      )}
+            <Text style={{fontFamily: 'SCDream4'}}>
+              문의하신 내역이 없습니다.
+            </Text>
+          </View>
+        }
+      />
+      {/* // 공지사항 리스트 */}
     </>
   );
 };
