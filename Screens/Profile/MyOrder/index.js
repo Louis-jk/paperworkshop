@@ -4,21 +4,14 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard,
   Dimensions,
   TextInput,
-  Button,
   Image,
   Alert,
-  Platform,
   FlatList,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
-
-import DropDownPicker from 'react-native-dropdown-picker';
 
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
@@ -26,6 +19,8 @@ import OrderAPI from '../../../src/api/OrderAPI';
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+
+  console.log('나의 견적의뢰', props);
 
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
   const [myOrders, setMyOrders] = React.useState([]);
@@ -107,7 +102,9 @@ const index = (props) => {
                     alignItems: 'center',
                     marginBottom: 5,
                   }}>
-                  {item.status === '0' || item.status === '7' ? (
+                  {item.status === '0' ||
+                  item.status === '1' ||
+                  item.status === '8' ? (
                     <View style={styles.listStep02Badge}>
                       <Text
                         style={[
@@ -115,13 +112,15 @@ const index = (props) => {
                           {color: '#275696'},
                         ]}>
                         {item.status === '0'
+                          ? '견적요청'
+                          : item.status === '1'
                           ? '입찰중'
-                          : item.status === '7'
+                          : item.status === '8'
                           ? '마감'
                           : null}
                       </Text>
                     </View>
-                  ) : item.status === '1' || item.status === '2' ? (
+                  ) : item.status === '2' || item.status === '3' ? (
                     <View style={styles.listStep02BadgePayReq}>
                       <Text
                         style={[
@@ -129,37 +128,37 @@ const index = (props) => {
                           {color: '#275696'},
                         ]}>
                         파트너스 최종 선정 (
-                        {item.status === '1'
+                        {item.status === '2'
                           ? '견적 확정 대기'
-                          : item.status === '2'
+                          : item.status === '3'
                           ? '계약금 입금대기'
                           : null}
                         )
                       </Text>
                     </View>
-                  ) : item.status === '3' ||
-                    item.status === '4' ||
+                  ) : item.status === '4' ||
                     item.status === '5' ||
-                    item.status === '6' ? (
+                    item.status === '6' ||
+                    item.status === '7' ? (
                     <View style={styles.listStep02BadgePayComplete}>
                       <Text
                         style={[
                           styles.listStep02BadgeText,
                           {color: '#000000'},
                         ]}>
-                        {item.status === '3'
+                        {item.status === '4'
                           ? '계약금 입금 완료'
-                          : item.status === '4'
-                          ? '인쇄 제작 요청'
                           : item.status === '5'
-                          ? '납품완료'
+                          ? '인쇄 제작 요청'
                           : item.status === '6'
+                          ? '납품완료'
+                          : item.status === '7'
                           ? '수령완료'
                           : null}
                       </Text>
                     </View>
                   ) : null}
-                  {item.status === '0' && (
+                  {item.status === '1' && (
                     <Text
                       style={[
                         styles.normalText,
