@@ -14,7 +14,7 @@ import {
 
 import Modal from 'react-native-modal';
 
-const CancelModal = ({ toggleModal, isVisible, goCopyOrder, goCancelOrder }) => {
+const CancelModal = ({toggleModal, isVisible, goCopyOrder, goCancelOrder}) => {
   return (
     <View>
       <Modal isVisible={isVisible}>
@@ -41,14 +41,14 @@ const CancelModal = ({ toggleModal, isVisible, goCopyOrder, goCancelOrder }) => 
                 position: 'relative',
                 height: 30,
               }}>
-              <Text style={[styles.mediumText, { fontSize: 16, color: '#000' }]}>
+              <Text style={[styles.mediumText, {fontSize: 16, color: '#000'}]}>
                 계약 포기 요청
               </Text>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={toggleModal}
-                hitSlop={{ top: 50, bottom: 50, left: 50, right: 50 }}
-                style={{ position: 'absolute', top: -5, right: -5 }}>
+                hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
+                style={{position: 'absolute', top: -5, right: -5}}>
                 <Image
                   source={require('../../../src/assets/icon_close01.png')}
                   resizeMode="cover"
@@ -62,14 +62,15 @@ const CancelModal = ({ toggleModal, isVisible, goCopyOrder, goCancelOrder }) => 
 
             {/* 컨텐츠 */}
             <View style={styles.container}>
-              <View style={{ marginBottom: 10 }}>
+              <View style={{marginBottom: 10}}>
                 <View style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>
                     선택하신 파트너스와의 계약을 포기 하시겠습니까?
                   </Text>
                   <Text style={styles.partnerInfoDesc}>
-                    계약 포기 시, 해당 파트너스 회원에게 메세지가 발송됩니다. 계약금 및 견적 금액에
-                    대해서는 파트너스 회원과 직접 상의 하셔야 합니다.
+                    계약 포기 시, 해당 파트너스 회원에게 메세지가 발송됩니다.
+                    계약금 및 견적 금액에 대해서는 파트너스 회원과 직접 상의
+                    하셔야 합니다.
                   </Text>
                 </View>
               </View>
@@ -79,13 +80,13 @@ const CancelModal = ({ toggleModal, isVisible, goCopyOrder, goCancelOrder }) => 
                 style={{
                   width: '100%',
                 }}>
-                <TouchableOpacity onPress={goCopyOrder} activeOpacity={0.8}>
+                {/* <TouchableOpacity onPress={goCopyOrder} activeOpacity={0.8}>
                   <View style={[styles.goHomeBtn, { marginBottom: 5 }]}>
                     <Text style={styles.goHomeBtnText}>복사 후 재등록</Text>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity onPress={goCancelOrder} activeOpacity={0.8}>
-                  <View style={[styles.submitBtn, { marginBottom: 10 }]}>
+                  <View style={[styles.submitBtn, {marginBottom: 10}]}>
                     <Text style={styles.submitBtnText}>최종 선택 포기</Text>
                   </View>
                 </TouchableOpacity>
