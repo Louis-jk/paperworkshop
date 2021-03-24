@@ -677,10 +677,10 @@ const Register = (props) => {
                       borderColor: '#E3E3E3',
                       borderRadius: 4,
                       marginBottom:
-                        formikProps.touched.register_pw &&
-                        formikProps.errors.register_pw
-                          ? 0
-                          : 5,
+                        formikProps.touched.register_confirmPw &&
+                        formikProps.errors.register_confirmPw
+                          ? 5
+                          : 0,
                       height: 50,
                     }}>
                     <TextInput
