@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import { ScrollView } from 'react-native-gesture-handler';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
@@ -128,6 +129,21 @@ const DrawerMenu = (props) => {
   };
   const setCollapseArrowFunc05 = () => {
     setCollapseArrow05((prev) => !prev);
+  };
+
+  // 로그아웃
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem('@paper_info');
+    } catch (e) {
+      console.log('로그아웃 에러', e);
+    }
+    Alert.alert('로그아웃 되었습니다.', '로그인 화면으로 이동합니다.', [
+      {
+        text: '확인',
+        onPress: () => navigation.navigate('Login'),
+      },
+    ]);
   };
 
   return (
@@ -832,7 +848,7 @@ const DrawerMenu = (props) => {
               backgroundColor: '#F5F5F5',
             }}
           />
-          <TouchableOpacity activeOpacity={1}>
+          <TouchableOpacity activeOpacity={1} onPress={logout}>
             <View
               style={[
                 styles.categoryTitle,
