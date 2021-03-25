@@ -12,18 +12,7 @@ const List = ({item, index, navigation}) => {
         navigation.navigate('PartnersDetail', {
           screen: 'PartnersDetail',
           params: {
-            bName: item.businessName,
-            name: item.name,
-            rating: item.rating,
-            portfolioImg: item.portfolioImg,
-            mobile: item.mobile,
-            description: item.description,
-            openingTime: item.mb_7,
-            closedDay: item.mb_8,
-            used: item.used,
-            cate1: item.cate1,
             companyId: item.company_id,
-            location: item.location,
           },
         })
       }
