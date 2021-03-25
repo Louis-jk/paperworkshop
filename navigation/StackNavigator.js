@@ -275,8 +275,8 @@ export const ProfileEditStackNavigator = () => {
 export const LoginStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Check" component={CheckScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
 };
