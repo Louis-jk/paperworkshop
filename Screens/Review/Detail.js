@@ -102,10 +102,6 @@ const Detail = (props) => {
     getReviewDetailAPI();
   }, []);
 
-  console.log('디테일review', review);
-  console.log('디테일review grade1', review.grade1);
-  console.log('디테일detail', detail);
-
   const renderItem = ({item, index}) => {
     return (
       <Image
@@ -486,7 +482,7 @@ const Detail = (props) => {
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-start',
                 alignItems: 'center',
               }}>
               {review.bf_file &&
@@ -495,14 +491,16 @@ const Detail = (props) => {
                     key={idx}
                     activeOpacity={0.8}
                     onPress={() => {
-                      imageModalHandler(img);
+                      imageModalHandler();
                       setImgPath(img);
-                    }}>
+                    }}
+                    style={{flex: review.bf_file.length > 3 ? 1 : 0}}>
                     <Image
                       source={{uri: `${img}`}}
                       style={{
                         width: Dimensions.get('window').width / 5 - 15,
                         height: Dimensions.get('window').width / 5 - 15,
+                        marginRight: review.bf_file.length <= 3 ? 10 : 0,
                         borderRadius: 4,
                       }}
                     />
