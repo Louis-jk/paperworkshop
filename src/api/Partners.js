@@ -36,6 +36,16 @@ export default {
       }),
     });
   },
+  // 리뷰 상세 가져오기
+  getReviewDetail(pr_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_review_detail',
+        pr_id,
+      }),
+    });
+  },
   // 나의 파트너스 불러오기
   getMyPartners(mb_id, ptype, cate1, popular, location) {
     return Send({
