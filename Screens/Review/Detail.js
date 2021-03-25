@@ -122,6 +122,11 @@ const Detail = (props) => {
 
   // 이미지 모달창
   const ImageModal = ({toggleModal, isVisible, imgPath}) => {
+    let extension = '';
+    if (imgPath !== null) {
+      extension = imgPath.slice(imgPath.lastIndexOf('.'));
+    }
+
     return (
       <View>
         <Modal
@@ -132,10 +137,23 @@ const Detail = (props) => {
             alignItems: 'center',
           }}>
           <View style={{marginBottom: 20}}>
-            <AutoHeightImage
-              width={Dimensions.get('window').width - 40}
-              source={{uri: `${imgPath}`}}
-            />
+            {extension !== '.gif' ? (
+              <AutoHeightImage
+                width={Dimensions.get('window').width - 40}
+                source={{uri: `${imgPath}`}}
+              />
+            ) : (
+              <FastImage
+                source={{uri: `${imgPath}`}}
+                resizeMode={FastImage.resizeMode.contain}
+                style={{
+                  width: Dimensions.get('window').width - 40,
+                  height: 250,
+                  borderRadius: 5,
+                  marginRight: 10,
+                }}
+              />
+            )}
           </View>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -159,12 +177,11 @@ const Detail = (props) => {
   };
 
   const [isModalVisible, setModalVisible] = React.useState(false);
-  const [imgPath, setImgPath] = React.useState(false);
+  const [imgPath, setImgPath] = React.useState(null);
 
   // 이미지 모달 핸들러
-  const imageModalHandler = (path) => {
+  const imageModalHandler = () => {
     setModalVisible(!isModalVisible);
-    setImgPath(path);
   };
 
   return (
@@ -477,7 +494,10 @@ const Detail = (props) => {
                   <TouchableOpacity
                     key={idx}
                     activeOpacity={0.8}
-                    onPress={() => imageModalHandler(img)}>
+                    onPress={() => {
+                      imageModalHandler(img);
+                      setImgPath(img);
+                    }}>
                     <Image
                       source={{uri: `${img}`}}
                       style={{
