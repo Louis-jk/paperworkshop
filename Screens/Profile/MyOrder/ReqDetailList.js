@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard'; // 클립보드 패키지
 import DetailHeader from '../../Common/DetailHeader';
 import Modal from './CancelModal';
 import OrderAPI from '../../../src/api/OrderAPI';
@@ -23,8 +24,7 @@ const ReqDetailList = (props) => {
   const [myOrderDetail, setMyOrderDetail] = React.useState([]);
   const [myOrderPartners, setMyOrderPartners] = React.useState([]);
 
-  console.log('OrderDetail props', props);
-
+  // 나의 견적 상세 API 호출
   const getMyOrderDetailAPI = () => {
     OrderAPI.getMyOrderDetail(pe_id)
       .then((res) => {
@@ -81,8 +81,14 @@ const ReqDetailList = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  console.log('myOrderDetail', myOrderDetail);
-  console.log('myOrderPartners', myOrderPartners);
+  const copyToClipboard = (copyTxt) => {
+    Clipboard.setString(copyTxt);
+    Alert.alert('클립보드로 복사되었습니다.', copyTxt, [
+      {
+        text: '확인',
+      },
+    ]);
+  };
 
   const [isModalVisible, setModalVisible] = React.useState(false);
 
@@ -132,6 +138,7 @@ const ReqDetailList = (props) => {
           borderRadius: 5,
           borderColor: '#E3E3E3',
           marginBottom: 10,
+          marginHorizontal: 20,
         }}>
         <View
           style={{
@@ -171,7 +178,15 @@ const ReqDetailList = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{paddingHorizontal: 20}}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() =>
+            navigation.navigate('PartnersDetail', {
+              screen: 'PartnersDetail',
+              params: {companyId: item.company_id},
+            })
+          }
+          style={{paddingHorizontal: 20}}>
           <Text
             style={[
               styles.normalText,
@@ -181,7 +196,7 @@ const ReqDetailList = (props) => {
               ? item.description
               : '소개글이 없습니다.'}
           </Text>
-        </View>
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: 'row',
@@ -315,182 +330,328 @@ const ReqDetailList = (props) => {
         goCopyOrder={goCopyOrder}
       />
       <DetailHeader title={routeName} navigation={navigation} />
-      <View style={[styles.container, styles.wrap]}>
-        <View style={styles.infoBox}>
-          <Text style={styles.infoStepDesc}>
-            {myOrderDetail.status === '0'
-              ? '견적요청'
-              : myOrderDetail.status === '1'
-              ? '입찰중'
-              : myOrderDetail.status === '2'
-              ? '파트너스최종선정 (견적확정대기)'
-              : myOrderDetail.status === '3'
-              ? '파트너스최종선정 (계약금입금대기)'
-              : myOrderDetail.status === '4'
-              ? '파트너스최종선정 (계약금입금완료)'
-              : myOrderDetail.status === '5'
-              ? '인쇄제작요청'
-              : myOrderDetail.status === '6'
-              ? '납품완료'
-              : myOrderDetail.status === '7'
-              ? '수령완료'
-              : myOrderDetail.status === '8'
-              ? '마감'
-              : null}
-          </Text>
-          <Text style={styles.infoStepTitle}>{myOrderDetail.title}</Text>
-          <View style={styles.line} />
-          <View style={styles.details}>
-            <Text style={styles.detailsTitle}>분류</Text>
-            <Text style={styles.detailsDesc}>
-              {myOrderDetail.cate1 === '0'
-                ? '일반인쇄'
-                : myOrderDetail.cate1 === '1'
-                ? '패키지'
-                : myOrderDetail.cate1 === '2'
-                ? '기타인쇄'
-                : null}
-            </Text>
-          </View>
-          <View style={styles.details}>
-            <Text style={styles.detailsTitle}>견적 마감일</Text>
-            <Text style={styles.detailsDesc}>
-              {myOrderDetail.estimate_date}
-            </Text>
-          </View>
-          <View style={styles.detailsEnd}>
-            <View style={styles.detailsEnd}>
-              <Text style={styles.detailsTitle}>납품 희망일</Text>
-              <Text style={styles.detailsDesc}>
-                {myOrderDetail.delivery_date}
-              </Text>
-            </View>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate('OrderDetail', {
-                  pe_id: pe_id,
-                  cate1: myOrderDetail.cate1,
-                })
-              }
-              style={{alignSelf: 'flex-end'}}>
-              <Text
-                style={[
-                  styles.normalText,
-                  {
-                    fontSize: 12,
-                    textDecorationLine: 'underline',
-                    color: '#A2A2A2',
-                  },
-                ]}>
-                세부 내용 보기
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {myOrderDetail.status !== '8' ? (
-          <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-            <View style={[styles.submitBtn, {marginTop: 20}]}>
-              <Text style={styles.submitBtnText}>요청 포기</Text>
-            </View>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('CopyOrder')}
-            activeOpacity={0.9}>
-            <View style={[styles.submitBtn, {marginTop: 20}]}>
-              <Text style={styles.submitBtnText}>복사 후 재등록</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      </View>
-      {/* 경계 라인 */}
-      <View
-        style={{
-          height: 1,
-          backgroundColor: '#F5F5F5',
-          width: Dimensions.get('window').width,
-        }}
-      />
-      <View
-        style={{
-          backgroundColor: '#F5F5F5',
-          width: Dimensions.get('window').width,
-        }}
-      />
-      {/* // 경계 라인 */}
+      {/* 입찰업체 리스트 */}
 
-      <View style={{flex: 1, paddingHorizontal: 20}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            marginBottom: 15,
-          }}>
-          <Text style={[styles.orderInfoTitle, {marginRight: 10}]}>
-            {myOrderDetail.status === '1'
-              ? '입찰업체'
-              : myOrderDetail.status === '2'
-              ? '파트너선정업체'
-              : myOrderDetail.status === '3'
-              ? '파트너선정업체'
-              : null}
-          </Text>
-          {myOrderDetail.status === '1' && (
-            <Text style={[styles.orderInfoTitleRow, {color: '#275696'}]}>
-              총 견적 {myOrderDetail.ecnt}
-            </Text>
-          )}
-          {myOrderDetail.status === '2' && (
-            <Text style={[styles.orderInfoTitleRow, {color: '#275696'}]}>
-              현재 견적확정 대기중입니다.
-            </Text>
-          )}
-          {myOrderDetail.status === '3' && (
-            <Text style={[styles.orderInfoTitleRow, {color: '#275696'}]}>
-              현재 계약금 입금 대기중입니다.
-            </Text>
-          )}
-        </View>
-
-        {/* 입찰업체 리스트 */}
-
-        <FlatList
-          data={myOrderPartners}
-          renderItem={renderRow}
-          keyExtractor={(list, index) => index.toString()}
-          numColumns={1}
-          // pagingEnabled={true}
-          persistentScrollbar={true}
-          showsVerticalScrollIndicator={false}
-          progressViewOffset={true}
-          refreshing={true}
-          style={{
-            backgroundColor: '#fff',
-          }}
-          ListEmptyComponent={
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <View style={[styles.container, styles.wrap]}>
+              <View style={styles.infoBox}>
+                <Text style={styles.infoStepDesc}>
+                  {myOrderDetail.status === '0'
+                    ? '견적요청'
+                    : myOrderDetail.status === '1'
+                    ? '입찰중'
+                    : myOrderDetail.status === '2'
+                    ? '파트너스최종선정 (견적확정대기)'
+                    : myOrderDetail.status === '3'
+                    ? '파트너스최종선정 (계약금입금대기)'
+                    : myOrderDetail.status === '4'
+                    ? '파트너스최종선정 (계약금입금완료)'
+                    : myOrderDetail.status === '5'
+                    ? '인쇄제작요청'
+                    : myOrderDetail.status === '6'
+                    ? '납품완료'
+                    : myOrderDetail.status === '7'
+                    ? '수령완료'
+                    : myOrderDetail.status === '8'
+                    ? '마감'
+                    : null}
+                </Text>
+                <Text style={styles.infoStepTitle}>{myOrderDetail.title}</Text>
+                <View style={styles.line} />
+                <View style={styles.details}>
+                  <Text style={styles.detailsTitle}>분류</Text>
+                  <Text style={styles.detailsDesc}>
+                    {myOrderDetail.cate1 === '0'
+                      ? '일반인쇄'
+                      : myOrderDetail.cate1 === '1'
+                      ? '패키지'
+                      : myOrderDetail.cate1 === '2'
+                      ? '기타인쇄'
+                      : null}
+                  </Text>
+                </View>
+                <View style={styles.details}>
+                  <Text style={styles.detailsTitle}>견적 마감일</Text>
+                  <Text style={styles.detailsDesc}>
+                    {myOrderDetail.estimate_date}
+                  </Text>
+                </View>
+                <View style={styles.detailsEnd}>
+                  <View style={styles.detailsEnd}>
+                    <Text style={styles.detailsTitle}>납품 희망일</Text>
+                    <Text style={styles.detailsDesc}>
+                      {myOrderDetail.delivery_date}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      navigation.navigate('OrderDetail', {
+                        pe_id: pe_id,
+                        cate1: myOrderDetail.cate1,
+                      })
+                    }
+                    style={{alignSelf: 'flex-end'}}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          fontSize: 12,
+                          textDecorationLine: 'underline',
+                          color: '#A2A2A2',
+                        },
+                      ]}>
+                      세부 내용 보기
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              {myOrderDetail.status !== '8' ? (
+                <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                  <View style={[styles.submitBtn, {marginTop: 20}]}>
+                    <Text style={styles.submitBtnText}>요청 포기</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('CopyOrder')}
+                  activeOpacity={0.9}>
+                  <View style={[styles.submitBtn, {marginTop: 20}]}>
+                    <Text style={styles.submitBtnText}>복사 후 재등록</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
+            {/* 경계 라인 */}
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                flex: 1,
-                height: Dimensions.get('window').height - 500,
-              }}>
-              <Text style={{fontFamily: 'SCDream4'}}>
-                입찰한 업체가 없습니다.
-              </Text>
-            </View>
-          }
-        />
+                height: 1,
+                backgroundColor: '#F5F5F5',
+                width: Dimensions.get('window').width,
+              }}
+            />
+            <View
+              style={{
+                height: 6,
+                backgroundColor: '#F5F5F5',
+                width: Dimensions.get('window').width,
+              }}
+            />
+            {/* // 경계 라인 */}
 
-        {/* // 입찰업체 리스트 */}
-      </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBottom: 15,
+                paddingHorizontal: 20,
+              }}>
+              <Text style={[styles.orderInfoTitle, {marginRight: 10}]}>
+                {myOrderDetail.status === '1'
+                  ? '입찰업체'
+                  : myOrderDetail.status === '2'
+                  ? '파트너선정업체'
+                  : myOrderDetail.status === '3'
+                  ? '파트너선정업체'
+                  : null}
+              </Text>
+              {myOrderDetail.status === '1' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  총 견적 {myOrderDetail.ecnt}
+                </Text>
+              )}
+              {myOrderDetail.status === '2' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  현재 견적확정 대기중입니다.
+                </Text>
+              )}
+              {myOrderDetail.status === '3' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  현재 계약금 입금 대기중입니다.
+                </Text>
+              )}
+            </View>
+          </>
+        }
+        data={myOrderPartners}
+        renderItem={renderRow}
+        keyExtractor={(list, index) => index.toString()}
+        numColumns={1}
+        // pagingEnabled={true}
+        persistentScrollbar={true}
+        showsVerticalScrollIndicator={false}
+        progressViewOffset={true}
+        refreshing={true}
+        style={{
+          backgroundColor: '#fff',
+        }}
+        ListEmptyComponent={
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              height: Dimensions.get('window').height - 500,
+              paddingHorizontal: 20,
+            }}>
+            <Text style={{fontFamily: 'SCDream4'}}>
+              입찰한 업체가 없습니다.
+            </Text>
+          </View>
+        }
+        ListFooterComponent={
+          myOrderDetail.status === '3' ? (
+            <View style={{paddingHorizontal: 20}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'baseline',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'SCDream4',
+                    fontSize: 12,
+                    lineHeight: 18,
+                    marginRight: 5,
+                    color: '#366DE5',
+                  }}>
+                  ※
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                    flexWrap: 'wrap',
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      lineHeight: 18,
+                      color: '#366DE5',
+                    }}>
+                    계약금을 아래의 계좌로 입금해주시고
+                  </Text>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#275696',
+                      marginHorizontal: 5,
+                      paddingHorizontal: 10,
+                      paddingVertical: 5,
+                      borderRadius: 10,
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: 'SCDream4',
+                        fontSize: 8,
+                        color: '#fff',
+                      }}>
+                      계약금 입금완료
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      lineHeight: 18,
+                      color: '#366DE5',
+                    }}>
+                    을 눌러주세요.
+                  </Text>
+                </View>
+              </View>
+              <View style={{marginBottom: 20}}>
+                <View style={styles.bankInfoWrap}>
+                  <View style={styles.bankInfoTitleWrap}>
+                    <Text style={{fontFamily: 'SCDream4'}}>은행명</Text>
+                  </View>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      copyToClipboard(myOrderDetail.list[0].bank_name)
+                    }
+                    style={{
+                      paddingVertical: 10,
+                      paddingHorizontal: 10,
+                      width: '100%',
+                    }}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      {myOrderDetail.list[0].bank_name}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.bankInfoWrap}>
+                  <View style={styles.bankInfoTitleWrap}>
+                    <Text style={{fontFamily: 'SCDream4'}}>계좌번호</Text>
+                  </View>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      copyToClipboard(myOrderDetail.list[0].bank_account)
+                    }
+                    style={{
+                      paddingVertical: 10,
+                      paddingHorizontal: 10,
+                      width: '100%',
+                    }}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      {myOrderDetail.list[0].bank_account}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.bankInfoWrap}>
+                  <View style={styles.bankInfoTitleWrap}>
+                    <Text style={{fontFamily: 'SCDream4'}}>예금주</Text>
+                  </View>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      copyToClipboard(myOrderDetail.list[0].bank_depositor)
+                    }
+                    style={{
+                      paddingVertical: 10,
+                      paddingHorizontal: 10,
+                      width: '100%',
+                    }}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      {myOrderDetail.list[0].bank_depositor}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          ) : null
+        }
+      />
+
+      {/* // 입찰업체 리스트 */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  bankInfoWrap: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#E3E3E3',
+    marginBottom: 5,
+  },
+  bankInfoTitleWrap: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#EFEFEF',
+    paddingVertical: 10,
+    width: 100,
+  },
   container: {
     backgroundColor: '#fff',
   },
