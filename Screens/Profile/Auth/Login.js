@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {setFcmToken} from '../../../Modules/InfoReducer';
 import {
@@ -39,11 +40,32 @@ const Login = (props) => {
   const [fFcmToken, setFfcmToken] = React.useState(null); // fcmtoken 현재 페이지 저장
   const [checkPlatform, setCheckPlatform] = React.useState(null); // OS 체크
   const [loginId, setLoginId] = React.useState(null);
-  const [userPwd, setUserPwd] = React.useState(null);
+  const [loginPwd, setLoginPwd] = React.useState(null);
 
   const [autoLogin, setAutoLogin] = React.useState(false); // 자동 로그인
   const toggleCheck = () => {
-    setAutoLogin((prev) => !prev);
+    if (loginId !== null || loginPwd !== null) {
+      setAutoLogin((prev) => !prev);
+    } else {
+      Alert.alert('아이디 또는 비밀번호를 입력해주세요', '', [
+        {
+          text: '확인',
+        },
+      ]);
+    }
+  };
+
+  const storeData = async () => {
+    try {
+      const jsonValue = JSON.stringify({userId: loginId, userPwd: loginPwd});
+      await AsyncStorage.setItem('@paper_info', jsonValue);
+    } catch (e) {
+      Alert.alert(e, '관리자에게 문의하세요', [
+        {
+          text: '확인',
+        },
+      ]);
+    }
   };
 
   // 비밀번호 보이기 기능
@@ -72,13 +94,11 @@ const Login = (props) => {
     } else {
       setCheckPlatform('aos');
     }
-
-    // foregroundListener()
   }, []);
 
   // 로그인 API
   const login = () => {
-    Auth.onLogin(loginId, userPwd, fFcmToken, checkPlatform)
+    Auth.onLogin(loginId, loginPwd, fFcmToken, checkPlatform)
       .then((res) => {
         if (res.data.result === '1') {
           dispatch(UserId(res.data.item.mb_id));
@@ -90,7 +110,12 @@ const Login = (props) => {
           dispatch(UserType(res.data.item.mb_level));
           dispatch(UserProfileImg(res.data.item.mb_profile));
           dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
-          navigation.navigate('Stack');
+          if (autoLogin) {
+            storeData();
+            navigation.navigate('Stack');
+          } else {
+            navigation.navigate('Stack');
+          }
         } else {
           Alert.alert(res.data.message, '다시 시도해주세요.', [
             {
@@ -100,8 +125,13 @@ const Login = (props) => {
           ]);
         }
       })
-      .catch((err) => Alert.alert(`${err.messaging()}`));
-    // navigation.navigate('Stack')
+      .catch((err) =>
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]),
+      );
   };
 
   return (
@@ -168,14 +198,14 @@ const Login = (props) => {
                 }}>
                 <TextInput
                   ref={loginPwdRef}
-                  value={userPwd}
+                  value={loginPwd}
                   placeholder="비밀번호"
                   placeholderTextColor="#A2A2A2"
                   style={[styles.normalText, {width: '80%'}]}
-                  onChangeText={(text) => setUserPwd(text)}
+                  onChangeText={(text) => setLoginPwd(text)}
                   autoCapitalize="none"
                   secureTextEntry={pwdEyes}
-                  onSubmitEditing={() => login()}
+                  // onSubmitEditing={() => login()}
                 />
                 <TouchableOpacity
                   activeOpacity={0.8}
