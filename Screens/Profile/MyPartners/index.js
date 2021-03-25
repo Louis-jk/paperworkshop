@@ -139,19 +139,6 @@ const index = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const unsubscribe = navigation.addListener('focus', () => {
-  //       getPartnersAll();
-  //       getPartnersPackage();
-  //       getPartnersGeneral();
-  //       getPartnersEtc();
-  //     });
-
-  //     return () => unsubscribe();
-  //   }, [partners])
-  // );
-
   const initialLayout = {width: Dimensions.get('window').width};
 
   const [index, setIndex] = React.useState(0);
