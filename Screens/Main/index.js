@@ -148,15 +148,43 @@ const index = (props) => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: 5,
+                  width: 40,
+                  flexWrap: 'wrap',
                 }}>
                 <Text
-                  style={[styles.normalText, {fontSize: 12, color: '#366DE5'}]}>
-                  입찰중
+                  style={[
+                    styles.normalText,
+                    {textAlign: 'center', fontSize: 12, color: '#366DE5'},
+                  ]}>
+                  {item.status === '0'
+                    ? '견적요청'
+                    : item.status === '1'
+                    ? '입찰중'
+                    : item.status === '2'
+                    ? '파트너선정'
+                    : item.status === '3'
+                    ? '파트너선정'
+                    : item.status === '4'
+                    ? '파트너선정'
+                    : item.status === '5'
+                    ? '제작요청'
+                    : item.status === '6'
+                    ? '납품완료'
+                    : item.status === '7'
+                    ? '수령완료'
+                    : item.status === '8'
+                    ? '마감'
+                    : null}
                 </Text>
-                <Text
-                  style={[styles.normalText, {fontSize: 12, color: '#366DE5'}]}>
-                  {item.ecnt}건
-                </Text>
+                {item.status === '1' ? (
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 12, color: '#366DE5'},
+                    ]}>
+                    {item.ecnt}건
+                  </Text>
+                ) : null}
               </View>
             </View>
             <View
