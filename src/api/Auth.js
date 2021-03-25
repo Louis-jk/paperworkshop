@@ -74,4 +74,13 @@ export default {
       }),
     });
   },
+  getMyInfo(mb_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_member_detail',
+        mb_id,
+      }),
+    });
+  },
 };
