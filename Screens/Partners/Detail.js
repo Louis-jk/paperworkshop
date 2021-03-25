@@ -101,10 +101,6 @@ const Detail = (props) => {
     };
   }, []);
 
-  console.log('partners detail', detail);
-  console.log('reviews', reviews);
-  console.log('review[0]', reviews[0]);
-
   const onLikeBtn = (payload) => {
     // setLike((prev) => !prev);
     PartnersAPI.setFavorPartner(mb_id, payload)
@@ -115,13 +111,13 @@ const Detail = (props) => {
           res.data.message === '찜하기가 취소되었습니다.'
         ) {
           setLike(false);
-          // checkMyFavorP();
+          checkMyFavorP();
         } else if (
           res.data.result === '1' &&
           res.data.message === '찜하기가 완료되었습니다.'
         ) {
           setLike(true);
-          // checkMyFavorP();
+          checkMyFavorP();
         }
       })
       .catch((err) => {
@@ -146,8 +142,6 @@ const Detail = (props) => {
       });
     return a;
   };
-
-  console.log('like ?', like);
 
   const checkMyFavorP = () => {
     PartnersAPI.getMyPartners(mb_id, null, null, null, null)
@@ -192,7 +186,7 @@ const Detail = (props) => {
   const sliderWidth = Dimensions.get('window').width;
   const itemWidth = Dimensions.get('window').width;
 
-  console.log('Detail props', props);
+  console.log('detail', detail);
 
   const renderRow = ({item, index}) => {
     return (
@@ -346,7 +340,7 @@ const Detail = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      {isLoading && (
+      {isLoading ? (
         <View
           style={{
             position: 'absolute',
@@ -364,402 +358,435 @@ const Detail = (props) => {
           }}>
           <ActivityIndicator size="large" color="#275696" />
         </View>
-      )}
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            position: 'relative',
-            backgroundColor: '#fff',
-            justifyContent: 'flex-start',
-            marginBottom: 20,
-          }}>
-          {detail.portfolioImg ? (
-            <Carousel
-              ref={carouselRef}
-              data={detail.portfolioImg}
-              renderItem={renderItem}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-              loop={true}
-            />
-          ) : (
-            <Image
-              source={require('../../src/assets/noImg.png')}
-              resizeMode="cover"
-              style={{width: '100%'}}
-            />
-          )}
-
-          {/* Swipe Prev,Next 버튼 Custom */}
-          {detail.portfolioImg ? (
+      ) : (
+        <>
+          <ScrollView
+            style={styles.container}
+            showsVerticalScrollIndicator={false}>
             <View
               style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 111,
-                height: 67,
-                backgroundColor: '#275696',
+                position: 'relative',
+                backgroundColor: '#fff',
+                justifyContent: 'flex-start',
+                marginBottom: 20,
               }}>
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  carouselRef.current.snapToPrev();
-                }}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '100%',
-                  }}>
-                  <Image
-                    source={require('../../src/assets/slide_arr02.png')}
-                    resizeMode="contain"
-                    style={{width: 22, height: 20}}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
-              <View
-                style={{borderWidth: 0.2, height: 15, borderColor: '#D4D4D4'}}
-              />
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  carouselRef.current.snapToNext();
-                }}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '100%',
-                  }}>
-                  <Image
-                    source={require('../../src/assets/slide_arr01.png')}
-                    resizeMode="contain"
-                    style={{width: 22, height: 20}}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          ) : null}
-          {/* // Swipe Prev,Next 버튼 Custom */}
+              {detail &&
+              detail.portfolioImg &&
+              detail.portfolioImg.length > 1 ? (
+                <Carousel
+                  ref={carouselRef}
+                  data={detail.portfolioImg}
+                  renderItem={renderItem}
+                  sliderWidth={sliderWidth}
+                  itemWidth={itemWidth}
+                  loop={true}
+                />
+              ) : (
+                <Image
+                  source={require('../../src/assets/noImg.png')}
+                  resizeMode="cover"
+                  style={{width: '100%'}}
+                />
+              )}
 
-          {/* 회사정보 상단 fix */}
-          <View
-            style={{
-              position: 'absolute',
-              top: 20,
-              right: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: 156,
-              height: 156,
-              backgroundColor: '#fff',
-            }}>
-            <View style={{justifyContent: 'flex-start'}}>
-              {/* Partner_logo.png */}
-              <Image
-                source={require('../../src/images/Partner_logo.png')}
-                resizeMode="cover"
-                style={{width: 55, height: 15, marginBottom: 5}}
-              />
+              {/* Swipe Prev,Next 버튼 Custom */}
+              {detail &&
+              detail.portfolioImg &&
+              detail.portfolioImg.length > 1 ? (
+                <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 111,
+                    height: 67,
+                    backgroundColor: '#275696',
+                  }}>
+                  <TouchableWithoutFeedback
+                    onPress={() => {
+                      carouselRef.current.snapToPrev();
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                      }}>
+                      <Image
+                        source={require('../../src/assets/slide_arr02.png')}
+                        resizeMode="contain"
+                        style={{width: 22, height: 20}}
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
+                  <View
+                    style={{
+                      borderWidth: 0.2,
+                      height: 15,
+                      borderColor: '#D4D4D4',
+                    }}
+                  />
+                  <TouchableWithoutFeedback
+                    onPress={() => {
+                      carouselRef.current.snapToNext();
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                      }}>
+                      <Image
+                        source={require('../../src/assets/slide_arr01.png')}
+                        resizeMode="contain"
+                        style={{width: 22, height: 20}}
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
+              ) : null}
+              {/* // Swipe Prev,Next 버튼 Custom */}
+
+              {/* 회사정보 상단 fix */}
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 20,
+                  right: 20,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 156,
+                  height: 156,
+                  backgroundColor: '#fff',
+                }}>
+                <View style={{justifyContent: 'flex-start'}}>
+                  {/* Partner_logo.png */}
+                  <Image
+                    source={require('../../src/images/Partner_logo.png')}
+                    resizeMode="cover"
+                    style={{width: 55, height: 15, marginBottom: 5}}
+                  />
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {fontSize: 20, marginBottom: 5},
+                    ]}>
+                    {detail.businessName}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.mediumText,
+                      {fontSize: 12, marginBottom: 12, color: '#707070'},
+                    ]}>
+                    담당자 {detail.name}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <StarRating
+                      disabled={false}
+                      emptyStar={require('../../src/assets/star_off.png')}
+                      fullStar={require('../../src/assets/star_on.png')}
+                      maxStars={5}
+                      rating={Math.floor(detail.rate)}
+                      starSize={13}
+                    />
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 12, marginLeft: 5},
+                      ]}>
+                      {detail.rate}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              {/* // 회사정보 상단 fix */}
+            </View>
+            <View style={{paddingHorizontal: 20}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 5,
+                  backgroundColor: '#fff',
+                  marginBottom: 10,
+                }}>
+                <TouchableWithoutFeedback
+                  onPress={() => Linking.openURL(`tel:${detail.mobile}`)}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                    }}>
+                    <Image
+                      source={require('../../src/assets/call01.png')}
+                      resizeMode="cover"
+                      style={{width: 24, height: 24}}
+                    />
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          fontSize: 14,
+                          marginLeft: 5,
+                        },
+                      ]}>
+                      전화하기
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <View
+                  style={{
+                    borderWidth: 0.5,
+                    height: '100%',
+                    borderColor: '#E3E3E3',
+                  }}
+                />
+                <TouchableWithoutFeedback
+                  onPress={() => navigation.navigate('MessageDetail')}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                    }}>
+                    <Image
+                      source={require('../../src/assets/msm01.png')}
+                      resizeMode="cover"
+                      style={{width: 24, height: 24}}
+                    />
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          fontSize: 14,
+                          marginLeft: 5,
+                        },
+                      ]}>
+                      메세지보내기
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+
+              {/* 업체소개 */}
+              <View style={{marginTop: 20}}>
+                <Text
+                  style={[styles.mediumText, {fontSize: 16, marginBottom: 15}]}>
+                  업체소개
+                </Text>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {fontSize: 14, lineHeight: 22, marginBottom: 5},
+                  ]}>
+                  {detail.description
+                    ? detail.description
+                    : '업체 소개글이 등록되어 있지 않습니다.'}
+                </Text>
+
+                <View style={{paddingVertical: 20, paddingLeft: 7}}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 14, marginBottom: 5},
+                    ]}>
+                    * 업무시간 :
+                    {detail.mb_7 ? detail.mb_7 : ' 현재 미등록 상태입니다.'}
+                    {/* 평일 09:00 ~ 18:00 */}
+                  </Text>
+                  <Text style={[styles.normalText, {fontSize: 14}]}>
+                    * 휴무일 안내 :
+                    {detail.mb_8 ? detail.mb_8 : ' 현재 미등록 상태입니다.'}
+                    {/* * 토, 일, 공휴일 휴무 */}
+                  </Text>
+                </View>
+              </View>
+              {/* // 업체소개 */}
+            </View>
+
+            {/* 영업품목 */}
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingVertical: 20,
+                backgroundColor: '#F5F5F5',
+                width: Dimensions.get('screen').width,
+              }}>
               <Text
-                style={[styles.mediumText, {fontSize: 20, marginBottom: 5}]}>
-                {detail.businessName}
+                style={[styles.mediumText, {fontSize: 16, marginBottom: 10}]}>
+                영업품목
               </Text>
               <Text
                 style={[
-                  styles.mediumText,
-                  {fontSize: 12, marginBottom: 12, color: '#707070'},
+                  styles.normalText,
+                  {fontSize: 14, lineHeight: 24, marginBottom: 5},
                 ]}>
-                담당자 {detail.name}
+                {detail.used
+                  ? detail.used
+                  : '영업품목이 등록되어 있지 않습니다.'}
               </Text>
+            </View>
+            {/* // 영업품목 */}
+
+            {/* 고객후기 */}
+            <View
+              style={{
+                marginTop: 20,
+                paddingHorizontal: 20,
+                paddingVertical: 20,
+                backgroundColor: '#fff',
+                width: Dimensions.get('screen').width,
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                }}>
-                <StarRating
-                  disabled={false}
-                  emptyStar={require('../../src/assets/star_off.png')}
-                  fullStar={require('../../src/assets/star_on.png')}
-                  maxStars={5}
-                  rating={Math.floor(detail.rate)}
-                  starSize={13}
-                />
-                <Text
-                  style={[styles.normalText, {fontSize: 12, marginLeft: 5}]}>
-                  {detail.rate}
-                </Text>
-              </View>
-            </View>
-          </View>
-          {/* // 회사정보 상단 fix */}
-        </View>
-        <View style={{paddingHorizontal: 20}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderWidth: 1,
-              borderColor: '#E3E3E3',
-              borderRadius: 5,
-              backgroundColor: '#fff',
-              marginBottom: 10,
-            }}>
-            <TouchableWithoutFeedback
-              onPress={() => Linking.openURL(`tel:${detail.mobile}`)}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingVertical: 12,
-                }}>
-                <Image
-                  source={require('../../src/assets/call01.png')}
-                  resizeMode="cover"
-                  style={{width: 24, height: 24}}
-                />
-                <Text
-                  style={[
-                    styles.normalText,
-                    {
-                      fontSize: 14,
-                      marginLeft: 5,
-                    },
-                  ]}>
-                  전화하기
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <View
-              style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
-            />
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('MessageDetail')}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingVertical: 12,
-                }}>
-                <Image
-                  source={require('../../src/assets/msm01.png')}
-                  resizeMode="cover"
-                  style={{width: 24, height: 24}}
-                />
-                <Text
-                  style={[
-                    styles.normalText,
-                    {
-                      fontSize: 14,
-                      marginLeft: 5,
-                    },
-                  ]}>
-                  메세지보내기
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-
-          {/* 업체소개 */}
-          <View style={{marginTop: 20}}>
-            <Text style={[styles.mediumText, {fontSize: 16, marginBottom: 15}]}>
-              업체소개
-            </Text>
-            <Text
-              style={[
-                styles.normalText,
-                {fontSize: 14, lineHeight: 22, marginBottom: 5},
-              ]}>
-              {detail.description
-                ? detail.description
-                : '업체 소개글이 등록되어 있지 않습니다.'}
-            </Text>
-
-            <View style={{paddingVertical: 20, paddingLeft: 7}}>
-              <Text
-                style={[styles.normalText, {fontSize: 14, marginBottom: 5}]}>
-                * 업무시간 :
-                {detail.mb_7 ? detail.mb_7 : ' 현재 미등록 상태입니다.'}
-                {/* 평일 09:00 ~ 18:00 */}
-              </Text>
-              <Text style={[styles.normalText, {fontSize: 14}]}>
-                * 휴무일 안내 :
-                {detail.mb_8 ? detail.mb_8 : ' 현재 미등록 상태입니다.'}
-                {/* * 토, 일, 공휴일 휴무 */}
-              </Text>
-            </View>
-          </View>
-          {/* // 업체소개 */}
-        </View>
-
-        {/* 영업품목 */}
-        <View
-          style={{
-            paddingHorizontal: 20,
-            paddingVertical: 20,
-            backgroundColor: '#F5F5F5',
-            width: Dimensions.get('screen').width,
-          }}>
-          <Text style={[styles.mediumText, {fontSize: 16, marginBottom: 10}]}>
-            영업품목
-          </Text>
-          <Text
-            style={[
-              styles.normalText,
-              {fontSize: 14, lineHeight: 24, marginBottom: 5},
-            ]}>
-            {detail.used ? detail.used : '영업품목이 등록되어 있지 않습니다.'}
-          </Text>
-        </View>
-        {/* // 영업품목 */}
-
-        {/* 고객후기 */}
-        <View
-          style={{
-            marginTop: 20,
-            paddingHorizontal: 20,
-            paddingVertical: 20,
-            backgroundColor: '#fff',
-            width: Dimensions.get('screen').width,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              marginBottom: 10,
-            }}>
-            <Text style={[styles.mediumText, {fontSize: 16, marginRight: 12}]}>
-              고객후기
-            </Text>
-            <Text style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
-              총 리뷰수 {detail.review_total}
-            </Text>
-          </View>
-
-          {/* 리뷰 */}
-          <FlatList
-            data={reviews}
-            renderItem={renderRow}
-            keyExtractor={(item, index) => index.toString()}
-            numColumns={1}
-            persistentScrollbar={true}
-            showsVerticalScrollIndicator={false}
-            progressViewOffset={true}
-            refreshing={true}
-            style={{backgroundColor: '#fff'}}
-            ListEmptyComponent={
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flex: 1,
-                  height: Dimensions.get('window').height - 300,
-                }}>
-                <Text style={{fontFamily: 'SCDream4'}}>
-                  등록된 리뷰가 없습니다.
-                </Text>
-              </View>
-            }
-          />
-          {/* // 리뷰 */}
-        </View>
-        {/* // 고객후기 */}
-
-        <Footer navigation={navigation} />
-        <View style={{marginBottom: 50}} />
-      </ScrollView>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          width: Dimensions.get('window').width,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          backgroundColor: '#fff',
-          zIndex: 5,
-          shadowRadius: 4,
-          shadowOffset: {
-            width: 8,
-            height: 16,
-          },
-          shadowColor: '#000000',
-          shadowOpacity: 0.3,
-          elevation: 10,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => {
-              dispatch(setCompanyId(companyId));
-              dispatch(setPartnerLocation(detail.location));
-              navigation.navigate('Home', {
-                screen: 'Order',
-                params: {
-                  screen: 'DirectOrder',
-                  params: {
-                    bName: detail.businessName,
-                    name: detail.name,
-                    cate1: detail.cate1,
-                    location: detail.location,
-                  },
-                },
-              });
-            }}
-            onPress={() => navigation.navigate('DirectOrder')}
-            style={{width: '85%'}}>
-            <View style={[styles.submitBtn]}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  marginBottom: 10,
                 }}>
                 <Text
-                  style={[styles.mediumText, {fontSize: 18, color: '#fff'}]}>
-                  견적 신청하기
+                  style={[styles.mediumText, {fontSize: 16, marginRight: 12}]}>
+                  고객후기
                 </Text>
-                <Image
-                  source={require('../../src/assets/orderbtn_plus.png')}
-                  resizeMode="cover"
-                  style={{width: 22, height: 22, marginLeft: 10}}
-                />
+                <Text
+                  style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
+                  총 리뷰수 {detail.review_total}
+                </Text>
               </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => onLikeBtn(companyId)}>
-            <View>
-              <Image
-                source={
-                  !checkFavor()
-                    ? require('../../src/assets/Dibson_off.png')
-                    : require('../../src/assets/Dibson_on.png')
+
+              {/* 리뷰 */}
+              <FlatList
+                data={reviews}
+                renderItem={renderRow}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={1}
+                persistentScrollbar={true}
+                showsVerticalScrollIndicator={false}
+                progressViewOffset={true}
+                refreshing={true}
+                style={{backgroundColor: '#fff'}}
+                ListEmptyComponent={
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: 150,
+                    }}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      등록된 리뷰가 없습니다.
+                    </Text>
+                  </View>
                 }
-                resizeMode="contain"
-                style={{width: 50, height: 50, marginLeft: 10}}
               />
+              {/* // 리뷰 */}
             </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+            {/* // 고객후기 */}
+
+            <Footer navigation={navigation} />
+            <View style={{marginBottom: 50}} />
+          </ScrollView>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              width: Dimensions.get('window').width,
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              backgroundColor: '#fff',
+              zIndex: 5,
+              shadowRadius: 4,
+              shadowOffset: {
+                width: 8,
+                height: 16,
+              },
+              shadowColor: '#000000',
+              shadowOpacity: 0.3,
+              elevation: 10,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => {
+                  dispatch(setCompanyId(companyId));
+                  dispatch(setPartnerLocation(detail.location));
+                  navigation.navigate('Home', {
+                    screen: 'Order',
+                    params: {
+                      screen: 'DirectOrder',
+                      params: {
+                        bName: detail.businessName,
+                        name: detail.name,
+                        cate1: detail.cate1,
+                        location: detail.location,
+                      },
+                    },
+                  });
+                }}
+                style={{width: '85%'}}>
+                <View style={[styles.submitBtn]}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={[
+                        styles.mediumText,
+                        {fontSize: 18, color: '#fff'},
+                      ]}>
+                      견적 신청하기
+                    </Text>
+                    <Image
+                      source={require('../../src/assets/orderbtn_plus.png')}
+                      resizeMode="cover"
+                      style={{width: 22, height: 22, marginLeft: 10}}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => onLikeBtn(companyId)}>
+                <View>
+                  <Image
+                    source={
+                      !checkFavor()
+                        ? require('../../src/assets/Dibson_off.png')
+                        : require('../../src/assets/Dibson_on.png')
+                    }
+                    resizeMode="contain"
+                    style={{width: 50, height: 50, marginLeft: 10}}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </>
+      )}
     </>
   );
 };
