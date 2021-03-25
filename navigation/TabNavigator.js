@@ -131,6 +131,7 @@ export const BottomTabNavigator = () => {
 const TabNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Check" component={LoginStackNavigator} />
       <Stack.Screen name="Login" component={LoginStackNavigator} />
       <Stack.Screen name="Stack" component={BottomTabNavigator} />
       <Stack.Screen name="Register" component={RegisterStackNavigator} />
