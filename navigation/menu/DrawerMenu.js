@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Image,
-  Linking,
   StyleSheet,
   Alert,
   ScrollView,
@@ -21,7 +20,7 @@ import FastImage from 'react-native-fast-image';
 import Main from '../../src/api/Main';
 
 const DrawerMenu = (props) => {
-  const {navigate, closeDrawer} = props.navigation;
+  const navigation = props.navigation;
 
   // Redux 에서 유저 정보 가져오기
   const {
@@ -108,6 +107,7 @@ const DrawerMenu = (props) => {
     );
   };
 
+  // 각 메뉴 아코디언 형식 설정(collapse)
   const [collapseArrow01, setCollapseArrow01] = React.useState(true);
   const [collapseArrow02, setCollapseArrow02] = React.useState(true);
   const [collapseArrow03, setCollapseArrow03] = React.useState(true);
@@ -150,7 +150,7 @@ const DrawerMenu = (props) => {
             }}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigate('Main')}>
+              onPress={() => navigation.navigate('Main')}>
               <Image
                 source={require('../../src/assets/home.png')}
                 resizeMode="cover"
@@ -159,7 +159,7 @@ const DrawerMenu = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => closeDrawer('right')}>
+              onPress={() => navigation.closeDrawer('right')}>
               <Image
                 source={require('../../src/assets/icon_close02.png')}
                 resizeMode="cover"
@@ -256,7 +256,7 @@ const DrawerMenu = (props) => {
                   </Text>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={() => navigate('ProfileEdit')}>
+                    onPress={() => navigation.navigate('ProfileEdit')}>
                     <View
                       style={{
                         paddingHorizontal: 10,
@@ -294,7 +294,9 @@ const DrawerMenu = (props) => {
               marginBottom: 20,
             }}>
             <TouchableWithoutFeedback
-              onPress={() => navigate('MyOrder', {screen: 'MyOrder'})}>
+              onPress={() =>
+                navigation.navigate('MyOrder', {screen: 'MyOrder'})
+              }>
               <View
                 style={{
                   flex: 1,
@@ -328,7 +330,8 @@ const DrawerMenu = (props) => {
             <View
               style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
             />
-            <TouchableWithoutFeedback onPress={() => navigate('Message')}>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('Message')}>
               <View
                 style={{
                   flex: 1,
@@ -358,7 +361,7 @@ const DrawerMenu = (props) => {
             />
             <TouchableWithoutFeedback
               onPress={() =>
-                navigate('Home', {
+                navigation.navigate('Home', {
                   screen: 'MyPartners',
                   value: 'reload',
                 })
@@ -391,7 +394,7 @@ const DrawerMenu = (props) => {
 
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => navigate('Order', {screen: 'Order'})}
+            onPress={() => navigation.navigate('Order', {screen: 'Order'})}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -445,7 +448,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Gallery',
                     params: {screen: 'GalleryPackage', params: {cate1: '1'}},
                   })
@@ -458,7 +461,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Gallery',
                     params: {screen: 'GalleryGeneral', params: {cate1: '0'}},
                   })
@@ -471,7 +474,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Gallery',
                     params: {screen: 'GalleryEtc', params: {cate1: '2'}},
                   })
@@ -521,7 +524,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Partners',
                     params: {screen: 'Partners01'},
                   })
@@ -534,7 +537,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Partners',
                     params: {screen: 'Partners02'},
                   })
@@ -547,7 +550,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Partners',
                     params: {screen: 'Partners03'},
                   })
@@ -599,7 +602,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Story',
                     params: {screen: 'Story'},
                   })
@@ -612,7 +615,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Story',
                     params: {screen: 'StoryTips'},
                   })
@@ -625,7 +628,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Story',
                     params: {screen: 'StoryCreateInfo'},
                   })
@@ -647,7 +650,7 @@ const DrawerMenu = (props) => {
 
           <View style={[styles.categoryTitle, styles.mV10]}>
             <TouchableOpacity
-              onPress={() => navigate('Event')}
+              onPress={() => navigation.navigate('Event')}
               activeOpacity={0.8}>
               <Text style={[styles.mediumText, {fontSize: 16}]}>이벤트</Text>
             </TouchableOpacity>
@@ -691,7 +694,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Ccenter',
                     params: {screen: 'CCenterNotice'},
                   })
@@ -704,7 +707,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Ccenter',
                     params: {screen: 'CCenter'},
                   })
@@ -717,7 +720,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'Ccenter',
                     params: {screen: 'CCenterQnA'},
                   })
@@ -739,7 +742,7 @@ const DrawerMenu = (props) => {
 
           <View style={[styles.categoryTitle, styles.mV10]}>
             <TouchableOpacity
-              onPress={() => navigate('CompanyInfo')}
+              onPress={() => navigation.navigate('CompanyInfo')}
               activeOpacity={0.8}>
               <Text style={[styles.mediumText, {fontSize: 16}]}>회사소개</Text>
             </TouchableOpacity>
@@ -783,7 +786,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'PaperInfo',
                     params: {screen: 'PaperInfo'},
                   })
@@ -796,7 +799,7 @@ const DrawerMenu = (props) => {
                 style={styles.subCategory}
                 activeOpacity={0.8}
                 onPress={() =>
-                  navigate('Root', {
+                  navigation.navigate('Root', {
                     screen: 'PaperInfo',
                     params: {screen: 'PaperPrice'},
                   })
