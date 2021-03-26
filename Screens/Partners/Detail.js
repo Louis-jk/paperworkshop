@@ -33,8 +33,6 @@ const Detail = (props) => {
 
   const companyId = props.route.params.companyId;
 
-  console.log('파트너 디테일', props);
-
   const dispatch = useDispatch();
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
@@ -76,7 +74,6 @@ const Detail = (props) => {
     // setLoading(true);
     PartnersAPI.getReview(companyId)
       .then((res) => {
-        console.log('review res', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setReviews(res.data.item);
         } else {
@@ -105,7 +102,6 @@ const Detail = (props) => {
     // setLike((prev) => !prev);
     PartnersAPI.setFavorPartner(mb_id, payload)
       .then((res) => {
-        console.log('찜 결과', res);
         if (
           res.data.result === '1' &&
           res.data.message === '찜하기가 취소되었습니다.'
@@ -131,13 +127,10 @@ const Detail = (props) => {
 
   // 찜한 파트너 확인
   const checkFavor = () => {
-    console.log('myFaverP', myFaverP);
-
     const a =
       myFaverP.length !== 0 &&
       myFaverP.some((element) => {
         //유저정보가 들어와야
-        console.log(element.company_id);
         return element.company_id === props.route.params.companyId;
       });
     return a;
@@ -146,7 +139,6 @@ const Detail = (props) => {
   const checkMyFavorP = () => {
     PartnersAPI.getMyPartners(mb_id, null, null, null, null)
       .then((res) => {
-        console.log('내 찜 파트너 목록', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setMyFavorP(res.data.item);
         } else {
@@ -185,8 +177,6 @@ const Detail = (props) => {
 
   const sliderWidth = Dimensions.get('window').width;
   const itemWidth = Dimensions.get('window').width;
-
-  console.log('detail', detail);
 
   const renderRow = ({item, index}) => {
     return (

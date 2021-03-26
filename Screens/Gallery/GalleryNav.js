@@ -47,7 +47,6 @@ const GalleryNav = (props) => {
     setIsLoading(true);
     GalleryApi.getPartner('proc_cate_list', '1')
       .then((res) => {
-        console.log('package: ', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setPackagesInfo(res.data.item);
           setIsLoading(false);
@@ -69,7 +68,6 @@ const GalleryNav = (props) => {
     setIsLoading(true);
     GalleryApi.getPartner('proc_cate_list', '0')
       .then((res) => {
-        console.log('general: ', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setGeneralInfo(res.data.item);
           setIsLoading(false);
@@ -91,7 +89,6 @@ const GalleryNav = (props) => {
     setIsLoading(true);
     GalleryApi.getPartner('proc_cate_list', '2')
       .then((res) => {
-        console.log('etc: ', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setEtcInfo(res.data.item);
           setIsLoading(false);

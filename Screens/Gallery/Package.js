@@ -27,8 +27,6 @@ const Package = (props) => {
   const cate1 = props.route.params.cate1;
   const ca_id = props.route.params.ca_id;
 
-  console.log('Galley package props', props);
-
   const [galleries, setGalleries] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -37,7 +35,6 @@ const Package = (props) => {
 
     GalleryApi.getPartnerType('proc_gallery_list', cate1, ca_id)
       .then((res) => {
-        console.log('gallery res', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setGalleries(res.data.item);
           setIsLoading(false);

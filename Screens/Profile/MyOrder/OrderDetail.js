@@ -33,8 +33,6 @@ const OrderDetail = (props) => {
   const [info04, setInfo04] = React.useState([]); // 후가공 정보
   const [isLoading, setLoading] = React.useState(false);
 
-  console.log('OrderDetail props2', props);
-
   const getMyOrderParticularsAPI = () => {
     setLoading(true);
     let method = '';
@@ -49,7 +47,6 @@ const OrderDetail = (props) => {
 
     OrderAPI.getMyOrderParticulars(method, pe_id)
       .then((res) => {
-        console.log('메소드 실행 결과 값', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setDetails(res.data.item.basic);
           if (cate1 !== '2') {
@@ -103,7 +100,6 @@ const OrderDetail = (props) => {
             text: '확인',
           },
         ]);
-        console.log('The file saved to ', res.path());
       });
   };
 
@@ -153,12 +149,6 @@ const OrderDetail = (props) => {
     setModalVisible(!isModalVisible);
     setImgPath(path);
   };
-
-  console.log('details', details);
-  console.log('info01', info01);
-  console.log('info02', info02);
-  console.log('info03', info03);
-  console.log('info04', info04);
 
   return (
     <>

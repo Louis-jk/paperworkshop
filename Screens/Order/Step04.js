@@ -116,7 +116,6 @@ const Step04 = (props) => {
     BoxType.getBoxTypeId(cate1, ca_id, type_id)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
-          console.log('상세정보', res);
           setInfoDetail(res.data.item);
           setGetQuantity(res.data.item[0].making_cnt);
 
@@ -201,8 +200,6 @@ const Step04 = (props) => {
   const [coverColorCurError, setCoverColorCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 표지간지색상 선택 값 없을 시 에러
   const [sectionColorCurError, setSectionColorCurError] = React.useState(false); // 일반인쇄 - 책자/서적 - 출판류/서적/도서류 섹션간지색상 선택 값 없을 시 에러
   const [thomsonCurError, setThomsonCurError] = React.useState(false); // 일반인쇄 - 스티커 - 톰슨타입 선택 값 없을 시 에러
-
-  console.log('pageCountCur', pageCountCur);
 
   const toggleModal = () => {
     if (cate1 === '1') {
@@ -891,7 +888,6 @@ const Step04 = (props) => {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      // console.log('이미지', res);
       const imgName = res.name.split('.');
       const extArray = res.type.split('/');
       setFileUrlCurrent(res.uri);
@@ -975,11 +971,8 @@ const Step04 = (props) => {
     frmdata.append('pe_file2[]', source02);
     frmdata.append('easy_yn', 'Y');
 
-    console.log('간단견적제출시 frmdata', frmdata);
-
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
-        console.log('간편견적', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setModalVisible(!isModalVisible);
           navigation.navigate('easyOrderComplete');

@@ -29,7 +29,6 @@ const QnADetail = (props) => {
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setDetail(res.data.item[0]);
-          console.log(res);
           setLoading(false);
         } else {
           Alert.alert(
@@ -56,8 +55,6 @@ const QnADetail = (props) => {
   React.useEffect(() => {
     getQnaDetailAPI();
   }, []);
-
-  console.log('detail', detail);
 
   return (
     <>

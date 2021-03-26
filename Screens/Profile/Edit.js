@@ -48,8 +48,6 @@ const Edit = (props) => {
     mb_profile_img,
   } = useSelector((state) => state.UserInfoReducer);
 
-  console.log('프로필 이미지', mb_profile_img);
-
   const [profileImg, setProfileImg] = React.useState(null);
 
   const [source, setSource] = React.useState({});
@@ -70,7 +68,6 @@ const Edit = (props) => {
       cropping: true,
     })
       .then((img) => {
-        console.log('img', img);
         dispatch(UserProfileImg(img.path));
         setSource({
           uri: img.path,
@@ -79,7 +76,7 @@ const Edit = (props) => {
         });
         setProfileImg(img.path);
       })
-      .catch((e) => console.log(e.message ? e.message : e));
+      .catch((e) => console.log(e));
   };
 
   // 회원 정보 수정시 입력값 담기
@@ -87,8 +84,6 @@ const Edit = (props) => {
   const [mobileConfirmNum, setMobileConfirmNum] = React.useState('null');
   const [email, setEmail] = React.useState(null);
   const [company, setCompany] = React.useState(null);
-
-  // console.log('입력된 핸드폰번호', mobile);
 
   // 비밀번호 보이기 기능
   const [pwdEyes, setPwdEyes] = React.useState(true);
@@ -159,7 +154,6 @@ const Edit = (props) => {
         }),
       })
         .then((res) => {
-          console.log('본인 인증 response 11', res);
           if (res.data.result == '1') {
             setConfirm('Y');
             Alert.alert('본인 인증되었습니다.', res.data.message, [
@@ -224,7 +218,6 @@ const Edit = (props) => {
         }),
       })
         .then((res) => {
-          // console.log('재전송시 인증번호 response', res);
           if (res.data.result == '1') {
             // setMobileConfirmId(res.data.item);
             setMobileConfimed(false);
@@ -240,7 +233,6 @@ const Edit = (props) => {
               ],
             );
           }
-          // console.log('휴대폰 인증 response', res);
         })
         .catch((err) =>
           Alert.alert('문제가 있습니다.', err, [
@@ -309,8 +301,6 @@ const Edit = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  console.log('프로필 이미지 점검 후', mb_profile_img);
-
   const onSubmit = () => {
     axios({
       method: 'post',
@@ -321,7 +311,6 @@ const Edit = (props) => {
       },
     })
       .then((res) => {
-        console.log('수정 시 테스트', res);
         if (res.data.result === '1') {
           Alert.alert(
             '수정되었습니다.',

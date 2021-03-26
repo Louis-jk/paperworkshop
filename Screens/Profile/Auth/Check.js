@@ -28,14 +28,11 @@ const Check = (props) => {
 
   const getData = async () => {
     try {
-      console.log('체크하나 ');
       const jsonValue = await AsyncStorage.getItem('@paper_info');
       if (jsonValue !== null) {
         const UserInfo = JSON.parse(jsonValue);
         const uId = UserInfo.userId;
         const uPwd = UserInfo.userPwd;
-        console.log('아이디는', uId);
-        console.log('비번은', uPwd);
         login(uId, uPwd);
       } else {
         navigation.navigate('Login');

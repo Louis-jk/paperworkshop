@@ -39,7 +39,6 @@ const DrawerMenu = (props) => {
 
   // Redux에서 가입시 회원 정보 가져오기
 
-  // console.log('유저 이미지', mb_img);
   const bannerCarouselRef = React.useRef(null);
 
   const [banners, setBanners] = React.useState([]); // 드로어 메뉴 내부 슬라이더(배너)

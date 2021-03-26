@@ -46,7 +46,6 @@ const Step05 = (props) => {
   const routeName = props.route.name;
   const propsScreenName = props.route.params.screen;
 
-  console.log('Step05 props:', props);
   const dispatch = useDispatch();
 
   //////////////////////////
@@ -115,8 +114,6 @@ const Step05 = (props) => {
   //////////////////////////
   /////// FUNCTIONS ///////
   /////////////////////////
-
-  console.log('isPaperType02', isPaperType02);
 
   const nextBtn = () => {
     if (paper === null || paper === '') {
@@ -205,7 +202,6 @@ const Step05 = (props) => {
           },
         ]);
       } else {
-        console.log('directPaperName', directPaperName);
         dispatch(selectPfId(paper));
         dispatch(selectPdId(paperType));
         dispatch(selectPnId(paperTypeDetail));
@@ -272,7 +268,6 @@ const Step05 = (props) => {
           },
         ]);
       } else {
-        console.log('directPaperName', directPaperName);
         dispatch(selectPfId(paper));
         dispatch(selectPdId(paperType));
         dispatch(selectPnId(paperTypeDetail));
@@ -318,7 +313,6 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        console.log('지류 정보 step05', res);
         if (res.data.result === '1') {
           setTypeDetail(res.data.item);
           // setPaperChoise(res.data.item[0].pf_id); // 최조 지종 지정
@@ -357,7 +351,6 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        console.log('지류 정보', res);
         if (res.data.result === '1') {
           setIsLoading(false);
           setPaperDetail(res.data.item);
@@ -417,7 +410,6 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        console.log('지종1 차 결과 res', res);
         if (res.data.result === '1') {
           if (res.data.item[0].paper_name !== '직접입력') {
             setPaperDetail2(res.data.item); // 상세 지종 API 가져온 값 담기
@@ -476,7 +468,6 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        console.log('지종 상세', res);
         if (res.data.result === '1') {
           setPaperDetail3(res.data.item);
           setGetWeight(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
@@ -510,16 +501,12 @@ const Step05 = (props) => {
     setPaper(null);
   }, []);
 
-  console.log('pf_id', paper);
-  console.log('getWeight', typeof getWeight);
-
   // 직접입력시
   const setPaperTypeName02 = (v) => {
     if (v === '직접입력') {
       setIsDirect(v);
       setIsLoading03(false);
     } else {
-      console.log('아님', v);
       setDirectPaperName(v);
     }
   };
@@ -537,7 +524,6 @@ const Step05 = (props) => {
 
   // 지종 2차 선택
   const setPaperType02 = (v) => {
-    console.log('지종2차', v);
     setPaperTypeDetail(v);
     getPaperDetailStep02(v);
     setIsLoading03(true);
@@ -563,24 +549,17 @@ const Step05 = (props) => {
   //  인쇄교정
   const setColorChoise = (v) => {
     setColor(v);
-    console.log('setColorChoise v', v);
   };
 
   //  인쇄감리
   const setCheckChoise = (v) => {
     setCheck(v);
-    console.log('setCheckChoise v', v);
   };
 
   const onSelectPaperColor = (name) => {
-    console.log('컬러 네임', name);
     setPaperColorName(name);
     setPaperColor(name);
   };
-
-  console.log('getGoal', getGoal);
-  console.log('getWeight', getWeight);
-  console.log('getPrtSupervision', getPrtSupervision);
 
   return (
     <>

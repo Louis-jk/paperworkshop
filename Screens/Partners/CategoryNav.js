@@ -14,9 +14,6 @@ const CategoryNav = (props) => {
   const cateName = props.cateName;
   const propLocation = props.location;
 
-  console.log('Category Nav Props', props);
-  console.log('Category Nav propLocation', propLocation);
-
   const packageIds = ['9', '10', '11', '12', '13', '14'];
   const generalIds = ['1', '4', '5', '6', '7', '8'];
   const etcIds = ['15', '16', '17', '18', '19'];

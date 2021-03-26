@@ -271,7 +271,6 @@ const Step03 = (props) => {
           {/* 타입 부분 */}
           <View style={{marginBottom: 20}}>
             <View style={styles.categoryWrap}>
-              {/* {console.log('TypeDetail', typeDetail)} */}
               <FlatList
                 data={typeDetail}
                 renderItem={renderRow}

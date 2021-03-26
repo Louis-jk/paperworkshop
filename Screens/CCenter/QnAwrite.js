@@ -28,8 +28,6 @@ const QnAwrite = (props) => {
   const [titleError, setTitleError] = React.useState(null); // 문의 제목 입력 없을 시(유효성)
   const [contentError, setContentError] = React.useState(null); // 문의 내용 입력 없을 시(유효성)
 
-  console.log('mb_id', mb_id);
-
   const senFaqAPI = () => {
     if (title === null || title === '') {
       setTitleError(true);

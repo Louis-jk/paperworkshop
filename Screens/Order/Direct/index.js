@@ -30,8 +30,6 @@ const index = (props) => {
   const bName = props.route.params.bName;
   const name = props.route.params.name;
 
-  console.log('Direct props', props);
-
   const dispatch = useDispatch();
 
   // Redux 에서 유저 정보 가져오기
@@ -47,8 +45,6 @@ const index = (props) => {
     const type = cate1.split(',');
     setCate1Type(type);
   }, []);
-
-  console.log('cate1Type', cate1Type);
 
   return (
     <>

@@ -25,7 +25,6 @@ const SetPwd = (props) => {
   const userId = props.route.params.mb_id;
 
   const pwdReRef = React.useRef(null);
-  console.log('setPwd props:', props);
 
   // 유효성 체크
   const validationSchema = yup.object().shape({
@@ -68,7 +67,6 @@ const SetPwd = (props) => {
   const setUserNewPwd = (mb_id, mb_password, mb_password_re) => {
     Auth.onSetPwd(mb_id, mb_password, mb_password_re)
       .then((res) => {
-        console.log('비밀번호 변경', res);
         if (res.data.result === '1') {
           navigation.navigate('SetPwdComplete');
         } else {

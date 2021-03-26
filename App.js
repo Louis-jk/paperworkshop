@@ -21,7 +21,6 @@ const App = () => {
     }, 1000);
 
     messaging().onMessage((remoteMessage) => {
-      console.log('remoteMessage', remoteMessage);
       Toast.showWithGravity(
         `${remoteMessage.data.message}`,
         Toast.LONG,

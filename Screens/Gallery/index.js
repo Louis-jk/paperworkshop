@@ -28,7 +28,6 @@ const index = (props) => {
 
     GalleryApi.getPartner('proc_gallery_list', '')
       .then((res) => {
-        console.log('gallery res', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setGalleries(res.data.item);
           setIsLoading(false);

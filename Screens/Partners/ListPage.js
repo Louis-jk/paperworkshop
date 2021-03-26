@@ -29,12 +29,6 @@ const Packages = (props) => {
   const ca_id = props.route.params.ca_id;
   const propLocation = props.route.params.location;
 
-  console.log('List Page Props', props);
-  console.log('List Page propLocation', propLocation);
-
-  console.log('ListPage props', props);
-  console.log();
-
   const [partners, setPartners] = React.useState([]);
 
   // useMemo || useCallback 필요
@@ -74,8 +68,6 @@ const Packages = (props) => {
   React.useEffect(() => {
     getApi();
   }, [propLocation, cate1, ca_id]);
-
-  console.log('partners:', partners);
 
   const renderRow = ({item, index}) => {
     return <List item={item} index={index} navigation={navigation} />;

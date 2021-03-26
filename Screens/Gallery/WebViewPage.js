@@ -64,8 +64,6 @@ const WebViewPage = (props) => {
     getApi();
   }, []);
 
-  console.log('galleryDetail', galleryDetail);
-
   return (
     <>
       <Header title={routeName} navigation={navigation} />
@@ -140,7 +138,6 @@ const WebViewPage = (props) => {
                 //   }
                 // `}
                 onSizeUpdated={(size) => {
-                  console.log('웹뷰 size', size);
                   setGetHeight(size.height);
                 }}
                 files={[

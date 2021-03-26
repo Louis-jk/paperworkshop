@@ -24,14 +24,8 @@ import PartnersApi from '../../../src/api/Partners';
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-  // const cateName = props.route.params.name;
-
-  console.log('MyPartners props', props);
 
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
-
-  console.log('routeName', routeName);
-  // console.log('favor', favor);
 
   const [partners, setPartners] = React.useState([]);
   const [pPackage, setPpackages] = React.useState([]);
@@ -44,7 +38,6 @@ const index = (props) => {
 
     PartnersApi.getMyPartners(mb_id, null, null, null, null)
       .then((res) => {
-        console.log('getPartnersAll', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
           setIsLoading(false);

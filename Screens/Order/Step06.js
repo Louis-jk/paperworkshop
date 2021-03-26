@@ -149,8 +149,6 @@ const Step06 = (props) => {
     setInfoModalVisible(!isInfoModalVisible);
   };
 
-  console.log('foil', foil);
-
   const [source, setSource] = React.useState('');
   const [source02, setSource02] = React.useState('');
 
@@ -234,11 +232,8 @@ const Step06 = (props) => {
     frmdata.append('outside', outside);
     frmdata.append('status', status);
 
-    console.log('frmdata', frmdata);
-
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
-        console.log('세부견적', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setModalVisible(!isModalVisible);
           navigation.navigate('easyOrderComplete');

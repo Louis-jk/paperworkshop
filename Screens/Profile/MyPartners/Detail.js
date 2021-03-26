@@ -61,8 +61,6 @@ const Detail = (props) => {
   const sliderWidth = Dimensions.get('window').width;
   const itemWidth = Dimensions.get('window').width;
 
-  console.log('Detail props', props);
-
   return (
     <>
       <Header title={routeName} navigation={navigation} />

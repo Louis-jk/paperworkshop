@@ -127,8 +127,6 @@ const Register = (props) => {
   const [mobileConfirmId, setMobileConfirmId] = React.useState(null);
   const [isMobileConfimed, setMobileConfimed] = React.useState(false);
 
-  console.log('입력된 인증번호', mobileConfirmId);
-
   // 본인 인증 시간 초과의 경우 상태관리
   const [reSend, setReSend] = React.useState(false);
   const [reSendStatus, setReSendStatus] = React.useState('n');
@@ -177,7 +175,6 @@ const Register = (props) => {
           } else {
             Alert.alert('휴대전화번호를 올바르게 입력해주세요.');
           }
-          console.log('휴대폰 인증 response', res);
         })
         .catch((err) =>
           Alert.alert('문제가 있습니다.', err, [
@@ -237,7 +234,6 @@ const Register = (props) => {
               ],
             );
           }
-          console.log('휴대폰 인증 response', res);
         })
         .catch((err) =>
           Alert.alert('문제가 있습니다.', err, [
@@ -278,7 +274,6 @@ const Register = (props) => {
         }),
       })
         .then((res) => {
-          console.log('본인 인증 response 11', res);
           if (res.data.result == '1') {
             Alert.alert('본인 인증되었습니다.', res.data.message, [
               {

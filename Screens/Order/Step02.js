@@ -60,8 +60,6 @@ const Step02 = (props) => {
   const companyRef = React.useRef(null); // 휴대폰번호 TextInpu
   const memoRef = React.useRef(null); // 메모 TextInpu
 
-  console.log('Step02 props', props);
-
   const dispatch = useDispatch();
 
   const [date, setDate] = React.useState(new Date());
@@ -97,8 +95,6 @@ const Step02 = (props) => {
       setDefaultLocat(pLocation);
     }
   }, []);
-
-  console.log('defaultLocat', defaultLocat);
 
   const onChange01 = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -175,7 +171,6 @@ const Step02 = (props) => {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      // console.log('이미지', res);
       const imgName = res.name.split('.');
       const extArray = res.type.split('/');
       setFileUrlCurrent(res.uri);
@@ -232,11 +227,9 @@ const Step02 = (props) => {
     frmdata.append('estimate_date', esti);
     frmdata.append('pe_file[]', source);
     frmdata.append('status', '0');
-    // console.log(frmdata);
 
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
-        console.log('기타인쇄 견적', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setModalVisible(!isModalVisible);
           navigation.navigate('easyOrderComplete');

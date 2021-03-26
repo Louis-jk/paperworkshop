@@ -19,18 +19,14 @@ const Detail = (props) => {
   const routeName = props.route.name;
   const fa_id = props.route.params.fa_id;
 
-  console.log('props FaqDetail', props);
-
   const [isLoading, setLoading] = React.useState(false);
   const [detail, setDetail] = React.useState({});
 
   const getFaqDetailAPI = () => {
     Info.getFaqDetail(fa_id)
       .then((res) => {
-        console.log('faq res', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setDetail(res.data.item[0]);
-          console.log(res);
           setLoading(false);
         } else {
           Alert.alert(
@@ -149,7 +145,7 @@ const Detail = (props) => {
               style={[
                 styles.normalText,
                 {
-                  fontSize: 15,
+                  fontSize: 14,
                   color: '#333333',
                   lineHeight: 28,
                   width: '100%',
@@ -215,7 +211,7 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontFamily: 'SCDream5',
-    fontSize: 17,
+    fontSize: 15,
     lineHeight: 24,
     color: '#000',
   },

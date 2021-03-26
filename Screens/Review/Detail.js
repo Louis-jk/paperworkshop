@@ -69,7 +69,6 @@ const Detail = (props) => {
     setLoading(true);
     PartnersAPI.getReviewDetail(reviewID)
       .then((res) => {
-        console.log('어찌됐노', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setReview(res.data.item[0]);
           setLoading(false);

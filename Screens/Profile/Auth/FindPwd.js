@@ -91,7 +91,6 @@ const FindPwd = (props) => {
                 },
               ],
             );
-            // console.log('getUserId res', res);
           } else {
             Alert.alert(res.data.message, '', [
               {
@@ -136,7 +135,6 @@ const FindPwd = (props) => {
         // check_yn ?
       )
         .then((res) => {
-          // console.log('인증시 ', res);
           if (res.data.result.result === '1' && res.data.result.item === 'Y') {
             Alert.alert(
               res.data.result.message,

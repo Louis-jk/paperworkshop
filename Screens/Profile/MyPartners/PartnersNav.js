@@ -4,7 +4,6 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 const PartnersNav = (props) => {
   const navigation = props.navigation;
   const routeName = props.routeName;
-  console.log('PartnersNav props', props);
 
   const [isActiveLocation, setActiveLocation] = React.useState(false);
   const toggleLocation = () => {

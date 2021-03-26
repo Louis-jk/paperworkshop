@@ -28,7 +28,6 @@ const ReqDetailList = (props) => {
   const getMyOrderDetailAPI = () => {
     OrderAPI.getMyOrderDetail(pe_id)
       .then((res) => {
-        console.log('ReqDetail 결과값', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setMyOrderDetail(res.data.item[0]);
           if (
@@ -103,7 +102,6 @@ const ReqDetailList = (props) => {
   const delOrderAPI = () => {
     OrderAPI.delOrder(pe_id)
       .then((res) => {
-        console.log('요청 취소 결과값', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setModalVisible(!isModalVisible);
           navigation.navigate('CancelOrder');

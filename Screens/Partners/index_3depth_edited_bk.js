@@ -60,8 +60,6 @@ const index = (props) => {
     getApi();
   }, []);
 
-  console.log('partners:', partners);
-
   const renderRow = ({item, index}) => {
     return <List item={item} index={index} navigation={navigation} />;
   };

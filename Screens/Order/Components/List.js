@@ -25,7 +25,6 @@ const List = (props) => {
     toggleSelectDetailModal,
     setBindFix,
   } = props;
-  // console.log('인덱스', item[item.length - 1]);
   return (
     <TouchableOpacity
       key={item.type_id}

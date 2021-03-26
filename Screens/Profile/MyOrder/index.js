@@ -20,8 +20,6 @@ const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  console.log('나의 견적의뢰', props);
-
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
   const [myOrders, setMyOrders] = React.useState([]);
   const [visibleStep01, setVisibleStep01] = React.useState(false);
@@ -55,8 +53,6 @@ const index = (props) => {
         ]);
       });
   };
-
-  console.log('myOrders', myOrders);
 
   React.useEffect(() => {
     getMyOrderAPI();
