@@ -44,13 +44,13 @@ const index = (props) => {
     },
   ];
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return (
       <Image
         key={index}
         source={item.image}
         resizeMode="cover"
-        style={{ width: Dimensions.get('window').width, height: 400 }}
+        style={{width: Dimensions.get('window').width, height: 400}}
       />
     );
   };
@@ -61,7 +61,7 @@ const index = (props) => {
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <View style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
+      <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
           style={{
             flexDirection: 'row',
@@ -76,16 +76,16 @@ const index = (props) => {
             marginBottom: 10,
           }}>
           <TextInput
-            placeholder="업체명을 입력하세요."
+            placeholder="이벤트명을 입력하세요."
             placeholderTextColor="#BEBEBE"
             autoFocus={false}
-            style={[styles.normalText, { width: '80%' }]}
+            style={[styles.normalText, {width: '80%'}]}
           />
           <TouchableOpacity>
             <Image
               source={require('../../src/assets/top_seach.png')}
               resizeMode="contain"
-              style={{ width: 30, height: 30 }}
+              style={{width: 30, height: 30}}
             />
           </TouchableOpacity>
         </View>
@@ -97,7 +97,7 @@ const index = (props) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('EventDetail')}
           activeOpacity={0.8}
-          style={{ marginVertical: 20 }}>
+          style={{marginVertical: 20}}>
           <View
             style={{
               position: 'relative',
@@ -140,11 +140,13 @@ const index = (props) => {
                   <Image
                     source={require('../../src/assets/slide_arr02.png')}
                     resizeMode="contain"
-                    style={{ width: 22, height: 20 }}
+                    style={{width: 22, height: 20}}
                   />
                 </View>
               </TouchableWithoutFeedback>
-              <View style={{ borderWidth: 0.2, height: 15, borderColor: '#D4D4D4' }} />
+              <View
+                style={{borderWidth: 0.2, height: 15, borderColor: '#D4D4D4'}}
+              />
               <TouchableWithoutFeedback
                 onPress={() => {
                   carouselRef.current.snapToNext();
@@ -159,16 +161,16 @@ const index = (props) => {
                   <Image
                     source={require('../../src/assets/slide_arr01.png')}
                     resizeMode="contain"
-                    style={{ width: 22, height: 20 }}
+                    style={{width: 22, height: 20}}
                   />
                 </View>
               </TouchableWithoutFeedback>
             </View>
             {/* // Swipe Prev,Next 버튼 Custom */}
           </View>
-          <View style={{ paddingHorizontal: 20 }}>
+          <View style={{paddingHorizontal: 20}}>
             {/* 이벤트 내용 */}
-            <View style={{ marginTop: 15 }}>
+            <View style={{marginTop: 15}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -176,16 +178,26 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.boldText, { fontSize: 16, marginRight: 5 }]}>제목입니다</Text>
-                <Text style={[styles.mediumText, { fontSize: 14, color: '#366DE5' }]}>NEW</Text>
+                <Text style={[styles.boldText, {fontSize: 16, marginRight: 5}]}>
+                  제목입니다
+                </Text>
+                <Text
+                  style={[styles.mediumText, {fontSize: 14, color: '#366DE5'}]}>
+                  NEW
+                </Text>
               </View>
               <Text
                 style={[
                   styles.normalText,
-                  { fontSize: 14, lineHeight: 20, width: '100%', marginBottom: 5 },
+                  {
+                    fontSize: 14,
+                    lineHeight: 20,
+                    width: '100%',
+                    marginBottom: 5,
+                  },
                 ]}>
-                이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트
-                내용입니다 이벤트 내용입니다 이벤트 내용...
+                이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트
+                내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트 내용...
               </Text>
             </View>
             {/* // 이벤트 내용 */}
@@ -196,7 +208,7 @@ const index = (props) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('EventDetail')}
           activeOpacity={0.8}
-          style={{ marginVertical: 20 }}>
+          style={{marginVertical: 20}}>
           <View
             style={{
               position: 'relative',
@@ -239,11 +251,13 @@ const index = (props) => {
                   <Image
                     source={require('../../src/assets/slide_arr02.png')}
                     resizeMode="contain"
-                    style={{ width: 22, height: 20 }}
+                    style={{width: 22, height: 20}}
                   />
                 </View>
               </TouchableWithoutFeedback>
-              <View style={{ borderWidth: 0.2, height: 15, borderColor: '#D4D4D4' }} />
+              <View
+                style={{borderWidth: 0.2, height: 15, borderColor: '#D4D4D4'}}
+              />
               <TouchableWithoutFeedback
                 onPress={() => {
                   carouselRef.current.snapToNext();
@@ -258,16 +272,16 @@ const index = (props) => {
                   <Image
                     source={require('../../src/assets/slide_arr01.png')}
                     resizeMode="contain"
-                    style={{ width: 22, height: 20 }}
+                    style={{width: 22, height: 20}}
                   />
                 </View>
               </TouchableWithoutFeedback>
             </View>
             {/* // Swipe Prev,Next 버튼 Custom */}
           </View>
-          <View style={{ paddingHorizontal: 20 }}>
+          <View style={{paddingHorizontal: 20}}>
             {/* 이벤트 내용 */}
-            <View style={{ marginTop: 15 }}>
+            <View style={{marginTop: 15}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -275,16 +289,26 @@ const index = (props) => {
                   alignItems: 'center',
                   marginBottom: 10,
                 }}>
-                <Text style={[styles.boldText, { fontSize: 16, marginRight: 5 }]}>제목입니다</Text>
-                <Text style={[styles.mediumText, { fontSize: 14, color: '#366DE5' }]}>NEW</Text>
+                <Text style={[styles.boldText, {fontSize: 16, marginRight: 5}]}>
+                  제목입니다
+                </Text>
+                <Text
+                  style={[styles.mediumText, {fontSize: 14, color: '#366DE5'}]}>
+                  NEW
+                </Text>
               </View>
               <Text
                 style={[
                   styles.normalText,
-                  { fontSize: 14, lineHeight: 20, width: '100%', marginBottom: 5 },
+                  {
+                    fontSize: 14,
+                    lineHeight: 20,
+                    width: '100%',
+                    marginBottom: 5,
+                  },
                 ]}>
-                이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트
-                내용입니다 이벤트 내용입니다 이벤트 내용...
+                이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트
+                내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트 내용...
               </Text>
             </View>
             {/* // 이벤트 내용 */}
