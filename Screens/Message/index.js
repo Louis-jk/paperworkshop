@@ -4,28 +4,83 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
-  TextInput,
-  Button,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
+  FlatList,
+  Alert,
 } from 'react-native';
 
+import {useSelector} from 'react-redux';
+
 import Header from '../Common/Header';
-import Footer from '../Common/Footer';
+import MessageAPI from '../../src/api/Messgae';
 
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
+  const {mb_id} = useSelector((state) => state.UserInfoReducer);
+
   const [category01, setCategory01] = React.useState(null);
   const [value, setValue] = React.useState(null);
+
+  const [isLoading, setLoading] = React.useState(false);
+  const [list, setList] = React.useState([]);
+
+  const getMessageRoomAPI = () => {
+    setLoading(true);
+    MessageAPI.onChatList(mb_id)
+
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setList(res.data.item);
+          setLoading(false);
+        } else {
+          setList();
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+        setLoading(false);
+      });
+  };
+
+  React.useEffect(() => {
+    getMessageRoomAPI();
+  }, []);
+
+  console.log('list', list);
 
   return (
     <>
       <Header title={routeName} navigation={navigation} />
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.wrap}>
           <TouchableOpacity
