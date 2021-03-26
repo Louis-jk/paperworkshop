@@ -50,6 +50,7 @@ export default {
       }),
     });
   },
+  // 견적 요청 포기
   delOrder(pe_id) {
     return Send({
       method: 'post',
