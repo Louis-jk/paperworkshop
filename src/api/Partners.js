@@ -81,4 +81,14 @@ export default {
       }),
     });
   },
+  // 메인페이지 파트너 3개씩 출력 부분
+  getPartnerMain(ptype) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_main_partner_list',
+        ptype,
+      }),
+    });
+  },
 };
