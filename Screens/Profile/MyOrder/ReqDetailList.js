@@ -53,6 +53,7 @@ const ReqDetailList = (props) => {
       });
   };
 
+  // 파트너 선정(나의 견적에서 파트너 선정)
   const setEstimatePartnerAPI = (pd_id) => {
     Partners.setEstimatePartner(pd_id).then((res) => {
       if (res.data.result === '1') {
@@ -71,6 +72,46 @@ const ReqDetailList = (props) => {
       }
     });
   };
+
+  // 파트너 선정(계약금 입금완료)
+  const setDepositPartnerAPI = () => {
+    Partners.setDepositPartner(pe_id).then((res) => {
+      if (res.data.result === '1') {
+        Alert.alert(res.data.message, '', [
+          {
+            text: '확인',
+            onPress: () => navigation.navigate('MyOrder'),
+          },
+        ]);
+      } else {
+        Alert.alert(res.data.message, '', [
+          {
+            text: '확인',
+          },
+        ]);
+      }
+    });
+  };
+
+  // // 파트너 선정(인쇄 제작요청)
+  // const setDepositPartnerAPI = () => {
+  //   Partners.setDepositPartner(pe_id).then((res) => {
+  //     if (res.data.result === '1') {
+  //       Alert.alert(res.data.message, '', [
+  //         {
+  //           text: '확인',
+  //           onPress: () => navigation.navigate('MyOrder'),
+  //         },
+  //       ]);
+  //     } else {
+  //       Alert.alert(res.data.message, '', [
+  //         {
+  //           text: '확인',
+  //         },
+  //       ]);
+  //     }
+  //   });
+  // };
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -99,6 +140,7 @@ const ReqDetailList = (props) => {
     delOrderAPI();
   };
 
+  // 견적 요청 포기
   const delOrderAPI = () => {
     OrderAPI.delOrder(pe_id)
       .then((res) => {
@@ -236,6 +278,18 @@ const ReqDetailList = (props) => {
                   ],
                 );
               } else if (myOrderDetail.status === '3') {
+                setDepositPartnerAPI();
+                Alert.alert(
+                  '계약금 입금완료 요청하였습니다.',
+                  '파트너회원이 입금확인할 때까지 기다려주세요.',
+                  [
+                    {
+                      text: '확인',
+                    },
+                  ],
+                );
+              } else if (myOrderDetail.status === '5') {
+                setDepositPartnerAPI();
                 Alert.alert(
                   '계약금 입금완료 요청하였습니다.',
                   '파트너회원이 입금확인할 때까지 기다려주세요.',
@@ -251,21 +305,35 @@ const ReqDetailList = (props) => {
             }}
             style={{
               borderWidth: 0.5,
-              borderColor: '#275696',
+              borderColor: myOrderDetail.status === '4' ? '#b5b5b5' : '#275696',
               borderRadius: 20,
-              backgroundColor: '#275696',
+              backgroundColor:
+                myOrderDetail.status === '4' ? '#b5b5b5' : '#275696',
               paddingVertical: 12,
               width: '49%',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={[styles.normalText, {fontSize: 12, color: '#fff'}]}>
+            <Text
+              style={[
+                styles.normalText,
+                {
+                  fontSize: 12,
+                  color: '#fff',
+                },
+              ]}>
               {myOrderDetail.status === '1'
                 ? '파트너 선정'
                 : myOrderDetail.status === '2'
                 ? '파트너 선정됨'
                 : myOrderDetail.status === '3'
                 ? '계약금 입금완료'
+                : myOrderDetail.status === '4'
+                ? '계약금 입금확인대기'
+                : myOrderDetail.status === '5'
+                ? '인쇄제작요청'
+                : myOrderDetail.status === '6'
+                ? '수령완료'
                 : null}
             </Text>
           </TouchableOpacity>
@@ -454,6 +522,16 @@ const ReqDetailList = (props) => {
                   ? '파트너선정업체'
                   : myOrderDetail.status === '3'
                   ? '파트너선정업체'
+                  : myOrderDetail.status === '4'
+                  ? '파트너선정업체'
+                  : myOrderDetail.status === '5'
+                  ? '파트너선정업체'
+                  : myOrderDetail.status === '6'
+                  ? '파트너선정업체'
+                  : myOrderDetail.status === '7'
+                  ? '파트너선정업체'
+                  : myOrderDetail.status === '8'
+                  ? '마감'
                   : null}
               </Text>
               {myOrderDetail.status === '1' && (
@@ -469,6 +547,31 @@ const ReqDetailList = (props) => {
               {myOrderDetail.status === '3' && (
                 <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
                   현재 계약금 입금 대기중입니다.
+                </Text>
+              )}
+              {myOrderDetail.status === '4' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  현재 계약금 입금확인 대기중입니다.
+                </Text>
+              )}
+              {myOrderDetail.status === '5' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  인쇄 제작 요청을 하실 수 있습니다.
+                </Text>
+              )}
+              {myOrderDetail.status === '6' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  납품 완료된 견적 건입니다.
+                </Text>
+              )}
+              {myOrderDetail.status === '7' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  수령 완료된 견적 건입니다.
+                </Text>
+              )}
+              {myOrderDetail.status === '8' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  이 견적은 마감된 견적입니다.
                 </Text>
               )}
             </View>
