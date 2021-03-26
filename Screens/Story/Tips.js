@@ -10,9 +10,14 @@ import {
   TouchableOpacity,
   ImageBackground,
   TextInput,
+  Alert,
+  FlatList,
+  ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 
 import Header from '../Common/Header';
+import CcenterAPI from '../../src/api/Ccenter';
 
 const Tips = (props) => {
   const navigation = props.navigation;
@@ -21,8 +26,86 @@ const Tips = (props) => {
   const [visibleStep01, setVisibleStep01] = React.useState(false);
   const [step01, setStep01] = React.useState('');
 
+  const [isLoading, setLoading] = React.useState(false);
+  const [list, setList] = React.useState([]);
+  const [keyword, setKeyword] = React.useState(null);
+
   const toggleMenu01 = () => {
     setVisibleStep01((prev) => !prev);
+  };
+
+  const getTipsAPI = () => {
+    setLoading(true);
+    CcenterAPI.getTips(keyword)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setList(res.data.item);
+          setLoading(false);
+        } else {
+          setList();
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+        setLoading(false);
+      });
+  };
+
+  React.useEffect(() => {
+    getTipsAPI();
+  }, []);
+
+  const renderRow = ({item, index}) => {
+    return (
+      <>
+        <TouchableOpacity
+          style={{paddingHorizontal: 20}}
+          activeOpacity={0.8}
+          onPress={() =>
+            navigation.navigate('StoryTipsDetail', {
+              item: item,
+            })
+          }>
+          <View style={styles.categoryWrap}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                }}>
+                <View style={styles.categoryBtn}>
+                  <Text style={styles.categoryBtnTxt}>{item.ca_name}</Text>
+                </View>
+                <Text style={styles.new}>
+                  {item.new_yn === 'Y' ? 'NEW' : null}
+                </Text>
+              </View>
+              <Text style={styles.categoryDate}>{item.wr_datetime}</Text>
+            </View>
+            <Text style={styles.categoryTitle}>{item.wr_subject}</Text>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            height: 0.5,
+            width: Dimensions.get('window').width,
+            backgroundColor: '#E3E3E3',
+          }}
+        />
+      </>
+    );
   };
 
   return (
@@ -115,12 +198,20 @@ const Tips = (props) => {
               width: '100%',
             }}>
             <TextInput
+              value={keyword}
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
               style={[styles.normalText, {width: '80%'}]}
+              onChangeText={(text) => setKeyword(text)}
+              onSubmitEditing={() => getTipsAPI()}
             />
-            <TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                Keyboard.dismiss();
+                getTipsAPI();
+              }}>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
@@ -131,281 +222,29 @@ const Tips = (props) => {
         </View>
       </View>
 
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('StoryTipsDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-            <Text style={styles.categoryTitle}>
-              중소기업 선물용 쇼핑백 제작 요청합니다.
-            </Text>
+      <FlatList
+        data={list}
+        renderItem={renderRow}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={1}
+        persistentScrollbar={true}
+        showsVerticalScrollIndicator={false}
+        progressViewOffset={true}
+        refreshing={true}
+        style={{backgroundColor: '#fff'}}
+        ListEmptyComponent={
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              height: Dimensions.get('window').height - 300,
+            }}>
+            <Text style={{fontFamily: 'SCDream4'}}>리뷰가 없습니다.</Text>
           </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('StoryTipsDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-            <Text style={styles.categoryTitle}>
-              중소기업 선물용 쇼핑백 제작 요청합니다.
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('StoryTipsDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-            <Text style={styles.categoryTitle}>
-              중소기업 선물용 쇼핑백 제작 요청합니다.
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('StoryTipsDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-            <Text style={styles.categoryTitle}>
-              중소기업 선물용 쇼핑백 제작 요청합니다.
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('StoryTipsDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-            <Text style={styles.categoryTitle}>
-              중소기업 선물용 쇼핑백 제작 요청합니다.
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('StoryTipsDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-            <Text style={styles.categoryTitle}>
-              중소기업 선물용 쇼핑백 제작 요청합니다.
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 카테고리 리스트 */}
-        {/* 카테고리 리스트 */}
-        <TouchableOpacity
-          style={{paddingHorizontal: 20}}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('StoryTipsDetail')}>
-          <View style={styles.categoryWrap}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
-              </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
-            </View>
-            <Text style={styles.categoryTitle}>
-              중소기업 선물용 쇼핑백 제작 요청합니다.
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            height: 0.5,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#E3E3E3',
-          }}
-        />
-        {/* // 카테고리 리스트 */}
-      </ScrollView>
+        }
+      />
+
       {visibleStep01 && (
         <ScrollView
           showsVerticalScrollIndicator={false}

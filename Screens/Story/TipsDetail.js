@@ -11,7 +11,10 @@ import {
   StyleSheet,
   Image,
   Linking,
+  Platform,
 } from 'react-native';
+import {WebView} from 'react-native-webview';
+import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -21,105 +24,83 @@ import Footer from '../Common/Footer';
 const TipsDetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const {
+    wr_id,
+    wr_subject,
+    wr_datetime,
+    ca_name,
+    new_yn,
+  } = props.route.params.item;
 
-  const [like, setLike] = React.useState(false);
-  const onLikeBtn = () => {
-    setLike((prev) => !prev);
-  };
+  console.log('props', props);
 
-  const phoneNumber = '01012345678';
-  const emailAddress = 'paper_workshop@paperworkshop.com';
-
-  const carouselRef = React.useRef(null);
-
-  const entries = [
-    {
-      id: 1,
-      image: require('../../src/images/event_img.png'),
-    },
-    {
-      id: 2,
-      image: require('../../src/images/event_img.png'),
-    },
-  ];
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <Image
-        key={index}
-        source={item.image}
-        resizeMode="cover"
-        style={{ width: Dimensions.get('window').width, height: 400 }}
-      />
-    );
-  };
-
-  const sliderWidth = Dimensions.get('window').width;
-  const itemWidth = Dimensions.get('window').width;
+  const [getHeight, setGetHeight] = React.useState(null);
 
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{ paddingHorizontal: 20 }}>
-          <View style={styles.categoryWrap}>
+      <View style={[styles.container, {paddingHorizontal: 20}]}>
+        <View style={styles.categoryWrap}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 10,
+            }}>
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-start',
                 alignItems: 'center',
-                marginBottom: 10,
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}>
-                <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text>
+              <View style={styles.categoryBtn}>
+                <Text style={styles.categoryBtnTxt}>{ca_name}</Text>
               </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
+              <Text style={styles.new}>{new_yn === 'Y' ? 'NEW' : null}</Text>
             </View>
-            <Text style={styles.categoryTitle}>
-              문의제목 문의제목 문의제목 문의제목 문의제목 문 의제목문의제목 문의제목 문의제목
-              입니다.
-            </Text>
+            <Text style={styles.categoryDate}>{wr_datetime}</Text>
           </View>
+          <Text style={styles.categoryTitle}>{wr_subject}</Text>
         </View>
+      </View>
 
-        <View
-          style={{
-            height: 1,
-            width: Dimensions.get('window').width,
-            backgroundColor: '#D7D7D7',
-            marginBottom: 10,
+      <View
+        style={{
+          height: 1,
+          width: Dimensions.get('window').width,
+          backgroundColor: '#D7D7D7',
+        }}
+      />
+
+      <View
+        style={{
+          width: '100%',
+          height: Dimensions.get('window').height - 210,
+        }}>
+        <AutoHeightWebView
+          customScript={`
+              document.body.style.background = '#fff'; 
+              document.body.style.fontSize = '14px';
+              document.body.style.lineHeight = '22px';
+              
+              `}
+          onSizeUpdated={(size) => console.log(size.height)}
+          style={{}}
+          files={[
+            {
+              href: 'cssfileaddress',
+              type: 'text/css',
+              rel: 'stylesheet',
+            },
+          ]}
+          source={{
+            uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=info&wr_id=${wr_id}`,
           }}
+          scalesPageToFit={Platform.OS === 'ios' ? false : true}
+          viewportContent={'width=device-width, user-scalable=no'}
         />
-
-        <View style={{ paddingHorizontal: 20 }}>
-          {/* 이벤트 내용 */}
-          <View style={{ marginTop: 15 }}>
-            <Text
-              style={[
-                styles.normalText,
-                { fontSize: 15, color: '#333333', lineHeight: 28, width: '100%', marginBottom: 20 },
-              ]}>
-              이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트 내용입니다 이벤트
-              내용입니다 이벤트 내용입니다 이벤트 내용...
-            </Text>
-            <AutoHeightImage
-              source={require('../../src/images/faq_img.png')}
-              width={Dimensions.get('window').width - 40}
-            />
-          </View>
-          {/* // 이벤트 내용 */}
-        </View>
-
-        <Footer navigation={navigation} />
-      </ScrollView>
+      </View>
     </>
   );
 };
