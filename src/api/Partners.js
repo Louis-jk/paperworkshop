@@ -81,6 +81,26 @@ export default {
       }),
     });
   },
+  // 파트너 선정(계약금 입금완료)
+  setDepositPartner(pe_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_my_estimate_status2',
+        pe_id,
+      }),
+    });
+  },
+  // // 파트너 선정(인쇄 제작요청)
+  // setDepositPartner(pe_id) {
+  //   return Send({
+  //     method: 'post',
+  //     data: qs.stringify({
+  //       method: 'proc_my_estimate_status3',
+  //       pe_id,
+  //     }),
+  //   });
+  // },
   // 메인페이지 파트너 3개씩 출력 부분
   getPartnerMain(ptype) {
     return Send({
