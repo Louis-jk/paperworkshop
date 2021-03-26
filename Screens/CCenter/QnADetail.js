@@ -100,7 +100,7 @@ const QnADetail = (props) => {
               style={[
                 styles.boldText,
                 {
-                  fontSize: 16,
+                  fontSize: 14,
                   color: '#000',
                   lineHeight: 28,
                   width: '100%',
@@ -131,7 +131,7 @@ const QnADetail = (props) => {
               style={[
                 styles.boldText,
                 {
-                  fontSize: 16,
+                  fontSize: 14,
                   color: '#000',
                   width: '100%',
                   marginBottom: 10,
@@ -173,7 +173,7 @@ const QnADetail = (props) => {
               style={[
                 styles.boldText,
                 {
-                  fontSize: 16,
+                  fontSize: 14,
                   color: '#000',
                   width: '100%',
                   marginBottom: 10,
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontFamily: 'SCDream5',
-    fontSize: 17,
+    fontSize: 15,
     lineHeight: 24,
     color: '#000',
   },
