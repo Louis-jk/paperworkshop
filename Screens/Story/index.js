@@ -10,24 +10,324 @@ import {
   TouchableOpacity,
   ImageBackground,
   TextInput,
+  Alert,
+  FlatList,
+  ActivityIndicator,
+  Keyboard,
 } from 'react-native';
+import StarRating from 'react-native-star-rating';
 
 import Header from '../Common/Header';
+import CcenterAPI from '../../src/api/Ccenter';
 
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
   const [visibleStep01, setVisibleStep01] = React.useState(false);
-  const [step01, setStep01] = React.useState('');
+  const [cate1, setCate1] = React.useState(null);
+  const [keyword, setKeyword] = React.useState(null);
+
+  const [isLoading, setLoading] = React.useState(false);
+  const [reviews, setReviews] = React.useState([]);
+
+  const category = ['전체', '패키지', '일반인쇄', '기타인쇄'];
 
   const toggleMenu01 = () => {
     setVisibleStep01((prev) => !prev);
   };
 
+  const getReviewsAPI = () => {
+    setLoading(true);
+    CcenterAPI.getReviews(cate1, keyword)
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          setReviews(res.data.item);
+          setLoading(false);
+        } else {
+          setReviews();
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+        setLoading(false);
+      });
+  };
+
+  React.useEffect(() => {
+    getReviewsAPI();
+  }, [cate1]);
+
+  const setCategoryFn = (c) => {
+    if (c === '전체') {
+      setCate1(null);
+    } else if (c === '패키지') {
+      setCate1('1');
+    } else if (c === '일반인쇄') {
+      setCate1('0');
+    } else {
+      setCate1('2');
+    }
+  };
+
+  const renderRow = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() =>
+          navigation.navigate('ReviewDetail', {
+            screen: 'ReviewDetail',
+            params: {reviewID: item.pr_id, companyId: item.company_id},
+          })
+        }
+        style={{
+          borderWidth: 1,
+          borderColor: '#E3E3E3',
+          borderRadius: 5,
+          marginBottom: 10,
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            paddingHorizontal: 20,
+            paddingTop: 20,
+          }}>
+          <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
+            {item.ccompany_name}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            {item.cate1.includes('1') ? (
+              <View
+                style={{
+                  backgroundColor: '#3CD7C8',
+                  borderRadius: 2,
+                }}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#fff',
+                      fontSize: 11,
+                      paddingHorizontal: 5,
+                      paddingVertical: 2,
+                    },
+                  ]}>
+                  패키지
+                </Text>
+              </View>
+            ) : item.cate1.includes('0') ? (
+              <View
+                style={{
+                  backgroundColor: '#275696',
+                  borderRadius: 2,
+                  marginLeft: 5,
+                }}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#fff',
+                      fontSize: 11,
+                      paddingHorizontal: 5,
+                      paddingVertical: 2,
+                    },
+                  ]}>
+                  일반인쇄
+                </Text>
+              </View>
+            ) : item.cate1.includes('2') ? (
+              <View
+                style={{
+                  backgroundColor: '#B5B5B5',
+                  borderRadius: 2,
+                  marginLeft: 5,
+                }}>
+                <Text
+                  style={[
+                    styles.normalText,
+                    {
+                      color: '#fff',
+                      fontSize: 11,
+                      paddingHorizontal: 5,
+                      paddingVertical: 2,
+                    },
+                  ]}>
+                  기타인쇄
+                </Text>
+              </View>
+            ) : null}
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            marginTop: 10,
+            paddingHorizontal: 20,
+            paddingBottom: 10,
+          }}>
+          <ImageBackground
+            source={{uri: `${item.bf_file[0]}`}}
+            resizeMode="cover"
+            style={{width: 75, height: 70, position: 'relative'}}>
+            <Text
+              style={[
+                styles.normalText,
+                {
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0,
+                  fontSize: 10,
+                  backgroundColor: 'rgba(0,0,0,0.45)',
+                  color: '#fff',
+                  padding: 5,
+                },
+              ]}>
+              +6
+            </Text>
+          </ImageBackground>
+          <View style={{flexShrink: 2, marginLeft: 20}}>
+            <Text style={[styles.boldText, {fontSize: 15, marginBottom: 10}]}>
+              {item.ccompany_name
+                ? `${item.ccompany_name} (${item.mb_name} 고객님)`
+                : `${item.mb_name} 고객님`}
+            </Text>
+            <Text style={[styles.normalText, {fontSize: 15, lineHeight: 22}]}>
+              {item.review_content}
+            </Text>
+          </View>
+        </View>
+        <View style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}} />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+          }}>
+          <View>
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 12, color: '#707070', marginBottom: 7},
+              ]}>
+              소통만족도
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <StarRating
+                disabled={false}
+                emptyStar={require('../../src/assets/star_off.png')}
+                fullStar={require('../../src/assets/star_on.png')}
+                maxStars={5}
+                rating={Math.floor(item.grade1)}
+                starSize={12}
+              />
+              <Text style={[styles.normalText, {fontSize: 12, marginLeft: 5}]}>
+                {`${item.grade1}.0`}
+              </Text>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 12, color: '#707070', marginBottom: 7},
+              ]}>
+              품질만족도
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <StarRating
+                disabled={false}
+                emptyStar={require('../../src/assets/star_off.png')}
+                fullStar={require('../../src/assets/star_on.png')}
+                maxStars={5}
+                rating={Math.floor(item.grade2)}
+                starSize={12}
+              />
+              <Text style={[styles.normalText, {fontSize: 12, marginLeft: 5}]}>
+                {`${item.grade2}.0`}
+              </Text>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 12, color: '#707070', marginBottom: 7},
+              ]}>
+              납기만족도
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <StarRating
+                disabled={false}
+                emptyStar={require('../../src/assets/star_off.png')}
+                fullStar={require('../../src/assets/star_on.png')}
+                maxStars={5}
+                rating={Math.floor(item.grade3)}
+                starSize={12}
+              />
+              <Text style={[styles.normalText, {fontSize: 12, marginLeft: 5}]}>
+                {`${item.grade3}.0`}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <>
       <Header title={routeName} navigation={navigation} />
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <View style={{paddingHorizontal: 20, backgroundColor: '#fff'}}>
         <View
           style={{
@@ -126,12 +426,20 @@ const index = (props) => {
                 alignItems: 'center',
               }}>
               <TextInput
-                value={step01}
+                value={
+                  cate1 === '1'
+                    ? '패키지'
+                    : cate1 === '0'
+                    ? '일반인쇄'
+                    : cate1 === '2'
+                    ? '기타인쇄'
+                    : '전체'
+                }
                 placeholder="인쇄종류"
                 style={{
                   fontFamily: 'SCDream4',
                   width: '80%',
-                  color: step01 ? '#000' : '#A2A2A2',
+                  color: cate1 ? '#000' : '#A2A2A2',
                 }}
                 editable={false}
                 collapsable={true}
@@ -160,12 +468,20 @@ const index = (props) => {
               width: '69%',
             }}>
             <TextInput
+              value={keyword}
               placeholder="업체명을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
               style={[styles.normalText, {width: '80%'}]}
+              onChangeText={(text) => setKeyword(text)}
+              onSubmitEditing={() => getReviewsAPI()}
             />
-            <TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                Keyboard.dismiss();
+                getReviewsAPI();
+              }}>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
@@ -176,564 +492,36 @@ const index = (props) => {
         </View>
       </View>
 
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View>
-          {/* 고객후기 */}
+      <FlatList
+        data={reviews}
+        renderItem={renderRow}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={1}
+        persistentScrollbar={true}
+        showsVerticalScrollIndicator={false}
+        progressViewOffset={true}
+        refreshing={true}
+        style={{backgroundColor: '#fff', paddingHorizontal: 20}}
+        ListEmptyComponent={
           <View
             style={{
-              paddingHorizontal: 20,
-              paddingVertical: 20,
-              backgroundColor: '#fff',
-              width: Dimensions.get('screen').width,
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              height: Dimensions.get('window').height - 300,
             }}>
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                marginBottom: 10,
-              }}>
-              <Text style={[styles.mediumText, { fontSize: 15, marginRight: 12 }]}>고객후기</Text>
-              <Text style={[styles.normalText, { fontSize: 15, color: '#275696' }]}>
-                총 리뷰수 26
-              </Text>
-            </View> */}
-
-            {/* 고객후기 리스트 박스 */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('ReviewDetail')}
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 5,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  paddingHorizontal: 20,
-                  paddingTop: 20,
-                }}>
-                <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
-                  패키지나라
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#3CD7C8',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      패키지
-                    </Text>
-                  </View>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  marginTop: 10,
-                  paddingHorizontal: 20,
-                  paddingBottom: 10,
-                }}>
-                <ImageBackground
-                  source={require('../../src/images/packages/package06.jpg')}
-                  resizeMode="cover"
-                  style={{width: 75, height: 70, position: 'relative'}}>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {
-                        position: 'absolute',
-                        bottom: 0,
-                        right: 0,
-                        fontSize: 10,
-                        backgroundColor: 'rgba(0,0,0,0.45)',
-                        color: '#fff',
-                        padding: 5,
-                      },
-                    ]}>
-                    +6
-                  </Text>
-                </ImageBackground>
-                <View style={{flexShrink: 2, marginLeft: 20}}>
-                  <Text
-                    style={[styles.boldText, {fontSize: 15, marginBottom: 10}]}>
-                    하나로세상(김*미 고객님)
-                  </Text>
-                  <Text
-                    style={[styles.normalText, {fontSize: 15, lineHeight: 22}]}>
-                    배송도 빠르고 프린트 퀄리티도 너무 좋아요 배송도 빠르고
-                    프린트 퀄리티도 너무 좋아요
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                }}>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    소통만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating04.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    품질만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    납기만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-            {/* // 고객후기 리스트 박스 */}
-            {/* 고객후기 리스트 박스 */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('ReviewDetail')}
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 5,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  paddingHorizontal: 20,
-                  paddingTop: 20,
-                }}>
-                <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
-                  성원애드피아
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#ACACAC',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      기타인쇄
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  marginBottom: 10,
-                  marginTop: 10,
-                  paddingHorizontal: 20,
-                  paddingBottom: 10,
-                }}>
-                <ImageBackground
-                  source={require('../../src/images/etc/etc01.jpg')}
-                  resizeMode="cover"
-                  style={{width: 75, height: 70, position: 'relative'}}>
-                  <Text
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      right: 0,
-                      fontSize: 10,
-                      backgroundColor: 'rgba(0,0,0,0.45)',
-                      color: '#fff',
-                      padding: 5,
-                    }}>
-                    +6
-                  </Text>
-                </ImageBackground>
-                <View style={{flexShrink: 2, marginLeft: 20}}>
-                  <Text
-                    style={[styles.boldText, {fontSize: 15, marginBottom: 10}]}>
-                    신세계세상(정*주 고객님)
-                  </Text>
-                  <Text
-                    style={[styles.normalText, {fontSize: 15, lineHeight: 22}]}>
-                    퀄리티 하나는 정말 끝내줍니다. 믿고 맡기는 업체로 선정한 지
-                    꽤 됩니다.
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                }}>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    소통만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating04.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    품질만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    납기만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating04.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-            {/* // 고객후기 리스트 박스 */}
-            {/* 고객후기 리스트 박스 */}
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('ReviewDetail')}
-              style={{
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 5,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  paddingHorizontal: 20,
-                  paddingTop: 20,
-                }}>
-                <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
-                  교보인쇄
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: '#275696',
-                      borderRadius: 2,
-                    }}>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          color: '#fff',
-                          fontSize: 11,
-                          paddingHorizontal: 5,
-                          paddingVertical: 2,
-                        },
-                      ]}>
-                      일반인쇄
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  marginBottom: 10,
-                  marginTop: 10,
-                  paddingHorizontal: 20,
-                  paddingBottom: 10,
-                }}>
-                <ImageBackground
-                  source={require('../../src/images/w03.jpg')}
-                  resizeMode="cover"
-                  style={{width: 75, height: 70, position: 'relative'}}>
-                  <Text
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      right: 0,
-                      fontSize: 10,
-                      backgroundColor: 'rgba(0,0,0,0.45)',
-                      color: '#fff',
-                      padding: 5,
-                    }}>
-                    +6
-                  </Text>
-                </ImageBackground>
-                <View style={{flexShrink: 2, marginLeft: 20}}>
-                  <Text
-                    style={[styles.boldText, {fontSize: 15, marginBottom: 10}]}>
-                    내안에바다(전*리 고객님)
-                  </Text>
-                  <Text
-                    style={[styles.normalText, {fontSize: 15, lineHeight: 22}]}>
-                    명함은 항상 여기서 주문해요. 고급지도 종류별로 다양하고
-                    디지털로 찍어도 오프셋 뺨치게 잘나옵니다.
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{width: '100%', height: 1, backgroundColor: '#E3E3E3'}}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                }}>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    소통만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    품질만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>5.0</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={[
-                      styles.normalText,
-                      {fontSize: 12, color: '#707070', marginBottom: 7},
-                    ]}>
-                    납기만족도
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={require('../../src/images/rating04.png')}
-                      resizeMode="cover"
-                      style={{width: 55, height: 15, marginRight: 5}}
-                    />
-                    <Text style={[styles.normalText, {fontSize: 10}]}>4.0</Text>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-            {/* // 고객후기 리스트 박스 */}
-
-            {/* 고객후기 전체보기 버튼 */}
-            {/* <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#fff',
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 5,
-                marginTop: 20,
-              }}>
-              <Text
-                style={[
-                  styles.normalText,
-                  { textAlign: 'center', fontSize: 15, color: '#444444', paddingVertical: 15 },
-                ]}>
-                고객후기 전체보기
-              </Text>
-            </TouchableOpacity> */}
-            {/* // 고객후기 전체보기 버튼 */}
+            <Text style={{fontFamily: 'SCDream4'}}>리뷰가 없습니다.</Text>
           </View>
-          {/* // 고객후기 */}
-        </View>
-      </ScrollView>
+        }
+      />
+
       {visibleStep01 && (
-        <ScrollView
+        <View
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{zIndex: 1000}}
           style={{
             position: 'absolute',
-            top: 186,
+            top: 166,
             left: 20,
             backgroundColor: '#fff',
             width: '27.1%',
@@ -743,55 +531,22 @@ const index = (props) => {
             borderBottomRightRadius: 4,
             borderBottomLeftRadius: 4,
           }}>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep01('전체');
-              setVisibleStep01(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep01('일반인쇄');
-              setVisibleStep01(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>일반인쇄</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep01('패키지');
-              setVisibleStep01(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep01('기타인쇄');
-              setVisibleStep01(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>기타인쇄</Text>
-          </TouchableOpacity>
-        </ScrollView>
+          {category.map((c, idx) => (
+            <TouchableOpacity
+              key={idx}
+              activeOpacity={1}
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+              }}
+              onPress={() => {
+                setCategoryFn(c);
+                setVisibleStep01(false);
+              }}>
+              <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>{c}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
     </>
   );
