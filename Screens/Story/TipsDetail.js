@@ -83,7 +83,6 @@ const TipsDetail = (props) => {
               document.body.style.background = '#fff'; 
               document.body.style.fontSize = '14px';
               document.body.style.lineHeight = '22px';
-              
               `}
           onSizeUpdated={(size) => console.log(size.height)}
           style={{}}
