@@ -781,7 +781,7 @@ const DrawerMenu = (props) => {
               <Text style={[styles.mediumText, {fontSize: 16}]}>지류정보</Text>
               <Image
                 source={
-                  collapseArrow04
+                  collapseArrow05
                     ? require('../../src/assets/arr03.png')
                     : require('../../src/assets/arr01.png')
                 }
@@ -800,11 +800,18 @@ const DrawerMenu = (props) => {
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
+                // onPress={() =>
+                //   navigation.navigate('Root', {
+                //     screen: 'PaperInfo',
+                //     params: {screen: 'PaperInfo'},
+                //   })
+                // }
                 onPress={() =>
-                  navigation.navigate('Root', {
-                    screen: 'PaperInfo',
-                    params: {screen: 'PaperInfo'},
-                  })
+                  Alert.alert('준비중입니다.', '', [
+                    {
+                      text: '확인',
+                    },
+                  ])
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
                   지류소개
@@ -813,11 +820,18 @@ const DrawerMenu = (props) => {
               <TouchableOpacity
                 style={styles.subCategory}
                 activeOpacity={0.8}
+                // onPress={() =>
+                //   navigation.navigate('Root', {
+                //     screen: 'PaperInfo',
+                //     params: {screen: 'PaperPrice'},
+                //   })
+                // }
                 onPress={() =>
-                  navigation.navigate('Root', {
-                    screen: 'PaperInfo',
-                    params: {screen: 'PaperPrice'},
-                  })
+                  Alert.alert('준비중입니다.', '', [
+                    {
+                      text: '확인',
+                    },
+                  ])
                 }>
                 <Text style={[styles.categoryText, styles.normalText]}>
                   지류고시가
