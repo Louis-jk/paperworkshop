@@ -74,6 +74,8 @@ const index = (props) => {
     setVisibleStep02((prev) => !prev);
   };
 
+  console.log('myOrders', myOrders);
+
   const renderRow = ({item, index}) => {
     return (
       <View>
