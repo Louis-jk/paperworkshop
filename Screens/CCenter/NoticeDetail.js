@@ -12,6 +12,8 @@ import {
   Image,
   Linking,
 } from 'react-native';
+import {WebView} from 'react-native-webview';
+import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -21,12 +23,14 @@ import Footer from '../Common/Footer';
 const NoticeDetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  const {wr_id, wr_subject, wr_datetime, new_yn} = props.route.params.item;
+  console.log('notice props', props);
 
   return (
     <>
       <Header title={routeName} navigation={navigation} />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={{ paddingHorizontal: 20 }}>
+      <View style={styles.container}>
+        <View style={{paddingHorizontal: 20}}>
           <View style={styles.categoryWrap}>
             <View
               style={{
@@ -41,14 +45,11 @@ const NoticeDetail = (props) => {
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                 }}>
-                {/* <View style={styles.categoryBtn}>
-                  <Text style={styles.categoryBtnTxt}>카테고리A</Text>
-                </View>
-                <Text style={styles.new}>NEW</Text> */}
+                <Text style={styles.new}>{new_yn === 'Y' ? 'NEW' : null}</Text>
               </View>
-              <Text style={styles.categoryDate}>2020.11.01</Text>
+              <Text style={styles.categoryDate}>{wr_datetime}</Text>
             </View>
-            <Text style={styles.categoryTitle}>공지사항 제목입니다. 공지사항 제목입니다.</Text>
+            <Text style={styles.categoryTitle}>{wr_subject}</Text>
           </View>
         </View>
 
@@ -57,24 +58,33 @@ const NoticeDetail = (props) => {
             height: 1,
             width: Dimensions.get('window').width,
             backgroundColor: '#D7D7D7',
-            marginBottom: 10,
           }}
         />
-
-        <View style={{ paddingHorizontal: 20 }}>
-          {/* 이벤트 내용 */}
-          <View style={{ marginTop: 15 }}>
-            <Text
-              style={[
-                styles.normalText,
-                { fontSize: 15, color: '#333333', lineHeight: 28, width: '100%', marginBottom: 20 },
-              ]}>
-              내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다
-            </Text>
-          </View>
-          {/* // 이벤트 내용 */}
-        </View>
-      </ScrollView>
+      </View>
+      <View
+        style={{width: '100%', height: Dimensions.get('window').height - 210}}>
+        <AutoHeightWebView
+          customScript={`
+              document.body.style.background = '#fff'; 
+              document.body.style.fontSize = '14px';
+              document.body.style.lineHeight = '22px';
+              `}
+          onSizeUpdated={(size) => console.log(size.height)}
+          style={{}}
+          files={[
+            {
+              href: 'cssfileaddress',
+              type: 'text/css',
+              rel: 'stylesheet',
+            },
+          ]}
+          source={{
+            uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=notice&wr_id=${wr_id}`,
+          }}
+          scalesPageToFit={Platform.OS === 'ios' ? false : true}
+          viewportContent={'width=device-width, user-scalable=no'}
+        />
+      </View>
     </>
   );
 };

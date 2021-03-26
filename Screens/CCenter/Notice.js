@@ -58,7 +58,7 @@ const Notice = (props) => {
           style={{paddingHorizontal: 20}}
           activeOpacity={0.8}
           onPress={() =>
-            navigation.navigate('CCenterNoticeDetail', {wr_id: item.wr_id})
+            navigation.navigate('CCenterNoticeDetail', {item: item})
           }>
           <View style={styles.categoryWrap}>
             <View
