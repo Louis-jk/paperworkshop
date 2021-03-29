@@ -77,12 +77,16 @@ const ReqDetailList = (props) => {
   const setDepositPartnerAPI = () => {
     Partners.setDepositPartner(pe_id).then((res) => {
       if (res.data.result === '1') {
-        Alert.alert(res.data.message, '', [
-          {
-            text: '확인',
-            onPress: () => navigation.navigate('MyOrder'),
-          },
-        ]);
+        Alert.alert(
+          '계약금 입금완료 요청하였습니다.',
+          '파트너회원이 입금확인할 때까지 기다려주세요.',
+          [
+            {
+              text: '확인',
+              onPress: () => navigation.navigate('MyOrder'),
+            },
+          ],
+        );
       } else {
         Alert.alert(res.data.message, '', [
           {
@@ -93,25 +97,29 @@ const ReqDetailList = (props) => {
     });
   };
 
-  // // 파트너 선정(인쇄 제작요청)
-  // const setDepositPartnerAPI = () => {
-  //   Partners.setDepositPartner(pe_id).then((res) => {
-  //     if (res.data.result === '1') {
-  //       Alert.alert(res.data.message, '', [
-  //         {
-  //           text: '확인',
-  //           onPress: () => navigation.navigate('MyOrder'),
-  //         },
-  //       ]);
-  //     } else {
-  //       Alert.alert(res.data.message, '', [
-  //         {
-  //           text: '확인',
-  //         },
-  //       ]);
-  //     }
-  //   });
-  // };
+  // 파트너 선정(인쇄 제작요청)
+  const setOrderProductAPI = () => {
+    Partners.setOrderProduct(pe_id).then((res) => {
+      if (res.data.result === '1') {
+        Alert.alert(
+          '인쇄제작요청을 하였습니다.',
+          '파트너스 회원이 제작완료 후 "납품완료" 처리를 하게 됩니다.',
+          [
+            {
+              text: '확인',
+              onPress: () => navigation.navigate('MyOrder'),
+            },
+          ],
+        );
+      } else {
+        Alert.alert(res.data.message, '', [
+          {
+            text: '확인',
+          },
+        ]);
+      }
+    });
+  };
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -279,26 +287,8 @@ const ReqDetailList = (props) => {
                 );
               } else if (myOrderDetail.status === '3') {
                 setDepositPartnerAPI();
-                Alert.alert(
-                  '계약금 입금완료 요청하였습니다.',
-                  '파트너회원이 입금확인할 때까지 기다려주세요.',
-                  [
-                    {
-                      text: '확인',
-                    },
-                  ],
-                );
               } else if (myOrderDetail.status === '5') {
-                setDepositPartnerAPI();
-                Alert.alert(
-                  '계약금 입금완료 요청하였습니다.',
-                  '파트너회원이 입금확인할 때까지 기다려주세요.',
-                  [
-                    {
-                      text: '확인',
-                    },
-                  ],
-                );
+                setOrderProductAPI();
               } else {
                 return false;
               }
