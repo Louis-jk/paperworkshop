@@ -23,18 +23,40 @@ const Check = (props) => {
 
   const dispatch = useDispatch();
 
-  const [fFcmToken, setFfcmToken] = React.useState(null); // fcmtoken 현재 페이지 저장
-  const [checkPlatform, setCheckPlatform] = React.useState(null); // OS 체크
+  // FCM 토큰과 플랫폼 가져오기
+  const getTokenPlatformAPI = () => {
+    messaging()
+      .getToken()
+      .then((currentToken) => {
+        dispatch(setFcmToken(currentToken));
 
-  const getData = async () => {
+        if (Platform.OS === 'ios') {
+          getData(currentToken, 'ios');
+        } else {
+          getData(currentToken, 'aos');
+        }
+      })
+      .catch((err) =>
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]),
+      );
+  };
+
+  //  Async Storage에 UserID, UserPwd가 있는지 확인(자동로그인의 경우)
+  const getData = async (token, device) => {
     try {
       const jsonValue = await AsyncStorage.getItem('@paper_info');
       if (jsonValue !== null) {
         const UserInfo = JSON.parse(jsonValue);
         const uId = UserInfo.userId;
         const uPwd = UserInfo.userPwd;
-        login(uId, uPwd);
+        // 있다면 로그인API 호출 (UserID, UserPwd, FcmToken, Platform)
+        login(uId, uPwd, token, device);
       } else {
+        // 없다면 로그인 화면으로 이동
         navigation.navigate('Login');
       }
     } catch (e) {
@@ -44,8 +66,8 @@ const Check = (props) => {
   };
 
   // 로그인 API
-  const login = (loginId, loginPwd) => {
-    Auth.onLogin(loginId, loginPwd, fFcmToken, checkPlatform)
+  const login = (id, pwd, fToken, cDevice) => {
+    Auth.onLogin(id, pwd, fToken, cDevice)
       .then((res) => {
         if (res.data.result === '1') {
           dispatch(UserId(res.data.item.mb_id));
@@ -75,27 +97,7 @@ const Check = (props) => {
   };
 
   React.useEffect(() => {
-    messaging()
-      .getToken()
-      .then((currentToken) => {
-        setFfcmToken(currentToken);
-        dispatch(setFcmToken(currentToken));
-      })
-      .catch((err) =>
-        Alert.alert('관리자에게 문의하세요', err.messaging(), [
-          {
-            text: '확인',
-          },
-        ]),
-      );
-
-    if (Platform.OS === 'ios') {
-      setCheckPlatform('ios');
-    } else {
-      setCheckPlatform('aos');
-    }
-
-    getData();
+    getTokenPlatformAPI();
   }, []);
 
   return (
