@@ -12,7 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {setFcmToken} from '../../../Modules/InfoReducer';

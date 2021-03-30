@@ -52,7 +52,7 @@ const Edit = (props) => {
 
   const [source, setSource] = React.useState({});
 
-  // react-native-image-crop-picker 모듈 사용
+  // 프로필 사진 설정
   const pickImageHandler = () => {
     ImagePicker.openPicker({
       mediaType: 'photo',
