@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   View,
   Text,
@@ -10,25 +10,148 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   TextInput,
+  Alert,
+  FlatList,
 } from 'react-native';
 
-import DetailHeader from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
-
-// import { WebView } from 'react-native-webview';
+import moment from 'moment';
+import 'moment/locale/ko';
+import SearchAPI from '../../src/api/Search';
+import {useSelector} from 'react-redux';
 
 const Search = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
   const [keyword, setKeyword] = React.useState(null);
+  const [historyKeyword, setHistoryKeyword] = React.useState([]);
+
+  const {mb_id} = useSelector((state) => state.UserInfoReducer);
+
+  // 검색어 입력 및 히스토리 저장
+  const sendSearchAPI = () => {
+    SearchAPI.getSearchHistory(mb_id, '', keyword, 'y', '')
+      .then((res) => {
+        if (res.data.result === '1') {
+          setHistoryKeyword(res.data.item);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  // 검색어 삭제(히스토리)
+  const delSearchKeywordAPI = (id) => {
+    SearchAPI.getSearchHistory(mb_id, id, '', '', 'y')
+      .then((res) => {
+        if (res.data.result === '1') {
+          setHistoryKeyword(res.data.item);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  // 검색어 히스토리 불어오기
+  const getSearchHistoryAPI = () => {
+    SearchAPI.getSearchHistory(mb_id, '', '', '', '')
+      .then((res) => {
+        if (res.data.result === '1') {
+          setHistoryKeyword(res.data.item);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  React.useEffect(() => {
+    getSearchHistoryAPI();
+  }, []);
+
+  console.log('historyKeyword', historyKeyword);
+
+  const renderRow = ({item, index}) => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <TouchableWithoutFeedback
+          onPress={() => setKeyword(item.keyword)}
+          key={index}>
+          <View
+            style={[styles.fRowSBAC, styles.pdV10, {flex: 1, marginRight: 20}]}>
+            <Text style={styles.searchKeyword}>{item.keyword}</Text>
+            <Text style={styles.searchDate}>
+              {moment(item.created_at).format('YYYY.MM.DD h:mm')}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => delSearchKeywordAPI(item.id)}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 18,
+              height: 18,
+              borderRadius: 18,
+              backgroundColor: '#E5E5E5',
+            }}>
+            <Image
+              source={require('../../src/assets/icon_close02.png')}
+              resizeMode="cover"
+              style={{
+                width: 10,
+                height: 10,
+              }}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
+    );
+  };
 
   return (
     <>
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={styles.headerCtrl}>
-            <View style={{ paddingVertical: 10, paddingRight: 3 }}>
+            <View style={{paddingVertical: 10, paddingRight: 3}}>
               <Image
                 source={require('../../src/assets/arr02.png')}
                 resizeMode="cover"
@@ -42,13 +165,15 @@ const Search = (props) => {
             <Image
               source={require('../../src/assets/logo02.png')}
               resizeMode="contain"
-              style={{ width: 125, height: 30 }}
+              style={{width: 125, height: 30}}
             />
           </View>
         </TouchableWithoutFeedback>
       </View>
 
-      <ScrollView style={styles.container02} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.container02}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           {/* <WebView source={{ uri: 'https://reactnative.dev/' }} /> */}
           <View
@@ -68,13 +193,13 @@ const Search = (props) => {
               placeholderTextColor="#BEBEBE"
               onChangeText={(text) => setKeyword(text)}
               autoFocus={false}
-              style={[styles.normalText, { width: '80%' }]}
+              style={[styles.normalText, {width: '80%'}]}
             />
-            <TouchableOpacity>
+            <TouchableOpacity activeOpacity={1} onPress={() => sendSearchAPI()}>
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
-                style={{ width: 30, height: 30 }}
+                style={{width: 30, height: 30}}
               />
             </TouchableOpacity>
           </View>
@@ -82,54 +207,33 @@ const Search = (props) => {
             <Text style={styles.searchTitle}>검색기록</Text>
 
             <View style={styles.searchWrap}>
-              {/* 검색 키워드 */}
-              <TouchableWithoutFeedback onPress={() => setKeyword('2단접지')}>
-                <View style={[styles.fRowSBAC, styles.pdV10]}>
-                  <Text style={styles.searchKeyword}>2단접지</Text>
-                  <Text style={styles.searchDate}>2020.02.05 02:55</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              {/* // 검색 키워드 */}
-              {/* 검색 키워드 */}
-              <TouchableWithoutFeedback onPress={() => setKeyword('3단접지')}>
-                <View style={[styles.fRowSBAC, styles.pdV10]}>
-                  <Text style={styles.searchKeyword}>3단접지</Text>
-                  <Text style={styles.searchDate}>2020.02.05 02:55</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              {/* // 검색 키워드 */}
-              {/* 검색 키워드 */}
-              <TouchableWithoutFeedback onPress={() => setKeyword('에어간판')}>
-                <View style={[styles.fRowSBAC, styles.pdV10]}>
-                  <Text style={styles.searchKeyword}>에어간판</Text>
-                  <Text style={styles.searchDate}>2020.02.05 02:55</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              {/* // 검색 키워드 */}
-              {/* 검색 키워드 */}
-              <TouchableWithoutFeedback onPress={() => setKeyword('명함인쇄')}>
-                <View style={[styles.fRowSBAC, styles.pdV10]}>
-                  <Text style={styles.searchKeyword}>명함인쇄</Text>
-                  <Text style={styles.searchDate}>2020.02.05 02:55</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              {/* // 검색 키워드 */}
-              {/* 검색 키워드 */}
-              <TouchableWithoutFeedback onPress={() => setKeyword('디지털인쇄')}>
-                <View style={[styles.fRowSBAC, styles.pdV10]}>
-                  <Text style={styles.searchKeyword}>디지털인쇄</Text>
-                  <Text style={styles.searchDate}>2020.02.05 02:55</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              {/* // 검색 키워드 */}
-              {/* 검색 키워드 */}
-              <TouchableWithoutFeedback onPress={() => setKeyword('오프셋인쇄')}>
-                <View style={[styles.fRowSBAC, styles.pdV10]}>
-                  <Text style={styles.searchKeyword}>오프셋인쇄</Text>
-                  <Text style={styles.searchDate}>2020.02.05 02:55</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              {/* // 검색 키워드 */}
+              {/* 검색어 히스토리 리스트 */}
+              <FlatList
+                data={historyKeyword}
+                renderItem={renderRow}
+                keyExtractor={(list, index) => index.toString()}
+                numColumns={1}
+                // pagingEnabled={true}
+                persistentScrollbar={true}
+                showsVerticalScrollIndicator={false}
+                progressViewOffset={true}
+                refreshing={true}
+                style={{backgroundColor: '#fff'}}
+                ListEmptyComponent={
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flex: 1,
+                      height: Dimensions.get('window').height - 300,
+                    }}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      검색하신 내역이 없습니다.
+                    </Text>
+                  </View>
+                }
+              />
+              {/* // 검색어 히스토리 리스트 */}
             </View>
           </View>
         </View>
