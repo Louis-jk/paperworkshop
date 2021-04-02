@@ -216,14 +216,22 @@ const Detail = (props) => {
               justifyContent: 'flex-start',
               marginBottom: 20,
             }}>
-            <Carousel
-              ref={carouselRef}
-              data={detail.portfolioImg}
-              renderItem={renderItem}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-              loop={true}
-            />
+            {detail && detail.portfolioImg && detail.portfolioImg.length > 1 ? (
+              <Carousel
+                ref={carouselRef}
+                data={detail.portfolioImg}
+                renderItem={renderItem}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                loop={true}
+              />
+            ) : (
+              <Image
+                source={require('../../src/assets/noImg.png')}
+                resizeMode="cover"
+                style={{width: '100%'}}
+              />
+            )}
 
             {/* Swipe Prev,Next 버튼 Custom */}
             <View
