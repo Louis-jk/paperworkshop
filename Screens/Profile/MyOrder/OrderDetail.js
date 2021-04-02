@@ -64,6 +64,7 @@ const OrderDetail = (props) => {
             text: '확인',
           },
         ]);
+        setLoading(false);
       });
   };
 
