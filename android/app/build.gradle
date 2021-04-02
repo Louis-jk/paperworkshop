@@ -191,6 +191,8 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
+    implementation project(':react-native-fs') 
+
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
 
