@@ -60,4 +60,14 @@ export default {
       }),
     });
   },
+  // 견적 제안 보기
+  getOfferDetail(pd_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_my_real2_estimate_detail',
+        pd_id,
+      }),
+    });
+  },
 };

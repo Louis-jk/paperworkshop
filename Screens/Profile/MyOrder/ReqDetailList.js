@@ -53,6 +53,8 @@ const ReqDetailList = (props) => {
       });
   };
 
+  console.log('myOrderPartners', myOrderPartners);
+
   // 파트너 선정(나의 견적에서 파트너 선정)
   const setEstimatePartnerAPI = (pd_id) => {
     Partners.setEstimatePartner(pd_id).then((res) => {
@@ -256,7 +258,7 @@ const ReqDetailList = (props) => {
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('FeedBack')}
+            onPress={() => navigation.navigate('FeedBack', {pd_id: item.pd_id})}
             style={{
               borderWidth: 0.5,
               borderColor: '#275696',
