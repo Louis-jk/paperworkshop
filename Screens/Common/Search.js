@@ -14,6 +14,7 @@ import {
   FlatList,
   Keyboard,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 
 import moment from 'moment';
@@ -29,6 +30,7 @@ const Search = (props) => {
 
   const keywordRef = React.useRef(null);
 
+  const [isLoading, setLoading] = React.useState(false);
   const [keyword, setKeyword] = React.useState(null); // 검색어 담기
   const [historyKeyword, setHistoryKeyword] = React.useState([]); // 히스토리 검색어 저장
   const [searchResult, setSearchResult] = React.useState([]); // 전체 검색 결과
@@ -39,18 +41,21 @@ const Search = (props) => {
 
   // 검색 결과
   const getSearchResultAPI = () => {
+    setLoading(true);
     SearchAPI.getSearchResult(keyword)
       .then((res) => {
         console.log('검색 결과', res);
         if (res.data.result === '1') {
           setSearchResult(res.data.item);
           setVisibleResult(true);
+          setLoading(false);
         } else {
           Alert.alert(res.data.message, '', [
             {
               text: '확인',
             },
           ]);
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -59,6 +64,7 @@ const Search = (props) => {
             text: '확인',
           },
         ]);
+        setLoading(false);
       });
   };
 
@@ -67,19 +73,19 @@ const Search = (props) => {
 
   // 검색어 입력 및 히스토리 저장
   const sendSearchAPI = () => {
+    setLoading(true);
     if (!keyword) {
-      Alert.alert('검색어를 입력해주세요.', '', [
-        {
-          text: '확인',
-          onPress: () => keywordRef.current.focus(),
-        },
-      ]);
+      setVisibleResult(false);
+      setVisibleKeyword(true);
+      getSearchHistoryAPI();
+      setLoading(false);
     } else {
       SearchAPI.getSearchHistory(mb_id, '', keyword, 'y', '')
         .then((res) => {
           if (res.data.result === '1') {
             setHistoryKeyword(res.data.item);
             setVisibleKeyword(false);
+            setLoading(false);
           }
         })
         .then(() => getSearchResultAPI())
@@ -89,6 +95,7 @@ const Search = (props) => {
               text: '확인',
             },
           ]);
+          setLoading(false);
         });
     }
   };
@@ -148,56 +155,56 @@ const Search = (props) => {
 
   console.log('historyKeyword', historyKeyword);
 
-  const resultRender = ({item, index}) => {
-    return (
-      <>
-        {item.notice !== null ? (
-          <>
-            <TouchableOpacity
-              key={index}
-              style={{paddingHorizontal: 20}}
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate('CCenterNoticeDetail', {item: item.notice})
-              }>
-              <View style={styles.categoryWrap}>
-                <View
-                  style={{
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-start',
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      marginBottom: 12,
-                    }}>
-                    <Text style={styles.categoryTitle}>
-                      {item.notice.title}
-                    </Text>
-                    {/* <Text style={styles.new}>
-                      {item.notice.new_yn === 'Y' ? 'NEW' : null}
-                    </Text> */}
-                  </View>
-                  <Text style={styles.categoryDate}>
-                    {item.notice.datetime}
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <View
-              style={{
-                height: 0.5,
-                width: Dimensions.get('window').width,
-                backgroundColor: '#E3E3E3',
-              }}
-            />
-          </>
-        ) : null}
-      </>
-    );
-  };
+  // const resultRender = ({item, index}) => {
+  //   return (
+  //     <>
+  //       {item.notice !== null ? (
+  //         <>
+  //           <TouchableOpacity
+  //             key={index}
+  //             style={{paddingHorizontal: 20}}
+  //             activeOpacity={0.8}
+  //             onPress={() =>
+  //               navigation.navigate('CCenterNoticeDetail', {item: item.notice})
+  //             }>
+  //             <View style={styles.categoryWrap}>
+  //               <View
+  //                 style={{
+  //                   justifyContent: 'flex-start',
+  //                   alignItems: 'flex-start',
+  //                 }}>
+  //                 <View
+  //                   style={{
+  //                     flexDirection: 'row',
+  //                     justifyContent: 'flex-start',
+  //                     alignItems: 'center',
+  //                     marginBottom: 12,
+  //                   }}>
+  //                   <Text style={styles.categoryTitle}>
+  //                     {item.notice.title}
+  //                   </Text>
+  //                   {/* <Text style={styles.new}>
+  //                     {item.notice.new_yn === 'Y' ? 'NEW' : null}
+  //                   </Text> */}
+  //                 </View>
+  //                 <Text style={styles.categoryDate}>
+  //                   {item.notice.datetime}
+  //                 </Text>
+  //               </View>
+  //             </View>
+  //           </TouchableOpacity>
+  //           <View
+  //             style={{
+  //               height: 0.5,
+  //               width: Dimensions.get('window').width,
+  //               backgroundColor: '#E3E3E3',
+  //             }}
+  //           />
+  //         </>
+  //       ) : null}
+  //     </>
+  //   );
+  // };
 
   const renderRow = ({item, index}) => {
     return (
@@ -209,7 +216,7 @@ const Search = (props) => {
         }}>
         <TouchableWithoutFeedback
           onPress={() => setKeyword(item.keyword)}
-          key={index}>
+          key={item.id}>
           <View
             style={[styles.fRowSBAC, styles.pdV10, {flex: 1, marginRight: 20}]}>
             <Text style={styles.searchKeyword}>{item.keyword}</Text>
@@ -230,7 +237,7 @@ const Search = (props) => {
               width: 18,
               height: 18,
               borderRadius: 18,
-              backgroundColor: '#E5E5E5',
+              backgroundColor: '#EFEFEF',
             }}>
             <Image
               source={require('../../src/assets/icon_close02.png')}
@@ -292,6 +299,33 @@ const Search = (props) => {
             style={[styles.normalText, {width: '80%'}]}
             onSubmitEditing={() => sendSearchAPI()}
           />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+              setKeyword(null);
+              getSearchHistoryAPI();
+              setVisibleKeyword(true);
+              setVisibleResult(false);
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 23,
+                height: 23,
+                borderRadius: 23,
+                backgroundColor: '#EFEFEF',
+              }}>
+              <Image
+                source={require('../../src/assets/icon_close02.png')}
+                resizeMode="cover"
+                style={{
+                  width: 15,
+                  height: 15,
+                }}
+              />
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} onPress={() => sendSearchAPI()}>
             <Image
               source={require('../../src/assets/top_seach.png')}
@@ -301,536 +335,603 @@ const Search = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView
-        style={styles.container02}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.content}>
-          <View>
-            {/* <View>
-              <Text>검색 결과들</Text>
-            </View> */}
+      <View
+        style={{
+          backgroundColor: '#fff',
+          height: Dimensions.get('window').height,
+        }}>
+        {isVisiblekeyword && (
+          <View style={{paddingHorizontal: 20, marginTop: 10}}>
+            <Text style={styles.searchTitle}>검색기록</Text>
+            <View style={styles.searchWrap}>
+              {/* 검색어 히스토리 리스트 */}
 
-            {/* 검색 결과 리스트 */}
-
-            {isVisibleResult &&
-              searchResult.notice.length === 0 &&
-              searchResult.event.length === 0 &&
-              searchResult.gallery.length === 0 &&
-              searchResult.info.length === 0 &&
-              searchResult.review.length === 0 && (
-                <View
-                  style={{
-                    flex: 1,
-                    height: Dimensions.get('window').height - 300,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={styles.normalText}>
-                    검색어에 일치하는 내용물이 없습니다.
-                  </Text>
-                </View>
-              )}
-
-            {/* 공지사항 출력 부분 */}
-            {isVisibleResult && searchResult !== null ? (
-              searchResult.notice.length > 0 ? (
-                <View style={{paddingHorizontal: 20}}>
-                  <Text style={[styles.searchSubTitle]}>공지사항</Text>
-                </View>
-              ) : null
-            ) : null}
-            {isVisibleResult &&
-            searchResult !== null &&
-            searchResult.notice.length > 0
-              ? searchResult.notice.map((notice, index) => (
-                  <>
-                    <TouchableOpacity
-                      key={notice.id}
-                      style={{paddingHorizontal: 20}}
-                      activeOpacity={0.8}
-                      onPress={() =>
-                        navigation.navigate('CCenterNoticeDetail', {
-                          item: notice,
-                        })
-                      }>
-                      <View style={styles.categoryWrap}>
-                        <View
-                          style={{
-                            justifyContent: 'flex-start',
-                            alignItems: 'flex-start',
-                          }}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'flex-start',
-                              alignItems: 'center',
-                              marginBottom: 12,
-                            }}>
-                            <Text style={styles.categoryTitle}>
-                              {notice.title}
-                            </Text>
-                            {/* <Text style={styles.new}>
-                          {item.notice.new_yn === 'Y' ? 'NEW' : null}
-                        </Text> */}
-                          </View>
-                          <Text style={styles.categoryDate}>
-                            {moment(notice.datetime).format('YYYY.MM.DD')}
-                          </Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                    <View
-                      style={{
-                        height: 0.5,
-                        width: Dimensions.get('window').width,
-                        backgroundColor: '#E3E3E3',
-                      }}
-                    />
-                  </>
-                ))
-              : null}
-            {/* // 공지사항 출력 부분 */}
-
-            {/* 이벤트 출력 부분 */}
-            {isVisibleResult && searchResult !== null ? (
-              searchResult.event.length > 0 ? (
-                <View style={{paddingHorizontal: 20, marginTop: 20}}>
-                  <Text style={styles.searchSubTitle}>이벤트</Text>
-                </View>
-              ) : null
-            ) : null}
-            {isVisibleResult &&
-            searchResult !== null &&
-            searchResult.event.length > 0
-              ? searchResult.event.map((event, index) => (
-                  <View style={{paddingHorizontal: 20, marginBottom: 20}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                        marginBottom: 10,
-                      }}>
-                      <Text
-                        style={[
-                          styles.boldText,
-                          {fontSize: 16, marginRight: 5},
-                        ]}>
-                        {event.title}
-                      </Text>
-                      <Text
-                        style={[
-                          styles.mediumText,
-                          {fontSize: 14, color: '#366DE5'},
-                        ]}>
-                        NEW
-                      </Text>
-                    </View>
-                    <Text
-                      style={[
-                        styles.normalText,
-                        {
-                          fontSize: 14,
-                          lineHeight: 20,
-                          width: '100%',
-                          marginBottom: 5,
-                        },
-                      ]}>
-                      {moment(event.datetime).format('YYYY.MM.DD')}
+              <FlatList
+                data={historyKeyword}
+                renderItem={renderRow}
+                keyExtractor={(list, index) => index.toString()}
+                numColumns={1}
+                // pagingEnabled={true}
+                persistentScrollbar={true}
+                showsVerticalScrollIndicator={false}
+                progressViewOffset={true}
+                refreshing={true}
+                style={{backgroundColor: '#fff'}}
+                ListEmptyComponent={
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flex: 1,
+                      height: Dimensions.get('window').height - 300,
+                    }}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      검색하신 내역이 없습니다.
                     </Text>
                   </View>
-                ))
-              : null}
-            {/* // 이벤트 출력 부분 */}
+                }
+              />
 
-            {isVisibleResult &&
-              searchResult !== null &&
-              searchResult.event.length > 0 && (
-                <View
-                  style={{
-                    height: 0.5,
-                    width: Dimensions.get('window').width,
-                    backgroundColor: '#E3E3E3',
-                  }}
-                />
-              )}
+              {/* // 검색어 히스토리 리스트 */}
+            </View>
+          </View>
+        )}
 
-            {/* 갤러리 출력 부분 */}
-            {isVisibleResult && searchResult !== null ? (
-              searchResult.gallery.length > 0 ? (
-                <View style={{paddingHorizontal: 20, marginTop: 20}}>
-                  <Text style={styles.searchSubTitle}>인쇄/패키지 갤러리</Text>
-                </View>
-              ) : null
-            ) : null}
-            {isVisibleResult &&
-            searchResult !== null &&
-            searchResult.gallery.length > 0
-              ? searchResult.gallery.map((gallery, index) => (
-                  <>
-                    <View key={gallery.id} style={{paddingHorizontal: 20}}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'flex-start',
-                          alignItems: 'center',
-                          marginVertical: 10,
-                        }}>
-                        <View style={{flex: 1, marginRight: 20}}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'flex-start',
-                              alignItems: 'center',
-                              marginBottom: 5,
-                            }}>
-                            <Text
-                              style={[
-                                styles.normalText,
-                                {fontSize: 12, marginRight: 5},
-                              ]}>
-                              {gallery.company}
-                            </Text>
-                            {gallery.new_yn === 'Y' && (
-                              <Text
-                                style={[
-                                  styles.mediumText,
-                                  {fontSize: 12, color: '#366DE5'},
-                                ]}>
-                                NEW
-                              </Text>
-                            )}
-                          </View>
-                          <Text
-                            style={[
-                              styles.boldText,
-                              {
-                                fontSize: 14,
-                                lineHeight: 20,
-                                width: '100%',
-                                marginBottom: 5,
-                              },
-                            ]}
-                            numberOfLines={1}>
-                            {gallery.decription}
-                          </Text>
-                        </View>
-                        <View>
-                          <Image
-                            source={{uri: `${gallery.portfolioImg}`}}
-                            resizeMode="cover"
-                            style={{width: 50, height: 50, borderRadius: 5}}
-                          />
-                        </View>
-                      </View>
-                    </View>
+        {isLoading ? (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              flex: 1,
+              height: Dimensions.get('window').height - 200,
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 100,
+              elevation: 0,
+              backgroundColor: 'rgba(255,255,255,0.5)',
+            }}>
+            <ActivityIndicator size="large" color="#275696" />
+          </View>
+        ) : (
+          <ScrollView
+            style={styles.container02}
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.content}>
+              <View>
+                {/* 검색 결과 리스트 */}
+
+                {isVisibleResult &&
+                  searchResult.notice.length === 0 &&
+                  searchResult.event.length === 0 &&
+                  searchResult.gallery.length === 0 &&
+                  searchResult.info.length === 0 &&
+                  searchResult.review.length === 0 && (
                     <View
                       style={{
-                        height: 0.5,
-                        width: Dimensions.get('window').width,
-                        backgroundColor: '#E3E3E3',
-                      }}
-                    />
-                  </>
-                ))
-              : null}
-            {/* // 갤러리 출력 부분 */}
+                        flex: 1,
+                        height: Dimensions.get('window').height - 300,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text style={styles.normalText}>
+                        검색어에 일치하는 내용물이 없습니다.
+                      </Text>
+                    </View>
+                  )}
 
-            {/* 유용한정보 출력 부분 */}
-            {isVisibleResult && searchResult !== null ? (
-              searchResult.info.length > 0 ? (
-                <View style={{paddingHorizontal: 20, marginTop: 20}}>
-                  <Text style={styles.searchSubTitle}>유용한 정보</Text>
-                </View>
-              ) : null
-            ) : null}
-            {isVisibleResult &&
-            searchResult !== null &&
-            searchResult.info.length > 0
-              ? searchResult.info.map((info, index) => (
-                  <>
-                    <TouchableOpacity
-                      key={info.id}
-                      style={{paddingHorizontal: 20}}
-                      activeOpacity={0.8}
-                      onPress={() =>
-                        navigation.navigate('StoryTipsDetail', {
-                          item: info,
-                        })
-                      }>
-                      <View style={styles.categoryWrap}>
+                {/* 공지사항 출력 부분 */}
+                {isVisibleResult && searchResult !== null ? (
+                  searchResult.notice.length > 0 ? (
+                    <View style={{paddingHorizontal: 20}}>
+                      <Text style={[styles.searchSubTitle]}>공지사항</Text>
+                    </View>
+                  ) : null
+                ) : null}
+                {isVisibleResult &&
+                searchResult !== null &&
+                searchResult.notice.length > 0
+                  ? searchResult.notice.map((notice, index) => (
+                      <>
+                        <TouchableOpacity
+                          key={notice.id}
+                          style={{paddingHorizontal: 20}}
+                          activeOpacity={0.8}
+                          onPress={() =>
+                            navigation.navigate('Ccenter', {
+                              screen: 'CCenterNoticeDetail',
+                              params: {
+                                item: notice,
+                              },
+                            })
+                          }>
+                          <View style={styles.categoryWrap}>
+                            <View
+                              style={{
+                                justifyContent: 'flex-start',
+                                alignItems: 'flex-start',
+                              }}>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'flex-start',
+                                  alignItems: 'center',
+                                  marginBottom: 12,
+                                }}>
+                                <Text style={styles.categoryTitle}>
+                                  {notice.title}
+                                </Text>
+                                <Text style={styles.new}>
+                                  {notice.new_yn === 'Y' ? 'NEW' : null}
+                                </Text>
+                              </View>
+                              <Text style={styles.categoryDate}>
+                                {moment(notice.datetime).format('YYYY.MM.DD')}
+                              </Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                        <View
+                          style={{
+                            height: 0.5,
+                            width: Dimensions.get('window').width,
+                            backgroundColor: '#E3E3E3',
+                          }}
+                        />
+                      </>
+                    ))
+                  : null}
+                {/* // 공지사항 출력 부분 */}
+
+                {/* 이벤트 출력 부분 */}
+                {isVisibleResult && searchResult !== null ? (
+                  searchResult.event.length > 0 ? (
+                    <View style={{paddingHorizontal: 20, marginTop: 20}}>
+                      <Text style={styles.searchSubTitle}>이벤트</Text>
+                    </View>
+                  ) : null
+                ) : null}
+                {isVisibleResult &&
+                searchResult !== null &&
+                searchResult.event.length > 0
+                  ? searchResult.event.map((event, index) => (
+                      <View
+                        key={event.id}
+                        style={{paddingHorizontal: 20, marginBottom: 20}}>
                         <View
                           style={{
                             flexDirection: 'row',
-                            justifyContent: 'space-between',
+                            justifyContent: 'flex-start',
                             alignItems: 'center',
+                            marginBottom: 10,
+                          }}>
+                          <Text
+                            style={[
+                              styles.boldText,
+                              {fontSize: 16, marginRight: 5},
+                            ]}>
+                            {event.title}
+                          </Text>
+                          <Text
+                            style={[
+                              styles.mediumText,
+                              {fontSize: 14, color: '#366DE5'},
+                            ]}>
+                            NEW
+                          </Text>
+                        </View>
+                        <Text
+                          style={[
+                            styles.normalText,
+                            {
+                              fontSize: 14,
+                              lineHeight: 20,
+                              width: '100%',
+                              marginBottom: 5,
+                            },
+                          ]}>
+                          {moment(event.datetime).format('YYYY.MM.DD')}
+                        </Text>
+                      </View>
+                    ))
+                  : null}
+                {/* // 이벤트 출력 부분 */}
+
+                {isVisibleResult &&
+                  searchResult !== null &&
+                  searchResult.event.length > 0 && (
+                    <View
+                      style={{
+                        height: 0.5,
+                        width: Dimensions.get('window').width,
+                        backgroundColor: '#E3E3E3',
+                      }}
+                    />
+                  )}
+
+                {/* 갤러리 출력 부분 */}
+                {isVisibleResult && searchResult !== null ? (
+                  searchResult.gallery.length > 0 ? (
+                    <View style={{paddingHorizontal: 20, marginTop: 20}}>
+                      <Text style={styles.searchSubTitle}>
+                        인쇄/패키지 갤러리
+                      </Text>
+                    </View>
+                  ) : null
+                ) : null}
+                {isVisibleResult &&
+                searchResult !== null &&
+                searchResult.gallery.length > 0
+                  ? searchResult.gallery.map((gallery, index) => (
+                      <>
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() =>
+                            navigation.navigate('Gallery', {
+                              screen: 'GalleryWebView',
+                              params: {
+                                id: gallery.id,
+                                description: gallery.description,
+                                businessName: gallery.company,
+                              },
+                            })
+                          }
+                          key={gallery.id}
+                          style={{paddingHorizontal: 20}}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginVertical: 10,
+                            }}>
+                            <View style={{flex: 1, marginRight: 20}}>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'flex-start',
+                                  alignItems: 'center',
+                                  marginBottom: 5,
+                                }}>
+                                <Text
+                                  style={[
+                                    styles.normalText,
+                                    {fontSize: 12, marginRight: 5},
+                                  ]}>
+                                  {gallery.company}
+                                </Text>
+                                {gallery.new_yn === 'Y' && (
+                                  <Text
+                                    style={[
+                                      styles.mediumText,
+                                      {fontSize: 12, color: '#366DE5'},
+                                    ]}>
+                                    NEW
+                                  </Text>
+                                )}
+                              </View>
+                              <Text
+                                style={[
+                                  styles.boldText,
+                                  {
+                                    fontSize: 14,
+                                    lineHeight: 20,
+                                    width: '100%',
+                                    marginBottom: 5,
+                                  },
+                                ]}
+                                numberOfLines={1}>
+                                {gallery.decription}
+                              </Text>
+                            </View>
+                            <View>
+                              <Image
+                                source={{uri: `${gallery.portfolioImg}`}}
+                                resizeMode="cover"
+                                style={{width: 50, height: 50, borderRadius: 5}}
+                              />
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                        <View
+                          style={{
+                            height: 0.5,
+                            width: Dimensions.get('window').width,
+                            backgroundColor: '#E3E3E3',
+                          }}
+                        />
+                      </>
+                    ))
+                  : null}
+                {/* // 갤러리 출력 부분 */}
+
+                {/* 유용한정보 출력 부분 */}
+                {isVisibleResult && searchResult !== null ? (
+                  searchResult.info.length > 0 ? (
+                    <View style={{paddingHorizontal: 20, marginTop: 20}}>
+                      <Text style={styles.searchSubTitle}>유용한 정보</Text>
+                    </View>
+                  ) : null
+                ) : null}
+                {isVisibleResult &&
+                searchResult !== null &&
+                searchResult.info.length > 0
+                  ? searchResult.info.map((info, index) => (
+                      <>
+                        <TouchableOpacity
+                          key={info.id}
+                          style={{paddingHorizontal: 20}}
+                          activeOpacity={0.8}
+                          onPress={() =>
+                            navigation.navigate('Story', {
+                              screen: 'StoryTipsDetail',
+                              params: {
+                                item: info,
+                              },
+                            })
+                          }>
+                          <View style={styles.categoryWrap}>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginBottom: 10,
+                              }}>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'flex-start',
+                                  alignItems: 'center',
+                                }}>
+                                <View style={styles.categoryBtn}>
+                                  <Text style={styles.categoryBtnTxt}>
+                                    {info.ca_name}
+                                  </Text>
+                                </View>
+                                <Text style={styles.new}>
+                                  {info.new_yn === 'Y' ? 'NEW' : null}
+                                </Text>
+                              </View>
+                              <Text style={styles.categoryDate}>
+                                {moment(info.datetime).format('YYYY.MM.DD')}
+                              </Text>
+                            </View>
+                            <Text style={styles.categoryTitle}>
+                              {info.title}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <View
+                          style={{
+                            height: 0.5,
+                            width: Dimensions.get('window').width,
+                            backgroundColor: '#E3E3E3',
+                          }}
+                        />
+                      </>
+                    ))
+                  : null}
+                {/* // 유용한정보 출력 부분 */}
+
+                {/* 고객후기 출력 부분 */}
+                {isVisibleResult && searchResult !== null ? (
+                  searchResult.review.length > 0 ? (
+                    <View style={{paddingHorizontal: 20, marginTop: 20}}>
+                      <Text style={styles.searchSubTitle}>고객후기</Text>
+                    </View>
+                  ) : null
+                ) : null}
+                {isVisibleResult &&
+                searchResult !== null &&
+                searchResult.review.length > 0
+                  ? searchResult.review.map((review, index) => (
+                      <View style={{paddingHorizontal: 20}}>
+                        <TouchableOpacity
+                          key={review.id}
+                          activeOpacity={0.8}
+                          onPress={() =>
+                            navigation.navigate('Review', {
+                              screen: 'ReviewDetail',
+                              params: {
+                                reviewID: review.id,
+                                companyId: review.company_id,
+                              },
+                            })
+                          }
+                          style={{
+                            borderWidth: 1,
+                            borderColor: '#E3E3E3',
+                            borderRadius: 5,
                             marginBottom: 10,
                           }}>
                           <View
                             style={{
                               flexDirection: 'row',
                               justifyContent: 'flex-start',
-                              alignItems: 'center',
+                              alignItems: 'flex-start',
+                              marginBottom: 20,
+                              paddingTop: 20,
+                              paddingHorizontal: 20,
+                              paddingBottom: 10,
                             }}>
-                            <View style={styles.categoryBtn}>
-                              <Text style={styles.categoryBtnTxt}>
-                                {info.ca_name}
+                            <ImageBackground
+                              source={{uri: `${review.bf_file[0]}`}}
+                              resizeMode="cover"
+                              style={{
+                                width: 75,
+                                height: 70,
+                                position: 'relative',
+                              }}>
+                              {review.img_cnt !== '0' && (
+                                <Text
+                                  style={{
+                                    position: 'absolute',
+                                    bottom: 0,
+                                    right: 0,
+                                    fontSize: 10,
+                                    backgroundColor: 'rgba(0,0,0,0.45)',
+                                    color: '#fff',
+                                    padding: 5,
+                                  }}>
+                                  {`+${review.img_cnt}`}
+                                </Text>
+                              )}
+                            </ImageBackground>
+                            <View style={{flexShrink: 2, marginLeft: 20}}>
+                              <Text
+                                style={[
+                                  styles.boldText,
+                                  {fontSize: 14, marginBottom: 10},
+                                ]}>
+                                {review.company_name
+                                  ? `${review.company_name}(${review.mb_name} 고객님)`
+                                  : `${review.mb_name} 고객님`}
+                              </Text>
+                              <Text
+                                style={[
+                                  styles.normalText,
+                                  {fontSize: 14, lineHeight: 22},
+                                ]}>
+                                {review.content}
                               </Text>
                             </View>
-                            {/* <Text style={styles.new}>
-                  {item.new_yn === 'Y' ? 'NEW' : null}
-                </Text> */}
                           </View>
-                          <Text style={styles.categoryDate}>
-                            {moment(info.datetime).format('YYYY.MM.DD')}
-                          </Text>
-                        </View>
-                        <Text style={styles.categoryTitle}>{info.title}</Text>
-                      </View>
-                    </TouchableOpacity>
-                    <View
-                      style={{
-                        height: 0.5,
-                        width: Dimensions.get('window').width,
-                        backgroundColor: '#E3E3E3',
-                      }}
-                    />
-                  </>
-                ))
-              : null}
-            {/* // 유용한정보 출력 부분 */}
-
-            {/* 고객후기 출력 부분 */}
-            {isVisibleResult && searchResult !== null ? (
-              searchResult.review.length > 0 ? (
-                <View style={{paddingHorizontal: 20, marginTop: 20}}>
-                  <Text style={styles.searchSubTitle}>고객후기</Text>
-                </View>
-              ) : null
-            ) : null}
-            {isVisibleResult &&
-            searchResult !== null &&
-            searchResult.review.length > 0
-              ? searchResult.review.map((review, index) => (
-                  <View style={{paddingHorizontal: 20}}>
-                    <TouchableOpacity
-                      key={review.id}
-                      activeOpacity={0.8}
-                      // onPress={() =>
-                      //   navigation.navigate('ReviewDetail', {
-                      //     screen: 'ReviewDetail',
-                      //     params: {reviewID: item.pr_id, companyId: companyId},
-                      //   })
-                      // }
-                      style={{
-                        borderWidth: 1,
-                        borderColor: '#E3E3E3',
-                        borderRadius: 5,
-                        marginBottom: 10,
-                      }}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'flex-start',
-                          alignItems: 'flex-start',
-                          marginBottom: 20,
-                          paddingTop: 20,
-                          paddingHorizontal: 20,
-                          paddingBottom: 10,
-                        }}>
-                        <ImageBackground
-                          source={{uri: `${review.bf_file[0]}`}}
-                          resizeMode="cover"
-                          style={{width: 75, height: 70, position: 'relative'}}>
-                          {review.img_cnt !== '0' && (
-                            <Text
-                              style={{
-                                position: 'absolute',
-                                bottom: 0,
-                                right: 0,
-                                fontSize: 10,
-                                backgroundColor: 'rgba(0,0,0,0.45)',
-                                color: '#fff',
-                                padding: 5,
-                              }}>
-                              {`+${review.img_cnt}`}
-                            </Text>
-                          )}
-                        </ImageBackground>
-                        <View style={{flexShrink: 2, marginLeft: 20}}>
-                          <Text
-                            style={[
-                              styles.boldText,
-                              {fontSize: 14, marginBottom: 10},
-                            ]}>
-                            {review.company_name
-                              ? `${review.company_name}(${review.mb_name} 고객님)`
-                              : `${review.mb_name} 고객님`}
-                          </Text>
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 14, lineHeight: 22},
-                            ]}>
-                            {review.content}
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{
-                          width: '100%',
-                          height: 1,
-                          backgroundColor: '#E3E3E3',
-                        }}
-                      />
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          paddingHorizontal: 20,
-                          paddingVertical: 10,
-                        }}>
-                        <View>
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 12, color: '#707070', marginBottom: 7},
-                            ]}>
-                            소통만족도
-                          </Text>
+                          <View
+                            style={{
+                              width: '100%',
+                              height: 1,
+                              backgroundColor: '#E3E3E3',
+                            }}
+                          />
                           <View
                             style={{
                               flexDirection: 'row',
-                              justifyContent: 'center',
+                              justifyContent: 'space-between',
                               alignItems: 'center',
+                              paddingHorizontal: 20,
+                              paddingVertical: 10,
                             }}>
-                            <StarRating
-                              disabled={false}
-                              emptyStar={require('../../src/assets/star_off.png')}
-                              fullStar={require('../../src/assets/star_on.png')}
-                              maxStars={5}
-                              rating={Math.floor(review.grade1)}
-                              starSize={12}
-                            />
-                            <Text
-                              style={[
-                                styles.normalText,
-                                {fontSize: 12, marginLeft: 5},
-                              ]}>
-                              {`${review.grade1}.0`}
-                            </Text>
+                            <View>
+                              <Text
+                                style={[
+                                  styles.normalText,
+                                  {
+                                    fontSize: 12,
+                                    color: '#707070',
+                                    marginBottom: 7,
+                                  },
+                                ]}>
+                                소통만족도
+                              </Text>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <StarRating
+                                  disabled={false}
+                                  emptyStar={require('../../src/assets/star_off.png')}
+                                  fullStar={require('../../src/assets/star_on.png')}
+                                  maxStars={5}
+                                  rating={Math.floor(review.grade1)}
+                                  starSize={12}
+                                />
+                                <Text
+                                  style={[
+                                    styles.normalText,
+                                    {fontSize: 12, marginLeft: 5},
+                                  ]}>
+                                  {`${review.grade1}.0`}
+                                </Text>
+                              </View>
+                            </View>
+                            <View>
+                              <Text
+                                style={[
+                                  styles.normalText,
+                                  {
+                                    fontSize: 12,
+                                    color: '#707070',
+                                    marginBottom: 7,
+                                  },
+                                ]}>
+                                품질만족도
+                              </Text>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <StarRating
+                                  disabled={false}
+                                  emptyStar={require('../../src/assets/star_off.png')}
+                                  fullStar={require('../../src/assets/star_on.png')}
+                                  maxStars={5}
+                                  rating={Math.floor(review.grade2)}
+                                  starSize={12}
+                                />
+                                <Text
+                                  style={[
+                                    styles.normalText,
+                                    {fontSize: 12, marginLeft: 5},
+                                  ]}>
+                                  {`${review.grade2}.0`}
+                                </Text>
+                              </View>
+                            </View>
+                            <View>
+                              <Text
+                                style={[
+                                  styles.normalText,
+                                  {
+                                    fontSize: 12,
+                                    color: '#707070',
+                                    marginBottom: 7,
+                                  },
+                                ]}>
+                                납기만족도
+                              </Text>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <StarRating
+                                  disabled={false}
+                                  emptyStar={require('../../src/assets/star_off.png')}
+                                  fullStar={require('../../src/assets/star_on.png')}
+                                  maxStars={5}
+                                  rating={Math.floor(review.grade3)}
+                                  starSize={12}
+                                />
+                                <Text
+                                  style={[
+                                    styles.normalText,
+                                    {fontSize: 12, marginLeft: 5},
+                                  ]}>
+                                  {`${review.grade3}.0`}
+                                </Text>
+                              </View>
+                            </View>
                           </View>
-                        </View>
-                        <View>
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 12, color: '#707070', marginBottom: 7},
-                            ]}>
-                            품질만족도
-                          </Text>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                            }}>
-                            <StarRating
-                              disabled={false}
-                              emptyStar={require('../../src/assets/star_off.png')}
-                              fullStar={require('../../src/assets/star_on.png')}
-                              maxStars={5}
-                              rating={Math.floor(review.grade2)}
-                              starSize={12}
-                            />
-                            <Text
-                              style={[
-                                styles.normalText,
-                                {fontSize: 12, marginLeft: 5},
-                              ]}>
-                              {`${review.grade2}.0`}
-                            </Text>
-                          </View>
-                        </View>
-                        <View>
-                          <Text
-                            style={[
-                              styles.normalText,
-                              {fontSize: 12, color: '#707070', marginBottom: 7},
-                            ]}>
-                            납기만족도
-                          </Text>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                            }}>
-                            <StarRating
-                              disabled={false}
-                              emptyStar={require('../../src/assets/star_off.png')}
-                              fullStar={require('../../src/assets/star_on.png')}
-                              maxStars={5}
-                              rating={Math.floor(review.grade3)}
-                              starSize={12}
-                            />
-                            <Text
-                              style={[
-                                styles.normalText,
-                                {fontSize: 12, marginLeft: 5},
-                              ]}>
-                              {`${review.grade3}.0`}
-                            </Text>
-                          </View>
-                        </View>
+                        </TouchableOpacity>
                       </View>
-                    </TouchableOpacity>
-                  </View>
-                ))
-              : null}
-            {/* // 고객후기 출력 부분 */}
+                    ))
+                  : null}
+                {/* // 고객후기 출력 부분 */}
 
-            {/* // 검색 결과 리스트 */}
-            {isVisiblekeyword && (
-              <View style={{paddingHorizontal: 20}}>
-                <Text style={styles.searchTitle}>검색기록</Text>
-                <View style={styles.searchWrap}>
-                  {/* 검색어 히스토리 리스트 */}
-
-                  <FlatList
-                    data={historyKeyword}
-                    renderItem={renderRow}
-                    keyExtractor={(list, index) => index.toString()}
-                    numColumns={1}
-                    // pagingEnabled={true}
-                    persistentScrollbar={true}
-                    showsVerticalScrollIndicator={false}
-                    progressViewOffset={true}
-                    refreshing={true}
-                    style={{backgroundColor: '#fff'}}
-                    ListEmptyComponent={
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          flex: 1,
-                          height: Dimensions.get('window').height - 300,
-                        }}>
-                        <Text style={{fontFamily: 'SCDream4'}}>
-                          검색하신 내역이 없습니다.
-                        </Text>
-                      </View>
-                    }
-                  />
-
-                  {/* // 검색어 히스토리 리스트 */}
-                </View>
+                {/* // 검색 결과 리스트 */}
               </View>
-            )}
-          </View>
-        </View>
-      </ScrollView>
+            </View>
+          </ScrollView>
+        )}
+      </View>
     </>
   );
 };
@@ -894,6 +995,7 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: 20,
     backgroundColor: '#fff',
+    paddingBottom: 150,
   },
   categoryWrap: {
     paddingVertical: 20,
