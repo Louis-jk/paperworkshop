@@ -185,7 +185,7 @@ const Detail = (props) => {
         onPress={() =>
           navigation.navigate('ReviewDetail', {
             screen: 'ReviewDetail',
-            params: {reviewID: item.pr_id, companyId: companyId},
+            params: {reviewID: item.id, companyId: companyId},
           })
         }
         style={{
@@ -228,7 +228,7 @@ const Detail = (props) => {
                 : `${item.mb_name} 고객님`}
             </Text>
             <Text style={[styles.normalText, {fontSize: 14, lineHeight: 22}]}>
-              {item.review_content}
+              {item.content}
             </Text>
           </View>
         </View>

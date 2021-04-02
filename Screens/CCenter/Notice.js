@@ -73,12 +73,12 @@ const Notice = (props) => {
                   alignItems: 'center',
                   marginBottom: 12,
                 }}>
-                <Text style={styles.categoryTitle}>{item.wr_subject}</Text>
+                <Text style={styles.categoryTitle}>{item.title}</Text>
                 <Text style={styles.new}>
                   {item.new_yn === 'Y' ? 'NEW' : null}
                 </Text>
               </View>
-              <Text style={styles.categoryDate}>{item.wr_datetime}</Text>
+              <Text style={styles.categoryDate}>{item.datetime}</Text>
             </View>
           </View>
         </TouchableOpacity>

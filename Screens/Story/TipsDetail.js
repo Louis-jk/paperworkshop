@@ -24,13 +24,7 @@ import Footer from '../Common/Footer';
 const TipsDetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-  const {
-    wr_id,
-    wr_subject,
-    wr_datetime,
-    ca_name,
-    new_yn,
-  } = props.route.params.item;
+  const {id, title, datetime, ca_name, new_yn} = props.route.params.item;
 
   console.log('props', props);
 
@@ -59,9 +53,9 @@ const TipsDetail = (props) => {
               </View>
               <Text style={styles.new}>{new_yn === 'Y' ? 'NEW' : null}</Text>
             </View>
-            <Text style={styles.categoryDate}>{wr_datetime}</Text>
+            <Text style={styles.categoryDate}>{datetime}</Text>
           </View>
-          <Text style={styles.categoryTitle}>{wr_subject}</Text>
+          <Text style={styles.categoryTitle}>{title}</Text>
         </View>
       </View>
 
@@ -94,7 +88,7 @@ const TipsDetail = (props) => {
             },
           ]}
           source={{
-            uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=info&wr_id=${wr_id}`,
+            uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=info&wr_id=${id}`,
           }}
           scalesPageToFit={Platform.OS === 'ios' ? false : true}
           viewportContent={'width=device-width, user-scalable=no'}

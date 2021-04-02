@@ -23,7 +23,7 @@ import Footer from '../Common/Footer';
 const NoticeDetail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-  const {wr_id, wr_subject, wr_datetime, new_yn} = props.route.params.item;
+  const {id, title, datetime, new_yn} = props.route.params.item;
   console.log('notice props', props);
 
   return (
@@ -47,9 +47,9 @@ const NoticeDetail = (props) => {
                 }}>
                 <Text style={styles.new}>{new_yn === 'Y' ? 'NEW' : null}</Text>
               </View>
-              <Text style={styles.categoryDate}>{wr_datetime}</Text>
+              <Text style={styles.categoryDate}>{datetime}</Text>
             </View>
-            <Text style={styles.categoryTitle}>{wr_subject}</Text>
+            <Text style={styles.categoryTitle}>{title}</Text>
           </View>
         </View>
 
@@ -79,7 +79,7 @@ const NoticeDetail = (props) => {
             },
           ]}
           source={{
-            uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=notice&wr_id=${wr_id}`,
+            uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=notice&wr_id=${id}`,
           }}
           scalesPageToFit={Platform.OS === 'ios' ? false : true}
           viewportContent={'width=device-width, user-scalable=no'}
