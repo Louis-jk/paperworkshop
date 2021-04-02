@@ -15,6 +15,7 @@ import DetailHeader from '../../Common/DetailHeader';
 import Modal from './CancelModal';
 import OrderAPI from '../../../src/api/OrderAPI';
 import Partners from '../../../src/api/Partners';
+import OrderDetail from './OrderDetail';
 
 const ReqDetailList = (props) => {
   const navigation = props.navigation;
@@ -258,7 +259,12 @@ const ReqDetailList = (props) => {
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('FeedBack', {pd_id: item.pd_id})}
+            onPress={() =>
+              navigation.navigate('FeedBack', {
+                cate1: myOrderDetail.cate1,
+                pd_id: item.pd_id,
+              })
+            }
             style={{
               borderWidth: 0.5,
               borderColor: '#275696',
@@ -278,15 +284,7 @@ const ReqDetailList = (props) => {
               if (myOrderDetail.status === '1') {
                 setEstimatePartnerAPI(item.pd_id);
               } else if (myOrderDetail.status === '2') {
-                Alert.alert(
-                  '견적확정 대기중입니다.',
-                  '파트너회원이 견적을 확정할 때까지 기다려주세요.',
-                  [
-                    {
-                      text: '확인',
-                    },
-                  ],
-                );
+                return false;
               } else if (myOrderDetail.status === '3') {
                 setDepositPartnerAPI();
               } else if (myOrderDetail.status === '5') {
@@ -295,12 +293,14 @@ const ReqDetailList = (props) => {
                 return false;
               }
             }}
+            disabled={myOrderDetail.status === ('2' || '4') ? true : false}
             style={{
               borderWidth: 0.5,
-              borderColor: myOrderDetail.status === '4' ? '#b5b5b5' : '#275696',
+              borderColor:
+                myOrderDetail.status === ('2' || '4') ? '#b5b5b5' : '#275696',
               borderRadius: 20,
               backgroundColor:
-                myOrderDetail.status === '4' ? '#b5b5b5' : '#275696',
+                myOrderDetail.status === ('2' || '4') ? '#b5b5b5' : '#275696',
               paddingVertical: 12,
               width: '49%',
               justifyContent: 'center',
