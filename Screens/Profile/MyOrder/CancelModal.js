@@ -80,11 +80,11 @@ const CancelModal = ({toggleModal, isVisible, goCopyOrder, goCancelOrder}) => {
                 style={{
                   width: '100%',
                 }}>
-                {/* <TouchableOpacity onPress={goCopyOrder} activeOpacity={0.8}>
-                  <View style={[styles.goHomeBtn, { marginBottom: 5 }]}>
+                <TouchableOpacity onPress={goCopyOrder} activeOpacity={0.8}>
+                  <View style={[styles.goHomeBtn, {marginBottom: 5}]}>
                     <Text style={styles.goHomeBtnText}>복사 후 재등록</Text>
                   </View>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <TouchableOpacity onPress={goCancelOrder} activeOpacity={0.8}>
                   <View style={[styles.submitBtn, {marginBottom: 10}]}>
                     <Text style={styles.submitBtnText}>최종 선택 포기</Text>
