@@ -206,7 +206,10 @@ const ReqDetailList = (props) => {
 
   const goCopyOrder = async () => {
     await setModalVisible(!isModalVisible);
-    await navigation.navigate('CopyOrder');
+    await navigation.navigate('CopyOrder', {
+      pe_id: pe_id,
+      cate1: myOrderDetail.cate1,
+    });
   };
 
   const renderRow = ({item, index}) => {
@@ -311,41 +314,17 @@ const ReqDetailList = (props) => {
             onPress={() => {
               if (myOrderDetail.status === '1') {
                 setEstimatePartnerAPI(item.pd_id);
-              } else if (myOrderDetail.status === '3') {
-                setDepositPartnerAPI();
-              } else if (myOrderDetail.status === '5') {
-                setOrderProductAPI();
-              } else if (myOrderDetail.status === '7') {
-                setOrderCompleteAPI();
               } else {
                 return false;
               }
             }}
-            disabled={
-              myOrderDetail.status === '2' ||
-              myOrderDetail.status === '4' ||
-              myOrderDetail.status === '6' ||
-              myOrderDetail.status === '8'
-                ? true
-                : false
-            }
+            disabled={myOrderDetail.status !== '1' ? true : false}
             style={{
               borderWidth: 0.5,
-              borderColor:
-                myOrderDetail.status === '2' ||
-                myOrderDetail.status === '4' ||
-                myOrderDetail.status === '6' ||
-                myOrderDetail.status === '8'
-                  ? '#D4D4D4'
-                  : '#275696',
+              borderColor: myOrderDetail.status !== '1' ? '#D4D4D4' : '#275696',
               borderRadius: 20,
               backgroundColor:
-                myOrderDetail.status === '2' ||
-                myOrderDetail.status === '4' ||
-                myOrderDetail.status === '6' ||
-                myOrderDetail.status === '8'
-                  ? '#D4D4D4'
-                  : '#275696',
+                myOrderDetail.status !== '1' ? '#fff' : '#275696',
               paddingVertical: 12,
               width: '49%',
               justifyContent: 'center',
@@ -356,26 +335,10 @@ const ReqDetailList = (props) => {
                 styles.normalText,
                 {
                   fontSize: 12,
-                  color: '#fff',
+                  color: myOrderDetail.status !== '1' ? '#D4D4D4' : '#fff',
                 },
               ]}>
-              {myOrderDetail.status === '1'
-                ? '파트너 선정'
-                : myOrderDetail.status === '2'
-                ? '파트너 선정됨'
-                : myOrderDetail.status === '3'
-                ? '계약금 입금완료'
-                : myOrderDetail.status === '4'
-                ? '계약금 입금확인대기'
-                : myOrderDetail.status === '5'
-                ? '인쇄제작요청'
-                : myOrderDetail.status === '6'
-                ? '인쇄제작요청완료'
-                : myOrderDetail.status === '7'
-                ? '수령완료'
-                : myOrderDetail.status === '8'
-                ? '수령확인'
-                : null}
+              {myOrderDetail.status !== '1' ? '파트너 선정됨' : '파트너 선정'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -427,6 +390,8 @@ const ReqDetailList = (props) => {
       </View>
     );
   };
+
+  console.log('myOrderDetail', myOrderDetail);
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -517,15 +482,107 @@ const ReqDetailList = (props) => {
                   </TouchableOpacity>
                 </View>
               </View>
-              {myOrderDetail.status !== '8' ? (
-                <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-                  <View style={[styles.submitBtn, {marginTop: 20}]}>
-                    <Text style={styles.submitBtnText}>요청 포기</Text>
+              {myOrderDetail.status !== '9' ? (
+                myOrderDetail.status === '3' ? (
+                  <>
+                    <TouchableOpacity
+                      onPress={() => setDepositPartnerAPI()}
+                      activeOpacity={0.9}>
+                      <View style={[styles.submitStepBtn, {marginTop: 20}]}>
+                        <Text style={styles.submitStepBtnText}>
+                          계약금 입금 완료
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                      <View style={[styles.submitBtn, {marginTop: 7}]}>
+                        <Text style={styles.submitBtnText}>요청 포기</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                ) : myOrderDetail.status === '4' ? (
+                  <>
+                    <View
+                      style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
+                      <Text style={styles.submitStepBtnTextDisable}>
+                        계약금 입금 확인 대기
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                      <View style={[styles.submitBtn, {marginTop: 7}]}>
+                        <Text style={styles.submitBtnText}>요청 포기</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                ) : myOrderDetail.status === '5' ? (
+                  <>
+                    <TouchableOpacity
+                      onPress={() => setOrderProductAPI()}
+                      activeOpacity={0.9}>
+                      <View style={[styles.submitStepBtn, {marginTop: 20}]}>
+                        <Text style={styles.submitStepBtnText}>
+                          인쇄제작요청
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                      <View style={[styles.submitBtn, {marginTop: 7}]}>
+                        <Text style={styles.submitBtnText}>요청 포기</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                ) : myOrderDetail.status === '6' ? (
+                  <>
+                    <View
+                      style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
+                      <Text style={styles.submitStepBtnTextDisable}>
+                        인쇄제작요청완료
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                      <View style={[styles.submitBtn, {marginTop: 7}]}>
+                        <Text style={styles.submitBtnText}>요청 포기</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                ) : myOrderDetail.status === '7' ? (
+                  <>
+                    <TouchableOpacity
+                      onPress={() => setOrderCompleteAPI()}
+                      activeOpacity={0.9}>
+                      <View style={[styles.submitStepBtn, {marginTop: 20}]}>
+                        <Text style={styles.submitStepBtnText}>수령확인</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                      <View style={[styles.submitBtn, {marginTop: 7}]}>
+                        <Text style={styles.submitBtnText}>요청 포기</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                ) : myOrderDetail.status === '8' ? (
+                  <View style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
+                    <Text style={styles.submitStepBtnTextDisable}>
+                      수령완료
+                    </Text>
                   </View>
-                </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                    <View style={[styles.submitBtn, {marginTop: 20}]}>
+                      <Text style={styles.submitBtnText}>요청 포기</Text>
+                    </View>
+                  </TouchableOpacity>
+                )
               ) : (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('CopyOrder')}
+                  onPress={() =>
+                    navigation.navigate('CopyOrder', {
+                      pe_id: pe_id,
+                      cate1: myOrderDetail.cate1,
+                    })
+                  }
                   activeOpacity={0.9}>
                   <View style={[styles.submitBtn, {marginTop: 20}]}>
                     <Text style={styles.submitBtnText}>복사 후 재등록</Text>
@@ -923,6 +980,34 @@ const styles = StyleSheet.create({
     fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#707070',
+  },
+  submitStepBtn: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#275696',
+    backgroundColor: '#fff',
+    width: '100%',
+    paddingVertical: 15,
+  },
+  submitStepBtnText: {
+    fontFamily: 'SCDream4',
+    fontSize: 16,
+    color: '#275696',
+    textAlign: 'center',
+  },
+  submitStepBtnDisable: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#D4D4D4',
+    backgroundColor: '#fff',
+    width: '100%',
+    paddingVertical: 15,
+  },
+  submitStepBtnTextDisable: {
+    fontFamily: 'SCDream4',
+    fontSize: 16,
+    color: '#D4D4D4',
+    textAlign: 'center',
   },
   submitBtn: {
     borderRadius: 5,
