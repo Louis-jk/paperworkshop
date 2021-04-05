@@ -102,7 +102,7 @@ const index = (props) => {
                   }}>
                   {item.status === '0' ||
                   item.status === '1' ||
-                  item.status === '8' ? (
+                  item.status === '9' ? (
                     <View style={styles.listStep02Badge}>
                       <Text
                         style={[
@@ -113,7 +113,7 @@ const index = (props) => {
                           ? '견적요청'
                           : item.status === '1'
                           ? '입찰중'
-                          : item.status === '8'
+                          : item.status === '9'
                           ? '마감'
                           : null}
                       </Text>
@@ -137,7 +137,8 @@ const index = (props) => {
                   ) : item.status === '4' ||
                     item.status === '5' ||
                     item.status === '6' ||
-                    item.status === '7' ? (
+                    item.status === '7' ||
+                    item.status === '8' ? (
                     <View style={styles.listStep02BadgePayComplete}>
                       <Text
                         style={[
@@ -147,10 +148,12 @@ const index = (props) => {
                         {item.status === '4'
                           ? '계약금 입금 완료'
                           : item.status === '5'
-                          ? '인쇄 제작 요청'
+                          ? '인쇄 제작 요청 가능'
                           : item.status === '6'
-                          ? '납품완료'
+                          ? '인쇄 제작 요청 완료'
                           : item.status === '7'
+                          ? '납품완료'
+                          : item.status === '8'
                           ? '수령완료'
                           : null}
                       </Text>

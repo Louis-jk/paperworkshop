@@ -101,6 +101,16 @@ export default {
       }),
     });
   },
+  // 파트너 선정(수령완료)
+  setOrderComplete(pe_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_my_estimate_status4',
+        pe_id,
+      }),
+    });
+  },
   // 메인페이지 파트너 3개씩 출력 부분
   getPartnerMain(ptype) {
     return Send({

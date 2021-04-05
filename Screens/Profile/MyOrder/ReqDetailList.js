@@ -124,6 +124,34 @@ const ReqDetailList = (props) => {
     });
   };
 
+  // 파트너 선정(수령완료)
+  const setOrderCompleteAPI = () => {
+    Partners.setOrderComplete(pe_id).then((res) => {
+      if (res.data.result === '1') {
+        Alert.alert(
+          res.data.message,
+          '파트너스 회원이 제작완료 후 "납품완료" 처리를 하게 됩니다.',
+          [
+            {
+              text: '확인',
+              onPress: () => navigation.navigate('MyOrder'),
+            },
+          ],
+        );
+      } else {
+        Alert.alert(
+          '수령완료를 하였습니다.',
+          '수령완료확인된 견적으로 처리됩니다.',
+          [
+            {
+              text: '확인',
+            },
+          ],
+        );
+      }
+    });
+  };
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getMyOrderDetailAPI();
@@ -283,24 +311,41 @@ const ReqDetailList = (props) => {
             onPress={() => {
               if (myOrderDetail.status === '1') {
                 setEstimatePartnerAPI(item.pd_id);
-              } else if (myOrderDetail.status === '2') {
-                return false;
               } else if (myOrderDetail.status === '3') {
                 setDepositPartnerAPI();
               } else if (myOrderDetail.status === '5') {
                 setOrderProductAPI();
+              } else if (myOrderDetail.status === '7') {
+                setOrderCompleteAPI();
               } else {
                 return false;
               }
             }}
-            disabled={myOrderDetail.status === ('2' || '4') ? true : false}
+            disabled={
+              myOrderDetail.status === '2' ||
+              myOrderDetail.status === '4' ||
+              myOrderDetail.status === '6' ||
+              myOrderDetail.status === '8'
+                ? true
+                : false
+            }
             style={{
               borderWidth: 0.5,
               borderColor:
-                myOrderDetail.status === ('2' || '4') ? '#b5b5b5' : '#275696',
+                myOrderDetail.status === '2' ||
+                myOrderDetail.status === '4' ||
+                myOrderDetail.status === '6' ||
+                myOrderDetail.status === '8'
+                  ? '#D4D4D4'
+                  : '#275696',
               borderRadius: 20,
               backgroundColor:
-                myOrderDetail.status === ('2' || '4') ? '#b5b5b5' : '#275696',
+                myOrderDetail.status === '2' ||
+                myOrderDetail.status === '4' ||
+                myOrderDetail.status === '6' ||
+                myOrderDetail.status === '8'
+                  ? '#D4D4D4'
+                  : '#275696',
               paddingVertical: 12,
               width: '49%',
               justifyContent: 'center',
@@ -325,7 +370,11 @@ const ReqDetailList = (props) => {
                 : myOrderDetail.status === '5'
                 ? '인쇄제작요청'
                 : myOrderDetail.status === '6'
+                ? '인쇄제작요청완료'
+                : myOrderDetail.status === '7'
                 ? '수령완료'
+                : myOrderDetail.status === '8'
+                ? '수령확인'
                 : null}
             </Text>
           </TouchableOpacity>
@@ -370,7 +419,7 @@ const ReqDetailList = (props) => {
               ]}>
               계약금(선금)
             </Text>
-            <Text style={[styles.normalText, {fontSize: 14, color: '#A2A2A2'}]}>
+            <Text style={[styles.normalText, {fontSize: 14, color: '#000'}]}>
               {item.deposit_rate}%
             </Text>
           </View>
@@ -409,10 +458,12 @@ const ReqDetailList = (props) => {
                     : myOrderDetail.status === '5'
                     ? '인쇄제작요청'
                     : myOrderDetail.status === '6'
-                    ? '납품완료'
+                    ? '인쇄제작요청완료'
                     : myOrderDetail.status === '7'
-                    ? '수령완료'
+                    ? '납품완료'
                     : myOrderDetail.status === '8'
+                    ? '수령완료'
+                    : myOrderDetail.status === '9'
                     ? '마감'
                     : null}
                 </Text>
@@ -513,16 +564,18 @@ const ReqDetailList = (props) => {
                   : myOrderDetail.status === '2'
                   ? '파트너선정업체'
                   : myOrderDetail.status === '3'
-                  ? '파트너선정업체'
+                  ? '계약금입금대기'
                   : myOrderDetail.status === '4'
-                  ? '파트너선정업체'
+                  ? '계약금입금완료'
                   : myOrderDetail.status === '5'
-                  ? '파트너선정업체'
+                  ? '인쇄제작요청가능'
                   : myOrderDetail.status === '6'
-                  ? '파트너선정업체'
+                  ? '인쇄제작요청완료'
                   : myOrderDetail.status === '7'
-                  ? '파트너선정업체'
+                  ? '납품완료'
                   : myOrderDetail.status === '8'
+                  ? '수령완료'
+                  : myOrderDetail.status === '9'
                   ? '마감'
                   : null}
               </Text>
@@ -553,15 +606,20 @@ const ReqDetailList = (props) => {
               )}
               {myOrderDetail.status === '6' && (
                 <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
-                  납품 완료된 견적 건입니다.
+                  인쇄 제작 요청을 한 상태입니다.
                 </Text>
               )}
               {myOrderDetail.status === '7' && (
                 <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
-                  수령 완료된 견적 건입니다.
+                  파트너스가 납품 완료한 상태입니다.
                 </Text>
               )}
               {myOrderDetail.status === '8' && (
+                <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
+                  수령 완료된 견적 건입니다.
+                </Text>
+              )}
+              {myOrderDetail.status === '9' && (
                 <Text style={[styles.orderInfoTitleRow, {color: '#366DE5'}]}>
                   이 견적은 마감된 견적입니다.
                 </Text>
