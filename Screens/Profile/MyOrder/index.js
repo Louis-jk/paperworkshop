@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 
@@ -30,6 +31,7 @@ const index = (props) => {
   const [cate1, setCate1] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
   const [keyword, setKeyword] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
   const [search, setSearch] = React.useState(''); // 셀렉트 박스(분류('패키지','일반','기타')) 중 API 호출 값 담기
+  const [isLoading, setLoading] = React.useState(false);
 
   const searchForm = () => {
     setSearch(keyword);
@@ -37,6 +39,8 @@ const index = (props) => {
   };
 
   const getMyOrderAPI = () => {
+    setLoading(true);
+
     OrderAPI.getMyOrder(mb_id, status, cate1, search)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
@@ -44,6 +48,7 @@ const index = (props) => {
         } else {
           setMyOrders(null);
         }
+        setLoading(false);
       })
       .catch((err) => {
         Alert.alert(err, '관리자에게 문의하세요', [
@@ -51,6 +56,7 @@ const index = (props) => {
             text: '확인',
           },
         ]);
+        setLoading(false);
       });
   };
 
@@ -82,9 +88,18 @@ const index = (props) => {
         <View style={{paddingHorizontal: 20}} key={index}>
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() =>
-              navigation.navigate('MyOrderReqDetailList', {orderId: item.pe_id})
-            }
+            onPress={() => {
+              setStep01('');
+              setStep02('');
+              setStatus('');
+              setCate1('');
+              setSearch('');
+              setKeyword('');
+
+              navigation.navigate('MyOrderReqDetailList', {
+                orderId: item.pe_id,
+              });
+            }}
             activeOpacity={0.8}>
             <View
               style={{
@@ -100,9 +115,7 @@ const index = (props) => {
                     alignItems: 'center',
                     marginBottom: 5,
                   }}>
-                  {item.status === '0' ||
-                  item.status === '1' ||
-                  item.status === '9' ? (
+                  {item.status === '0' || item.status === '1' ? (
                     <View style={styles.listStep02Badge}>
                       <Text
                         style={[
@@ -113,8 +126,6 @@ const index = (props) => {
                           ? '견적요청'
                           : item.status === '1'
                           ? '입찰중'
-                          : item.status === '9'
-                          ? '마감'
                           : null}
                       </Text>
                     </View>
@@ -138,13 +149,11 @@ const index = (props) => {
                     item.status === '5' ||
                     item.status === '6' ||
                     item.status === '7' ||
-                    item.status === '8' ? (
+                    item.status === '8' ||
+                    item.status === '9' ? (
                     <View style={styles.listStep02BadgePayComplete}>
                       <Text
-                        style={[
-                          styles.listStep02BadgeText,
-                          {color: '#000000'},
-                        ]}>
+                        style={[styles.listStep02BadgeText, {color: '#fff'}]}>
                         {item.status === '4'
                           ? '계약금 입금 완료'
                           : item.status === '5'
@@ -155,6 +164,8 @@ const index = (props) => {
                           ? '납품완료'
                           : item.status === '8'
                           ? '수령완료'
+                          : item.status === '9'
+                          ? '마감'
                           : null}
                       </Text>
                     </View>
@@ -198,6 +209,25 @@ const index = (props) => {
 
   return (
     <>
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
       <DetailHeader title={routeName} navigation={navigation} />
       {/* 카테고리 선택 및 검색 부분 */}
       <View
@@ -311,6 +341,7 @@ const index = (props) => {
             alignItems: 'center',
           }}>
           <TextInput
+            value={keyword}
             placeholder="제목을 입력하세요."
             style={[
               styles.normalText,
@@ -417,8 +448,21 @@ const index = (props) => {
               paddingHorizontal: 10,
             }}
             onPress={() => {
-              setStep01('입찰중');
+              setStep01('견적요청');
               setStatus('0');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>견적요청</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('입찰중');
+              setStatus('1');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>입찰중</Text>
@@ -431,7 +475,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('파트너최종선정(견적확정대기)');
-              setStatus('1');
+              setStatus('2');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
@@ -446,7 +490,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('파트너최종선정(계약금입금대기)');
-              setStatus('2');
+              setStatus('3');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
@@ -461,7 +505,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('파트너최종선정(계약금입금완료)');
-              setStatus('3');
+              setStatus('4');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
@@ -475,12 +519,27 @@ const index = (props) => {
               paddingHorizontal: 10,
             }}
             onPress={() => {
-              setStep01('인쇄제작요청');
-              setStatus('4');
+              setStep01('인쇄제작요청가능');
+              setStatus('5');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
-              인쇄제작요청
+              인쇄제작요청가능
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep01('인쇄제작요청완료');
+              setStatus('6');
+              setVisibleStep01(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              인쇄제작요청완료
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -491,7 +550,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('납품완료');
-              setStatus('5');
+              setStatus('7');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>납품완료</Text>
@@ -504,7 +563,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('수령완료');
-              setStatus('6');
+              setStatus('8');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>수령완료</Text>
@@ -517,7 +576,7 @@ const index = (props) => {
             }}
             onPress={() => {
               setStep01('마감');
-              setStatus('7');
+              setStatus('9');
               setVisibleStep01(false);
             }}>
             <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>마감</Text>
@@ -771,9 +830,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#F5F5F5',
+    borderColor: '#275696',
+    // borderColor: '#F5F5F5',
     borderRadius: 2,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#275696',
     alignSelf: 'flex-start',
   },
   listStep02BadgeTimeOver: {
