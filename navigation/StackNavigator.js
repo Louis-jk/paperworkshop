@@ -130,6 +130,7 @@ import CompanyInfoScreen from '../Screens/Common/CompanyInfo';
 // 이벤트 SCREEN
 import EventScreen from '../Screens/Event';
 import EventDetailScreen from '../Screens/Event/Detail';
+import EventWebViewScreen from '../Screens/Event/WebViewPage';
 
 const Stack = createStackNavigator();
 
@@ -173,6 +174,7 @@ export const EventStackNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Event" component={EventScreen} />
       <Stack.Screen name="EventDetail" component={EventDetailScreen} />
+      <Stack.Screen name="EventWebView" component={EventWebViewScreen} />
     </Stack.Navigator>
   );
 };
