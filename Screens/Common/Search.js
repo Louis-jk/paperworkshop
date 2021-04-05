@@ -20,6 +20,7 @@ import {
 import moment from 'moment';
 import 'moment/locale/ko';
 import StarRating from 'react-native-star-rating';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 import SearchAPI from '../../src/api/Search';
 import {useSelector} from 'react-redux';
@@ -78,6 +79,7 @@ const Search = (props) => {
       setVisibleResult(false);
       setVisibleKeyword(true);
       getSearchHistoryAPI();
+      keywordRef.current.focus();
       setLoading(false);
     } else {
       SearchAPI.getSearchHistory(mb_id, '', keyword, 'y', '')
@@ -436,7 +438,7 @@ const Search = (props) => {
                   ? searchResult.notice.map((notice, index) => (
                       <>
                         <TouchableOpacity
-                          key={notice.id}
+                          key={`${notice.id}${index}`}
                           style={{paddingHorizontal: 20}}
                           activeOpacity={0.8}
                           onPress={() =>
@@ -488,7 +490,12 @@ const Search = (props) => {
                 {/* 이벤트 출력 부분 */}
                 {isVisibleResult && searchResult !== null ? (
                   searchResult.event.length > 0 ? (
-                    <View style={{paddingHorizontal: 20, marginTop: 20}}>
+                    <View
+                      style={{
+                        paddingHorizontal: 20,
+                        marginTop: 20,
+                        marginBottom: 15,
+                      }}>
                       <Text style={styles.searchSubTitle}>이벤트</Text>
                     </View>
                   ) : null
@@ -497,9 +504,24 @@ const Search = (props) => {
                 searchResult !== null &&
                 searchResult.event.length > 0
                   ? searchResult.event.map((event, index) => (
-                      <View
-                        key={event.id}
+                      <TouchableOpacity
+                        key={`${event.id}${index}`}
+                        activeOpacity={0.8}
+                        onPress={() =>
+                          navigation.navigate('Event', {
+                            screen: 'EventWebView',
+                            params: {
+                              id: event.id,
+                              description: event.description,
+                            },
+                          })
+                        }
                         style={{paddingHorizontal: 20, marginBottom: 20}}>
+                        <AutoHeightImage
+                          source={{uri: `${event.event_img}`}}
+                          width={Dimensions.get('window').width - 40}
+                          style={{marginBottom: 10}}
+                        />
                         <View
                           style={{
                             flexDirection: 'row',
@@ -532,9 +554,9 @@ const Search = (props) => {
                               marginBottom: 5,
                             },
                           ]}>
-                          {moment(event.datetime).format('YYYY.MM.DD')}
+                          {event.description}
                         </Text>
-                      </View>
+                      </TouchableOpacity>
                     ))
                   : null}
                 {/* // 이벤트 출력 부분 */}
