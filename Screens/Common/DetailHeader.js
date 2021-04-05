@@ -146,6 +146,9 @@ const DetailHeader = (props) => {
       case 'Event':
         setTitle('이벤트');
         break;
+      case 'EventWebView':
+        setTitle('이벤트');
+        break;
       case 'Terms':
         setTitle('이용약관');
         break;
