@@ -256,11 +256,23 @@ const index = (props) => {
   const steps = [
     {
       id: 1,
-      image: require('../../src/images/slide01.png'),
+      image: require('../../src/images/step01.png'),
     },
     {
       id: 2,
-      image: require('../../src/images/slide02.png'),
+      image: require('../../src/images/step02.png'),
+    },
+    {
+      id: 3,
+      image: require('../../src/images/step03.png'),
+    },
+    {
+      id: 4,
+      image: require('../../src/images/step04.png'),
+    },
+    {
+      id: 5,
+      image: require('../../src/images/step05.png'),
     },
   ];
 
