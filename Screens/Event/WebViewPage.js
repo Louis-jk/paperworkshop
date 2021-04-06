@@ -24,6 +24,8 @@ const WebViewPage = (props) => {
   const id = props.route.params.id;
   const description = props.route.params.description;
 
+  console.log('event webview props', props);
+
   const [eventDetail, setEventDetail] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [getHeight, setGetHeight] = React.useState(null);
