@@ -53,63 +53,135 @@ const Step05 = (props) => {
   /////////////////////////
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isLoading01, setIsLoading01] = React.useState(false);
-  const [isLoading02, setIsLoading02] = React.useState(true); // 평량 로딩
-  const [isLoading03, setIsLoading03] = React.useState(true); // 직접 입력 로딩
-  const [isLoading04, setIsLoading04] = React.useState(true); // 색상 입력 로딩
-  const [isLoading05, setIsLoading05] = React.useState(true); // 골 입력 로딩
+  const [isLoading01, setIsLoading01] = React.useState(false); // 지류 선택시 - 경우에 따라 표지용
+  const [isLoading02, setIsLoading02] = React.useState(true); // 평량 로딩 - 경우에 따라 표지용
+  const [isLoading03, setIsLoading03] = React.useState(true); // 직접 입력 로딩 - 경우에 따라 표지용
+  const [isLoading04, setIsLoading04] = React.useState(true); // 색상 입력 로딩 - 경우에 따라 표지용
+  const [isLoading05, setIsLoading05] = React.useState(true); // 골 입력 로딩 - 경우에 따라 표지용
+
+  const [isLoading01Inner, setIsLoading01Inner] = React.useState(false); // 지류 선택시 - 내지용
+  const [isLoading02Inner, setIsLoading02Inner] = React.useState(true); // 평량 로딩 - 내지용
+  const [isLoading03Inner, setIsLoading03Inner] = React.useState(true); // 직접 입력 로딩 - 내지용
+  const [isLoading04Inner, setIsLoading04Inner] = React.useState(true); // 색상 입력 로딩 - 내지용
+  const [isLoading05Inner, setIsLoading05Inner] = React.useState(true); // 골 입력 로딩 - 내지용
 
   const {cate1, ca_id, type_id} = useSelector((state) => state.OrderReducer);
   const {type_details} = useSelector((state) => state.OrderHandlerReducer);
 
   const [boardTk, setBoardTk] = React.useState(''); // 속지 판지 두께 담기 (ca_id === 12 : 싸바리 박스일 경우)
-  const [paper, setPaper] = React.useState(null); // 지류 선택 (pf_id 지류아이디)
-  const [paperName, setPaperName] = React.useState(''); // 지류 선택 시 지류 명 담기
-  const [typeDetail, setTypeDetail] = React.useState([]); // 지류 상세 정보 담기
-  const [paperType, setPaperType] = React.useState(null); // 지종 선택
-  const [paperDetail, setPaperDetail] = React.useState([]); // 지종 정보 담기
-  const [paperDetail2, setPaperDetail2] = React.useState([]); // 지종 2차 정보 담기
-  const [isDirect01, setIsDirect01] = React.useState('n'); // 지종 2차 정보 중 "직접입력" 란 유무 담기
-  const [paperTypeDetail, setPaperTypeDetail] = React.useState(''); //  지종 2차 정보 담기
-  const [paperDetail3, setPaperDetail3] = React.useState([]); // 지종 2차 세부 내용 정보 담기
-  const [getWeight, setGetWeight] = React.useState(null); // 지종 1차 Response 평량 값 및 유무 (paper_weight)
+
+  // ca_id 1, ca_id 4 일반인쇄 '카달로그/브로슈어/판플렛' 또는 '책자/서적류' 일 경우 표지 내지로 분류됨
+  const [paper, setPaper] = React.useState(null); // 지류 선택 (pf_id 지류아이디) - 경우에 따라 표지용
+  const [paperInner, setPaperInner] = React.useState(null); // 지류 선택 (pf_id 지류아이디) - 내지 용
+
+  const [paperName, setPaperName] = React.useState(''); // 지류 선택 시 지류 명 담기 - 경우에 따라 표지용
+  const [paperNameInner, setPaperNameInner] = React.useState(''); // 지류 선택 시 지류 명 담기 - 내지 용
+
+  const [typeDetail, setTypeDetail] = React.useState([]); // 지류 상세 정보 담기 - 경우에 따라 표지용
+  const [typeDetailInner, setTypeDetailInner] = React.useState([]); // 지류 상세 정보 담기 - 내지 용
+
+  const [paperType, setPaperType] = React.useState(null); // 지종 선택 - 경우에 따라 표지용
+  const [paperTypeInner, setPaperTypeInner] = React.useState(null); // 지종 선택 - 내지용
+
+  const [isDirect01, setIsDirect01] = React.useState('n'); // 지종 2차 정보 중 "직접입력" 란 유무 담기 - 경우에 따라 표지용
+  const [isDirect01Inner, setIsDirect01Inner] = React.useState('n'); // 지종 2차 정보 중 "직접입력" 란 유무 담기 - 내지 용
+
+  const [paperTypeDetail, setPaperTypeDetail] = React.useState(''); //  지종 2차 정보 담기 - 경우에 따라 표지용
+  const [paperTypeDetailInner, setPaperTypeDetailInner] = React.useState(''); //  지종 2차 정보 담기 - 내지용
+
+  const [weight, setWeight] = React.useState(''); //  평량 정보 담기  - 경우에 따라 표지용
+  const [weightInner, setWeightInner] = React.useState(''); //  평량 정보 담기  - 내지 용
+
+  // API 호출시 Response값
+  const [paperDetail, setPaperDetail] = React.useState([]); // 지종 정보 담기 - 경우에 따라 표지용
+  const [paperDetailInner, setPaperDetailInner] = React.useState([]); // 지종 정보 담기 - 내지용
+
+  const [paperDetail2, setPaperDetail2] = React.useState([]); // 지종 2차 정보 담기 - 경우에 따라 표지용
+  const [paperDetail2Inner, setPaperDetail2Inner] = React.useState([]); // 지종 2차 정보 담기 - 내지용
+
+  const [paperDetail3, setPaperDetail3] = React.useState([]); // 지종 2차 세부 내용 정보 담기 - 경우에 따라 표지용
+  const [paperDetail3Inner, setPaperDetail3Inner] = React.useState([]); // 지종 2차 세부 내용 정보 담기 - 내지용
+
   const [getGoal, setGetGoal] = React.useState(null); // 지종 1차 Response 골 값 및 유무 (paper_goal)
-  const [weight, setWeight] = React.useState(''); //  평량 정보 담기
+
+  const [getWeight, setGetWeight] = React.useState(null); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 경우에 따라 표지용
+  const [getWeightInner, setGetWeightInner] = React.useState(null); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 내지용
+
   const [goal, setGoal] = React.useState(''); //  골 정보 담기
-  const [isDirect, setIsDirect] = React.useState(null); // 지종 2차 직접 입력 선택 유무
-  const [directPaperName, setDirectPaperName] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 지종 직접 입력 값 담기
-  const [directWeight, setDirectWeight] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기
+
+  const [isDirect, setIsDirect] = React.useState(null); // 지종 2차 직접 입력 선택 유무 - 경우에 따라 표지용
+  const [isDirectInner, setIsDirectInner] = React.useState(null); // 지종 2차 직접 입력 선택 유무 - 내지용
+
+  const [directPaperName, setDirectPaperName] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 지종 직접 입력 값 담기 - 경우에 따라 표지용
+  const [directPaperNameInner, setDirectPaperNameInner] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 지종 직접 입력 값 담기 - 내지용
+
+  const [directWeight, setDirectWeight] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기 - 경우에 따라 표지용
+  const [directWeightInner, setDirectWeightInner] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기 - 내지용
+
   const [directGoal, setDirectGoal] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기
   const [directColor, setDirectColor] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기
   const [print, setPrint] = React.useState(null); //  인쇄도수
   const [color, setColor] = React.useState('Y'); //  인쇄교정
   const [check, setCheck] = React.useState('Y'); //  인쇄감리
-  const [getPaperColors, setGetPaperColors] = React.useState([]); //  색상
-  const [getPrtFrequency, setGetPrtFrequency] = React.useState([]); //  수량
+
+  const [getPaperColors, setGetPaperColors] = React.useState([]); //  색상 - 경우에 따라 표지용
+  const [getPaperColorsInner, setGetPaperColorsInner] = React.useState([]); //  색상 - 내지용
+
+  const [getPrtFrequency, setGetPrtFrequency] = React.useState([]); //  수량 - 경우에 따라 표지용
+  const [getPrtFrequencyInner, setGetPrtFrequencyInner] = React.useState([]); //  수량 - 표지용
+
   const [getProofPrinting, setGetProofPrinting] = React.useState(null); //  인쇄교정 API 가져온 값 담기
   const [getPrtSupervision, setGetPrtSupervision] = React.useState(null); //  인쇄감리 API 가져온 값 담기
-  const [paperColor, setPaperColor] = React.useState(null); //  색상 지정 index
-  const [paperColorName, setPaperColorName] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로)
+
+  const [paperColor, setPaperColor] = React.useState(null); //  색상 지정 index - 경우에 따라 표지용
+  const [paperColorInner, setPaperColorInner] = React.useState(null); //  색상 지정 index - 내지용
+
+  const [paperColorName, setPaperColorName] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로) - 경우에 따라 표지용
+  const [paperColorNameInner, setPaperColorNameInner] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로) - 내지용
 
   // 2차 지종 유무
   const [isPaperType02, setIsPaperType02] = React.useState(false);
 
   // 에러일 경우
-  const [paperTypeError, setPaperTypeError] = React.useState(false); // 지류 선택 안했을 경우
-  const [paperError, setPaperError] = React.useState(false); // 지종 선택 안했을 경우
-  const [directPaperError, setDirectPaperError] = React.useState(false); // 지종 선택 안했을 경우
-  const [weightError, setWeightError] = React.useState(false); // 평량 선택 안했을 경우
-  const [directWeightError, setDirectWeightError] = React.useState(false); // 평량 직접입력 입력없을 경우
+  const [paperTypeError, setPaperTypeError] = React.useState(false); // 지류 선택 안했을 경우 - 경우에 따라 표지용
+  const [paperTypeInnerError, setPaperTypeInnerError] = React.useState(false); // 지류 선택 안했을 경우 - 내지용
+
+  const [paperError, setPaperError] = React.useState(false); // 지종 선택 안했을 경우 - 경우에 따라 표지용
+  const [paperInnerError, setPaperInnerError] = React.useState(false); // 지종 선택 안했을 경우 - 내지용
+
+  const [directPaperError, setDirectPaperError] = React.useState(false); // 지종 직접입력 선택시 입력 안했을 경우 - 경우에 따라 표지용
+  const [directPaperInnerError, setDirectPaperInnerError] = React.useState(
+    false,
+  ); // 지종 직접입력 선택시 입력 안했을 경우 - 내지용
+
+  const [weightError, setWeightError] = React.useState(false); // 평량 선택 안했을 경우 - 경우에 따라 표지용
+  const [weightInnerError, setWeightInnerError] = React.useState(false); // 평량 선택 안했을 경우 - 내지용
+
+  const [directWeightError, setDirectWeightError] = React.useState(false); // 평량 직접입력 입력없을 경우 - 경우에 따라 표지용
+  const [directWeightInnerError, setDirectWeightInnerError] = React.useState(
+    false,
+  ); // 평량 직접입력 입력없을 경우 - 내지용
+
   const [goalError, setGoalError] = React.useState(false); // 골 선택 안했을 경우
   const [directGoalError, setDirectGoalError] = React.useState(false); // 골 직접입력 입력없을 경우
-  const [colorError, setColorError] = React.useState(false); // 색상 선택 안했을 경우
-  const [directColorError, setDirectColorError] = React.useState(false); // 색상 선택 안했을 경우
+
+  const [colorError, setColorError] = React.useState(false); // 색상 선택 안했을 경우 - 경우에 따라 표지용
+  const [colorInnerError, setColorInnerError] = React.useState(false); // 색상 선택 안했을 경우 - 내지용
+
+  const [directColorError, setDirectColorError] = React.useState(false); // 색상 직접 입력 선택시 입력 안했을 경우 - 경우에 따라 표지용
+  const [directColorInnerError, setDirectColorInnerError] = React.useState(
+    false,
+  ); // 색상 직접 입력 선택시 입력 안했을 경우 - 내지용
+
   const [printError, setPrintError] = React.useState(false); // 인쇄도수 선택 안했을 경우
 
   // 직접입력란 TextInput
-  const directPaperRef = React.useRef(null);
-  const directGoalRef = React.useRef(null);
-  const directColorRef = React.useRef(null);
+  const directPaperRef = React.useRef(null); // 경우에 따라 표지용
+  const directPaperInnerRef = React.useRef(null); // 내지용
+  const directGoalRef = React.useRef(null); // 경우에 따라 표지용
+  const directGoalInnerRef = React.useRef(null); // 내지용
+  const directColorRef = React.useRef(null); // 경우에 따라 표지용
+  const directColorInnerRef = React.useRef(null); // 내지용
 
   //////////////////////////
   /////// FUNCTIONS ///////
@@ -315,8 +387,7 @@ const Step05 = (props) => {
       .then((res) => {
         if (res.data.result === '1') {
           setTypeDetail(res.data.item);
-          // setPaperChoise(res.data.item[0].pf_id); // 최조 지종 지정
-          // dispatch(setOrderDetails(res.data.item));
+          setTypeDetailInner(res.data.item);
         } else {
           Alert.alert(res.data.message, '', [
             {
@@ -334,7 +405,7 @@ const Step05 = (props) => {
       });
   };
 
-  // 지류 해당 상세 정보 가져오기 (지류 아이디 필요 : pf_id)
+  // 지류 해당 상세 정보 가져오기 (지류 아이디 필요 : pf_id) - 경우에 따라 표지용
   const getPaperDetail = (pf_id) => {
     setIsLoading(true);
     setIsLoading01(true);
@@ -372,6 +443,45 @@ const Step05 = (props) => {
       });
   };
 
+  // 지류 해당 상세 정보 가져오기 (지류 아이디 필요 : pf_id) - 내지용
+  const getPaperInnerDetail = (pf_id) => {
+    // setIsLoading(true);
+    setIsLoading01Inner(true);
+    setIsLoading02Inner(true);
+
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_list',
+        cate1,
+        ca_id,
+        pf_id,
+      }),
+    })
+      .then((res) => {
+        if (res.data.result === '1') {
+          // setIsLoading(false);
+          setPaperDetailInner(res.data.item);
+          // setPaperType(res.data.item[0].paper_name);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  // 지류 선택시 실행될 기능 - 경우에 따라 표지 지류 선택이 됨
   const setPaperChoise = (v) => {
     setPaper(v);
     getPaperDetail(v);
@@ -387,6 +497,22 @@ const Step05 = (props) => {
     setIsDirect01('n'); // 지종 1차 선택시 직접 유무 초기화
     setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화
     setPaperType(null); // 지종 초기화
+  };
+
+  // 지류 선택시 실행될 기능 - 내지용
+  const setPaperInnerChoise = (v) => {
+    setPaperInner(v);
+    getPaperInnerDetail(v);
+    setIsLoading02Inner(true); // 평량 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setIsLoading03Inner(true); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setIsLoading04Inner(true); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setIsLoading05Inner(true); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setWeightInner(null);
+    setDirectPaperNameInner(null);
+    setDirectWeightInner(null);
+    setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
+    setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화
+    setPaperTypeInner(null); // 지종 초기화
   };
 
   // 지종 1차(pd_id) 선택 및 가져오기 (지종 아이디 필요 : pd_id)
@@ -450,7 +576,68 @@ const Step05 = (props) => {
       });
   };
 
-  // 평량 정보 가져오기
+  // 지종 1차(pd_id) 선택 및 가져오기 (지종 아이디 필요 : pd_id) - 내지용
+  const getPaperDetailStep01Inner = (pd_id) => {
+    setIsLoading01Inner(true);
+    setIsLoading02Inner(true); // 평량 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setIsLoading03Inner(true); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setIsLoading04Inner(true); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setIsLoading05Inner(true); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+    setPaperColorInner(null);
+    setPaperColorNameInner(null);
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_list',
+        cate1, // 분류아이디
+        ca_id, // 1차 분류 아이디
+        pf_id: paper, // 지류아이디
+        pd_id, // 지종아이디
+      }),
+    })
+      .then((res) => {
+        if (res.data.result === '1') {
+          if (res.data.item[0].paper_name !== '직접입력') {
+            setPaperDetail2Inner(res.data.item); // 상세 지종 API 가져온 값 담기
+            setIsDirect01Inner('n'); // 지종 1차에서 직접 입력이 아니란 값 담기
+          } else {
+            setIsDirect01Inner('y'); // 지종 1차에서 직접 입력이란 값 담기
+            setIsLoading03Inner(false); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+          }
+          setGetWeightInner(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
+          setGetPaperColorsInner(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
+
+          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
+          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
+          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
+
+          setIsLoading01Inner(false);
+          setIsLoading02Inner(false); // 평량 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+          setIsLoading04Inner(false); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+          setIsLoading05Inner(false); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+
+          // if (res.data.item[0].paper_name2 !== null) {
+          //   setIsPaperType02(true); // 지종 1차에서 2차 지종이 있으면 true
+          // }
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  // 평량 정보 가져오기 - 경우에 따라 표지용
   const getPaperDetailStep02 = (pn_id) => {
     setIsLoading02(true);
     setPaperColor(null);
@@ -495,13 +682,59 @@ const Step05 = (props) => {
       });
   };
 
+  // 평량 정보 가져오기 - 내지용
+  const getPaperDetailStep02Inner = (pn_id) => {
+    setIsLoading02Inner(true);
+    setPaperColorInner(null);
+    setPaperColorNameInner(null);
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_list',
+        cate1, // 분류아이디('일반','패키지','기타')
+        ca_id, // 1차 분류 아이디
+        pf_id: paper, // 지류 아이디
+        pd_id: paperType, // 지종 아이디
+        pn_id, // 지종 상세 아이디
+      }),
+    })
+      .then((res) => {
+        if (res.data.result === '1') {
+          setPaperDetail3Inner(res.data.item);
+          setGetWeightInner(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
+          setGetPaperColorsInner(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
+
+          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
+          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
+          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
+
+          setIsLoading02Inner(false);
+          setIsLoading04Inner(false);
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
   React.useEffect(() => {
     getTypeDetail();
     setPaperType(null);
     setPaper(null);
   }, []);
 
-  // 직접입력시
+  // 직접입력시 - 경우에 따라 표지용
   const setPaperTypeName02 = (v) => {
     if (v === '직접입력') {
       setIsDirect(v);
@@ -511,7 +744,17 @@ const Step05 = (props) => {
     }
   };
 
-  // 지종 1차 선택
+  // 직접입력시 - 내지용
+  const setPaperTypeName02Inner = (v) => {
+    if (v === '직접입력') {
+      setIsDirectInner(v);
+      setIsLoading03Inner(false);
+    } else {
+      setDirectPaperNameInner(v);
+    }
+  };
+
+  // 지종 1차 선택 - 경우에 따라 표지용
   const setPaperType01 = (v) => {
     setPaperType(v); // 지종 선택 지종 아이디
     getPaperDetailStep01(v);
@@ -522,7 +765,18 @@ const Step05 = (props) => {
     setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화
   };
 
-  // 지종 2차 선택
+  // 지종 1차 선택 - 내지용
+  const setPaperType01Inner = (v) => {
+    setPaperTypeInner(v); // 지종 선택 지종 아이디
+    getPaperDetailStep01Inner(v);
+    setIsLoading01Inner(false);
+    setIsLoading02Inner(false);
+    setIsLoading03Inner(true);
+    setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
+    setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화
+  };
+
+  // 지종 2차 선택 - 경우에 따라 표지용
   const setPaperType02 = (v) => {
     setPaperTypeDetail(v);
     getPaperDetailStep02(v);
@@ -531,9 +785,23 @@ const Step05 = (props) => {
     setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화
   };
 
-  // 평량 넣기
+  // 지종 2차 선택 - 내지용
+  const setPaperType02Inner = (v) => {
+    setPaperTypeDetailInner(v);
+    getPaperDetailStep02Inner(v);
+    setIsLoading03Inner(true);
+    setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
+    setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화
+  };
+
+  // 평량 넣기 - 경우에 따라 표지용
   const setWeightChoise = (v) => {
     setWeight(v);
+  };
+
+  // 평량 넣기 - 내지용
+  const setWeightChoiseInner = (v) => {
+    setWeightInner(v);
   };
 
   // 골 넣기
@@ -726,6 +994,7 @@ const Step05 = (props) => {
               {/* // 지류 선택  */}
             </>
           )}
+          {/* 경우에 따라 표지가 됨 */}
           <View style={styles.wrap}>
             <View
               style={{
@@ -734,7 +1003,7 @@ const Step05 = (props) => {
                 alignItems: 'center',
               }}>
               <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
-                지류 선택
+                지류 선택 {ca_id === '1' || ca_id === '4' ? '(표지)' : null}
               </Text>
             </View>
           </View>
@@ -835,8 +1104,7 @@ const Step05 = (props) => {
             {/* // 지류 선택  */}
 
             {/* 지종 선택 */}
-
-            <View style={{marginBottom: 25}}>
+            <View style={{marginBottom: 10}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -1484,9 +1752,778 @@ const Step05 = (props) => {
               ) : null}
               {/* // 색상 선택  */}
             </View>
+          </View>
+          {/* // 경우에 따라 표지가 됨 */}
 
+          {/* 내지 부분 */}
+          {ca_id === '1' || ca_id === '4' ? (
+            <View style={styles.wrap}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+                  지류 선택 (내지)
+                </Text>
+              </View>
+            </View>
+          ) : null}
+          {ca_id === '1' || ca_id === '4' ? (
+            <View style={styles.wrap}>
+              {/* 지류 선택  */}
+              <View style={{marginBottom: paperInner === 'normal' ? 40 : 25}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}>
+                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                    구분
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                  }}>
+                  {typeDetailInner
+                    ? typeDetailInner.map((t) => (
+                        <TouchableOpacity
+                          key={t.pf_id}
+                          activeOpacity={1}
+                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                          onPress={() => {
+                            setPaperTypeInnerError(false);
+                            setPaperInnerChoise(t.pf_id);
+                            setPaperNameInner(t.feeder_name);
+                          }}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            marginRight: 20,
+                            marginBottom: 20,
+                            width: '100%',
+                          }}>
+                          <Image
+                            source={
+                              paperInner === t.pf_id
+                                ? require('../../src/assets/radio_on.png')
+                                : require('../../src/assets/radio_off.png')
+                            }
+                            resizeMode="contain"
+                            style={{width: 20, height: 20, marginRight: 5}}
+                          />
+                          <Text style={[styles.normalText, {fontSize: 14}]}>
+                            {t.feeder_name}
+                          </Text>
+                        </TouchableOpacity>
+                      ))
+                    : null}
+                </View>
+                {paperTypeInnerError ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    지류를 선택해주세요.
+                  </Text>
+                ) : null}
+                {/* 구분 - 지류선택 - 직접입력 선택시 */}
+                {paperNameInner === '직접입력' ? (
+                  <TextInput
+                    ref={directPaperInnerRef}
+                    value={directPaperNameInner}
+                    placeholder="지류를 직접 입력해주세요."
+                    placeholderTextColor="#A2A2A2"
+                    style={[
+                      styles.normalText,
+                      {
+                        borderWidth: 1,
+                        borderColor: '#E3E3E3',
+                        borderRadius: 4,
+                        paddingHorizontal: 10,
+                        marginBottom: 10,
+                      },
+                    ]}
+                    onChangeText={(text) => {
+                      setDirectPaperInnerError(false);
+                      setDirectPaperNameInner(text);
+                    }}
+                    autoCapitalize="none"
+                  />
+                ) : null}
+                {/* // 구분 - 지류선택 - 직접입력 선택시 */}
+              </View>
+              {/* // 지류 선택  */}
+
+              {/* 지종 선택 */}
+              <View style={{marginBottom: 10}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}>
+                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                    지종
+                  </Text>
+                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom:
+                      !isLoading03Inner && isDirectInner === '직접입력'
+                        ? 5
+                        : !isLoading03Inner && isDirect01Inner === 'y'
+                        ? 5
+                        : paperInnerError
+                        ? 5
+                        : 20,
+                  }}>
+                  {/* 지종 1차 */}
+                  {!isLoading && paperDetailInner ? (
+                    <View style={{width: '49%'}}>
+                      <DropDownPicker
+                        value={paperTypeInner}
+                        placeholder="지종 선택"
+                        placeholderStyle={{
+                          fontSize: 14,
+                          color: '#A2A2A2',
+                          fontWeight: '400',
+                        }}
+                        activeLabelStyle={{color: '#000'}}
+                        activeItemStyle={{color: '#000'}}
+                        selectedLabelStyle={{color: '#000'}}
+                        dropDownMaxHeight={300}
+                        items={paperDetailInner.map((v, _i) => {
+                          // setPfId(v.pf_id);
+                          return {value: v.pd_id, label: v.paper_name};
+                        })}
+                        containerStyle={{height: 50}}
+                        style={{
+                          backgroundColor: '#fff',
+                          borderTopRightRadius: 4,
+                          borderTopLeftRadius: 4,
+                          borderBottomRightRadius: 4,
+                          borderBottomLeftRadius: 4,
+                        }}
+                        itemStyle={{
+                          justifyContent: 'flex-start',
+                          paddingVertical: 10,
+                        }}
+                        onOpen={() => {
+                          setDirectPaperNameInner(null);
+                          setWeightInner(null);
+                          setDirectWeightInner(null);
+                          setIsLoading02Inner(true);
+                          setIsLoading03Inner(true);
+                          setIsLoading04Inner(true);
+                          setIsLoading05Inner(true);
+                        }}
+                        labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                        dropDownStyle={{backgroundColor: '#fff'}}
+                        onChangeItem={(item) => {
+                          setPaperType01Inner(item.value);
+                          setIsLoading01Inner(true);
+                          setPaperInnerError(false);
+                          // setIsLoading02(true);
+                        }}
+                        customArrowDown={() => (
+                          <Image
+                            source={require('../../src/assets/arr01.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                        customArrowUp={() => (
+                          <Image
+                            source={require('../../src/assets/arr01_top.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                      />
+                    </View>
+                  ) : null}
+
+                  {/* // 지종 1차 */}
+
+                  {/* 지종 2차 */}
+                  {!isLoading01Inner &&
+                  paperDetail2Inner &&
+                  isDirect01Inner !== 'y'
+                    ? paperDetail2Inner.map((pd, idx) =>
+                        pd.paper_name2 ? (
+                          <View style={{width: '49%'}} key={idx}>
+                            <DropDownPicker
+                              placeholder="세부 선택"
+                              placeholderStyle={{
+                                fontSize: 14,
+                                color: '#A2A2A2',
+                                fontWeight: '400',
+                              }}
+                              activeLabelStyle={{color: '#000'}}
+                              activeItemStyle={{color: '#000'}}
+                              selectedLabelStyle={{color: '#000'}}
+                              value={
+                                paperTypeInner === '직접입력'
+                                  ? '없음'
+                                  : paperTypeDetailInner
+                              }
+                              dropDownMaxHeight={300}
+                              items={pd.paper_name2.map((v, _i) => {
+                                return {value: v.pn_id, label: v.name};
+                              })}
+                              containerStyle={{height: 50}}
+                              style={{
+                                backgroundColor: '#fff',
+                                borderTopRightRadius: 4,
+                                borderTopLeftRadius: 4,
+                                borderBottomRightRadius: 4,
+                                borderBottomLeftRadius: 4,
+                              }}
+                              itemStyle={{
+                                justifyContent: 'flex-start',
+                                paddingVertical: 10,
+                              }}
+                              labelStyle={{
+                                fontFamily: 'SCDream4',
+                                color: '#A2A2A2',
+                              }}
+                              dropDownStyle={{backgroundColor: '#fff'}}
+                              onChangeItem={(item) => {
+                                setPaperType02Inner(item.value);
+                                setPaperTypeName02Inner(item.label);
+
+                                setIsLoading02Inner(true);
+                                setPaperInnerError(false);
+                              }}
+                              customArrowDown={() => (
+                                <Image
+                                  source={require('../../src/assets/arr01.png')}
+                                  style={{width: 25, height: 25}}
+                                  resizeMode="contain"
+                                />
+                              )}
+                              customArrowUp={() => (
+                                <Image
+                                  source={require('../../src/assets/arr01_top.png')}
+                                  style={{width: 25, height: 25}}
+                                  resizeMode="contain"
+                                />
+                              )}
+                            />
+                          </View>
+                        ) : null,
+                      )
+                    : null}
+                  {/* // 지종 2차 */}
+                </View>
+                {paperError ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    지종을 선택해주세요.
+                  </Text>
+                ) : null}
+                {!isLoading03 &&
+                (isDirect === '직접입력' || isDirect01 === 'y') ? (
+                  <TextInput
+                    ref={directPaperInnerRef}
+                    value={directPaperNameInner}
+                    placeholder="지종을 직접 입력해주세요."
+                    placeholderTextColor="#A2A2A2"
+                    style={[
+                      styles.normalText,
+                      {
+                        borderWidth: 1,
+                        borderColor: '#E3E3E3',
+                        borderRadius: 4,
+                        paddingHorizontal: 10,
+                        marginBottom: 20,
+                      },
+                    ]}
+                    onChangeText={(text) => {
+                      setDirectPaperError(false);
+                      setDirectPaperName(text);
+                    }}
+                    autoCapitalize="none"
+                  />
+                ) : null}
+                {directPaperError ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    지종을 직접 입력해주세요.
+                  </Text>
+                ) : null}
+                {/* 평량 선택 또는 입력 */}
+                {!isLoading02 && getWeight !== null && ca_id !== '10' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        평량
+                      </Text>
+                    </View>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                ) : !isLoading02 &&
+                  (isDirect === '직접입력' || isDirect01 === 'y') &&
+                  ca_id !== '10' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        평량
+                      </Text>
+                    </View>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                ) : null}
+
+                {/* paperDetail2 && paperDetail2[0].paper_name === '직접입력' */}
+
+                {!isLoading03 &&
+                (isDirect === '직접입력' || isDirect01 === 'y') &&
+                getWeight === null &&
+                ca_id !== '10' ? (
+                  <TextInput
+                    value={directWeight}
+                    placeholder="평량을 직접 입력해주세요."
+                    placeholderTextColor="#A2A2A2"
+                    style={[
+                      styles.normalText,
+                      {
+                        borderWidth: 1,
+                        borderColor: '#E3E3E3',
+                        borderRadius: 4,
+                        paddingHorizontal: 10,
+                        marginBottom: 20,
+                      },
+                    ]}
+                    onChangeText={(text) => {
+                      setDirectWeightError(false);
+                      setDirectWeight(text);
+                    }}
+                    autoCapitalize="none"
+                    keyboardType="number-pad"
+                  />
+                ) : null}
+                {directWeightError ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    평량을 직접 입력해주세요.
+                  </Text>
+                ) : null}
+                {!isLoading02 &&
+                  getWeight !== null &&
+                  getWeight.length > 0 &&
+                  ca_id !== '10' && (
+                    <View style={{width: '49%', marginBottom: 20}}>
+                      <DropDownPicker
+                        placeholder="평량 선택"
+                        placeholderStyle={{
+                          fontSize: 14,
+                          color: '#A2A2A2',
+                          fontWeight: '400',
+                        }}
+                        activeLabelStyle={{color: '#000'}}
+                        activeItemStyle={{color: '#000'}}
+                        selectedLabelStyle={{color: '#000'}}
+                        value={weight}
+                        items={getWeight.map((v) => {
+                          return {value: v, label: v};
+                        })}
+                        containerStyle={{height: 50}}
+                        style={{
+                          backgroundColor: '#fff',
+                          borderTopRightRadius: 4,
+                          borderTopLeftRadius: 4,
+                          borderBottomRightRadius: 4,
+                          borderBottomLeftRadius: 4,
+                        }}
+                        dropDownMaxHeight={300}
+                        itemStyle={{
+                          justifyContent: 'flex-start',
+                          paddingVertical: 10,
+                        }}
+                        labelStyle={{
+                          fontFamily: 'SCDream4',
+                          color: '#A2A2A2',
+                        }}
+                        dropDownStyle={{backgroundColor: '#fff'}}
+                        onChangeItem={(item) => {
+                          setWeightError(false);
+                          setWeightChoise(item.value);
+                        }}
+                        onOpen={() => {
+                          // setDirectPaperName(null);
+                          setWeight(null);
+                        }}
+                        customArrowDown={() => (
+                          <Image
+                            source={require('../../src/assets/arr01.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                        customArrowUp={() => (
+                          <Image
+                            source={require('../../src/assets/arr01_top.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                          />
+                        )}
+                      />
+                      {weightError ? (
+                        <Text
+                          style={{
+                            fontFamily: 'SCDream4',
+                            fontSize: 12,
+                            color: '#366DE5',
+                            marginVertical: 5,
+                          }}>
+                          평량을 선택해주세요.
+                        </Text>
+                      ) : null}
+                    </View>
+                  )}
+
+                {/* // 평량 선택 또는 입력 */}
+                {/* 골 선택 또는 입력 */}
+                {!isLoading05 &&
+                getGoal !== null &&
+                cate1 === '1' &&
+                ca_id !== '9' &&
+                ca_id !== '12' &&
+                ca_id !== '13' &&
+                ca_id !== '14' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        골
+                      </Text>
+                    </View>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                ) : !isLoading05 &&
+                  (isDirect === '직접입력' || isDirect01 === 'y') &&
+                  cate1 === '1' &&
+                  ca_id !== '9' &&
+                  ca_id !== '12' &&
+                  ca_id !== '13' &&
+                  ca_id !== '14' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        골
+                      </Text>
+                    </View>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                ) : null}
+                {!isLoading05 && getGoal !== null && getGoal.length > 0 && (
+                  <View style={{width: '49%', marginBottom: 20}}>
+                    <DropDownPicker
+                      placeholder="골 선택"
+                      placeholderStyle={{
+                        fontSize: 14,
+                        color: '#A2A2A2',
+                        fontWeight: '400',
+                      }}
+                      activeLabelStyle={{color: '#000'}}
+                      activeItemStyle={{color: '#000'}}
+                      selectedLabelStyle={{color: '#000'}}
+                      value={goal}
+                      items={getGoal.map((v) => {
+                        return {value: v, label: v};
+                      })}
+                      containerStyle={{height: 50}}
+                      style={{
+                        backgroundColor: '#fff',
+                        borderTopRightRadius: 4,
+                        borderTopLeftRadius: 4,
+                        borderBottomRightRadius: 4,
+                        borderBottomLeftRadius: 4,
+                      }}
+                      dropDownMaxHeight={300}
+                      itemStyle={{
+                        justifyContent: 'flex-start',
+                        paddingVertical: 10,
+                      }}
+                      labelStyle={{
+                        fontFamily: 'SCDream4',
+                        color: '#A2A2A2',
+                      }}
+                      dropDownStyle={{backgroundColor: '#fff'}}
+                      onChangeItem={(item) => {
+                        setGoalError(false);
+                        setGoalChoise(item.value);
+                      }}
+                      onOpen={() => {
+                        // setDirectPaperName(null);
+                        setGoal(null);
+                      }}
+                      customArrowDown={() => (
+                        <Image
+                          source={require('../../src/assets/arr01.png')}
+                          style={{width: 25, height: 25}}
+                          resizeMode="contain"
+                        />
+                      )}
+                      customArrowUp={() => (
+                        <Image
+                          source={require('../../src/assets/arr01_top.png')}
+                          style={{width: 25, height: 25}}
+                          resizeMode="contain"
+                        />
+                      )}
+                    />
+                    {goalError ? (
+                      <Text
+                        style={{
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        골을 선택해주세요.
+                      </Text>
+                    ) : null}
+                  </View>
+                )}
+
+                {!isLoading05 &&
+                (isDirect === '직접입력' || isDirect01 === 'y') &&
+                getGoal === null &&
+                cate1 === '1' &&
+                ca_id !== '9' &&
+                ca_id !== '12' &&
+                ca_id !== '13' &&
+                ca_id !== '14' ? (
+                  <TextInput
+                    ref={directGoalRef}
+                    value={directGoal}
+                    placeholder="골을 직접 입력해주세요."
+                    placeholderTextColor="#A2A2A2"
+                    style={[
+                      styles.normalText,
+                      {
+                        borderWidth: 1,
+                        borderColor: '#E3E3E3',
+                        borderRadius: 4,
+                        paddingHorizontal: 10,
+                        marginBottom: 20,
+                      },
+                    ]}
+                    onChangeText={(text) => {
+                      setDirectGoalError(false);
+                      setDirectGoal(text);
+                    }}
+                    autoCapitalize="none"
+                    keyboardType="default"
+                  />
+                ) : null}
+                {directGoalError ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    골을 직접 입력해주세요.
+                  </Text>
+                ) : null}
+                {/* // 골 선택 또는 입력 */}
+                {/* 색상 선택  */}
+                {!isLoading04 &&
+                (getPaperColors !== null || getPaperColors !== '') ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        색상
+                      </Text>
+                    </View>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                ) : !isLoading04 && isDirect01 === 'y' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        색상
+                      </Text>
+                    </View>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                ) : !isLoading04 && isDirect === '직접입력' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <View>
+                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
+                        색상
+                      </Text>
+                    </View>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                ) : null}
+                {!isLoading04 &&
+                  (getPaperColors !== null || getPaperColors !== '') &&
+                  getPaperColors.length > 0 && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                      }}>
+                      {getPaperColors.map((t, idx) => (
+                        <TouchableOpacity
+                          key={idx}
+                          activeOpacity={1}
+                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                          onPress={() => {
+                            setColorError(false);
+                            onSelectPaperColor(t);
+                          }}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            marginRight: 20,
+                            marginBottom: 20,
+                            width: '100%',
+                          }}>
+                          <Image
+                            source={
+                              paperColor === t
+                                ? require('../../src/assets/radio_on.png')
+                                : require('../../src/assets/radio_off.png')
+                            }
+                            resizeMode="contain"
+                            style={{width: 20, height: 20, marginRight: 5}}
+                          />
+                          <Text style={[styles.normalText, {fontSize: 14}]}>
+                            {t}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  )}
+                {colorError ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    색상을 선택해주세요.
+                  </Text>
+                ) : null}
+                {!isLoading04 &&
+                (isDirect === '직접입력' || isDirect01 === 'y') &&
+                getPaperColors === '' ? (
+                  <TextInput
+                    ref={directColorRef}
+                    value={directColor}
+                    placeholder="색상을 직접 입력해주세요."
+                    placeholderTextColor="#A2A2A2"
+                    style={[
+                      styles.normalText,
+                      {
+                        borderWidth: 1,
+                        borderColor: '#E3E3E3',
+                        borderRadius: 4,
+                        paddingHorizontal: 10,
+                        marginBottom: 5,
+                      },
+                    ]}
+                    onChangeText={(text) => setDirectColor(text)}
+                    autoCapitalize="none"
+                    keyboardType="default"
+                  />
+                ) : null}
+                {directColorError ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      fontSize: 12,
+                      color: '#366DE5',
+                      marginVertical: 5,
+                    }}>
+                    색상을 직접 입력해주세요.
+                  </Text>
+                ) : null}
+                {/* // 색상 선택  */}
+              </View>
+            </View>
+          ) : null}
+          {/* // 내지 부분 */}
+
+          <View style={styles.wrap}>
             {/* 인쇄 도수  */}
-
             <View style={{marginBottom: 20}}>
               <View
                 style={{
