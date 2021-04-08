@@ -119,7 +119,10 @@ const Step05 = (props) => {
   const [directWeightInner, setDirectWeightInner] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기 - 내지용
 
   const [directGoal, setDirectGoal] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기
-  const [directColor, setDirectColor] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기
+
+  const [directColor, setDirectColor] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기 - 경우에 따라 표지용
+  const [directColorInner, setDirectColorInner] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기 - 내지용
+
   const [print, setPrint] = React.useState(null); //  인쇄도수
   const [color, setColor] = React.useState('Y'); //  인쇄교정
   const [check, setCheck] = React.useState('Y'); //  인쇄감리
@@ -178,8 +181,9 @@ const Step05 = (props) => {
   // 직접입력란 TextInput
   const directPaperRef = React.useRef(null); // 경우에 따라 표지용
   const directPaperInnerRef = React.useRef(null); // 내지용
-  const directGoalRef = React.useRef(null); // 경우에 따라 표지용
-  const directGoalInnerRef = React.useRef(null); // 내지용
+
+  const directGoalRef = React.useRef(null);
+
   const directColorRef = React.useRef(null); // 경우에 따라 표지용
   const directColorInnerRef = React.useRef(null); // 내지용
 
@@ -880,9 +884,16 @@ const Step05 = (props) => {
     setCheck(v);
   };
 
+  // 색상 선택 - 경우에 따라 표지용
   const onSelectPaperColor = (name) => {
     setPaperColorName(name);
     setPaperColor(name);
+  };
+
+  // 색상 선택 - 내지용
+  const onSelectPaperColorInner = (name) => {
+    setPaperColorNameInner(name);
+    setPaperColorInner(name);
   };
 
   console.log('paperTypeDetail', paperTypeDetail);
@@ -1467,6 +1478,17 @@ const Step05 = (props) => {
                         </Text>
                       </TouchableOpacity>
                     ))}
+                    {weightError ? (
+                      <Text
+                        style={{
+                          fontFamily: 'SCDream4',
+                          fontSize: 12,
+                          color: '#366DE5',
+                          marginVertical: 5,
+                        }}>
+                        평량을 선택해주세요.
+                      </Text>
+                    ) : null}
                   </View>
                 )}
 
@@ -1906,11 +1928,11 @@ const Step05 = (props) => {
                         ? 5
                         : paperInnerError
                         ? 5
-                        : 20,
+                        : 0,
                   }}>
                   {/* 지종 1차 */}
                   {!isLoadingInner && paperDetailInner ? (
-                    <View style={{marginBottom: 20}}>
+                    <View style={{marginBottom: paperDetail2 ? 20 : 0}}>
                       {paperDetailInner.map((paper, idx) => (
                         <TouchableOpacity
                           key={`${paper.pd_id}${idx}`}
@@ -1961,7 +1983,7 @@ const Step05 = (props) => {
                   isDirect01Inner !== 'y'
                     ? paperDetail2Inner.map((pd, idx) =>
                         pd.paper_name2 ? (
-                          <>
+                          <View style={{marginBottom: 20}}>
                             <View
                               key={`${pd}${idx}`}
                               style={{
@@ -2020,7 +2042,7 @@ const Step05 = (props) => {
                                 </Text>
                               </TouchableOpacity>
                             ))}
-                          </>
+                          </View>
                         ) : null,
                       )
                     : null}
@@ -2081,6 +2103,7 @@ const Step05 = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
+                      marginBottom: 10,
                     }}>
                     <View>
                       <Text style={[styles.profileTitle, {marginBottom: 5}]}>
@@ -2097,6 +2120,7 @@ const Step05 = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       alignItems: 'center',
+                      marginBottom: 10,
                     }}>
                     <View>
                       <Text style={[styles.profileTitle, {marginBottom: 5}]}>
@@ -2150,62 +2174,49 @@ const Step05 = (props) => {
                   getWeightInner !== null &&
                   getWeightInner.length > 0 &&
                   ca_id !== '10' && (
-                    <View style={{width: '49%', marginBottom: 20}}>
-                      <DropDownPicker
-                        placeholder="평량 선택"
-                        placeholderStyle={{
-                          fontSize: 14,
-                          color: '#A2A2A2',
-                          fontWeight: '400',
-                        }}
-                        activeLabelStyle={{color: '#000'}}
-                        activeItemStyle={{color: '#000'}}
-                        selectedLabelStyle={{color: '#000'}}
-                        value={weightInner}
-                        items={getWeightInner.map((v) => {
-                          return {value: v, label: v};
-                        })}
-                        containerStyle={{height: 50}}
-                        style={{
-                          backgroundColor: '#fff',
-                          borderTopRightRadius: 4,
-                          borderTopLeftRadius: 4,
-                          borderBottomRightRadius: 4,
-                          borderBottomLeftRadius: 4,
-                        }}
-                        dropDownMaxHeight={300}
-                        itemStyle={{
-                          justifyContent: 'flex-start',
-                          paddingVertical: 10,
-                        }}
-                        labelStyle={{
-                          fontFamily: 'SCDream4',
-                          color: '#A2A2A2',
-                        }}
-                        dropDownStyle={{backgroundColor: '#fff'}}
-                        onChangeItem={(item) => {
-                          setWeightInnerError(false);
-                          setWeightChoiseInner(item.value);
-                        }}
-                        onOpen={() => {
-                          // setDirectPaperName(null);
-                          setWeightInner(null);
-                        }}
-                        customArrowDown={() => (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        marginBottom: 20,
+                      }}>
+                      {getWeightInner.map((v, idx) => (
+                        <TouchableOpacity
+                          key={`${v}${idx}`}
+                          activeOpacity={1}
+                          hitSlop={{
+                            top: 10,
+                            bottom: 10,
+                            left: 10,
+                            right: 10,
+                          }}
+                          onPress={() => {
+                            setWeightInnerError(false);
+                            setWeightChoiseInner(v);
+                          }}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            marginRight: 20,
+                            marginBottom: 20,
+                            width: '100%',
+                          }}>
                           <Image
-                            source={require('../../src/assets/arr01.png')}
-                            style={{width: 25, height: 25}}
+                            source={
+                              weightInner === v
+                                ? require('../../src/assets/radio_on.png')
+                                : require('../../src/assets/radio_off.png')
+                            }
                             resizeMode="contain"
+                            style={{width: 20, height: 20, marginRight: 5}}
                           />
-                        )}
-                        customArrowUp={() => (
-                          <Image
-                            source={require('../../src/assets/arr01_top.png')}
-                            style={{width: 25, height: 25}}
-                            resizeMode="contain"
-                          />
-                        )}
-                      />
+                          <Text style={[styles.normalText, {fontSize: 14}]}>
+                            {v}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
                       {weightInnerError ? (
                         <Text
                           style={{
@@ -2221,165 +2232,10 @@ const Step05 = (props) => {
                   )}
 
                 {/* // 평량 선택 또는 입력 */}
-                {/* 골 선택 또는 입력 */}
-                {!isLoading05 &&
-                getGoal !== null &&
-                cate1 === '1' &&
-                ca_id !== '9' &&
-                ca_id !== '12' &&
-                ca_id !== '13' &&
-                ca_id !== '14' ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                    }}>
-                    <View>
-                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
-                        골
-                      </Text>
-                    </View>
-                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                  </View>
-                ) : !isLoading05 &&
-                  (isDirect === '직접입력' || isDirect01 === 'y') &&
-                  cate1 === '1' &&
-                  ca_id !== '9' &&
-                  ca_id !== '12' &&
-                  ca_id !== '13' &&
-                  ca_id !== '14' ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                    }}>
-                    <View>
-                      <Text style={[styles.profileTitle, {marginBottom: 5}]}>
-                        골
-                      </Text>
-                    </View>
-                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                  </View>
-                ) : null}
-                {!isLoading05 && getGoal !== null && getGoal.length > 0 && (
-                  <View style={{width: '49%', marginBottom: 20}}>
-                    <DropDownPicker
-                      placeholder="골 선택"
-                      placeholderStyle={{
-                        fontSize: 14,
-                        color: '#A2A2A2',
-                        fontWeight: '400',
-                      }}
-                      activeLabelStyle={{color: '#000'}}
-                      activeItemStyle={{color: '#000'}}
-                      selectedLabelStyle={{color: '#000'}}
-                      value={goal}
-                      items={getGoal.map((v) => {
-                        return {value: v, label: v};
-                      })}
-                      containerStyle={{height: 50}}
-                      style={{
-                        backgroundColor: '#fff',
-                        borderTopRightRadius: 4,
-                        borderTopLeftRadius: 4,
-                        borderBottomRightRadius: 4,
-                        borderBottomLeftRadius: 4,
-                      }}
-                      dropDownMaxHeight={300}
-                      itemStyle={{
-                        justifyContent: 'flex-start',
-                        paddingVertical: 10,
-                      }}
-                      labelStyle={{
-                        fontFamily: 'SCDream4',
-                        color: '#A2A2A2',
-                      }}
-                      dropDownStyle={{backgroundColor: '#fff'}}
-                      onChangeItem={(item) => {
-                        setGoalError(false);
-                        setGoalChoise(item.value);
-                      }}
-                      onOpen={() => {
-                        // setDirectPaperName(null);
-                        setGoal(null);
-                      }}
-                      customArrowDown={() => (
-                        <Image
-                          source={require('../../src/assets/arr01.png')}
-                          style={{width: 25, height: 25}}
-                          resizeMode="contain"
-                        />
-                      )}
-                      customArrowUp={() => (
-                        <Image
-                          source={require('../../src/assets/arr01_top.png')}
-                          style={{width: 25, height: 25}}
-                          resizeMode="contain"
-                        />
-                      )}
-                    />
-                    {goalError ? (
-                      <Text
-                        style={{
-                          fontFamily: 'SCDream4',
-                          fontSize: 12,
-                          color: '#366DE5',
-                          marginVertical: 5,
-                        }}>
-                        골을 선택해주세요.
-                      </Text>
-                    ) : null}
-                  </View>
-                )}
 
-                {!isLoading05 &&
-                (isDirect === '직접입력' || isDirect01 === 'y') &&
-                getGoal === null &&
-                cate1 === '1' &&
-                ca_id !== '9' &&
-                ca_id !== '12' &&
-                ca_id !== '13' &&
-                ca_id !== '14' ? (
-                  <TextInput
-                    ref={directGoalRef}
-                    value={directGoal}
-                    placeholder="골을 직접 입력해주세요."
-                    placeholderTextColor="#A2A2A2"
-                    style={[
-                      styles.normalText,
-                      {
-                        borderWidth: 1,
-                        borderColor: '#E3E3E3',
-                        borderRadius: 4,
-                        paddingHorizontal: 10,
-                        marginBottom: 20,
-                      },
-                    ]}
-                    onChangeText={(text) => {
-                      setDirectGoalError(false);
-                      setDirectGoal(text);
-                    }}
-                    autoCapitalize="none"
-                    keyboardType="default"
-                  />
-                ) : null}
-                {directGoalError ? (
-                  <Text
-                    style={{
-                      fontFamily: 'SCDream4',
-                      fontSize: 12,
-                      color: '#366DE5',
-                      marginVertical: 5,
-                    }}>
-                    골을 직접 입력해주세요.
-                  </Text>
-                ) : null}
-                {/* // 골 선택 또는 입력 */}
                 {/* 색상 선택  */}
-                {!isLoading04 &&
-                (getPaperColors !== null || getPaperColors !== '') ? (
+                {!isLoading04Inner &&
+                (getPaperColorsInner !== null || getPaperColorsInner !== '') ? (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -2393,7 +2249,7 @@ const Step05 = (props) => {
                     </View>
                     {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                   </View>
-                ) : !isLoading04 && isDirect01 === 'y' ? (
+                ) : !isLoading04Inner && isDirect01Inner === 'y' ? (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -2407,7 +2263,7 @@ const Step05 = (props) => {
                     </View>
                     {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                   </View>
-                ) : !isLoading04 && isDirect === '직접입력' ? (
+                ) : !isLoading04Inner && isDirectInner === '직접입력' ? (
                   <View
                     style={{
                       flexDirection: 'row',
