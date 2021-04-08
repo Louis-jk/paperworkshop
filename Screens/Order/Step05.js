@@ -1060,7 +1060,7 @@ const Step05 = (props) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+              <Text style={[styles.boldText, {fontSize: 16, color: '#275696'}]}>
                 지류 선택 {ca_id === '1' || ca_id === '4' ? '(표지)' : null}
               </Text>
             </View>
@@ -1179,9 +1179,6 @@ const Step05 = (props) => {
               ) : null}
               <View
                 style={{
-                  // flexDirection: 'row',
-                  // justifyContent: 'space-between',
-                  // alignItems: 'center',
                   marginBottom:
                     !isLoading03 && isDirect === '직접입력'
                       ? 5
@@ -1189,11 +1186,11 @@ const Step05 = (props) => {
                       ? 5
                       : paperError
                       ? 5
-                      : 20,
+                      : 0,
                 }}>
                 {/* 지종 1차 */}
                 {!isLoading && paperDetail ? (
-                  <View style={{marginBottom: 20}}>
+                  <View style={{marginBottom: paperDetail2 ? 20 : 0}}>
                     {paperDetail.map((paper, idx) => (
                       <TouchableOpacity
                         key={`${paper.pd_id}${idx}`}
@@ -1243,7 +1240,7 @@ const Step05 = (props) => {
                 {!isLoading01 && paperDetail2 && isDirect01 !== 'y'
                   ? paperDetail2.map((pd, idx) =>
                       pd.paper_name2 ? (
-                        <>
+                        <View style={{marginBottom: 20}}>
                           <View
                             key={`${pd}${idx}`}
                             style={{
@@ -1297,7 +1294,7 @@ const Step05 = (props) => {
                               </Text>
                             </TouchableOpacity>
                           ))}
-                        </>
+                        </View>
                       ) : null,
                     )
                   : null}
@@ -1356,6 +1353,7 @@ const Step05 = (props) => {
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
+                    marginBottom: 10,
                   }}>
                   <View>
                     <Text style={[styles.profileTitle, {marginBottom: 5}]}>
@@ -1372,6 +1370,7 @@ const Step05 = (props) => {
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
+                    marginBottom: 10,
                   }}>
                   <View>
                     <Text style={[styles.profileTitle, {marginBottom: 5}]}>
@@ -1416,7 +1415,7 @@ const Step05 = (props) => {
                     fontFamily: 'SCDream4',
                     fontSize: 12,
                     color: '#366DE5',
-                    marginVertical: 5,
+                    marginBottom: 5,
                   }}>
                   평량을 직접 입력해주세요.
                 </Text>
@@ -1425,73 +1424,49 @@ const Step05 = (props) => {
                 getWeight !== null &&
                 getWeight.length > 0 &&
                 ca_id !== '10' && (
-                  <View style={{width: '49%', marginBottom: 20}}>
-                    <DropDownPicker
-                      placeholder="평량 선택"
-                      placeholderStyle={{
-                        fontSize: 14,
-                        color: '#A2A2A2',
-                        fontWeight: '400',
-                      }}
-                      activeLabelStyle={{color: '#000'}}
-                      activeItemStyle={{color: '#000'}}
-                      selectedLabelStyle={{color: '#000'}}
-                      value={weight}
-                      items={getWeight.map((v) => {
-                        return {value: v, label: v};
-                      })}
-                      containerStyle={{height: 50}}
-                      style={{
-                        backgroundColor: '#fff',
-                        borderTopRightRadius: 4,
-                        borderTopLeftRadius: 4,
-                        borderBottomRightRadius: 4,
-                        borderBottomLeftRadius: 4,
-                      }}
-                      dropDownMaxHeight={300}
-                      itemStyle={{
-                        justifyContent: 'flex-start',
-                        paddingVertical: 10,
-                      }}
-                      labelStyle={{
-                        fontFamily: 'SCDream4',
-                        color: '#A2A2A2',
-                      }}
-                      dropDownStyle={{backgroundColor: '#fff'}}
-                      onChangeItem={(item) => {
-                        setWeightError(false);
-                        setWeightChoise(item.value);
-                      }}
-                      onOpen={() => {
-                        // setDirectPaperName(null);
-                        setWeight(null);
-                      }}
-                      customArrowDown={() => (
-                        <Image
-                          source={require('../../src/assets/arr01.png')}
-                          style={{width: 25, height: 25}}
-                          resizeMode="contain"
-                        />
-                      )}
-                      customArrowUp={() => (
-                        <Image
-                          source={require('../../src/assets/arr01_top.png')}
-                          style={{width: 25, height: 25}}
-                          resizeMode="contain"
-                        />
-                      )}
-                    />
-                    {weightError ? (
-                      <Text
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 20,
+                    }}>
+                    {getWeight.map((v, idx) => (
+                      <TouchableOpacity
+                        key={`${v}${idx}`}
+                        activeOpacity={1}
+                        hitSlop={{
+                          top: 10,
+                          bottom: 10,
+                          left: 10,
+                          right: 10,
+                        }}
+                        onPress={() => {
+                          setWeightError(false);
+                          setWeightChoise(v);
+                        }}
                         style={{
-                          fontFamily: 'SCDream4',
-                          fontSize: 12,
-                          color: '#366DE5',
-                          marginVertical: 5,
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                          marginBottom: 20,
+                          width: '100%',
                         }}>
-                        평량을 선택해주세요.
-                      </Text>
-                    ) : null}
+                        <Image
+                          source={
+                            weight === v
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {v}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
                   </View>
                 )}
 
@@ -1800,7 +1775,7 @@ const Step05 = (props) => {
                   alignItems: 'center',
                 }}>
                 <Text
-                  style={[styles.boldText, {fontSize: 16, color: '#000000'}]}>
+                  style={[styles.boldText, {fontSize: 16, color: '#275696'}]}>
                   지류 선택 (내지)
                 </Text>
               </View>
@@ -2447,9 +2422,10 @@ const Step05 = (props) => {
                     {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                   </View>
                 ) : null}
-                {!isLoading04 &&
-                  (getPaperColors !== null || getPaperColors !== '') &&
-                  getPaperColors.length > 0 && (
+                {!isLoading04Inner &&
+                  (getPaperColorsInner !== null ||
+                    getPaperColorsInner !== '') &&
+                  getPaperColorsInner.length > 0 && (
                     <View
                       style={{
                         flexDirection: 'row',
@@ -2457,14 +2433,14 @@ const Step05 = (props) => {
                         alignItems: 'center',
                         flexWrap: 'wrap',
                       }}>
-                      {getPaperColors.map((t, idx) => (
+                      {getPaperColorsInner.map((t, idx) => (
                         <TouchableOpacity
                           key={idx}
                           activeOpacity={1}
                           hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                           onPress={() => {
-                            setColorError(false);
-                            onSelectPaperColor(t);
+                            setColorInnerError(false);
+                            onSelectPaperColorInner(t);
                           }}
                           style={{
                             flexDirection: 'row',
@@ -2476,7 +2452,7 @@ const Step05 = (props) => {
                           }}>
                           <Image
                             source={
-                              paperColor === t
+                              paperColorInner === t
                                 ? require('../../src/assets/radio_on.png')
                                 : require('../../src/assets/radio_off.png')
                             }
@@ -2490,7 +2466,7 @@ const Step05 = (props) => {
                       ))}
                     </View>
                   )}
-                {colorError ? (
+                {colorInnerError ? (
                   <Text
                     style={{
                       fontFamily: 'SCDream4',
@@ -2501,12 +2477,12 @@ const Step05 = (props) => {
                     색상을 선택해주세요.
                   </Text>
                 ) : null}
-                {!isLoading04 &&
-                (isDirect === '직접입력' || isDirect01 === 'y') &&
-                getPaperColors === '' ? (
+                {!isLoading04Inner &&
+                (isDirectInner === '직접입력' || isDirect01Inner === 'y') &&
+                getPaperColorsInner === '' ? (
                   <TextInput
-                    ref={directColorRef}
-                    value={directColor}
+                    ref={directColorInnerRef}
+                    value={directColorInner}
                     placeholder="색상을 직접 입력해주세요."
                     placeholderTextColor="#A2A2A2"
                     style={[
@@ -2519,12 +2495,12 @@ const Step05 = (props) => {
                         marginBottom: 5,
                       },
                     ]}
-                    onChangeText={(text) => setDirectColor(text)}
+                    onChangeText={(text) => setDirectColorInner(text)}
                     autoCapitalize="none"
                     keyboardType="default"
                   />
                 ) : null}
-                {directColorError ? (
+                {directColorInnerError ? (
                   <Text
                     style={{
                       fontFamily: 'SCDream4',
@@ -2554,7 +2530,7 @@ const Step05 = (props) => {
                 <Text
                   style={[
                     styles.boldText,
-                    {fontSize: 16, color: '#000000', marginBottom: 10},
+                    {fontSize: 16, color: '#275696', marginBottom: 10},
                   ]}>
                   인쇄도수/교정/감리 선택
                 </Text>
