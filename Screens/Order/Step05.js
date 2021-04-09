@@ -20,10 +20,10 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import DetailHeader from '../Common/DetailHeader';
 import {
   selectPfId,
-  selectPdId,
-  selectPnId,
   selectPfId02,
+  selectPdId,
   selectPdId02,
+  selectPnId,
   selectPnId02,
   selectPaperName,
   selectPaperName02,
@@ -391,6 +391,11 @@ const Step05 = (props) => {
       }
     }
   };
+
+  console.log('pnId 는 selectPnId', paperTypeDetail);
+  console.log('내지 pnId는 selectPnId02', paperTypeDetailInner);
+  console.log('표지 지종상세는 selectPaperName', directPaperName);
+  console.log('내지 지종상세는 selectPaperName02', directPaperNameInner);
 
   // 구분 지류 정보 가져오기 (분류아이디: cate1, 1차분류아이디: ca_id, 박스타입아이디: type_id(선택) 필요)
   const getTypeDetail = () => {
@@ -768,11 +773,9 @@ const Step05 = (props) => {
           setPaperDetail3Inner(res.data.item);
           setGetWeightInner(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
           setGetPaperColorsInner(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
-
           setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
           setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
           setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
-
           setIsLoading02Inner(false);
           setIsLoading04Inner(false);
         } else {
