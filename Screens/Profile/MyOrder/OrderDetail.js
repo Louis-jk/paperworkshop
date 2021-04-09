@@ -371,7 +371,7 @@ const OrderDetail = (props) => {
                   styles.mediumText,
                   {fontSize: 16, color: '#275696', marginBottom: 10},
                 ]}>
-                타입 선택
+                타입 선택항목
               </Text>
               <View
                 style={{
@@ -389,7 +389,6 @@ const OrderDetail = (props) => {
                 </Text>
               </View>
             </View>
-
             {/* 경계 라인 */}
             <View
               style={{
@@ -406,7 +405,6 @@ const OrderDetail = (props) => {
               }}
             />
             {/* // 경계 라인 */}
-
             <View style={[styles.wrap, {marginVertical: 10}]}>
               <Text
                 style={[
@@ -653,7 +651,6 @@ const OrderDetail = (props) => {
                 )}
               </View>
             </View>
-
             {/* // 간편 견적 유무에 따른 표시 Area */}
             {/* // 경계 라인 */}
             {details.easy_yn === 'N' ? (
@@ -676,7 +673,6 @@ const OrderDetail = (props) => {
               </>
             ) : null}
             {/* // 경계 라인 */}
-
             {/* // 간편 견적 유무에 따른 표시 Area */}
             {details.easy_yn === 'N' ? (
               <View style={[styles.wrap, {marginVertical: 10}]}>
@@ -685,8 +681,18 @@ const OrderDetail = (props) => {
                     styles.mediumText,
                     {fontSize: 16, color: '#275696', marginBottom: 10},
                   ]}>
-                  지류 선택
+                  지류 선택항목
                 </Text>
+                {details.ca_id === '1' || details.ca_id === '4' ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream5',
+                      fontSize: 15,
+                      marginVertical: 10,
+                    }}>
+                    {'<표지>'}
+                  </Text>
+                ) : null}
                 <View
                   style={{
                     flexDirection: 'row',
@@ -772,6 +778,96 @@ const OrderDetail = (props) => {
                 </View>
               </View>
             ) : null}
+            {details.easy_yn === 'N' &&
+            info02 &&
+            (details.ca_id === '1' || details.ca_id === '4') ? (
+              <View style={styles.wrap}>
+                <Text
+                  style={{
+                    fontFamily: 'SCDream5',
+                    fontSize: 15,
+                    marginBottom: 10,
+                  }}>
+                  {'<내지>'}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    marginBottom: 10,
+                  }}>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 15, color: '#000000'},
+                    ]}>
+                    구분 (지류)
+                  </Text>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {
+                        fontSize: 15,
+                        color: '#000000',
+                      },
+                    ]}>
+                    {info02.feeder_name2}
+                  </Text>
+                </View>
+                <View style={[styles.infoBox]}>
+                  {info02.paper2_name && info02.paper2_name !== '' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>지종</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper2_name}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {info02.paper_name2_02 && info02.paper_name2_02 !== '' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>지종세부</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_name2_02}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {info02.paper_weight && info02.paper_weight !== '' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>평량</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_weight2}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {info02.paper_weight_etc2 &&
+                  info02.paper_weight_etc2 !== '' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>평량(직접입력)</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_weight_etc2}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {info02.paper_color && info02.paper_color !== '' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>색상</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_color2}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {info02.paper_color_etc2 && info02.paper_color_etc2 !== '' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>색상(직접입력)</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_color_etc2}
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
+              </View>
+            ) : null}
             {/* 경계 라인 */}
             {details.easy_yn === 'N' ? (
               <>
@@ -792,7 +888,6 @@ const OrderDetail = (props) => {
               </>
             ) : null}
             {/* // 경계 라인 */}
-
             {/* // 간편 견적 유무에 따른 표시 Area */}
             {details.easy_yn === 'N' &&
             (info03.print_frequency !== '' ||
@@ -804,7 +899,7 @@ const OrderDetail = (props) => {
                     styles.mediumText,
                     {fontSize: 16, color: '#275696', marginBottom: 10},
                   ]}>
-                  인쇄도수/교정/감리 선택
+                  인쇄도수/교정/감리
                 </Text>
                 <View style={[styles.infoBox, {marginBottom: 10}]}>
                   <View style={styles.details}>
@@ -828,7 +923,6 @@ const OrderDetail = (props) => {
                 </View>
               </View>
             ) : null}
-
             {/* // 간편 견적 유무에 따른 표시 Area */}
             {/* 경계 라인 */}
             {details.easy_yn === 'N' ? (
@@ -850,9 +944,9 @@ const OrderDetail = (props) => {
               </>
             ) : null}
             {/* // 경계 라인 */}
-
             {/* // 간편 견적 유무에 따른 표시 Area */}
             {details.easy_yn === 'N' &&
+            (details.ca_id === '1' || details.ca_id === '4') &&
             (info04.park_processing !== '' ||
               info04.press_design !== '' ||
               info04.partial_silk !== '' ||
@@ -865,37 +959,93 @@ const OrderDetail = (props) => {
                   ]}>
                   후가공
                 </Text>
+                {details.ca_id === '1' || details.ca_id === '4' ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream5',
+                      fontSize: 15,
+                      marginVertical: 10,
+                    }}>
+                    {'<표지>'}
+                  </Text>
+                ) : null}
+                <View
+                  style={[
+                    styles.infoBox,
+                    {
+                      marginBottom:
+                        details.ca_id === '1' || details.ca_id === '4' ? 0 : 10,
+                    },
+                  ]}>
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>박가공</Text>
+                    <Text style={styles.detailsDesc}>
+                      {info04.park_processing === 'Y' ? '있음' : '없음'}
+                    </Text>
+                  </View>
+
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>형압</Text>
+                    <Text style={styles.detailsDesc}>
+                      {info04.press_design === 'Y' ? '있음' : '없음'}
+                    </Text>
+                  </View>
+
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>부분 실크</Text>
+                    <Text style={styles.detailsDesc}>
+                      {info04.partial_silk === 'Y' ? '있음' : '없음'}
+                    </Text>
+                  </View>
+
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>코팅</Text>
+                    <Text style={styles.detailsDesc}>{info04.coating}</Text>
+                  </View>
+                </View>
+              </View>
+            ) : null}
+            {details.easy_yn === 'N' &&
+            (info04.park_processing !== '' ||
+              info04.press_design !== '' ||
+              info04.partial_silk !== '' ||
+              info04.coating !== '') ? (
+              <View style={[styles.wrap, {marginBottom: 10}]}>
+                <Text
+                  style={{
+                    fontFamily: 'SCDream5',
+                    fontSize: 15,
+                    marginBottom: 10,
+                  }}>
+                  {'<내지>'}
+                </Text>
+
                 <View style={[styles.infoBox, {marginBottom: 10}]}>
-                  {info04.park_processing ? (
-                    <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>박가공</Text>
-                      <Text style={styles.detailsDesc}>
-                        {info04.park_processing === 'Y' ? '있음' : '없음'}
-                      </Text>
-                    </View>
-                  ) : null}
-                  {info04.press_design ? (
-                    <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>형압</Text>
-                      <Text style={styles.detailsDesc}>
-                        {info04.press_design === 'Y' ? '있음' : '없음'}
-                      </Text>
-                    </View>
-                  ) : null}
-                  {info04.partial_silk ? (
-                    <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>부분 실크</Text>
-                      <Text style={styles.detailsDesc}>
-                        {info04.partial_silk === 'Y' ? '있음' : '없음'}
-                      </Text>
-                    </View>
-                  ) : null}
-                  {info04.coating ? (
-                    <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>코팅</Text>
-                      <Text style={styles.detailsDesc}>{info04.coating}</Text>
-                    </View>
-                  ) : null}
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>박가공</Text>
+                    <Text style={styles.detailsDesc}>
+                      {info04.park_processing2 === 'Y' ? '있음' : '없음'}
+                    </Text>
+                  </View>
+
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>형압</Text>
+                    <Text style={styles.detailsDesc}>
+                      {info04.press_design2 === 'Y' ? '있음' : '없음'}
+                    </Text>
+                  </View>
+
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>부분 실크</Text>
+                    <Text style={styles.detailsDesc}>
+                      {info04.partial_silk2 === 'Y' ? '있음' : '없음'}
+                    </Text>
+                  </View>
+
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>코팅</Text>
+                    <Text style={styles.detailsDesc}>{info04.coating2}</Text>
+                  </View>
                 </View>
               </View>
             ) : null}
