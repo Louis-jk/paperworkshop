@@ -14,6 +14,8 @@ import RNFetchBlob from 'rn-fetch-blob'; // 파일 다운로드 패키지
 import Modal from 'react-native-modal';
 import AutoHeightImage from 'react-native-auto-height-image';
 import RNFS from 'react-native-fs'; // 파일 다운로드
+import moment from 'moment';
+import 'moment/locale/ko';
 
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
@@ -50,6 +52,7 @@ const FeedBack = (props) => {
 
     OrderAPI.getOfferDetail(method, pd_id)
       .then((res) => {
+        console.log('테스트', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setDetails(res.data.item.basic);
           if (cate1 !== '2') {
@@ -216,7 +219,9 @@ const FeedBack = (props) => {
               </View>
               <View style={styles.details}>
                 <Text style={styles.detailsTitle}>견적 마감일</Text>
-                <Text style={styles.detailsDesc}>{details.estimate_date}</Text>
+                <Text style={styles.detailsDesc}>
+                  {moment(details.estimate_date).format('YYYY.MM.DD')}
+                </Text>
               </View>
               <View style={styles.details}>
                 <Text style={styles.detailsTitle}>납품 희망일</Text>
@@ -227,17 +232,27 @@ const FeedBack = (props) => {
                     alignItems: 'center',
                   }}>
                   <Text style={styles.detailsDesc}>
-                    {details.delivery_date}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.detailsDesc,
-                      {color: '#275696', marginLeft: 5},
-                    ]}>
-                    (조정필요)
+                    {moment(details.delivery_date).format('YYYY.MM.DD')}
                   </Text>
                 </View>
               </View>
+              {info05 && info05.check_delivery_date === 'Y' ? (
+                <View style={styles.details}>
+                  <Text style={[styles.detailsTitle, {color: '#366DE5'}]}>
+                    납품 가능일
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                      {moment(info05.edit_delivery_date).format('YYYY.MM.DD')}
+                    </Text>
+                  </View>
+                </View>
+              ) : null}
               <View style={styles.details}>
                 <Text style={styles.detailsTitle}>디자인 의뢰</Text>
                 <Text style={styles.detailsDesc}>
@@ -380,7 +395,7 @@ const FeedBack = (props) => {
           {/* // 경계 라인 */}
 
           {/* 커스텀 */}
-          {cate1 !== '2' ? (
+          {cate1 !== '2' && info05 !== null ? (
             <>
               <View style={[styles.wrap, {marginVertical: 10}]}>
                 <Text
@@ -411,6 +426,30 @@ const FeedBack = (props) => {
                     {details.ca_type_name}
                   </Text>
                 </View>
+                {info05.check_type === 'Y' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginTop: 5,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 16, color: '#366DE5'},
+                      ]}>
+                      {cate1 === '1' ? '박스' : '인쇄'} 타입 (조정필요)
+                    </Text>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 16, color: '#366DE5'},
+                      ]}>
+                      {info05.edit_type}
+                    </Text>
+                  </View>
+                ) : null}
               </View>
 
               {/* 경계 라인 */}
@@ -429,7 +468,7 @@ const FeedBack = (props) => {
                 }}
               />
               {/* // 경계 라인 */}
-              {details.easy_yn === 'N' && info01 !== null && (
+              {details.easy_yn === 'N' && info01 !== null && info05 !== null && (
                 <View style={[styles.wrap, {marginVertical: 10}]}>
                   <Text
                     style={[
@@ -466,6 +505,17 @@ const FeedBack = (props) => {
                         </Text>
                         <Text style={styles.detailsDesc}>
                           {info01.pwidth}/{info01.plength}/{info01.pheight}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {cate1 === '1' && info05.check_size === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          가로/세로/높이 규격 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_size}
                         </Text>
                       </View>
                     ) : null}
@@ -610,19 +660,29 @@ const FeedBack = (props) => {
 
                     {/* // 일반인쇄일 경우 */}
 
-                    {info01.cnt && info01.cnt !== '0' ? (
-                      <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>수량</Text>
-                        <Text style={styles.detailsDesc}>{info01.cnt}</Text>
-                      </View>
-                    ) : null}
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>수량</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info01.cnt ? info01.cnt : '0'}
+                      </Text>
+                    </View>
 
-                    {info01.cnt_etc && info01.cnt_etc !== '0' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>수량(직접입력)</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info01.cnt_etc ? info01.cnt_etc : '0'}
+                      </Text>
+                    </View>
+
+                    {info05.check_cnt === 'Y' ? (
                       <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>
-                          수량(직접입력)
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          수량 (조정필요)
                         </Text>
-                        <Text style={styles.detailsDesc}>{info01.cnt_etc}</Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_cnt}
+                        </Text>
                       </View>
                     ) : null}
 
@@ -733,7 +793,7 @@ const FeedBack = (props) => {
               {/* // 경계 라인 */}
 
               {/* // 간편 견적 유무에 따른 표시 Area */}
-              {details.easy_yn === 'N' && info02 !== null && (
+              {details.easy_yn === 'N' && info02 !== null && info05 !== null ? (
                 <View style={[styles.wrap, {marginVertical: 10}]}>
                   <Text
                     style={[
@@ -754,7 +814,10 @@ const FeedBack = (props) => {
                         styles.normalText,
                         {fontSize: 15, color: '#000000'},
                       ]}>
-                      구분 (지류)
+                      구분 (지류){' '}
+                      {details.ca_id === '1' || details.ca_id === '4'
+                        ? '(표지)'
+                        : null}
                     </Text>
                     <Text
                       style={[
@@ -767,23 +830,34 @@ const FeedBack = (props) => {
                       {info02.feeder_name ? info02.feeder_name : null}
                     </Text>
                   </View>
+
                   <View style={[styles.infoBox]}>
-                    {info02.paper_name && info02.paper_name !== '' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>지종</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_name}
+                      </Text>
+                    </View>
+
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>지종세부</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_name2}
+                      </Text>
+                    </View>
+
+                    {info05.check_paper === 'Y' ? (
                       <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>지종</Text>
-                        <Text style={styles.detailsDesc}>
-                          {info02.paper_name}
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          지종 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_paper}
                         </Text>
                       </View>
                     ) : null}
-                    {info02.paper_name2 && info02.paper_name2 !== '' ? (
-                      <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>지종세부</Text>
-                        <Text style={styles.detailsDesc}>
-                          {info02.paper_name2}
-                        </Text>
-                      </View>
-                    ) : null}
+
                     {info02.paper_weight && info02.paper_weight !== '' ? (
                       <View style={styles.details}>
                         <Text style={styles.detailsTitle02}>평량</Text>
@@ -792,6 +866,7 @@ const FeedBack = (props) => {
                         </Text>
                       </View>
                     ) : null}
+
                     {info02.paper_weight_etc &&
                     info02.paper_weight_etc !== '' ? (
                       <View style={styles.details}>
@@ -803,6 +878,19 @@ const FeedBack = (props) => {
                         </Text>
                       </View>
                     ) : null}
+
+                    {info05.check_paper === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          평량 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_weight}
+                        </Text>
+                      </View>
+                    ) : null}
+
                     {info02.paper_goal && info02.paper_goal !== '' ? (
                       <View style={styles.details}>
                         <Text style={styles.detailsTitle02}>골</Text>
@@ -811,6 +899,7 @@ const FeedBack = (props) => {
                         </Text>
                       </View>
                     ) : null}
+
                     {info02.paper_goal_etc && info02.paper_goal_etc !== '' ? (
                       <View style={styles.details}>
                         <Text style={styles.detailsTitle02}>골(직접입력)</Text>
@@ -819,6 +908,7 @@ const FeedBack = (props) => {
                         </Text>
                       </View>
                     ) : null}
+
                     {info02.paper_color && info02.paper_color !== '' ? (
                       <View style={styles.details}>
                         <Text style={styles.detailsTitle02}>색상</Text>
@@ -827,9 +917,201 @@ const FeedBack = (props) => {
                         </Text>
                       </View>
                     ) : null}
+
+                    {info02.paper_color_etc && info02.paper_color_etc !== '' ? (
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle02}>
+                          색상(직접입력)
+                        </Text>
+                        <Text style={styles.detailsDesc}>
+                          {info02.paper_color_etc}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info05.check_paper === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          색상 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_color}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info05.check_paper === 'Y' && info05.edit_pattern ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          무늬 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_pattern}
+                        </Text>
+                      </View>
+                    ) : null}
                   </View>
                 </View>
-              )}
+              ) : null}
+
+              {details.easy_yn === 'N' &&
+              info02 !== null &&
+              info05 !== null &&
+              (details.ca_id === '1' || details.ca_id === '4') ? (
+                <View style={[styles.wrap]}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      marginBottom: 10,
+                    }}>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {fontSize: 15, color: '#000000'},
+                      ]}>
+                      구분 (지류) (내지)
+                    </Text>
+                    <Text
+                      style={[
+                        styles.normalText,
+                        {
+                          fontSize: 15,
+                          color: '#000000',
+                        },
+                      ]}>
+                      {info02.feeder_name2}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.infoBox]}>
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>지종</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper2_name}
+                      </Text>
+                    </View>
+
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>지종세부</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_name22}
+                      </Text>
+                    </View>
+
+                    {info05.check_paper02 === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          지종 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_paper02}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info02.paper_weight2 && info02.paper_weight2 !== '' ? (
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle02}>평량</Text>
+                        <Text style={styles.detailsDesc}>
+                          {info02.paper_weight2}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info02.paper_weight_etc2 &&
+                    info02.paper_weight_etc2 !== '' ? (
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle02}>
+                          평량(직접입력)
+                        </Text>
+                        <Text style={styles.detailsDesc}>
+                          {info02.paper_weight_etc2}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info05.check_paper02 === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          평량 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_weight02}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info02.paper_goal && info02.paper_goal !== '' ? (
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle02}>골</Text>
+                        <Text style={styles.detailsDesc}>
+                          {info02.paper_goal}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info02.paper_goal_etc && info02.paper_goal_etc !== '' ? (
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle02}>골(직접입력)</Text>
+                        <Text style={styles.detailsDesc}>
+                          {info02.paper_goal_etc}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info02.paper_color2 && info02.paper_color2 !== '' ? (
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle02}>색상</Text>
+                        <Text style={styles.detailsDesc}>
+                          {info02.paper_color2}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info02.paper_color_etc2 &&
+                    info02.paper_color_etc2 !== '' ? (
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle02}>
+                          색상(직접입력)
+                        </Text>
+                        <Text style={styles.detailsDesc}>
+                          {info02.paper_color_etc2}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info05.check_paper02 === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          색상 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_color02}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {info05.check_paper02 === 'Y' && info05.edit_pattern02 ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          무늬 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_pattern02}
+                        </Text>
+                      </View>
+                    ) : null}
+                  </View>
+                </View>
+              ) : null}
 
               {/* 경계 라인 */}
               {details.easy_yn === 'N' ? (
@@ -869,6 +1151,17 @@ const FeedBack = (props) => {
                         {info03.print_frequency}
                       </Text>
                     </View>
+                    {info05.check_print_frequency === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          인쇄도수 (조정필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_print_frequency}
+                        </Text>
+                      </View>
+                    ) : null}
                     <View style={styles.details}>
                       <Text style={styles.detailsTitle02}>인쇄교정</Text>
                       <Text style={styles.detailsDesc}>
@@ -919,34 +1212,202 @@ const FeedBack = (props) => {
                     후가공
                   </Text>
                   <View style={[styles.infoBox, {marginBottom: 10}]}>
-                    {info04.park_processing ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>박가공</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info04.park_processing === 'Y' ? '있음' : '없음'}
+                      </Text>
+                    </View>
+                    {info05.check_finishing === 'Y' &&
+                    info04.park_processing !== info05.edit_foil ? (
                       <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>박가공</Text>
-                        <Text style={styles.detailsDesc}>
-                          {info04.park_processing === 'Y' ? '있음' : '없음'}
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          박가공 (조종필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_foil === 'Y' ? '있음' : '없음'}
                         </Text>
                       </View>
                     ) : null}
-                    {info04.press_design ? (
+
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>형압</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info04.press_design === 'Y' ? '있음' : '없음'}
+                      </Text>
+                    </View>
+                    {info05.check_finishing === 'Y' &&
+                    info04.press_design !== info05.edit_press ? (
                       <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>형압</Text>
-                        <Text style={styles.detailsDesc}>
-                          {info04.press_design === 'Y' ? '있음' : '없음'}
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          형압 (조종필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_press === 'Y' ? '있음' : '없음'}
                         </Text>
                       </View>
                     ) : null}
-                    {info04.partial_silk ? (
+
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>부분 실크</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info04.partial_silk === 'Y' ? '있음' : '없음'}
+                      </Text>
+                    </View>
+                    {info05.check_finishing === 'Y' &&
+                    info04.partial_silk !== info05.edit_silk ? (
                       <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>부분 실크</Text>
-                        <Text style={styles.detailsDesc}>
-                          {info04.partial_silk === 'Y' ? '있음' : '없음'}
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          부분 실크 (조종필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_silk === 'Y' ? '있음' : '없음'}
                         </Text>
                       </View>
                     ) : null}
-                    {info04.coating ? (
+
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle02}>코팅</Text>
+                      <Text style={styles.detailsDesc}>{info04.coating}</Text>
+                    </View>
+                    {info05.check_finishing === 'Y' &&
+                    info04.coating !== info05.edit_coting ? (
                       <View style={styles.details}>
-                        <Text style={styles.detailsTitle02}>코팅</Text>
-                        <Text style={styles.detailsDesc}>{info04.coating}</Text>
+                        <Text
+                          style={[styles.detailsTitle02, {color: '#366DE5'}]}>
+                          코팅 (조종필요)
+                        </Text>
+                        <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
+                          {info05.edit_coting}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {info05.check_finishing === 'Y' && (
+                      <View style={styles.details}>
+                        <Text
+                          style={{
+                            fontFamily: 'SCDream5',
+                            fontSize: 15,
+                            marginTop: 20,
+                            marginBottom: 7,
+                          }}>
+                          파트너 회원 조정 추가값
+                        </Text>
+                      </View>
+                    )}
+                    {info05.check_finishing === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[
+                            styles.detailsTitle02,
+                            {
+                              color:
+                                info05.edit_epoxy === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          에폭시
+                        </Text>
+                        <Text
+                          style={[
+                            styles.detailsDesc,
+                            {
+                              color:
+                                info05.edit_epoxy === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          {info05.edit_epoxy === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {info05.check_finishing === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[
+                            styles.detailsTitle02,
+                            {
+                              color:
+                                info05.edit_oshi === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          오시
+                        </Text>
+                        <Text
+                          style={[
+                            styles.detailsDesc,
+                            {
+                              color:
+                                info05.edit_oshi === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          {info05.edit_oshi === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {info05.check_finishing === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[
+                            styles.detailsTitle02,
+                            {
+                              color:
+                                info05.edit_mishin === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          미싱
+                        </Text>
+                        <Text
+                          style={[
+                            styles.detailsDesc,
+                            {
+                              color:
+                                info05.edit_mishin === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          {info05.edit_mishin === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {info05.check_finishing === 'Y' ? (
+                      <View style={styles.details}>
+                        <Text
+                          style={[
+                            styles.detailsTitle02,
+                            {
+                              color:
+                                info05.edit_hole === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          타공
+                        </Text>
+                        <Text
+                          style={[
+                            styles.detailsDesc,
+                            {
+                              color:
+                                info05.edit_hole === 'Y'
+                                  ? '#366DE5'
+                                  : '#A2A2A2',
+                            },
+                          ]}>
+                          {info05.edit_hole === 'Y' ? '있음' : '없음'}
+                        </Text>
                       </View>
                     ) : null}
                   </View>
@@ -1081,14 +1542,22 @@ const FeedBack = (props) => {
                   ]}>
                   ※
                 </Text>
-                <Text
-                  style={[
-                    styles.normalText,
-                    {fontSize: 12, color: '#275696', lineHeight: 18},
-                  ]}>
-                  파트너사선정이 확정되면 입금계좌정보는 알림 메시지를 통해 확인
-                  가능합니다.
-                </Text>
+                <View>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 12, color: '#275696', lineHeight: 18},
+                    ]}>
+                    파트너사선정이 확정되면 입금계좌정보는 알림 메시지 또는
+                  </Text>
+                  <Text
+                    style={[
+                      styles.normalText,
+                      {fontSize: 12, color: '#275696', lineHeight: 18},
+                    ]}>
+                    진행현황을 통해 확인 가능합니다.
+                  </Text>
+                </View>
               </View>
             </View>
           )}
@@ -1166,26 +1635,38 @@ const FeedBack = (props) => {
                 ]}>
                 견적서 파일
               </Text>
-              <View style={[styles.infoBox, {marginBottom: 10}]}>
-                <TouchableOpacity
-                  onPress={() =>
-                    fileDownloadHandler(info05.bf_file, info05.bf_file_source)
-                  }
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    borderRadius: 5,
-                    marginRight: 10,
-                  }}>
-                  <Image
-                    source={require('../../../src/assets/down.png')}
-                    resizeMode="cover"
-                    style={{width: 30, height: 30, marginRight: 10}}
-                  />
-                  <Text style={styles.normalText}>{info05.bf_file_source}</Text>
-                </TouchableOpacity>
-              </View>
+              {info05.bf_file_source ? (
+                <View style={[styles.infoBox, {marginBottom: 10}]}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      fileDownloadHandler(info05.bf_file, info05.bf_file_source)
+                    }
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      borderRadius: 5,
+                      marginRight: 10,
+                    }}>
+                    <Image
+                      source={require('../../../src/assets/down.png')}
+                      resizeMode="cover"
+                      style={{width: 30, height: 30, marginRight: 10}}
+                    />
+                    <Text style={styles.normalText}>
+                      {info05.bf_file_source}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={[styles.infoBox, {marginBottom: 10}]}>
+                  <View style={styles.details02}>
+                    <Text style={styles.detailsTitle02}>
+                      첨부된 견적서가 없습니다.
+                    </Text>
+                  </View>
+                </View>
+              )}
             </View>
           )}
         </ScrollView>
@@ -1237,6 +1718,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 5,
+  },
+  details02: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   detailsTitle: {
     fontFamily: 'SCDream4',
