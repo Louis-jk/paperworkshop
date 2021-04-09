@@ -14,6 +14,9 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 
+import moment from 'moment';
+import 'moment/locale/ko';
+
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
 
@@ -196,7 +199,9 @@ const index = (props) => {
                   alignItems: 'flex-end',
                 }}>
                 {/* <Text style={styles.listStep02}>입찰중</Text> */}
-                <Text style={styles.listDday02}>{item.edate}</Text>
+                <Text style={styles.listDday02}>
+                  {moment(item.edate).format('YY.MM.DD')}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>
