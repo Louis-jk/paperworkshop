@@ -46,8 +46,11 @@ const Step06 = (props) => {
     type_id,
     type_name,
     pf_id,
+    pf_id2,
     pd_id,
+    pd_id2,
     pn_id,
+    pn_id2,
     paper_name2,
     paper_name2_02,
     mb_id,
@@ -87,11 +90,15 @@ const Step06 = (props) => {
     pe_file02_type,
     pe_file02_name,
     paper_weight,
+    paper_weight2,
     paper_weight_etc,
+    paper_weight_etc2,
     paper_goal,
     paper_goal_etc,
     paper_color,
+    paper_color2,
     paper_color_etc,
+    paper_color_etc2,
     print_frequency,
     print_frequency2,
     proof_printing,
@@ -213,16 +220,13 @@ const Step06 = (props) => {
     frmdata.append('type_id', type_id);
     frmdata.append('type_name', type_name);
     frmdata.append('pf_id', pf_id);
+    frmdata.append('pf_id2', pf_id2);
     frmdata.append('pd_id', pd_id);
+    frmdata.append('pd_id2', pd_id2);
     frmdata.append('pn_id', pn_id);
-    frmdata.append('paper_name2', paper_name2);
-
-    frmdata.append('pf_id2', pf_id);
-    frmdata.append('pd_id2', pd_id);
-    frmdata.append('pn_id2', pn_id);
-    frmdata.append('paper_name2_02', paper_name2_02);
-    frmdata.append('page_cnt2', page_cnt2);
-
+    frmdata.append('pn_id2', pn_id2);
+    frmdata.append('paper_name2', paper_name2 ? paper_name2 : '');
+    frmdata.append('paper_name2_02', paper_name2_02 ? paper_name2_02 : '');
     frmdata.append('mb_id', mb_id);
     frmdata.append('company_id', company_id);
     frmdata.append('title', title);
@@ -242,6 +246,7 @@ const Step06 = (props) => {
     frmdata.append('cnt_etc', cnt_etc);
     frmdata.append('easy_yn', easy_yn);
     frmdata.append('page_cnt', page_cnt);
+    frmdata.append('page_cnt2', page_cnt2);
     frmdata.append('bind_type', bind_type);
     frmdata.append('standard', standard);
     frmdata.append('thomson_type', thomson_type);
@@ -255,11 +260,15 @@ const Step06 = (props) => {
     frmdata.append('stype', stype);
     frmdata.append('board_tk', board_tk);
     frmdata.append('paper_weight', paper_weight);
+    frmdata.append('paper_weight2', paper_weight2);
     frmdata.append('paper_weight_etc', paper_weight_etc);
+    frmdata.append('paper_weight_etc2', paper_weight_etc2);
     frmdata.append('paper_goal', paper_goal ? paper_goal : '');
     frmdata.append('paper_goal_etc', paper_goal_etc ? paper_goal_etc : '');
     frmdata.append('paper_color', paper_color);
+    frmdata.append('paper_color2', paper_color2);
     frmdata.append('paper_color_etc', paper_color_etc);
+    frmdata.append('paper_color_etc2', paper_color_etc2);
     frmdata.append('print_frequency', print_frequency);
     frmdata.append('print_frequency2', print_frequency2);
     frmdata.append('proof_printing', proof_printing);
