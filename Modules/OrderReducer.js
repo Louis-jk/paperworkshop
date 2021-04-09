@@ -4,9 +4,13 @@ const SELECT_CA_ID = 'SELECT_CA_ID';
 const SELECT_TYPE_ID = 'SELECT_TYPE_ID';
 const SELECT_TYPE_NAME = 'SELECT_TYPE_NAME';
 const SELECT_PF_ID = 'SELECT_PF_ID';
+const SELECT_PF_ID02 = 'SELECT_PF_ID02';
 const SELECT_PD_ID = 'SELECT_PD_ID';
+const SELECT_PD_ID02 = 'SELECT_PD_ID02';
 const SELECT_PN_ID = 'SELECT_PN_ID';
+const SELECT_PN_ID02 = 'SELECT_PN_ID02';
 const SELECT_PAPER_NAME = 'SELECT_PAPER_NAME';
+const SELECT_PAPER_NAME02 = 'SELECT_PAPER_NAME02';
 const SET_USER_ID = 'SET_USER_ID';
 const SET_COMPANY_ID = 'SET_COMPANY_ID';
 const SET_TITLE = 'SET_TITLE';
@@ -35,10 +39,13 @@ const SET_WAY_EDIT = 'SET_WAY_EDIT';
 const SET_EASY_YN = 'SET_EASY_YN';
 const SET_WEIGHT = 'SET_WEIGHT';
 const SET_WEIGHT_ETC = 'SET_WEIGHT_ETC';
+const SET_WEIGHT_ETC02 = 'SET_WEIGHT_ETC02';
 const SET_GOAL = 'SET_GOAL';
 const SET_GOAL_ETC = 'SET_GOAL_ETC';
 const SET_COLOR = 'SET_COLOR';
+const SET_COLOR02 = 'SET_COLOR02';
 const SET_COLOR_ETC = 'SET_COLOR_ETC';
+const SET_COLOR_ETC02 = 'SET_COLOR_ETC02';
 const SET_FREQUENCY = 'SET_FREQUENCY';
 const SET_PRINTING = 'SET_PRINTING';
 const SET_PRINT_SUPERVISION = 'SET_PRINT_SUPERVISION';
@@ -80,8 +87,15 @@ export const selectTypeName = (payload) => ({type: SELECT_TYPE_NAME, payload});
 export const selectPfId = (payload) => ({type: SELECT_PF_ID, payload});
 export const selectPdId = (payload) => ({type: SELECT_PD_ID, payload});
 export const selectPnId = (payload) => ({type: SELECT_PN_ID, payload});
+export const selectPfId02 = (payload) => ({type: SELECT_PF_ID02, payload});
+export const selectPdId02 = (payload) => ({type: SELECT_PD_ID02, payload});
+export const selectPnId02 = (payload) => ({type: SELECT_PN_ID02, payload});
 export const selectPaperName = (payload) => ({
   type: SELECT_PAPER_NAME,
+  payload,
+});
+export const selectPaperName02 = (payload) => ({
+  type: SELECT_PAPER_NAME02,
   payload,
 });
 export const setUserId = (payload) => ({type: SET_USER_ID, payload});
@@ -118,10 +132,19 @@ export const setUserWayEdit = (payload) => ({type: SET_WAY_EDIT, payload});
 export const setUserEasyYn = (payload) => ({type: SET_EASY_YN, payload});
 export const setUserWeight = (payload) => ({type: SET_WEIGHT, payload});
 export const setUserWeightEtc = (payload) => ({type: SET_WEIGHT_ETC, payload});
+export const setUserWeightEtc02 = (payload) => ({
+  type: SET_WEIGHT_ETC02,
+  payload,
+});
 export const setUserGoal = (payload) => ({type: SET_GOAL, payload});
 export const setUserGoalEtc = (payload) => ({type: SET_GOAL_ETC, payload});
 export const setUserColor = (payload) => ({type: SET_COLOR, payload});
+export const setUserColor02 = (payload) => ({type: SET_COLOR02, payload});
 export const setUserColorEtc = (payload) => ({type: SET_COLOR_ETC, payload});
+export const setUserColorEtc02 = (payload) => ({
+  type: SET_COLOR_ETC02,
+  payload,
+});
 export const setUserFrequency = (payload) => ({type: SET_FREQUENCY, payload});
 export const setUserPrinting = (payload) => ({type: SET_PRINTING, payload});
 export const setUserPrintSup = (payload) => ({
@@ -200,9 +223,13 @@ const initialize = {
   type_id: '', // 박스아이디
   type_name: '', // 박스아이디
   pf_id: '', // 지류아이디
+  pf_id2: '', // 지류아이디 - 내지
   pd_id: '', // 지종아이디
+  pd_id2: '', // 지종아이디 - 내지
   pn_id: '', // 지종상세아이디
+  pn_id2: '', // 지종상세아이디 - 내지
   paper_name2: '', // 지종상세(직접입력)
+  paper_name2_02: '', // 지종상세(직접입력) - 내지
   mb_id: '', // 회원 아이디
   company_id: '', // 업체 아이디
   title: '', // 제작명
@@ -229,40 +256,43 @@ const initialize = {
   ground_method: '', // 접지방법
   way_edit: '', // 편집방법
   easy_yn: 'N', // 간편견적여부
-  page_cnt: '', // 페이지수 -- 추가
-  page_cnt2: '', // 페이지수(내지) -- 추가
-  bind_type: '', // 제본방식 -- 추가
-  standard: '', // 규격 -- 추가
-  thomson_type: '', // 톰슨모양 -- 추가
-  writeing_paper: '', // 간지 -- 추가
-  cover_color: '', // 표지간지색상 -- 추가
-  section_color: '', // 섹션간지색상 -- 추가
-  back_side: '', // 후면반칼형 -- 추가
-  geomancer: '', // 지관 -- 추가
-  pe_file02_url: '', // 첨부파일02 url -- 추가
-  pe_file02_type: '', // 첨부파일02 type -- 추가
-  pe_file02_name: '', // 첨부파일02 name -- 추가
-  pe_file02_size: '', // 첨부파일02 size -- 추가
+  page_cnt: '', // 페이지수
+  page_cnt2: '', // 페이지수(내지)
+  bind_type: '', // 제본방식
+  standard: '', // 규격
+  thomson_type: '', // 톰슨모양
+  writeing_paper: '', // 간지
+  cover_color: '', // 표지간지색상
+  section_color: '', // 섹션간지색상
+  back_side: '', // 후면반칼형
+  geomancer: '', // 지관
+  pe_file02_url: '', // 첨부파일02 url
+  pe_file02_type: '', // 첨부파일02 type
+  pe_file02_name: '', // 첨부파일02 name
+  pe_file02_size: '', // 첨부파일02 size
   paper_weight: '', // 평량
-  paper_weight2: '', // 평량(내지) -- 추가
+  paper_weight2: '', // 평량(내지)
   paper_weight_etc: '', // 평량(직접입력)
+  paper_weight_etc2: '', // 평량(직접입력) -- 추가
   paper_goal: '', // 골
   paper_goal_etc: '', // 골(직접입력)
   paper_color: '', // 색상
+  paper_color2: '', // 색상 - 내지
   paper_color_etc: '', // 색상(직접입력)
+  paper_color_etc2: '', // 색상(직접입력)
   print_frequency: '', // 인쇄도수
-  print_frequency2: '', // 인쇄도수(내지) -- 추가
+  print_frequency2: '', // 인쇄도수(내지)
   proof_printing: '', // 인쇄교정
-  proof_printing2: '', // 인쇄교정(내지) -- 추가
+  proof_printing2: '', // 인쇄교정(내지)
   print_supervision: '', // 인쇄감리
   park_processing: '', // 박가공
-  park_processing2: '', // 박가공 -- 추가
+  park_processing2: '', // 박가공
   press_design: '', // 형압
-  press_design2: '', // 형압 -- 추가
+  press_design2: '', // 형압
   partial_silk: '', // 부분실크
-  partial_silk2: '', // 부분실크(내지) -- 추가
+  partial_silk2: '', // 부분실크(내지)
   coating: '', // 코팅
-  coating2: '', // 코팅(내지) -- 추가
+  coating2: '', // 코팅(내지)
   outside: 'N', // 바깥면여부
   status: '', // 상태
 };
@@ -295,20 +325,40 @@ export default function setOrder(state = initialize, action) {
         ...state,
         pf_id: action.payload,
       };
+    case SELECT_PF_ID02:
+      return {
+        ...state,
+        pf_id2: action.payload,
+      };
     case SELECT_PD_ID:
       return {
         ...state,
         pd_id: action.payload,
+      };
+    case SELECT_PD_ID02:
+      return {
+        ...state,
+        pd_id2: action.payload,
       };
     case SELECT_PN_ID:
       return {
         ...state,
         pn_id: action.payload,
       };
+    case SELECT_PN_ID02:
+      return {
+        ...state,
+        pn_id2: action.payload,
+      };
     case SELECT_PAPER_NAME:
       return {
         ...state,
         paper_name2: action.payload,
+      };
+    case SELECT_PAPER_NAME02:
+      return {
+        ...state,
+        paper_name2_02: action.payload,
       };
     case SET_USER_ID:
       return {
@@ -450,6 +500,11 @@ export default function setOrder(state = initialize, action) {
         ...state,
         paper_weight_etc: action.payload,
       };
+    case SET_WEIGHT_ETC02:
+      return {
+        ...state,
+        paper_weight_etc2: action.payload,
+      };
     case SET_GOAL:
       return {
         ...state,
@@ -465,10 +520,20 @@ export default function setOrder(state = initialize, action) {
         ...state,
         paper_color: action.payload,
       };
+    case SET_COLOR02:
+      return {
+        ...state,
+        paper_color2: action.payload,
+      };
     case SET_COLOR_ETC:
       return {
         ...state,
         paper_color_etc: action.payload,
+      };
+    case SET_COLOR_ETC02:
+      return {
+        ...state,
+        paper_color_etc2: action.payload,
       };
     case SET_FREQUENCY:
       return {
