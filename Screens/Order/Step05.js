@@ -28,7 +28,7 @@ import {
   selectPaperName,
   selectPaperName02,
   setUserWeight,
-  setUserWeight02,
+  setUserWeight2,
   setUserWeightEtc,
   setUserWeightEtc02,
   setUserGoal,
@@ -353,19 +353,27 @@ const Step05 = (props) => {
         ]);
       } else {
         dispatch(selectPfId(paper));
+        dispatch(selectPfId02(paperInner));
         dispatch(selectPdId(paperType));
+        dispatch(selectPdId02(paperTypeInner));
         dispatch(selectPnId(paperTypeDetail));
+        dispatch(selectPnId02(paperTypeDetailInner));
         dispatch(selectPaperName(directPaperName));
+        dispatch(selectPaperName02(directPaperNameInner));
         dispatch(setUserWeightEtc(directWeight));
+        dispatch(setUserWeightEtc02(directWeightInner));
         dispatch(setUserGoalEtc(directGoal));
         dispatch(setUserColorEtc(directColor));
+        dispatch(setUserColorEtc02(directColorInner));
         dispatch(setUserFrequency(print));
         dispatch(setUserPrinting(color));
         dispatch(setUserPrintSup(check));
         dispatch(setOrderDetails(paperDetail2));
         dispatch(setUserWeight(weight));
+        dispatch(setUserWeight2(weightInner));
         dispatch(setUserGoal(goal));
         dispatch(setUserColor(paperColor));
+        dispatch(setUserColor02(paperColorInner));
         dispatch(setUserBoardTk(boardTk));
 
         navigation.navigate('OrderStep06', {
