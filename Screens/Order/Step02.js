@@ -1138,6 +1138,7 @@ const Step02 = (props) => {
                       textAlignVertical: 'top',
                       paddingLeft: 10,
                       paddingVertical: 10,
+                      lineHeight: 22,
                     },
                   ]}
                   onChangeText={(text) => {
