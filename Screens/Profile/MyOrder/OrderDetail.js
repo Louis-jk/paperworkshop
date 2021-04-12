@@ -304,7 +304,7 @@ const OrderDetail = (props) => {
                   alignItems: 'center',
                 }}>
                 <Image
-                  source={require('../../../src/assets/down.png')}
+                  source={require('../../../src/assets/icon_down.png')}
                   resizeMode="cover"
                   style={{
                     width: 20,
@@ -626,7 +626,7 @@ const OrderDetail = (props) => {
                       alignItems: 'center',
                     }}>
                     <Image
-                      source={require('../../../src/assets/down.png')}
+                      source={require('../../../src/assets/icon_down.png')}
                       resizeMode="cover"
                       style={{
                         width: 20,
