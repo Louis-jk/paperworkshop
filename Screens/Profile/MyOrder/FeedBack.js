@@ -351,7 +351,7 @@ const FeedBack = (props) => {
                     alignItems: 'center',
                   }}>
                   <Image
-                    source={require('../../../src/assets/down.png')}
+                    source={require('../../../src/assets/icon_down.png')}
                     resizeMode="cover"
                     style={{
                       width: 20,
@@ -742,7 +742,7 @@ const FeedBack = (props) => {
                           alignItems: 'center',
                         }}>
                         <Image
-                          source={require('../../../src/assets/down.png')}
+                          source={require('../../../src/assets/icon_down.png')}
                           resizeMode="cover"
                           style={{
                             width: 20,
@@ -1649,7 +1649,7 @@ const FeedBack = (props) => {
                       marginRight: 10,
                     }}>
                     <Image
-                      source={require('../../../src/assets/down.png')}
+                      source={require('../../../src/assets/icon_down.png')}
                       resizeMode="cover"
                       style={{width: 30, height: 30, marginRight: 10}}
                     />
