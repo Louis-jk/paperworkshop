@@ -70,4 +70,14 @@ export default {
       }),
     });
   },
+  // 견적 제안 보기
+  // getOfferDetail(method, pd_id) {
+  //   return Send({
+  //     method: 'post',
+  //     data: qs.stringify({
+  //       method,
+  //       pd_id,
+  //     }),
+  //   });
+  // },
 };

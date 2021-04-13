@@ -14,6 +14,10 @@ import {
 import messaging from '@react-native-firebase/messaging';
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 import {setFcmToken} from '../../../Modules/InfoReducer';
 import {
@@ -68,6 +72,43 @@ const Login = (props) => {
     }
   };
 
+  const [loggedIn, setloggedIn] = React.useState(false);
+  const [userInfo, setuserInfo] = React.useState([]);
+
+  // 구글 로그인 성공
+  const gSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const {accessToken, idToken} = await GoogleSignin.signIn();
+      const userInfo = await GoogleSignin.signIn();
+      setuserInfo(userInfo);
+      setloggedIn(true);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        alert('Cancel');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+        alert('Signin in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+        alert('PLAY_SERVICES_NOT_AVAILABLE');
+      } else {
+        // some other error happened
+        console.log('else err');
+      }
+    }
+  };
+
+  const socialGoogleConfigure = async () => {
+    await GoogleSignin.configure({
+      webClientId:
+        '512027257209-o83borl6om72r886gb1qrf7ag6sh46ne.apps.googleusercontent.com',
+    });
+  };
+
+  console.log('userInfo', userInfo);
+
   // 비밀번호 보이기 기능
   const [pwdEyes, setPwdEyes] = React.useState(true);
   const togglePwdEyes = () => {
@@ -88,6 +129,8 @@ const Login = (props) => {
           },
         ]),
       );
+
+    socialGoogleConfigure();
 
     if (Platform.OS === 'ios') {
       setCheckPlatform('ios');
@@ -382,9 +425,16 @@ const Login = (props) => {
               애플로 로그인
             </Text>
           </TouchableOpacity>
+          {/* <GoogleSigninButton
+            style={{width: 192, height: 48}}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={gSignIn}
+            // disabled={this.state.isSigninInProgress}
+          /> */}
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => Alert.alert('구글 로그인')}
+            onPress={() => gSignIn()}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',

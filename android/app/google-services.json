@@ -14,6 +14,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "512027257209-lgnlj4mmldslr9ksmbtfatv2cad10net.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dmonster.paperworkshop",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "512027257209-o83borl6om72r886gb1qrf7ag6sh46ne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX9y6SNf3bLFLaLZOQN-O07Cj67qQRXLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512027257209-o83borl6om72r886gb1qrf7ag6sh46ne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512027257209:android:d010c2f1554960afe6e7a8",
+        "android_client_info": {
+          "package_name": "com.dmonster.paperworkshoppartners"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "512027257209-o83borl6om72r886gb1qrf7ag6sh46ne.apps.googleusercontent.com",
           "client_type": 3
         }
