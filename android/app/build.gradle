@@ -193,7 +193,12 @@ dependencies {
 
     implementation project(':react-native-fs') 
 
+    implementation project(':react-native-seoul-kakao-login')
+
     implementation project(":react-native-google-signin")
+
+    // 카카오 SDK 모듈 설정
+    implementation "com.kakao.sdk:v2-user:2.4.2"
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
@@ -202,7 +207,6 @@ dependencies {
 
     // gif 파일 렌더링 때문에 필요
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

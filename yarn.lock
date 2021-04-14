@@ -1240,6 +1240,13 @@
   resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-6.0.0.tgz#115b666221169cbd6aabd6d9a622a7f48205ea2e"
   integrity sha512-xmrrG2muhwmoPy9AdfP+ceLBZtnrXkZwgN/jR5u3xOHadyerJfvD76w2BSmm7zeoiMB1wwSkZkzFSa9+i1BdKA==
 
+"@react-native-seoul/kakao-login@3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@react-native-seoul/kakao-login/-/kakao-login-3.0.6.tgz#1fdfb73658701bf2ae77a26cd062dfa6f7876605"
+  integrity sha512-s+GTD1d581AF3Q6bybh11+Q87mAxpmUe5d8Z1ec+QrKDbC10AX0haq/FLLEseVToBqVgBwuK3ToQnObccu9KYQ==
+  dependencies:
+    dooboolab-welcome "^1.2.0"
+
 "@react-navigation/bottom-tabs@5.11.2":
   version "5.11.2"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.11.2.tgz"
@@ -2773,6 +2780,11 @@ domexception@^2.0.1:
   integrity sha512-yxJ2mFy/sibVQlu5qHjOkf9J3K6zgmCxgJ94u2EdvDOV09H+32LtRswEcUsmUWN72pVLOEnTSRaIVVzVQgS0dg==
   dependencies:
     webidl-conversions "^5.0.0"
+
+dooboolab-welcome@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.2.0.tgz#295818ce85a8e97dc90c0ec0510b4008e2d722dc"
+  integrity sha512-XgEbjJHAsKLge/e8jtuHsv84Ovg1Gx0GvnOTOmOlVGV1643nduTAkT3fyo/mxKbzvyXBr47RHaJAY4R2toI0UA==
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"

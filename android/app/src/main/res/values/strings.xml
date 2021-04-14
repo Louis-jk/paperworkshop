@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">페이퍼공작소</string>
-    <!-- kakao -->
     <string name="kakao_app_key">2194770efdaf3f52d4f09e1dc7f0c83b</string>
-    <!--// kakao -->
 </resources>

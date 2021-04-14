@@ -17,6 +17,17 @@
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+    <!-- <meta-data android:name="com.kakao.sdk.AppKey" android:value="@string/kakao_app_key" /> -->
+    <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+        <data android:host="oauth" android:scheme="kakao2194770efdaf3f52d4f09e1dc7f0c83b" />
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

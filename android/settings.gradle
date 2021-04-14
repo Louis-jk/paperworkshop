@@ -5,6 +5,8 @@ include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
 include ':react-native-google-signin', ':app'
 project(':react-native-google-signin').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-google-signin/google-signin/android')
+include ':react-native-seoul-kakao-login'
+project(':react-native-seoul-kakao-login').projectDir = new File(rootProject.projectDir,     '../node_modules/@react-native-seoul/kakao-login/android')
 //include ':react-native-custom-ui-toast'
 //project(':react-native-custom-ui-toast').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-custom-ui-toast/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
