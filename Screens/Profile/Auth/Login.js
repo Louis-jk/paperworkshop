@@ -12,6 +12,12 @@ import {
   Platform,
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import {
+  login as kLogin,
+  getProfile,
+  getAccessToken,
+  logout,
+} from '@react-native-seoul/kakao-login';
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -30,6 +36,8 @@ import {
   UserType,
   UserProfileImg,
   UserEstimateCnt,
+  SnsCheck,
+  SnsType,
 } from '../../../Modules/UserInfoReducer';
 import Auth from '../../../src/api/Auth.js';
 
@@ -83,6 +91,7 @@ const Login = (props) => {
       const userInfo = await GoogleSignin.signIn();
       setuserInfo(userInfo);
       setloggedIn(true);
+      snsLogin(userInfo, 'google');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -107,7 +116,68 @@ const Login = (props) => {
     });
   };
 
+  const snsLogin = (payload, type) => {
+    console.log('payload', payload);
+
+    let id = payload.user.id;
+    let idToken = payload.idToken;
+    let name = payload.user.name;
+    let email = payload.user.email;
+
+    Auth.onSnsLogin(id, idToken, name, email, checkPlatform, fFcmToken, type)
+      .then((res) => {
+        console.log('sns 로그인', res);
+        if (res.data.result === '1') {
+          dispatch(UserId(res.data.item.mb_id));
+          dispatch(UserName(res.data.item.mb_name));
+          dispatch(UserMobile(res.data.item.mb_hp));
+          dispatch(UserEmail(res.data.item.mb_email));
+          dispatch(UserCompany(res.data.item.mb_2));
+          dispatch(UserMobileCfm(res.data.item.mb_1));
+          dispatch(UserType(res.data.item.mb_level));
+          dispatch(UserProfileImg(res.data.item.mb_profile));
+          dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
+          dispatch(SnsCheck(res.data.item.sns_check));
+          dispatch(SnsType(res.data.item.sns_type));
+          navigation.navigate('Stack');
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
   console.log('userInfo', userInfo);
+
+  // kakao 로그인
+
+  const [kakaoLoginLoading, setKakaoLoginLoading] = React.useState(false);
+  const [naverToken, setNaverToken] = React.useState(null);
+
+  // const kakaoLogin = async () => {
+  //   const kLogin = await getAccessToken();
+  //   let result = JSON.stringify(kLogin);
+  //   console.log('kLogin', result);
+  // };
+
+  const kakaoLogin = async () => {
+    try {
+      const token = await kLogin();
+      let jsonDe = JSON.stringify(token);
+      Alert.alert(jsonDe);
+    } catch (err) {
+      console.log(err);
+      Alert.alert('카카오톡 계정 정보가 없습니다.', '다시 확인해주세요.', [
+        {
+          text: '확인',
+        },
+      ]);
+    }
+  };
 
   // 비밀번호 보이기 기능
   const [pwdEyes, setPwdEyes] = React.useState(true);
@@ -361,7 +431,7 @@ const Login = (props) => {
         <View style={{marginBottom: 10}}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => Alert.alert('카카오 로그인')}
+            onPress={() => kakaoLogin()}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',

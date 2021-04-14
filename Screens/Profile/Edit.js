@@ -46,6 +46,8 @@ const Edit = (props) => {
     mb_1,
     mb_2,
     mb_profile_img,
+    sns_check,
+    sns_type,
   } = useSelector((state) => state.UserInfoReducer);
 
   const [profileImg, setProfileImg] = React.useState(null);
@@ -417,7 +419,134 @@ const Edit = (props) => {
         <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
           <View style={styles.profileBox}>
             <Text style={styles.profileTitle}>아이디</Text>
-            <Text style={styles.profileDesc}>{mb_id}</Text>
+            {sns_check !== 'Y' ? (
+              <Text style={styles.profileDesc}>{mb_id}</Text>
+            ) : sns_check === 'Y' && sns_type === 'google' ? (
+              <View
+                style={{
+                  alignSelf: 'flex-start',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 5,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                }}>
+                <Image
+                  source={require('../../src/assets/gg.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 17,
+                    height: 25,
+                    marginRight: 5,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontFamily: 'SCDream4',
+                    fontSize: 14,
+                  }}>
+                  구글 로그인 완료
+                </Text>
+              </View>
+            ) : sns_check === 'Y' && sns_type === 'kakao' ? (
+              <View
+                style={{
+                  alignSelf: 'flex-start',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  borderColor: '#FAE100',
+                  borderRadius: 5,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  backgroundColor: '#FAE100',
+                }}>
+                <Image
+                  source={require('../../src/assets/kakao.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 17,
+                    height: 20,
+                    marginRight: 5,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontFamily: 'SCDream4',
+                    fontSize: 14,
+                  }}>
+                  카카오 로그인 완료
+                </Text>
+              </View>
+            ) : sns_check === 'Y' && sns_type === 'apple' ? (
+              <View
+                style={{
+                  alignSelf: 'flex-start',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  borderColor: '#222',
+                  borderRadius: 5,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  backgroundColor: '#222',
+                }}>
+                <Image
+                  source={require('../../src/assets/apple.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 13,
+                    height: 20,
+                    marginRight: 5,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontFamily: 'SCDream4',
+                    fontSize: 14,
+                    color: '#fff',
+                  }}>
+                  애플 로그인 완료
+                </Text>
+              </View>
+            ) : sns_check === 'Y' && sns_type === 'naver' ? (
+              <View
+                style={{
+                  alignSelf: 'flex-start',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  borderColor: '#2DB400',
+                  borderRadius: 5,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  backgroundColor: '#2DB400',
+                }}>
+                <Image
+                  source={require('../../src/assets/naver.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 12,
+                    height: 13,
+                    marginRight: 5,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontFamily: 'SCDream4',
+                    fontSize: 14,
+                    color: '#fff',
+                  }}>
+                  네이버 로그인 완료
+                </Text>
+              </View>
+            ) : null}
           </View>
 
           {/* 회원 등급 */}
@@ -459,48 +588,54 @@ const Edit = (props) => {
           {/* // 성함 변경 */}
 
           {/* 비밀번호 변경 */}
-          <View style={styles.profileBox}>
-            <Text style={[styles.profileTitle, {marginBottom: 10}]}>
-              비밀번호 변경
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: 10,
-                borderWidth: 1,
-                borderColor: '#E3E3E3',
-                borderRadius: 4,
-                marginBottom: 5,
-                height: 50,
-              }}>
-              <TextInput
-                value={pwd}
-                placeholder="비밀번호를 변경하시려면 입력해주세요."
-                placeholderTextColor="#A2A2A2"
-                style={[styles.normalText, {width: '90%'}]}
-                onChangeText={(text) => setPwd(text)}
-                autoCapitalize="none"
-                secureTextEntry={pwdEyes}
-              />
-              <TouchableOpacity activeOpacity={0.8} onPress={togglePwdEyes}>
-                <Image
-                  source={
-                    pwdEyes
-                      ? require('../../src/assets/icon_eye.png')
-                      : require('../../src/assets/icon_eye_on.png')
-                  }
-                  resizeMode="center"
-                  style={{width: 35, height: 20}}
+          {sns_check !== 'Y' && (
+            <View style={styles.profileBox}>
+              <Text style={[styles.profileTitle, {marginBottom: 10}]}>
+                비밀번호 변경
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
+                  borderWidth: 1,
+                  borderColor: '#E3E3E3',
+                  borderRadius: 4,
+                  marginBottom: 5,
+                  height: 50,
+                }}>
+                <TextInput
+                  value={pwd}
+                  placeholder="비밀번호를 변경하시려면 입력해주세요."
+                  placeholderTextColor="#A2A2A2"
+                  style={[styles.normalText, {width: '90%'}]}
+                  onChangeText={(text) => setPwd(text)}
+                  autoCapitalize="none"
+                  secureTextEntry={pwdEyes}
                 />
-              </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.8} onPress={togglePwdEyes}>
+                  <Image
+                    source={
+                      pwdEyes
+                        ? require('../../src/assets/icon_eye.png')
+                        : require('../../src/assets/icon_eye_on.png')
+                    }
+                    resizeMode="center"
+                    style={{width: 35, height: 20}}
+                  />
+                </TouchableOpacity>
+              </View>
+              <Text
+                style={{
+                  fontFamily: 'SCDream4',
+                  fontSize: 12,
+                  color: '#366DE5',
+                }}>
+                ※ 비밀번호를 변경하시지 않을 경우 공백상태로 두셔도 됩니다.
+              </Text>
             </View>
-            <Text
-              style={{fontFamily: 'SCDream4', fontSize: 12, color: '#366DE5'}}>
-              ※ 비밀번호를 변경하시지 않을 경우 공백상태로 두셔도 됩니다.
-            </Text>
-          </View>
+          )}
           {/* // 비밀번호 변경 */}
 
           {/* 휴대폰 번호 변경 */}
@@ -620,23 +755,29 @@ const Edit = (props) => {
             <Text style={[styles.profileTitle, {marginBottom: 10}]}>
               이메일
             </Text>
-            <TextInput
-              value={email ? email : mb_email}
-              placeholder="이메일을 입력해주세요."
-              placeholderTextColor="#A2A2A2"
-              style={[
-                styles.normalText,
-                {
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  paddingHorizontal: 10,
-                },
-              ]}
-              onChangeText={(text) => setEmail(text)}
-              autoCapitalize="none"
-              keyboardType="email-address"
-            />
+            {sns_check !== 'Y' ? (
+              <TextInput
+                value={email ? email : mb_email}
+                placeholder="이메일을 입력해주세요."
+                placeholderTextColor="#A2A2A2"
+                style={[
+                  styles.normalText,
+                  {
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    paddingHorizontal: 10,
+                  },
+                ]}
+                onChangeText={(text) => setEmail(text)}
+                autoCapitalize="none"
+                keyboardType="email-address"
+              />
+            ) : (
+              <View>
+                <Text>{mb_email}</Text>
+              </View>
+            )}
           </View>
           {/* // 이메일 변경 */}
 

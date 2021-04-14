@@ -14,6 +14,21 @@ export default {
       }),
     });
   },
+  onSnsLogin(id, idToken, name, email, os, fcmToken, snsType) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_login_sns_member',
+        id,
+        idToken,
+        name,
+        email,
+        os,
+        fcmToken,
+        snsType,
+      }),
+    });
+  },
   onSearchIdStep01(mb_name, mb_hp, mb_level) {
     return Send({
       method: 'post',
