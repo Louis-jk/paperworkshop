@@ -187,7 +187,6 @@ const DrawerMenu = (props) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              paddingHorizontal: 20,
             }}>
             <View
               style={{
