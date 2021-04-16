@@ -103,6 +103,81 @@ const index = (props) => {
 
   console.log('rooms', rooms);
 
+  const renderRow = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        key={item.pm_id}
+        onPress={() =>
+          navigation.navigate('MessageDetail', {
+            screen: 'MessageDetail',
+            params: {chatId: item.pm_id},
+          })
+        }
+        activeOpacity={0.8}>
+        <View style={[styles.wrap, styles.msgBox]}>
+          <View style={styles.flexRow}>
+            <Image
+              source={{uri: `${item.mb_profile}`}}
+              resizeMode="cover"
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 50,
+                marginRight: 20,
+              }}
+            />
+            <View style={{flex: 2}}>
+              <Text style={styles.msgInfoName}>{item.company_name}</Text>
+
+              {item.msg ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={[
+                      styles.msgInfoContent,
+                      {fontFamily: 'SCDream5', color: '#275696'},
+                    ]}
+                    numberOfLines={1}>
+                    최신글 :
+                  </Text>
+                  <Text style={styles.msgInfoContent} numberOfLines={1}>
+                    {' '}
+                    {item.msg}
+                  </Text>
+                </View>
+              ) : (
+                <Text
+                  style={[styles.msgInfoContent, {color: '#b5b5b5'}]}
+                  numberOfLines={1}>
+                  채팅 내역이 없습니다.
+                </Text>
+              )}
+            </View>
+            <View style={{position: 'relative'}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => goOutChatRoomChecking(item.pm_id)}>
+                <Image
+                  source={require('../../src/assets/icon_close01.png')}
+                  resizeMode="contain"
+                  style={{
+                    width: 30,
+                    height: 30,
+                    marginBottom: 20,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <>
       <Header title={routeName} navigation={navigation} />
@@ -125,88 +200,35 @@ const index = (props) => {
           <ActivityIndicator size="large" color="#275696" />
         </View>
       )}
-      {rooms && rooms.length > 0 ? (
-        <ScrollView
-          style={styles.container}
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.wrap}>
-            {rooms.map((room, idx) => (
-              <TouchableOpacity
-                key={room.pm_id}
-                onPress={() =>
-                  navigation.navigate('MessageDetail', {
-                    screen: 'MessageDetail',
-                    params: {chatId: room.pm_id},
-                  })
-                }
-                activeOpacity={0.8}>
-                <View style={[styles.wrap, styles.msgBox]}>
-                  <View style={styles.flexRow}>
-                    <Image
-                      source={{uri: `${room.mb_profile}`}}
-                      resizeMode="cover"
-                      style={{
-                        width: 50,
-                        height: 50,
-                        borderRadius: 50,
-                        marginRight: 20,
-                      }}
-                    />
-                    <View style={{flex: 2}}>
-                      <Text style={styles.msgInfoName}>
-                        {room.company_name}
-                      </Text>
-
-                      {room.msg ? (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                          }}>
-                          <Text
-                            style={[
-                              styles.msgInfoContent,
-                              {fontFamily: 'SCDream5', color: '#275696'},
-                            ]}
-                            numberOfLines={1}>
-                            최신글 :
-                          </Text>
-                          <Text style={styles.msgInfoContent} numberOfLines={1}>
-                            {' '}
-                            {room.msg}
-                          </Text>
-                        </View>
-                      ) : (
-                        <Text
-                          style={[styles.msgInfoContent, {color: '#b5b5b5'}]}
-                          numberOfLines={1}>
-                          채팅 내역이 없습니다.
-                        </Text>
-                      )}
-                    </View>
-                    <View style={{position: 'relative'}}>
-                      <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() => goOutChatRoomChecking(room.pm_id)}>
-                        <Image
-                          source={require('../../src/assets/icon_close01.png')}
-                          resizeMode="contain"
-                          style={{
-                            width: 30,
-                            height: 30,
-                            marginBottom: 20,
-                          }}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-      ) : null}
+      <View style={styles.container}>
+        <View style={styles.wrap}>
+          <FlatList
+            data={rooms}
+            renderItem={renderRow}
+            keyExtractor={(list, index) => index.toString()}
+            numColumns={1}
+            // pagingEnabled={true}
+            persistentScrollbar={true}
+            showsVerticalScrollIndicator={false}
+            progressViewOffset={true}
+            refreshing={true}
+            style={{backgroundColor: '#fff'}}
+            ListEmptyComponent={
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                  height: Dimensions.get('window').height - 200,
+                }}>
+                <Text style={{fontFamily: 'SCDream4'}}>
+                  채팅 내역이 없습니다.
+                </Text>
+              </View>
+            }
+          />
+        </View>
+      </View>
     </>
   );
 };
@@ -214,6 +236,7 @@ const index = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+    flex: 1,
   },
   wrap: {
     paddingHorizontal: 20,
