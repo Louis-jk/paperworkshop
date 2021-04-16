@@ -15,6 +15,7 @@ import {
   UserType,
   UserProfileImg,
   UserEstimateCnt,
+  LoginCheck,
 } from '../../../Modules/UserInfoReducer';
 import Auth from '../../../src/api/Auth.js';
 
@@ -80,14 +81,9 @@ const Check = (props) => {
           dispatch(UserProfileImg(res.data.item.mb_profile));
           dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
           dispatch(LoginCheck('Y'));
-          navigation.navigate('Stack');
+          navigation.navigate('EntryBefore');
         } else {
-          Alert.alert(res.data.message, '다시 시도해주세요.', [
-            {
-              text: '확인',
-              onPress: () => loginIdRef.current.focus(),
-            },
-          ]);
+          navigation.navigate('Login');
         }
       })
       .catch((err) => {
