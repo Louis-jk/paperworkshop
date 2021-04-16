@@ -15,13 +15,14 @@ import messaging from '@react-native-firebase/messaging';
 import {
   login as kLogin,
   getProfile as getKakaoProfile,
-} from '@react-native-seoul/kakao-login';
+} from '@react-native-seoul/kakao-login'; // 카카오 로그인
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   GoogleSignin,
   statusCodes,
-} from '@react-native-google-signin/google-signin';
+} from '@react-native-google-signin/google-signin'; // 구글 로그인
+import {NaverLogin, getProfile} from '@react-native-seoul/naver-login'; // 네이버 로그인
 
 import {setFcmToken} from '../../../Modules/InfoReducer';
 import {
@@ -66,22 +67,73 @@ const Login = (props) => {
     }
   };
 
-  const storeData = async () => {
-    try {
-      const jsonValue = JSON.stringify({userId: loginId, userPwd: loginPwd});
-      await AsyncStorage.setItem('@paper_info', jsonValue);
-    } catch (e) {
-      Alert.alert(e, '관리자에게 문의하세요', [
-        {
-          text: '확인',
-        },
-      ]);
+  // SNS 로그인 처리(디비 접속)
+  const SnsLoginHandler = (payload, token, type) => {
+    let kakaoPhoneNum = '';
+    if (type === 'kakao') {
+      kakaoPhoneNum = payload.phoneNumber !== 'null' ? payload.phoneNumber : '';
     }
+
+    let id = type !== 'google' ? payload.id : payload.user.id;
+    let idToken = token;
+    let name =
+      type === 'naver'
+        ? payload.name
+        : type === 'kakao'
+        ? payload.nickname
+        : payload.user.name;
+    let email = type !== 'google' ? payload.email : payload.user.email;
+    let profileImg =
+      type === 'naver'
+        ? payload.profile_image
+        : type === 'kakao'
+        ? payload.profileImageUrl
+        : payload.user.photo;
+    let mobile =
+      type === 'naver' ? payload.mobile : type === 'kakao' ? kakaoPhoneNum : '';
+
+    Auth.onSnsLogin(
+      id,
+      idToken,
+      name,
+      email,
+      checkPlatform,
+      fFcmToken,
+      type,
+      profileImg,
+      mobile,
+    )
+      .then((res) => {
+        console.log('sns 로그인', res);
+        if (res.data.result === '1') {
+          dispatch(UserId(res.data.item.mb_id));
+          dispatch(UserName(res.data.item.mb_name));
+          dispatch(UserMobile(res.data.item.mb_hp));
+          dispatch(UserEmail(res.data.item.mb_email));
+          dispatch(UserCompany(res.data.item.mb_2));
+          dispatch(UserMobile(res.data.item.mb_hp));
+          dispatch(UserMobileCfm(res.data.item.mb_1));
+          dispatch(UserType(res.data.item.mb_level));
+          dispatch(UserProfileImg(res.data.item.mb_profile));
+          dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
+          dispatch(SnsCheck(res.data.item.sns_check));
+          dispatch(SnsType(res.data.item.sns_type));
+          dispatch(LoginCheck('Y'));
+          navigation.navigate('EntryBefore');
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
+  // 구글 로그인
   const [userInfo, setuserInfo] = React.useState([]);
 
-  // 구글 로그인 성공
   const gSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -89,7 +141,7 @@ const Login = (props) => {
       const userInfo = await GoogleSignin.signIn();
       setuserInfo(userInfo);
       console.log('userInfo', userInfo);
-      snsLogin(userInfo, 'google');
+      SnsLoginHandler(userInfo, userInfo.idToken, 'google');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -114,8 +166,7 @@ const Login = (props) => {
     });
   };
 
-  // kakao 로그인
-
+  // 카카오 로그인
   const kakaoLogin = async () => {
     try {
       const kakaoToken = await kLogin();
@@ -135,7 +186,7 @@ const Login = (props) => {
     try {
       const profile = await getKakaoProfile();
       console.log('profile', profile);
-      await KakaoSnsLogin(profile, accessToken, 'kakao');
+      await SnsLoginHandler(profile, accessToken, 'kakao');
     } catch (err) {
       Alert.alert('오류가 발생하였습니다.', '다시 확인해주세요.', [
         {
@@ -145,99 +196,62 @@ const Login = (props) => {
     }
   };
 
-  // 카카오 로그인 처리
-  const KakaoSnsLogin = (payload, token, type) => {
-    let id = payload.id;
-    let idToken = token;
-    let name = payload.nickname;
-    let email = payload.email;
-    let profileImg = payload.profileImageUrl;
-
-    Auth.onSnsLogin(
-      id,
-      idToken,
-      name,
-      email,
-      checkPlatform,
-      fFcmToken,
-      type,
-      profileImg,
-    )
-      .then((res) => {
-        console.log('sns 로그인', res);
-        if (res.data.result === '1') {
-          dispatch(UserId(res.data.item.mb_id));
-          dispatch(UserName(res.data.item.mb_name));
-          dispatch(UserMobile(res.data.item.mb_hp));
-          dispatch(UserEmail(res.data.item.mb_email));
-          dispatch(UserCompany(res.data.item.mb_2));
-          dispatch(UserMobileCfm(res.data.item.mb_1));
-          dispatch(UserType(res.data.item.mb_level));
-          dispatch(UserProfileImg(res.data.item.mb_profile));
-          dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
-          dispatch(SnsCheck(res.data.item.sns_check));
-          dispatch(SnsType(res.data.item.sns_type));
-          dispatch(LoginCheck('Y'));
-          navigation.navigate('EntryBefore');
-        }
-      })
-      .catch((err) => {
-        Alert.alert(err, '관리자에게 문의하세요.', [
-          {
-            text: '확인',
-          },
-        ]);
-      });
+  // 네이버 로그인
+  const ioskeys = {
+    kConsumerKey: 'zXPV13LnmSXZKOK5I98c',
+    kConsumerSecret: 'LC6fGLiHQq',
+    kServiceAppName: '페이퍼공작소',
+    kServiceAppUrlScheme: 'testapp', // only for iOS
   };
 
-  // SNS 로그인시
-  const snsLogin = (payload, type) => {
-    console.log('payload', payload);
-
-    let id = payload.user.id;
-    let idToken = payload.idToken;
-    let name = payload.user.name;
-    let email = payload.user.email;
-    let profileImg = payload.user.photo;
-
-    Auth.onSnsLogin(
-      id,
-      idToken,
-      name,
-      email,
-      checkPlatform,
-      fFcmToken,
-      type,
-      profileImg,
-    )
-      .then((res) => {
-        console.log('sns 로그인', res);
-        if (res.data.result === '1') {
-          dispatch(UserId(res.data.item.mb_id));
-          dispatch(UserName(res.data.item.mb_name));
-          dispatch(UserMobile(res.data.item.mb_hp));
-          dispatch(UserEmail(res.data.item.mb_email));
-          dispatch(UserCompany(res.data.item.mb_2));
-          dispatch(UserMobileCfm(res.data.item.mb_1));
-          dispatch(UserType(res.data.item.mb_level));
-          dispatch(UserProfileImg(res.data.item.mb_profile));
-          dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
-          dispatch(SnsCheck(res.data.item.sns_check));
-          dispatch(SnsType(res.data.item.sns_type));
-          dispatch(LoginCheck('Y'));
-          navigation.navigate('EntryBefore');
-        }
-      })
-      .catch((err) => {
-        Alert.alert(err, '관리자에게 문의하세요.', [
-          {
-            text: '확인',
-          },
-        ]);
-      });
+  const androidkeys = {
+    kConsumerKey: 'zXPV13LnmSXZKOK5I98c',
+    kConsumerSecret: 'LC6fGLiHQq',
+    kServiceAppName: '페이퍼공작소',
   };
 
-  console.log('userInfo', userInfo);
+  const initials = Platform.OS === 'ios' ? ioskeys : androidkeys;
+
+  const [naverToken, setNaverToken] = React.useState(null);
+
+  const naverLoginHandler = (props) => {
+    return new Promise((resolve, reject) => {
+      NaverLogin.login(props, (err, token) => {
+        console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
+        setNaverToken(token);
+        getUserProfile(token);
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(token);
+      });
+    });
+  };
+
+  const getUserProfile = async (token) => {
+    const profileResult = await getProfile(token.accessToken);
+    if (profileResult.resultcode === '024') {
+      Alert.alert('로그인 실패', profileResult.message);
+      return;
+    }
+    console.log('profileResult', profileResult);
+    SnsLoginHandler(profileResult.response, token.accessToken, 'naver');
+  };
+
+  //  자동 로그인 처리
+  const storeData = async () => {
+    try {
+      const jsonValue = JSON.stringify({userId: loginId, userPwd: loginPwd});
+      await AsyncStorage.setItem('@paper_info', jsonValue);
+    } catch (e) {
+      Alert.alert(e, '관리자에게 문의하세요', [
+        {
+          text: '확인',
+        },
+      ]);
+    }
+  };
 
   // 비밀번호 보이기 기능
   const [pwdEyes, setPwdEyes] = React.useState(true);
@@ -313,6 +327,7 @@ const Login = (props) => {
       <View
         style={{
           flex: 1,
+          height: Dimensions.get('window').height,
           backgroundColor: '#fff',
           justifyContent: 'space-around',
           alignItems: 'center',
@@ -514,7 +529,7 @@ const Login = (props) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => Alert.alert('네이버 로그인')}
+            onPress={() => naverLoginHandler(initials)}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -534,28 +549,30 @@ const Login = (props) => {
               네이버로 로그인
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => Alert.alert('애플로그인')}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: Dimensions.get('window').width - 100,
-              backgroundColor: '#333333',
-              borderRadius: 4,
-              paddingVertical: 10,
-              marginBottom: 10,
-            }}>
-            <Image
-              source={require('../../../src/assets/apple.png')}
-              resizeMode="contain"
-              style={{width: 30, height: 30}}
-            />
-            <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
-              애플로 로그인
-            </Text>
-          </TouchableOpacity>
+          {Platform.OS === 'ios' ? (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => Alert.alert('애플로그인')}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: Dimensions.get('window').width - 100,
+                backgroundColor: '#333333',
+                borderRadius: 4,
+                paddingVertical: 10,
+                marginBottom: 10,
+              }}>
+              <Image
+                source={require('../../../src/assets/apple.png')}
+                resizeMode="contain"
+                style={{width: 30, height: 30}}
+              />
+              <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
+                애플로 로그인
+              </Text>
+            </TouchableOpacity>
+          ) : null}
           {/* <GoogleSigninButton
             style={{width: 192, height: 48}}
             size={GoogleSigninButton.Size.Wide}

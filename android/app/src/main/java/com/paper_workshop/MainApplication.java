@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;  // <--- import
 import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
+import com.dooboolab.naverlogin.RNNaverLoginPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 

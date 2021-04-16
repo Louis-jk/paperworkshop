@@ -28,6 +28,9 @@
         <data android:host="oauth" android:scheme="kakao2194770efdaf3f52d4f09e1dc7f0c83b" />
       </intent-filter>
     </activity>
+    <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity" android:screenOrientation="portrait"
+        xmlns:tools="http://schemas.android.com/tools" tools:replace="android:theme" android:theme="@android:style/Theme.Translucent.NoTitleBar"  />
+    <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity" android:label="OAuth2.0 In-app" android:screenOrientation="portrait" />
   </application>
 
 </manifest>

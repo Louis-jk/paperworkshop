@@ -194,6 +194,7 @@ dependencies {
     implementation project(':react-native-fs') 
 
     implementation project(':react-native-seoul-kakao-login')
+    implementation project(':react-native-seoul-naver-login')
 
     implementation project(":react-native-google-signin")
 

@@ -14,7 +14,17 @@ export default {
       }),
     });
   },
-  onSnsLogin(id, idToken, name, email, os, fcmToken, snsType, profileImg) {
+  onSnsLogin(
+    id,
+    idToken,
+    name,
+    email,
+    os,
+    fcmToken,
+    snsType,
+    profileImg,
+    mobile,
+  ) {
     return Send({
       method: 'post',
       data: qs.stringify({
@@ -27,6 +37,7 @@ export default {
         fcmToken,
         snsType,
         profileImg,
+        mobile,
       }),
     });
   },
