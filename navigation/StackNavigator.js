@@ -64,6 +64,7 @@ import SearchScreen from '../Screens/Common/Search';
 // 로그인 관련 SCREEN
 import LoginScreen from '../Screens/Profile/Auth/Login';
 import CheckScreen from '../Screens/Profile/Auth/Check';
+import EntryBeforeScreen from '../Screens/Profile/Auth/EntryBefore';
 import RegisterScreen from '../Screens/Profile/Auth/Register';
 import SignedScreen from '../Screens/Profile/Auth/Signed';
 import FindIdScreen from '../Screens/Profile/Auth/FindId';
@@ -279,6 +280,7 @@ export const LoginStackNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Check" component={CheckScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="EntryBefore" component={EntryBeforeScreen} />
     </Stack.Navigator>
   );
 };

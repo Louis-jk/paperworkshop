@@ -79,7 +79,7 @@ const Check = (props) => {
           dispatch(UserType(res.data.item.mb_level));
           dispatch(UserProfileImg(res.data.item.mb_profile));
           dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
-
+          dispatch(LoginCheck('Y'));
           navigation.navigate('Stack');
         } else {
           Alert.alert(res.data.message, '다시 시도해주세요.', [

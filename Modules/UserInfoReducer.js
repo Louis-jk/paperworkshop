@@ -11,6 +11,7 @@ const USER_PROFILE_IMG = 'USER_PROFILE_IMG';
 const USER_ESTIMATE_CNT = 'USER_ESTIMATE_CNT';
 const SNS_CHECK = 'SNS_CHECK';
 const SNS_TYPE = 'SNS_TYPE';
+const LOGIN_CHECK = 'LOGIN_CHECK';
 
 // action method
 export const UserId = (payload) => ({type: USER_ID, payload});
@@ -34,6 +35,10 @@ export const SnsType = (payload) => ({
   type: SNS_TYPE,
   payload,
 });
+export const LoginCheck = (payload) => ({
+  type: LOGIN_CHECK,
+  payload,
+});
 
 // initialize
 const initialize = {
@@ -48,6 +53,7 @@ const initialize = {
   estimate_cnt: 0,
   sns_check: null,
   sns_type: null,
+  login_yn: 'N',
 };
 
 // reducer create
@@ -112,6 +118,11 @@ export default function setJoinInfo(state = initialize, action) {
       return {
         ...state,
         sns_type: action.payload,
+      };
+    case LOGIN_CHECK:
+      return {
+        ...state,
+        login_yn: action.payload,
       };
     default:
       return state;

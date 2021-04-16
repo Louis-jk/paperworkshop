@@ -14,11 +14,9 @@ import {
 import messaging from '@react-native-firebase/messaging';
 import {
   login as kLogin,
-  getProfile,
-  getAccessToken,
-  logout,
+  getProfile as getKakaoProfile,
 } from '@react-native-seoul/kakao-login';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   GoogleSignin,
@@ -38,6 +36,7 @@ import {
   UserEstimateCnt,
   SnsCheck,
   SnsType,
+  LoginCheck,
 } from '../../../Modules/UserInfoReducer';
 import Auth from '../../../src/api/Auth.js';
 
@@ -80,7 +79,6 @@ const Login = (props) => {
     }
   };
 
-  const [loggedIn, setloggedIn] = React.useState(false);
   const [userInfo, setuserInfo] = React.useState([]);
 
   // 구글 로그인 성공
@@ -90,7 +88,7 @@ const Login = (props) => {
       const {accessToken, idToken} = await GoogleSignin.signIn();
       const userInfo = await GoogleSignin.signIn();
       setuserInfo(userInfo);
-      setloggedIn(true);
+      console.log('userInfo', userInfo);
       snsLogin(userInfo, 'google');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -116,15 +114,55 @@ const Login = (props) => {
     });
   };
 
-  const snsLogin = (payload, type) => {
-    console.log('payload', payload);
+  // kakao 로그인
 
-    let id = payload.user.id;
-    let idToken = payload.idToken;
-    let name = payload.user.name;
-    let email = payload.user.email;
+  const kakaoLogin = async () => {
+    try {
+      const kakaoToken = await kLogin();
+      console.log('kakao ', kakaoToken);
+      await getKakaoProfileHandler(kakaoToken.accessToken);
+    } catch (err) {
+      console.log(err);
+      Alert.alert('카카오톡 계정 정보가 없습니다.', '다시 확인해주세요.', [
+        {
+          text: '확인',
+        },
+      ]);
+    }
+  };
 
-    Auth.onSnsLogin(id, idToken, name, email, checkPlatform, fFcmToken, type)
+  const getKakaoProfileHandler = async (accessToken) => {
+    try {
+      const profile = await getKakaoProfile();
+      console.log('profile', profile);
+      await KakaoSnsLogin(profile, accessToken, 'kakao');
+    } catch (err) {
+      Alert.alert('오류가 발생하였습니다.', '다시 확인해주세요.', [
+        {
+          text: '확인',
+        },
+      ]);
+    }
+  };
+
+  // 카카오 로그인 처리
+  const KakaoSnsLogin = (payload, token, type) => {
+    let id = payload.id;
+    let idToken = token;
+    let name = payload.nickname;
+    let email = payload.email;
+    let profileImg = payload.profileImageUrl;
+
+    Auth.onSnsLogin(
+      id,
+      idToken,
+      name,
+      email,
+      checkPlatform,
+      fFcmToken,
+      type,
+      profileImg,
+    )
       .then((res) => {
         console.log('sns 로그인', res);
         if (res.data.result === '1') {
@@ -139,7 +177,55 @@ const Login = (props) => {
           dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
           dispatch(SnsCheck(res.data.item.sns_check));
           dispatch(SnsType(res.data.item.sns_type));
-          navigation.navigate('Stack');
+          dispatch(LoginCheck('Y'));
+          navigation.navigate('EntryBefore');
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  // SNS 로그인시
+  const snsLogin = (payload, type) => {
+    console.log('payload', payload);
+
+    let id = payload.user.id;
+    let idToken = payload.idToken;
+    let name = payload.user.name;
+    let email = payload.user.email;
+    let profileImg = payload.user.photo;
+
+    Auth.onSnsLogin(
+      id,
+      idToken,
+      name,
+      email,
+      checkPlatform,
+      fFcmToken,
+      type,
+      profileImg,
+    )
+      .then((res) => {
+        console.log('sns 로그인', res);
+        if (res.data.result === '1') {
+          dispatch(UserId(res.data.item.mb_id));
+          dispatch(UserName(res.data.item.mb_name));
+          dispatch(UserMobile(res.data.item.mb_hp));
+          dispatch(UserEmail(res.data.item.mb_email));
+          dispatch(UserCompany(res.data.item.mb_2));
+          dispatch(UserMobileCfm(res.data.item.mb_1));
+          dispatch(UserType(res.data.item.mb_level));
+          dispatch(UserProfileImg(res.data.item.mb_profile));
+          dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
+          dispatch(SnsCheck(res.data.item.sns_check));
+          dispatch(SnsType(res.data.item.sns_type));
+          dispatch(LoginCheck('Y'));
+          navigation.navigate('EntryBefore');
         }
       })
       .catch((err) => {
@@ -152,32 +238,6 @@ const Login = (props) => {
   };
 
   console.log('userInfo', userInfo);
-
-  // kakao 로그인
-
-  const [kakaoLoginLoading, setKakaoLoginLoading] = React.useState(false);
-  const [naverToken, setNaverToken] = React.useState(null);
-
-  // const kakaoLogin = async () => {
-  //   const kLogin = await getAccessToken();
-  //   let result = JSON.stringify(kLogin);
-  //   console.log('kLogin', result);
-  // };
-
-  const kakaoLogin = async () => {
-    try {
-      const token = await kLogin();
-      let jsonDe = JSON.stringify(token);
-      Alert.alert(jsonDe);
-    } catch (err) {
-      console.log(err);
-      Alert.alert('카카오톡 계정 정보가 없습니다.', '다시 확인해주세요.', [
-        {
-          text: '확인',
-        },
-      ]);
-    }
-  };
 
   // 비밀번호 보이기 기능
   const [pwdEyes, setPwdEyes] = React.useState(true);
@@ -223,11 +283,12 @@ const Login = (props) => {
           dispatch(UserType(res.data.item.mb_level));
           dispatch(UserProfileImg(res.data.item.mb_profile));
           dispatch(UserEstimateCnt(res.data.item.estimate_cnt));
+          dispatch(LoginCheck('Y'));
           if (autoLogin) {
             storeData();
-            navigation.navigate('Stack');
+            navigation.navigate('EntryBefore');
           } else {
-            navigation.navigate('Stack');
+            navigation.navigate('EntryBefore');
           }
         } else {
           Alert.alert(res.data.message, '다시 시도해주세요.', [
