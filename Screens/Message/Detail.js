@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
@@ -20,6 +21,7 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import FastImage from 'react-native-fast-image'; // gif 이미지 출력 패키지
 import RNFetchBlob from 'rn-fetch-blob'; // 파일 다운로드 패키지
 import DocumentPicker from 'react-native-document-picker'; // 파일 업로드 패키지
+import {GiftedChat, SystemMessage} from 'react-native-gifted-chat'; // 채팅 패키지
 
 import DetailHeader from '../Common/DetailHeader';
 import ChatAPI from '../../src/api/Chat';
@@ -35,9 +37,8 @@ const Detail = (props) => {
   const [chatHistory, setChatHistory] = React.useState([]); // 채팅 히스토리
   const [message, setMessage] = React.useState(''); // 메세지 텍스트
   const [msgFile, setMsgFile] = React.useState(''); // 채팅 파일(이미지 또는 엑셀, pdf 등) 값
-
-  console.log('채팅방 prop', props);
-  console.log('채팅방 chatId', chatId);
+  const [firstDate, setFirstDate] = React.useState(null); // 채팅 최초 시작일
+  const [chatDateHistory, setChatDateHistory] = React.useState([]); // 채팅 날짜 갱신일
 
   // 채팅방 글 히스토리 가져오기
   const getChatHistoryAPI = () => {
@@ -45,8 +46,12 @@ const Detail = (props) => {
     ChatAPI.getChatHistory(chatId)
       .then((res) => {
         console.log('ㅎㅎㅎ', res);
-        if (res.data.result === '1') {
+        if (res.data.result === '1' && res.data.count > 0) {
           setChatHistory(res.data.item);
+          setChatDateHistory((prev) => [...prev, res.data.item[0].chat_date]);
+
+          setLoading(false);
+        } else if (res.data.result === '1' && res.data.count === 0) {
           setLoading(false);
         } else {
           Alert.alert(res.data.message, '관리자에게 문의하세요.', [
@@ -76,6 +81,7 @@ const Detail = (props) => {
   }, [navigation]);
 
   console.log('chatHistory', chatHistory);
+  console.log('chatDateHistory', chatDateHistory);
 
   // 이미지 모달창
   const ImageModal = ({toggleModal, isVisible, imgPath}) => {
@@ -192,49 +198,6 @@ const Detail = (props) => {
 
   console.log('msgFile', msgFile);
 
-  // 파일만 따로 업로드
-  const onChatFileUploadHandler = (url, type, name) => {
-    let file = {url: url, type: type, name: name};
-    let uploadFile = JSON.stringify(file);
-    console.log(('file', uploadFile));
-
-    let frmData = new FormData();
-    frmData.append('method', 'proc_my_message');
-    frmData.append('mb_id', mb_id);
-    frmData.append('pm_id', chatId);
-    frmData.append('bf_file[]', uploadFile);
-
-    console.log('frmData', frmData);
-    ChatAPI.sendMessage(frmData)
-      .then((res) => {
-        console.log('파일업로드시', res);
-        if (res.data.result === '1') {
-          setMessage('');
-          setMsgFile('');
-          getChatHistoryAPI();
-        } else {
-          Alert.alert(res.data.message, '관리자에게 문의하세요.', [
-            {
-              text: '확인',
-            },
-          ]);
-        }
-      })
-      .catch((err) => {
-        Alert.alert(err, '관리자에게 문의하세요.', [
-          {
-            text: '확인',
-          },
-        ]);
-      });
-    // Alert.alert('파일을 전송하시겠습니까?', '', [
-    //   {
-    //     text: '확인',
-    //     onPress: () => onChatFileUploadHandler(res.uri, res.type, res.name),
-    //   },
-    // ]);
-  };
-
   // 파일 다운로드 메소드
   const downloader = async (filePath, fileName) => {
     await RNFetchBlob.config({
@@ -259,18 +222,39 @@ const Detail = (props) => {
       });
   };
 
+  const [source, setSource] = React.useState({});
+
   // 파일 업로드 메소드
   const filePicker = async () => {
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      setMsgFile({
+      // setMsgFile({
+      //   uri: res.uri,
+      //   type: res.type,
+      //   name: res.name,
+      // });
+      setSource({
         uri: res.uri,
         type: res.type,
         name: res.name,
       });
-      onChatFileUploadHandler(res.uri, res.type, res.name);
+      console.log('size:', res.size);
+      if (res.size > 150000) {
+        Alert.alert(
+          '이미지 사이즈가 너무 큽니다.',
+          '사이즈를 줄이시거나 확인해주세요',
+          [
+            {
+              text: '확인',
+              onPress: () => setSource({}),
+            },
+          ],
+        );
+      } else {
+        onChatFileUploadHandler();
+      }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -278,6 +262,44 @@ const Detail = (props) => {
         throw err;
       }
     }
+  };
+
+  // 파일만 따로 업로드
+  const onChatFileUploadHandler = () => {
+    // let file = {url: url, type: type, name: name};
+    console.log('넘어오는지', source);
+    let uploadFile = JSON.stringify(source);
+    // console.log(('uploadFile', file));
+
+    let frmData = new FormData();
+    frmData.append('method', 'proc_my_message');
+    frmData.append('mb_id', mb_id);
+    frmData.append('pm_id', chatId);
+    frmData.append('bf_file[]', source);
+
+    console.log('frmData', frmData);
+    ChatAPI.sendMessage(frmData)
+      .then((res) => {
+        console.log('파일업로드시', res);
+        if (res.data.result === '1') {
+          setMessage('');
+          setMsgFile('');
+          getChatHistoryAPI();
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요.', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
   };
 
   // 채팅방 나가기
@@ -325,7 +347,34 @@ const Detail = (props) => {
       ],
     );
   };
+  // 비교 함수
+  const some_check = (item) => {
+    chatHistory.some((element) => {
+      console.log('chek111 ::::', item);
+      console.log('chek222 ::::', element.chat_date);
 
+      console.log(
+        'elem,ent  :::',
+        moment(element.chat_date).format('YYYY-MM-DD') ===
+          moment(item).format('YYYY-MM-DD'),
+      );
+
+      let result =
+        moment(element.chat_date).format('YYYY-MM-DD') ===
+        moment(item).format('YYYY-MM-DD');
+
+      return result;
+
+      // if (
+      //   moment(element.chat_date).format('YYYY-MM-DD') ===
+      //   moment(item).format('YYYY-MM-DD')
+      // ) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+    });
+  };
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
@@ -348,57 +397,150 @@ const Detail = (props) => {
           <ActivityIndicator size="large" color="#00A170" />
         </View>
       )}
+      {/* <View style={{flex: 1}}>
+        <GiftedChat
+          onPress={() => Keyboard.dismiss()}
+          messages={messages}
+          text={text}
+          onInputTextChanged={setText}
+          onSend={onSend}
+          user={{
+            _id: mb_id,
+          }}
+          placeholder="메세지를 입력하세요."
+          alignTop
+          alwaysShowSend
+          scrollToBottom
+          autoCapitalize="none"
+          locale={'ko'}
+          timeFormat={'LT'}
+          dateFormat={moment(props.createdAt).locale('ko').format('ll')}
+          renderAvatarOnTop
+          renderUsernameOnMessage={false}
+          // renderInputToolbar={renderInputToolbar}
+          // renderComposer={renderComposer}
+          // renderSend={renderSend}
+          // renderSystemMessage={renderSystemMessage}
+          // renderMessageText={renderMessageText}
+          // renderTime={(props)=>console.log(props)}
+          // renderMessage={renderMessage}
+          // renderAvatar={null}
+          renderAvatarOnTop={true}
+          imageProps={messages.image}
+          renderMessageImage={() => (
+            <Image source={{uri: `${messages.image}`}} />
+          )}
+          // renderBubble={renderBubble}
+          // renderLoading={renderLoading}
+          messagesContainerStyle={{backgroundColor: '#FFFFFF'}}
+          // onPressAvatar={console.log}
+          textInputProps={{autoCapitalize: 'none'}}
+          parsePatterns={(linkStyle) => [
+            {
+              pattern: /#(\w+)/,
+              style: linkStyle,
+              onPress: (tag) => console.log(`Pressed on hashtag: ${tag}`),
+            },
+          ]}
+        />
+      </View> */}
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <ImageModal
           imgPath={imgPath}
           isVisible={isModalVisible}
           toggleModal={imageModalHandler}
         />
+
         <View>
-          <View
-            style={{
-              marginVertical: 20,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{marginRight: 10}}>- - - - - - - -</Text>
-            <Text style={styles.normalText}>2021.01.28 (목)</Text>
-            <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
-          </View>
           <View
             style={{
               justifyContent: 'flex-start',
               paddingHorizontal: 20,
             }}>
             {/* 시작 */}
-            {chatHistory && chatHistory.length > 0
+            {chatHistory && chatHistory.length > 0 && chatDateHistory ? (
+              <View
+                style={{
+                  marginVertical: 20,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={{marginRight: 10}}>- - - - - - - -</Text>
+                <Text style={styles.normalText}>
+                  {moment(chatDateHistory[0])
+                    .locale('kr')
+                    .format('YYYY.MM.DD (ddd)')}
+                </Text>
+                {/* <Text style={styles.normalText}>2021.01.28 (목)</Text> */}
+                <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
+              </View>
+            ) : null}
+            {chatHistory && chatHistory.length > 0 && chatDateHistory
               ? chatHistory.map((history, idx) =>
                   history.mb_id === mb_id ? (
                     <View key={`p${history.pc_id}${idx}`}>
                       {history.msg ? (
-                        <View
-                          style={{
-                            alignSelf: 'flex-end',
-                            flexDirection: 'row-reverse',
-                            justifyContent: 'flex-start',
-                            alignItems: 'flex-start',
-                            paddingVertical: 10,
-                            width: '70%',
-                          }}>
-                          <View style={styles.msgBubbleP}>
-                            <Text style={styles.msgTextP}>{history.msg}</Text>
-                          </View>
-                          <Text
+                        <>
+                          {/* {console.log(
+                            'asdsdsads::::::::::',
+                            chatHistory[chatHistory.length - 1].chat_date,
+                          )} */}
+                          {moment(history.chat_date).diff(
+                            moment(
+                              chatHistory[chatHistory.length - 1].chat_date,
+                            ),
+                            'days',
+                          ) > 1 ? (
+                            <View
+                              style={{
+                                marginTop: 40,
+                                marginBottom: 20,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }}>
+                              <Text style={{marginRight: 10}}>
+                                - - - - - - - -
+                              </Text>
+                              <Text style={styles.normalText}>
+                                {moment(history.chat_date)
+                                  .locale('kr')
+                                  .format('YYYY.MM.DD (ddd)')}
+                                {/* {setChatDateHistory((prev) => [
+                                  ...prev,
+                                  history.chat_date,
+                                ])} */}
+                              </Text>
+                              {/* <Text style={styles.normalText}>2021.01.28 (목)</Text> */}
+                              <Text style={{marginLeft: 10}}>
+                                - - - - - - - -
+                              </Text>
+                            </View>
+                          ) : null}
+                          <View
                             style={{
-                              fontFamily: 'SCDream4',
                               alignSelf: 'flex-end',
-                              fontSize: 12,
-                              color: '#000000',
+                              flexDirection: 'row-reverse',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              paddingVertical: 10,
+                              width: '70%',
                             }}>
-                            {moment(history.chat_date).format('HH:mm')}
-                          </Text>
-                        </View>
+                            <View style={styles.msgBubbleP}>
+                              <Text style={styles.msgTextP}>{history.msg}</Text>
+                            </View>
+                            <Text
+                              style={{
+                                fontFamily: 'SCDream4',
+                                alignSelf: 'flex-end',
+                                fontSize: 12,
+                                color: '#000000',
+                              }}>
+                              {moment(history.chat_date).format('HH:mm')}
+                            </Text>
+                          </View>
+                        </>
                       ) : null}
                       {history.bf_file &&
                       (history.bf_file_ext === 'jpg' ||
@@ -540,6 +682,27 @@ const Detail = (props) => {
                           </Text>
                         </TouchableOpacity>
                       ) : null}
+                    </View>
+                  ) : moment(history.chat_date).diff(
+                      moment(firstDate),
+                      'days',
+                    ) > 1 ? (
+                    <View
+                      style={{
+                        marginTop: 40,
+                        marginBottom: 20,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text style={{marginRight: 10}}>- - - - - - - -</Text>
+                      <Text style={styles.normalText}>
+                        {moment(history.chat_date)
+                          .locale('kr')
+                          .format('YYYY.MM.DD (ddd)')}
+                      </Text>
+                      {/* <Text style={styles.normalText}>2021.01.28 (목)</Text> */}
+                      <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
                     </View>
                   ) : history.msg ? (
                     <View
@@ -788,6 +951,7 @@ const Detail = (props) => {
           </View>
         </View>
       </ScrollView>
+
       <View
         style={{
           flexDirection: 'row',
