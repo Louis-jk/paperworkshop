@@ -46,6 +46,8 @@ import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
+import BoxTypeAPI from '../../src/api/BoxType';
+
 const Step05 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
@@ -59,7 +61,7 @@ const Step05 = (props) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoadingPrev, setIsLoadingPrev] = React.useState(true); // 지종 값 출력 여부 전 로딩 값 - 경우에 따라 표지용
-  const [isLoading01, setIsLoading01] = React.useState(false); // 지류 선택시 - 경우에 따라 표지용
+  const [isLoading01, setIsLoading01] = React.useState(true); // 지류 선택시 - 경우에 따라 표지용
   const [isLoading02, setIsLoading02] = React.useState(true); // 평량 로딩 - 경우에 따라 표지용
   const [isLoading03, setIsLoading03] = React.useState(true); // 직접 입력 로딩 - 경우에 따라 표지용
   const [isLoading04, setIsLoading04] = React.useState(true); // 색상 입력 로딩 - 경우에 따라 표지용
@@ -67,7 +69,7 @@ const Step05 = (props) => {
 
   const [isLoadingInner, setIsLoadingInner] = React.useState(false);
   const [isLoadingPrevInner, setIsLoadingPrevInner] = React.useState(true); // 지종 값 출력 여부 전 로딩 값 - 내지용
-  const [isLoading01Inner, setIsLoading01Inner] = React.useState(false); // 지류 선택시 - 내지용
+  const [isLoading01Inner, setIsLoading01Inner] = React.useState(true); // 지류 선택시 - 내지용
   const [isLoading02Inner, setIsLoading02Inner] = React.useState(true); // 평량 로딩 - 내지용
   const [isLoading03Inner, setIsLoading03Inner] = React.useState(true); // 직접 입력 로딩 - 내지용
   const [isLoading04Inner, setIsLoading04Inner] = React.useState(true); // 색상 입력 로딩 - 내지용
@@ -107,13 +109,18 @@ const Step05 = (props) => {
   const [paperDetail2, setPaperDetail2] = React.useState([]); // 지종 2차 정보 담기 - 경우에 따라 표지용
   const [paperDetail2Inner, setPaperDetail2Inner] = React.useState([]); // 지종 2차 정보 담기 - 내지용
 
+  const [paperDetail2More, setPaperDetail2More] = React.useState([]); // 지종 2차 지종세부 정보 담기 - 경우에 따라 표지용
+  const [paperDetail2MoreInner, setPaperDetail2MoreInner] = React.useState([]); // 지종 2차 지종세부 정보 담기 - 내지용
+
   const [paperDetail3, setPaperDetail3] = React.useState([]); // 지종 2차 세부 내용 정보 담기 - 경우에 따라 표지용
   const [paperDetail3Inner, setPaperDetail3Inner] = React.useState([]); // 지종 2차 세부 내용 정보 담기 - 내지용
 
   const [getGoal, setGetGoal] = React.useState(null); // 지종 1차 Response 골 값 및 유무 (paper_goal)
 
-  const [getWeight, setGetWeight] = React.useState(null); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 경우에 따라 표지용
-  const [getWeightInner, setGetWeightInner] = React.useState(null); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 내지용
+  const [getWeight, setGetWeight] = React.useState([]); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 경우에 따라 표지용
+  const [getWeightInner, setGetWeightInner] = React.useState([]); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 내지용
+
+  const [paperDetailGetWeight, setPaperDetailGetWeight] = React.useState([]); // 지종 2차(지종세부) Response 평량 값 및 유무 (paper_weight) - 경우에 따라 표지용
 
   const [goal, setGoal] = React.useState(''); //  골 정보 담기
 
@@ -194,6 +201,9 @@ const Step05 = (props) => {
 
   const directColorRef = React.useRef(null); // 경우에 따라 표지용
   const directColorInnerRef = React.useRef(null); // 내지용
+
+  const [paperDetailName, setPaperDetailName] = React.useState(null); // 지종세부 이름 입력
+  const [pdId, setPdId] = React.useState(null); // 지종세부 pd_id 입력
 
   //////////////////////////
   /////// FUNCTIONS ///////
@@ -396,6 +406,8 @@ const Step05 = (props) => {
   console.log('내지 pnId는 selectPnId02', paperTypeDetailInner);
   console.log('표지 지종상세는 selectPaperName', directPaperName);
   console.log('내지 지종상세는 selectPaperName02', directPaperNameInner);
+  console.log("지종 1차 : ",paperDetail);
+  console.log("지종 2차 : ",paperDetail2);
 
   // 구분 지류 정보 가져오기 (분류아이디: cate1, 1차분류아이디: ca_id, 박스타입아이디: type_id(선택) 필요)
   const getTypeDetail = () => {
@@ -486,10 +498,14 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
+        console.log("지류선택시 : ", res);
         if (res.data.result === '1') {
           setIsLoading(false);
           setPaperDetail(res.data.item);
           setIsLoadingPrev(false);
+          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
+          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
+          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
           // setPaperType(res.data.item[0].paper_name);
         } else {
           Alert.alert(res.data.message, '', [
@@ -508,6 +524,12 @@ const Step05 = (props) => {
       });
   };
 
+  console.log('====================================');
+  console.log("paperDetail :::::::::::", paperDetail);
+  console.log("paperDetail2 :::::::::::", paperDetail2);
+  console.log('====================================');
+  
+
   // 지류 해당 상세 정보 가져오기 (지류 아이디 필요 : pf_id) - 내지용
   const getPaperInnerDetail = (pf_id) => {
     setIsLoadingInner(true);
@@ -525,10 +547,14 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
+        
         if (res.data.result === '1') {
           setIsLoadingInner(false);
           setPaperDetailInner(res.data.item);
           setIsLoadingPrevInner(false);
+          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
+          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
+          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
           // setPaperType(res.data.item[0].paper_name);
         } else {
           Alert.alert(res.data.message, '', [
@@ -581,9 +607,72 @@ const Step05 = (props) => {
     setPaperTypeInner(null); // 지종 초기화
   };
 
+  // ca_id 1 또는 ca_id 4 (카달로그/브로슈어/리플렛 또는 책자/서적류) - 표지용
+  const getPaperDetailMore = (pd_id) => {
+    console.log("more :: cate1 ::::::::" ,cate1);
+    console.log("more :: ca_id ::::::::" ,ca_id);
+    console.log("more :: pf_id ::::::::" ,paper);
+    console.log("more :: pd_id ::::::::" ,pd_id);
+
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_detail_list',        
+        ca_id, // 1차 분류 아이디
+        pd_id
+      }),
+    })
+      .then((res) => {
+        console.log("1차 지종 선택시 반환값 : ", res);
+        if (res.data.result === '1') {
+          if (res.data.item[0].paper_name !== '직접입력') {
+            setPaperDetail2More(res.data.item[0].paper_name2); // 상세 지종 API 가져온 값 담기
+            setIsDirect01('n'); // 지종 1차에서 직접 입력이 아니란 값 담기
+          } else {
+            setIsDirect01('y'); // 지종 1차에서 직접 입력이란 값 담기
+            setIsLoading03(false); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+          }
+          setGetWeight(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
+          setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기
+          setGetPaperColors(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
+        
+
+          setIsLoading01(false); 
+          setIsLoading05(false); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
+
+          // if (res.data.item[0].paper_name2 !== null) {
+          //   setIsPaperType02(true); // 지종 1차에서 2차 지종이 있으면 true
+          // }
+        } else {
+          Alert.alert(res.data.message, '', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+
+  }
+
+  console.log("세부 지종 상태 :: ", paperDetail2More)
+
   // 지종 1차(pd_id) 선택 및 가져오기 (지종 아이디 필요 : pd_id)
   // 지류 선택 후에 지종 출력된 값들 중에 선택했을 시 호출될 Fn
   const getPaperDetailStep01 = (pd_id) => {
+    
+    console.log("cate1 ::::::::" ,cate1);
+    console.log("ca_id ::::::::" ,ca_id);
+    console.log("pf_id ::::::::" ,paper);
+    console.log("pd_id ::::::::" ,pd_id);
+    
     setIsLoading01(true);
     setIsLoading02(true); // 평량 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading03(true); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
@@ -603,6 +692,7 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
+        console.log("1차 지종 선택시 반환값 : ", res);
         if (res.data.result === '1') {
           if (res.data.item[0].paper_name !== '직접입력') {
             setPaperDetail2(res.data.item); // 상세 지종 API 가져온 값 담기
@@ -613,10 +703,7 @@ const Step05 = (props) => {
           }
           setGetWeight(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
           setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기
-          setGetPaperColors(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
-          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
-          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
-          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
+          setGetPaperColors(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기        
 
           setIsLoading01(false);
           setIsLoading02(false); // 평량 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
@@ -677,10 +764,6 @@ const Step05 = (props) => {
           setGetWeightInner(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
           setGetPaperColorsInner(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
 
-          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
-          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
-          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
-
           setIsLoading01Inner(false);
           setIsLoading02Inner(false); // 평량 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
           setIsLoading04Inner(false); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
@@ -691,6 +774,45 @@ const Step05 = (props) => {
           // }
         } else {
           Alert.alert(res.data.message, '헤이헤이헤이', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
+
+  // 지종세부일 경우 평량 정보 가져오기 - 경우에 따라 표지용
+  const getPaperDetailStep02More = (pd_id, name) => {
+    setIsLoading02(true);
+    setPaperColor(null);
+    setPaperColorName(null);
+    axios({
+      url: `${baseUrl}`,
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_paper_weight_list',
+        pd_id, // 지종 아이디        
+        paper_name2: name, // 세부지종명
+        in_yn: 'N', // 내지 여부
+      }),
+    })
+      .then((res) => {
+        console.log("평량 정보 : ", res);
+        if (res.data.result === '1' && res.data.count > 0) {
+          // setPaperDetail3(res.data.item);
+          setGetWeight(res.data.item); // 상세 지종 평량 API 가져온 값 담기
+          // setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기       
+          setIsLoading02(false);
+        } else {
+          Alert.alert(res.data.message, '', [
             {
               text: '확인',
             },
@@ -724,14 +846,12 @@ const Step05 = (props) => {
       }),
     })
       .then((res) => {
-        if (res.data.result === '1') {
+        if (res.data.result === '1' && res.data.count > 0) {
           setPaperDetail3(res.data.item);
           setGetWeight(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
           setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기
           setGetPaperColors(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
-          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
-          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
-          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
+       
           setIsLoading02(false);
           setIsLoading04(false);
         } else {
@@ -773,9 +893,7 @@ const Step05 = (props) => {
           setPaperDetail3Inner(res.data.item);
           setGetWeightInner(res.data.item[0].paper_weight); // 상세 지종 평량 API 가져온 값 담기
           setGetPaperColorsInner(res.data.item[0].paper_color); // 상세 지종 색상 API 가져온 값 담기
-          setGetPrtFrequency(res.data.item[0].print_frequency); // 상세 지종 인쇄도수 API 가져온 값 담기
-          setGetProofPrinting(res.data.item[0].proof_printing); // 상세 지종 인쇄교정 API 가져온 값 담기
-          setGetPrtSupervision(res.data.item[0].print_supervision); // 상세 지종 인쇄감리 API 가져온 값 담기
+        
           setIsLoading02Inner(false);
           setIsLoading04Inner(false);
         } else {
@@ -807,8 +925,6 @@ const Step05 = (props) => {
     }
   }, []);
 
-  console.log('paperDetail', paperDetail);
-  console.log('paperDetailInner', paperDetailInner);
 
   // 직접입력시 - 경우에 따라 표지용
   const setPaperTypeName02 = (v) => {
@@ -816,6 +932,7 @@ const Step05 = (props) => {
       setIsDirect(v);
       setIsLoading03(false);
     } else {
+      setPaperDetailName(v);
       setDirectPaperName(v);
     }
   };
@@ -832,9 +949,13 @@ const Step05 = (props) => {
 
   // 지종 1차 선택 - 경우에 따라 표지용
   const setPaperType01 = (v) => {
-    console.log('헤이헤이헤이01', v);
     setPaperType(v); // 지종 선택 지종 아이디
-    getPaperDetailStep01(v);
+
+    if(ca_id === '1' || ca_id === '4') {
+      getPaperDetailMore(v);      
+    } else {
+      getPaperDetailStep01(v);
+    }    
     setIsLoading01(false);
     setIsLoading02(false);
     setIsLoading03(true);
@@ -844,7 +965,6 @@ const Step05 = (props) => {
 
   // 지종 1차 선택 - 내지용
   const setPaperType01Inner = (v) => {
-    console.log('헤이헤이헤이02', v);
     setPaperTypeInner(v); // 지종 선택 지종 아이디
     getPaperDetailStep01Inner(v);
     setIsLoading01Inner(false);
@@ -855,11 +975,11 @@ const Step05 = (props) => {
   };
 
   // 지종 2차 선택 - 경우에 따라 표지용
-  const setPaperType02 = (v) => {
-    console.log('2차 선책 넘어온 값 v', v);
-    setPaperTypeDetail(v);
-    getPaperDetailStep02(v);
+  const setPaperType02 = (pd_id, pn_id, name) => {
+    setPaperTypeDetail({pd_id: pd_id, pn_id: pn_id, name: name});
+    getPaperDetailStep02More(pd_id, name);
     setIsLoading03(true);
+    setIsLoading04(true);
     setIsDirect01('n'); // 지종 1차 선택시 직접 유무 초기화
     setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화
   };
@@ -872,6 +992,30 @@ const Step05 = (props) => {
     setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
     setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화
   };
+
+  // 색상 정보 가져오기 API
+  const getColorInfoHandler = (payload) => {
+    console.log('====================================');
+    console.log("pdId", pdId);
+    console.log("paperDetailName", paperDetailName);
+    console.log("payload", payload);
+    console.log('====================================');
+    BoxTypeAPI.getColorInfo(pdId, paperDetailName, payload)
+    .then(res => {
+      console.log("결과:",res);
+      if(res.data.result === '1' && res.data.count > 0) {
+        setIsLoading04(false);
+        setGetPaperColors(res.data.item);
+      }
+    })
+    .catch(err => {
+      Alert.alert(err, '관리자에게 문의하세요.', [
+        {
+          text: '확인',
+        }
+      ])
+    })
+  }
 
   // 평량 넣기 - 경우에 따라 표지용
   const setWeightChoise = (v) => {
@@ -915,7 +1059,9 @@ const Step05 = (props) => {
     setPaperColorInner(name);
   };
 
-  console.log('paperTypeDetail', paperTypeDetail);
+  console.log('paperDetail2More :::::: ', paperDetail2More);
+  console.log('getProofPrinting :::::: ', getProofPrinting);
+  console.log('getWeight :::::: ', getWeight);
 
   return (
     <>
@@ -1008,17 +1154,7 @@ const Step05 = (props) => {
                         itemStyle={{
                           justifyContent: 'flex-start',
                           paddingVertical: 10,
-                        }}
-                        // onOpen={() => {
-                        //   setDirectPaperName(null);
-                        //   setWeight(null);
-                        //   setDirectWeight(null);
-                        //   setDirectGoal(null);
-                        //   setIsLoading02(true);
-                        //   setIsLoading03(true);
-                        //   setIsLoading04(true);
-                        //   setIsLoading05(true);
-                        // }}
+                        }}                     
                         labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
                         dropDownStyle={{backgroundColor: '#fff'}}
                         onChangeItem={(item) => {
@@ -1044,39 +1180,6 @@ const Step05 = (props) => {
                       />
                     </View>
                   ) : null}
-
-                  {/* 라디오 타입 */}
-                  {/* {type_details[0].board_tk
-                    ? type_details[0].board_tk.map((t) => (
-                        <TouchableOpacity
-                          key={t.pf_id}
-                          activeOpacity={1}
-                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                          onPress={() => setPaperChoise(t)}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            marginRight: 20,
-                            marginBottom: 20,
-                            width: '100%',
-                          }}>
-                          <Image
-                            source={
-                              paper === t
-                                ? require('../../src/assets/radio_on.png')
-                                : require('../../src/assets/radio_off.png')
-                            }
-                            resizeMode="contain"
-                            style={{width: 20, height: 20, marginRight: 5}}
-                          />
-                          <Text style={[styles.normalText, {fontSize: 14}]}>
-                            {t}
-                          </Text>
-                        </TouchableOpacity>
-                      ))
-                    : null} */}
-                  {/* // 라디오 타입 */}
                 </View>
               </View>
               {/* // 지류 선택  */}
@@ -1266,8 +1369,8 @@ const Step05 = (props) => {
 
                 {/* // 지종 1차 */}
 
-                {/* 지종 2차 */}
-                {!isLoading01 && paperDetail2 && isDirect01 !== 'y'
+                {/* 지종 2차 ca_id 1 or ca_id 4 가 아닐 때*/}
+                {!isLoading01 && paperDetail2 && isDirect01 !== 'y' && (ca_id !== '1' || ca_id !== '4')
                   ? paperDetail2.map((pd, idx) =>
                       pd.paper_name2 ? (
                         <View style={{marginBottom: 20}}>
@@ -1328,7 +1431,72 @@ const Step05 = (props) => {
                       ) : null,
                     )
                   : null}
-                {/* // 지종 2차 */}
+                {/* // 지종 2차 ca_id 1 or ca_id 4 가 아닐 때 */}
+
+                {/* 지종 2차 ca_id 1 or ca_id 4 일 때*/}
+                {!isLoading01 && paperDetail2More && isDirect01 !== 'y' && (ca_id === '1' || ca_id === '4')
+                  ?  (
+                        <View style={{marginBottom: 20}}>
+                          <View                            
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginBottom: 20,
+                            }}>
+                            <Text
+                              style={[styles.profileTitle, {marginRight: 5}]}>
+                              지종 세부
+                            </Text>
+                            {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                          </View>       
+                          {console.log("dd",paperDetail2More)}                   
+                          {paperDetail2More.map((v, idx) => (
+                            <TouchableOpacity
+                              key={`${v.pn_id}${idx}`}
+                              activeOpacity={1}
+                              hitSlop={{
+                                top: 10,
+                                bottom: 10,
+                                left: 10,
+                                right: 10,
+                              }}
+                              onPress={() => {
+                                setPaperType02(v.pd_id, v.pn_id, v.name);
+                                setPaperTypeName02(v.name);
+                                setPdId(v.pd_id);
+                                setIsLoading02(true);
+                                setPaperError(false);
+                              }}
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                marginRight: 20,
+                                marginBottom: 20,
+                                width: '100%',
+                              }}>
+                              <Image
+                                source={
+                                  paperTypeDetail.pn_id === v.pn_id
+                                    ? require('../../src/assets/radio_on.png')
+                                    : require('../../src/assets/radio_off.png')
+                                }
+                                resizeMode="contain"
+                                style={{width: 20, height: 20, marginRight: 5}}
+                              />
+                              <Text style={[styles.normalText, {fontSize: 14}]}>
+                                {v.name}
+                              </Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+                      ) : null
+                    
+                  }
+                {/* // 지종 2차 ca_id 1 or ca_id 4 일 때 */}
+
+
               </View>
               {paperError ? (
                 <Text
@@ -1377,7 +1545,7 @@ const Step05 = (props) => {
                 </Text>
               ) : null}
               {/* 평량 선택 또는 입력 */}
-              {!isLoading02 && getWeight !== null && ca_id !== '10' ? (
+              {!isLoading02 && getWeight !== null && getWeight.length > 0 && ca_id !== '10' ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1413,9 +1581,9 @@ const Step05 = (props) => {
 
               {/* paperDetail2 && paperDetail2[0].paper_name === '직접입력' */}
 
-              {!isLoading03 &&
+              {!isLoading03 && 
               (isDirect === '직접입력' || isDirect01 === 'y') &&
-              getWeight === null &&
+              getWeight === null  && getWeight.length > 0 &&
               ca_id !== '10' ? (
                 <TextInput
                   value={directWeight}
@@ -1455,13 +1623,11 @@ const Step05 = (props) => {
                 getWeight.length > 0 &&
                 ca_id !== '10' && (
                   <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
+                    style={{                      
                       marginBottom: 20,
                     }}>
                     {getWeight.map((v, idx) => (
+                      // <Text key={v}>{v}</Text>
                       <TouchableOpacity
                         key={`${v}${idx}`}
                         activeOpacity={1}
@@ -1474,6 +1640,7 @@ const Step05 = (props) => {
                         onPress={() => {
                           setWeightError(false);
                           setWeightChoise(v);
+                          getColorInfoHandler(v);
                         }}
                         style={{
                           flexDirection: 'row',
@@ -2155,7 +2322,7 @@ const Step05 = (props) => {
                 {!isLoading03Inner &&
                 (isDirectInner === '직접입력' || isDirect01Inner === 'y') &&
                 getWeightInner === null &&
-                ca_id !== '10' ? (
+                (ca_id !== '10' || ca_id !== '1' || ca_id !== '4') ? (
                   <TextInput
                     value={directWeightInner}
                     placeholder="평량을 직접 입력해주세요."
