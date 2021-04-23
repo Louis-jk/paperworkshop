@@ -23,4 +23,15 @@ export default {
       }),
     });
   },
+  getColorInfo(pd_id,paper_name2,paper_weight) {
+    return Send({
+      method: 'post', 
+      data: qs.stringify({
+        method: 'proc_paper_color_list',
+        pd_id,
+        paper_name2,
+        paper_weight
+      })
+    })
+  }
 };
