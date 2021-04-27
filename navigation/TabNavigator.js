@@ -130,7 +130,7 @@ export const BottomTabNavigator = () => {
 
 const TabNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>      
       <Stack.Screen name="Check" component={LoginStackNavigator} />
       <Stack.Screen name="Login" component={LoginStackNavigator} />
       <Stack.Screen name="EntryBefore" component={LoginStackNavigator} />
@@ -154,6 +154,7 @@ const TabNavigator = () => {
       <Stack.Screen name="OrderStep03" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep04" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep05" component={OrderStackNavigator} />
+      <Stack.Screen name="OrderStep05After" component={OrderStackNavigator} />
       <Stack.Screen name="OrderStep06" component={OrderStackNavigator} />
       <Stack.Screen name="easyOrderComplete" component={OrderStackNavigator} />
       <Stack.Screen name="CancelOrder" component={MyOrderStackNavigator} />

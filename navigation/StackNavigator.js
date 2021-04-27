@@ -112,6 +112,7 @@ import OrderStep02Screen from '../Screens/Order/Step02';
 import OrderStep03Screen from '../Screens/Order/Step03';
 import OrderStep04Screen from '../Screens/Order/Step04';
 import OrderStep05Screen from '../Screens/Order/Step05';
+import OrderStep05AfterScreen from '../Screens/Order/Step05After';
 import OrderStep06Screen from '../Screens/Order/Step06';
 // 비교 견적 간단 견적 완료
 import easyOrderCompleteScreen from '../Screens/Order/easyOrderComplete';
@@ -347,6 +348,7 @@ export const OrderStackNavigator = () => {
       <Stack.Screen name="OrderStep03" component={OrderStep03Screen} />
       <Stack.Screen name="OrderStep04" component={OrderStep04Screen} />
       <Stack.Screen name="OrderStep05" component={OrderStep05Screen} />
+      <Stack.Screen name="OrderStep05After" component={OrderStep05AfterScreen} />
       <Stack.Screen name="OrderStep06" component={OrderStep06Screen} />
       <Stack.Screen
         name="easyOrderComplete"

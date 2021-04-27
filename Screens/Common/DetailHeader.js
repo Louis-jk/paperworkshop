@@ -98,6 +98,9 @@ const DetailHeader = (props) => {
       case 'OrderStep05':
         setTitle('세부 견적 작성');
         break;
+      case 'OrderStep05After':
+        setTitle('세부 견적 작성');
+        break;
       case 'OrderStep06':
         setTitle('세부 견적 작성');
         break;
