@@ -74,6 +74,7 @@ const SET_FILE02_SIZE = 'SET_FILE02_SIZE';
 const SET_WEIGHT2 = 'SET_WEIGHT2';
 const SET_FREQUENCY2 = 'SET_FREQUENCY2';
 const SET_PRINTING2 = 'SET_PRINTING2';
+const SET_PRINT_SUPERVISION2 = 'SET_PRINT_SUPERVISION2';
 const SET_PARK_PROCESSING2 = 'SET_PARK_PROCESSING2';
 const SET_PRESS_DESIGN2 = 'SET_PRESS_DESIGN2';
 const SET_PARTIAL_SILK2 = 'SET_PARTIAL_SILK2';
@@ -190,6 +191,10 @@ export const setUserFile02Size = (payload) => ({
 export const setUserWeight2 = (payload) => ({type: SET_WEIGHT2, payload});
 export const setUserFrequency2 = (payload) => ({type: SET_FREQUENCY2, payload});
 export const setUserPrinting2 = (payload) => ({type: SET_PRINTING2, payload});
+export const setUserPrintSup2 = (payload) => ({
+  type: SET_PRINT_SUPERVISION2,
+  payload,
+});
 
 /////////// 후가공
 export const setUserParkProc = (payload) => ({
@@ -285,6 +290,7 @@ const initialize = {
   proof_printing: '', // 인쇄교정
   proof_printing2: '', // 인쇄교정(내지)
   print_supervision: '', // 인쇄감리
+  print_supervision2: '', // 인쇄감리(내지)
   park_processing: '', // 박가공
   park_processing2: '', // 박가공
   press_design: '', // 형압
@@ -664,6 +670,11 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         proof_printing2: action.payload,
+      };
+    case SET_PRINT_SUPERVISION2:
+      return {
+        ...state,
+        print_supervision2: action.payload,
       };
     case SET_PARK_PROCESSING2:
       return {
