@@ -49,13 +49,14 @@ export default {
     })
   },
   // 지종 가져오기(1차)
-  getPaperDetailInfo(ca_id, pd_id) {
+  getPaperDetailInfo(ca_id, pd_id, in_yn) {
     return Send({
       method: 'post', 
       data: qs.stringify({
         method: 'proc_paper_detail_list',
         ca_id,
-        pd_id
+        pd_id,
+        in_yn
       })
     })
   },
@@ -74,14 +75,15 @@ export default {
     })
   },
   // 색상 정보 가져오기
-  getColorInfo(pd_id, paper_name2, paper_weight) {
+  getColorInfo(pd_id, paper_name2, paper_weight, in_yn) {
     return Send({
       method: 'post', 
       data: qs.stringify({
         method: 'proc_paper_color_list',
         pd_id,
         paper_name2,
-        paper_weight
+        paper_weight,
+        in_yn
       })
     })
   },
