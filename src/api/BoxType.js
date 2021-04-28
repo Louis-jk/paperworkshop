@@ -48,7 +48,7 @@ export default {
       })
     })
   },
-  // 지종 가져오기(1차)
+  // 지종 세부 가져오기
   getPaperDetailInfo(ca_id, pd_id, in_yn) {
     return Send({
       method: 'post', 
@@ -93,6 +93,17 @@ export default {
       method: 'post', 
       data: qs.stringify({
         method: 'proc_check_print',
+        cate1,
+        ca_id
+      })
+    })
+  },
+   // 후가공
+   getPostProcess(cate1, ca_id) {
+    return Send({
+      method: 'post', 
+      data: qs.stringify({
+        method: 'proc_postprocess_detail',
         cate1,
         ca_id
       })
