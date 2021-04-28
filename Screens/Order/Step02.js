@@ -100,6 +100,9 @@ const Step02 = (props) => {
     const currentDate = selectedDate || date;
     setShow01(Platform.OS === 'ios');
 
+    const nowDate = new Date();
+    let weekAgo = nowDate.setDate(nowDate.getDate() + 7);
+
     if (selectedDate < date) {
       Alert.alert(
         '오늘 이전 날짜는 선택이 불가능 합니다.',
@@ -110,8 +113,21 @@ const Step02 = (props) => {
           },
         ],
       );
-      setEstimateDate(date);
-    } else {
+      setDeliveryDate(date);
+    } 
+    else if (selectedDate < weekAgo) {
+      Alert.alert(
+        '납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
+      setDeliveryDate(date);
+    } 
+    else {
       setDeliveryDate(currentDate);
     }
   };
@@ -271,22 +287,38 @@ const Step02 = (props) => {
 
   // 다음 스텝
   const nextStep = (title, name, mobile) => {
-    dispatch(setUserTitle(title));
-    dispatch(setUserName(name));
-    dispatch(setUserMobile(mobile));
-    dispatch(setUserCompany(company));
-    dispatch(setUserDesign(designOrder));
-    dispatch(setUserLocation(location));
-    dispatch(setUserDelivery(moment(deliveryDate).format('YYYY-MM-DD')));
-    dispatch(setUserEstimate(moment(estimateDate).format('YYYY-MM-DD')));
-    dispatch(setUserFileUrl(fileUrlCurrent));
-    dispatch(setUserFileName(fileName));
-    dispatch(setUserFileType(fileTypeCurrent));
-    dispatch(setUserFileSize(fileSizeCurrent));
-    dispatch(setUserMemo(memo));
-    navigation.navigate('OrderStep03', {
-      screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-    });
+
+    const nowDate = new Date();
+    let weekAgo = nowDate.setDate(nowDate.getDate() + 7);
+
+    if(deliveryDate < weekAgo ) {
+      Alert.alert(
+        '납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
+    } else {
+      dispatch(setUserTitle(title));
+      dispatch(setUserName(name));
+      dispatch(setUserMobile(mobile));
+      dispatch(setUserCompany(company));
+      dispatch(setUserDesign(designOrder));
+      dispatch(setUserLocation(location));
+      dispatch(setUserDelivery(moment(deliveryDate).format('YYYY-MM-DD')));
+      dispatch(setUserEstimate(moment(estimateDate).format('YYYY-MM-DD')));
+      dispatch(setUserFileUrl(fileUrlCurrent));
+      dispatch(setUserFileName(fileName));
+      dispatch(setUserFileType(fileTypeCurrent));
+      dispatch(setUserFileSize(fileSizeCurrent));
+      dispatch(setUserMemo(memo));
+      navigation.navigate('OrderStep03', {
+        screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+      });
+    }   
   };
 
   // 기타인쇄 견적신청
