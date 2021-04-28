@@ -16,10 +16,10 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 
 import DetailHeader from '../Common/DetailHeader';
-import Footer from '../Common/Footer';
 import Modal from './detailOrderModal';
 import InfoModal from '../Common/infoModal02';
 import OrderAPI from '../../src/api/OrderAPI';
+
 
 import {
   setUserParkProc,
@@ -32,6 +32,9 @@ import {
   setUserCoating2,
 } from '../../Modules/OrderReducer';
 
+import BoxTypeAPI from '../../src/api/BoxType';
+
+
 const Step06 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
@@ -39,7 +42,7 @@ const Step06 = (props) => {
 
   const dispatch = useDispatch();
 
-  const {type_details} = useSelector((state) => state.OrderHandlerReducer);
+
   const {
     cate1,
     ca_id,
@@ -104,9 +107,58 @@ const Step06 = (props) => {
     proof_printing,
     proof_printing2,
     print_supervision,
+    print_supervision2,
     outside,
     status,
   } = useSelector((state) => state.OrderReducer);
+
+
+  const [getFoil, setGetFoil] = React.useState([]); // 박가공 정보
+  const [getPress, setGetPress] = React.useState([]); // 형압 정보
+  const [getSilk, setGetSilk] = React.useState([]); // 실크 정보
+  const [getLaminate, setGetLaminate] = React.useState([]); // 코팅 정보
+
+  const [getFoil2, setGetFoil2] = React.useState([]); // 박가공 정보 - 내지용
+  const [getPress2, setGetPress2] = React.useState([]); // 형압 정보 - 내지용
+  const [getSilk2, setGetSilk2] = React.useState([]); // 실크 정보 - 내지용
+  const [getLaminate2, setGetLaminate2] = React.useState([]); // 코팅 정보 - 내지용
+
+
+  const postProcessAPIHandler = () => {
+   
+    BoxTypeAPI.getPostProcess(cate1, ca_id)
+      .then(res => {
+        if(res.data.result === '1' && res.data.count > 0) {
+          setGetFoil(res.data.item[0].park_processing);
+          setGetPress(res.data.item[0].press_design);
+          setGetSilk(res.data.item[0].partial_silk);
+          setGetLaminate(res.data.item[0].coating);
+          if(cate1 === '0' && (ca_id ==='1' || ca_id === '4')) {
+            setGetFoil2(res.data.item[0].park_processing2);
+            setGetPress2(res.data.item[0].press_design2);
+            setGetSilk2(res.data.item[0].partial_silk2);
+            setGetLaminate2(res.data.item[0].coating2);
+          }
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요.', [
+            {
+              text: '확인'
+            }
+          ])  
+        }
+      })
+      .catch(err => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인'
+          }
+        ])
+      });
+  }
+
+  React.useEffect(() => {
+    postProcessAPIHandler();
+  },[cate1, ca_id])
 
   //  박가공 유무
   const [foil, setFoil] = React.useState('Y');
@@ -179,6 +231,9 @@ const Step06 = (props) => {
   const toggleModal = () => {
     if (ca_id !== '10' && laminate === '') {
       setLaminateError(true);
+    } 
+    else if (ca_id !== '10' && (ca_id === '1' || ca_id === '4') && laminate02 === '') {
+      setLaminateError02(true);
     } else {
       setModalVisible(!isModalVisible);
     }
@@ -274,6 +329,7 @@ const Step06 = (props) => {
     frmdata.append('proof_printing', proof_printing);
     frmdata.append('proof_printing2', proof_printing2);
     frmdata.append('print_supervision', print_supervision);
+    frmdata.append('print_supervision2', print_supervision2);
     frmdata.append('park_processing', foil);
     frmdata.append('press_design', press);
     frmdata.append('partial_silk', silk);
@@ -377,8 +433,8 @@ const Step06 = (props) => {
 
           <View style={styles.wrap}>
             {/* 박가공  */}
-            {type_details[0].park_processing &&
-              type_details[0].park_processing.length > 1 && (
+            {getFoil &&
+              getFoil.length > 1 && (
                 <View style={{marginBottom: 25}}>
                   {cate1 === '0' && (ca_id === '1' || ca_id === '4') ? (
                     <Text
@@ -409,7 +465,7 @@ const Step06 = (props) => {
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {type_details[0].park_processing.map((p, idx) => (
+                    {getFoil.map((p, idx) => (
                       <TouchableOpacity
                         key={idx}
                         activeOpacity={1}
@@ -441,8 +497,8 @@ const Step06 = (props) => {
             {/* // 박가공  */}
 
             {/* 형압  */}
-            {type_details[0].press_design &&
-              type_details[0].press_design.length > 1 && (
+            {getPress &&
+              getPress.length > 1 && (
                 <View style={{marginBottom: 25}}>
                   <View
                     style={{
@@ -462,7 +518,7 @@ const Step06 = (props) => {
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {type_details[0].press_design.map((p, idx) => (
+                    {getPress.map((p, idx) => (
                       <TouchableOpacity
                         key={idx}
                         activeOpacity={1}
@@ -494,8 +550,8 @@ const Step06 = (props) => {
             {/* // 형압  */}
 
             {/* 부분 실크  */}
-            {type_details[0].partial_silk &&
-              type_details[0].partial_silk.length > 1 && (
+            {getSilk &&
+              getSilk.length > 1 && (
                 <View style={{marginBottom: 25}}>
                   <View
                     style={{
@@ -515,7 +571,7 @@ const Step06 = (props) => {
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {type_details[0].partial_silk.map((p, idx) => (
+                    {getSilk.map((p, idx) => (
                       <TouchableOpacity
                         key={idx}
                         activeOpacity={1}
@@ -547,7 +603,7 @@ const Step06 = (props) => {
             {/* // 부분 실크  */}
 
             {/* 코팅  */}
-            {type_details[0].coating && type_details[0].coating.length > 0 ? (
+            {getLaminate && getLaminate.length > 0 ? (
               <View style={{marginBottom: 25}}>
                 <View
                   style={{
@@ -568,7 +624,7 @@ const Step06 = (props) => {
                     alignItems: 'center',
                     flexWrap: 'wrap',
                   }}>
-                  {type_details[0].coating.map((c, idx) => (
+                  {getLaminate.map((c, idx) => (
                     <TouchableOpacity
                       key={idx}
                       activeOpacity={1}
@@ -628,8 +684,8 @@ const Step06 = (props) => {
                 {'<내지>'}
               </Text>
               {/* 박가공  */}
-              {type_details[0].park_processing &&
-                type_details[0].park_processing.length > 1 && (
+              {getFoil2 &&
+                getFoil2.length > 1 && (
                   <View style={{marginBottom: 25}}>
                     <View
                       style={{
@@ -649,7 +705,7 @@ const Step06 = (props) => {
                         justifyContent: 'flex-start',
                         alignItems: 'center',
                       }}>
-                      {type_details[0].park_processing.map((p, idx) => (
+                      {getFoil2.map((p, idx) => (
                         <TouchableOpacity
                           key={idx}
                           activeOpacity={1}
@@ -681,8 +737,8 @@ const Step06 = (props) => {
               {/* // 박가공  */}
 
               {/* 형압  */}
-              {type_details[0].press_design &&
-                type_details[0].press_design.length > 1 && (
+              {getPress2 &&
+                getPress2.length > 1 && (
                   <View style={{marginBottom: 25}}>
                     <View
                       style={{
@@ -702,7 +758,7 @@ const Step06 = (props) => {
                         justifyContent: 'flex-start',
                         alignItems: 'center',
                       }}>
-                      {type_details[0].press_design.map((p, idx) => (
+                      {getPress2.map((p, idx) => (
                         <TouchableOpacity
                           key={idx}
                           activeOpacity={1}
@@ -734,8 +790,8 @@ const Step06 = (props) => {
               {/* // 형압  */}
 
               {/* 부분 실크  */}
-              {type_details[0].partial_silk &&
-                type_details[0].partial_silk.length > 1 && (
+              {getSilk2 &&
+                getSilk2.length > 1 && (
                   <View style={{marginBottom: 25}}>
                     <View
                       style={{
@@ -755,7 +811,7 @@ const Step06 = (props) => {
                         justifyContent: 'flex-start',
                         alignItems: 'center',
                       }}>
-                      {type_details[0].partial_silk.map((p, idx) => (
+                      {getSilk2.map((p, idx) => (
                         <TouchableOpacity
                           key={idx}
                           activeOpacity={1}
@@ -787,7 +843,7 @@ const Step06 = (props) => {
               {/* // 부분 실크  */}
 
               {/* 코팅  */}
-              {type_details[0].coating && type_details[0].coating.length > 0 ? (
+              {getLaminate2 && getLaminate2.length > 0 ? (
                 <View style={{marginBottom: 25}}>
                   <View
                     style={{
@@ -809,7 +865,7 @@ const Step06 = (props) => {
                       alignItems: 'center',
                       flexWrap: 'wrap',
                     }}>
-                    {type_details[0].coating.map((c, idx) => (
+                    {getLaminate2.map((c, idx) => (
                       <TouchableOpacity
                         key={idx}
                         activeOpacity={1}
