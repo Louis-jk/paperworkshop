@@ -582,13 +582,7 @@ const Register = (props) => {
 
                 {/* 비밀번호  */}
                 <View
-                  style={{
-                    marginBottom:
-                      formikProps.touched.register_pw &&
-                      formikProps.errors.register_pw
-                        ? 20
-                        : 0,
-                  }}>
+                  style={{marginBottom: 20}}>
                   <Text style={[styles.profileTitle, {marginBottom: 10}]}>
                     비밀번호
                   </Text>
