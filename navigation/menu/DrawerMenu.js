@@ -540,6 +540,19 @@ const DrawerMenu = (props) => {
                 onPress={() =>
                   navigation.navigate('Root', {
                     screen: 'Partners',
+                    params: {screen: 'Partners'},
+                  })
+                }>
+                <Text style={[styles.categoryText, styles.normalText]}>
+                  파트너스 전체
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.subCategory}
+                activeOpacity={0.8}
+                onPress={() =>
+                  navigation.navigate('Root', {
+                    screen: 'Partners',
                     params: {screen: 'Partners01'},
                   })
                 }>
