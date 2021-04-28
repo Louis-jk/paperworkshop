@@ -95,6 +95,7 @@ const Edit = (props) => {
 
   // 모바일 번호 임시 저장
   const [mobileNo, setMobileNo] = React.useState(null);
+  const mobileRef = React.useRef(null);
 
   // 모바일 인증 아이디 저장 및 버튼 색상 변화 상태
   const [mobileConfirmId, setMobileConfirmId] = React.useState(null);
@@ -269,7 +270,7 @@ const Edit = (props) => {
   frmdata.append('method', 'proc_modify_member');
   frmdata.append('mb_id', mb_id);
   frmdata.append('mb_password', pwd ? pwd : '');
-  frmdata.append('mb_hp', mobileNo ? mobileNo : mb_hp);
+  frmdata.append('mb_hp', mobileNo);
   frmdata.append('mb_1', confirm);
   frmdata.append('mb_email', email ? email : mb_email);
   frmdata.append('mb_2', company ? company : mb_2 ? mb_2 : '');
@@ -304,49 +305,59 @@ const Edit = (props) => {
   }, [navigation]);
 
   const onSubmit = () => {
-    axios({
-      method: 'post',
-      url: `${baseUrl}`,
-      data: frmdata,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then((res) => {
-        if (res.data.result === '1') {
-          Alert.alert(
-            '수정되었습니다.',
-            '확인을 누르시면 메인으로 이동합니다.',
-            [
-              {
-                text: '확인',
-                onPress: () =>
-                  beforeEditComplete(
-                    res.data.item.mb_id,
-                    res.data.item.mb_name,
-                    res.data.item.mb_hp,
-                    res.data.item.mb_1,
-                    res.data.item.mb_email,
-                    res.data.item.mb_2,
-                    // res.data.item.mb_img,
-                  ),
-              },
-              {
-                text: '취소',
-              },
-            ],
-          );
-        } else {
-          Alert.alert(res.data.message);
+
+    if(!isMobileConfimed) {
+      Alert.alert('휴대폰 번호를 인증해주세요.','', [
+        {
+          text: '확인',
+          onPress: () => mobileRef.current.focus()
         }
+      ])
+    } else {
+      axios({
+        method: 'post',
+        url: `${baseUrl}`,
+        data: frmdata,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
-      .catch((err) => {
-        Alert.alert(err, '관리자에게 문의하세요', [
-          {
-            text: '확인',
-          },
-        ]);
-      });
+        .then((res) => {
+          if (res.data.result === '1') {
+            Alert.alert(
+              '수정되었습니다.',
+              '확인을 누르시면 메인으로 이동합니다.',
+              [
+                {
+                  text: '확인',
+                  onPress: () =>
+                    beforeEditComplete(
+                      res.data.item.mb_id,
+                      res.data.item.mb_name,
+                      res.data.item.mb_hp,
+                      res.data.item.mb_1,
+                      res.data.item.mb_email,
+                      res.data.item.mb_2,
+                      // res.data.item.mb_img,
+                    ),
+                },
+                {
+                  text: '취소',
+                },
+              ],
+            );
+          } else {
+            Alert.alert(res.data.message);
+          }
+        })
+        .catch((err) => {
+          Alert.alert(err, '관리자에게 문의하세요', [
+            {
+              text: '확인',
+            },
+          ]);
+        });
+    }    
   };
 
   return (
@@ -651,6 +662,7 @@ const Edit = (props) => {
                 marginBottom: 5,
               }}>
               <TextInput
+                ref={mobileRef}
                 value={mobileNo}
                 placeholder="휴대전화번호를 입력해주세요."
                 placeholderTextColor="#A2A2A2"
@@ -747,6 +759,14 @@ const Edit = (props) => {
                 </Text>
               </TouchableOpacity>
             </View>
+            <Text
+                style={{
+                  fontFamily: 'SCDream4',
+                  fontSize: 12,
+                  color: '#366DE5',
+                }}>
+                ※ 휴대폰 번호는 반드시 입력하여 인증받으셔야 합니다.
+              </Text>
           </View>
           {/* // 휴대폰 번호 변경 */}
 
