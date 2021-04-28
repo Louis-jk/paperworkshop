@@ -4,6 +4,15 @@ import {useSelector, useDispatch} from 'react-redux';
 import DetailHeader from '../Common/DetailHeader';
 import BoxTypeAPI from '../../src/api/BoxType';
 
+import {
+    setUserFrequency,
+    setUserPrinting,
+    setUserPrintSup,
+    setUserFrequency2,
+    setUserPrinting2,
+    setUserPrintSup2,
+  } from '../../Modules/OrderReducer';
+
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const Step05After = (props) => {
@@ -15,6 +24,7 @@ const Step05After = (props) => {
     console.log("props", props);
 
     const {cate1, ca_id} = useSelector((state) => state.OrderReducer);
+    const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -38,7 +48,7 @@ const Step05After = (props) => {
     const [printError, setPrintError] = React.useState(false); // 인쇄도수 선택 안했을 경우 - 경우에 따라 표지용
     const [printInnerError, setPrintInnerError] = React.useState(false); // 인쇄도수 선택 안했을 경우 - 내지용
 
-    const dispatch = useDispatch();
+    
 
     /*
     에러 정의
@@ -87,12 +97,19 @@ const Step05After = (props) => {
 
 
     const nextBtn = () => {
-
+        
         if(printColor === null || printColor === '') {
             setPrintColorError(true);
         } else if(cate1 === '0' && (ca_id === '1' || ca_id === '4') && (innerPrintColor === null || innerPrintColor === '')) {
             setInnerPrintColorError(true);
         } else {
+            dispatch(setUserFrequency(printColor));
+            dispatch(setUserFrequency2(innerPrintColor));
+            dispatch(setUserPrinting(correction));
+            dispatch(setUserPrinting2(innerCorrection));
+            dispatch(setUserPrintSup(inspection));
+            dispatch(setUserPrintSup2(innerInspection));
+
             navigation.navigate('OrderStep06', {
                 screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
               });
