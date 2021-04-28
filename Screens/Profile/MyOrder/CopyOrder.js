@@ -28,6 +28,8 @@ const CopyOrder = (props) => {
   const pe_id = props.route.params.pe_id;
   const cate1 = props.route.params.cate1;
 
+  console.log("pe_id?", pe_id);
+
   const [details, setDetails] = React.useState([]);
 
   // 기타인쇄 견적이 아닌 "일반인쇄", "패키지 인쇄의 경우"
@@ -272,6 +274,58 @@ const CopyOrder = (props) => {
     showMode('time');
   };
 
+  const estimateCopyHandler = () => {
+    OrderAPI.estimateCopy(pe_id).then(res => {
+      if(res.data.result === '1') {
+        sendEstimateCopyAPIHandler();
+      } else {
+        Alert.alert(res.data.message, '관리자에게 문의하세요.', [
+          {
+            text: '확인'
+          }
+        ])
+      }
+    }).catch(err => {
+      Alert.alert(err, '관리자에게 문의하세요.', [
+        {
+          text: '확인'
+        }
+      ])
+    })
+  }
+
+  const sendEstimateCopyAPIHandler = () => {
+    let arrDate = moment(arriveDate).format('YYYY-MM-DD');
+    let dDate = moment(dDayDate).format('YYYY-MM-DD');
+
+    OrderAPI.sendEstimateCopy(pe_id, arrDate, dDate).then(res => {
+      console.log("어찌됐노", res);
+      if(res.data.result === '1') {
+        Alert.alert(res.data.message, '나의 견적 페이지로 이동합니다.', [
+          {
+            text: '확인',
+            onPress: () => navigation.navigate('MyOrder', {screen: 'MyOrder'})
+          }
+        ])
+      } else {
+        Alert.alert(res.data.message, '관리자에게 문의하세요.', [
+          {
+            text: '확인'
+          }
+        ])
+      }
+    }).catch(err => {
+      Alert.alert(err, '관리자에게 문의하세요.', [
+        {
+          text: '확인'
+        }
+      ])
+    })
+  }
+
+  console.log("arriveDate", arriveDate);
+  console.log("dDayDate", dDayDate);
+
   return (
     <>
       {isLoading && (
@@ -393,10 +447,10 @@ const CopyOrder = (props) => {
                   marginBottom: 10,
                 }}>
                 <Text style={styles.profileTitle}>제목</Text>
-                <Text style={[styles.profileRequired, {marginLeft: 5}]}>
+                {/* <Text style={[styles.profileRequired, {marginLeft: 5}]}>
                   (필수)
-                </Text>
-              </View>
+                </Text> */}
+              </View>              
               <TextInput
                 value={title}
                 placeholder="제목을 입력해주세요."
@@ -413,6 +467,7 @@ const CopyOrder = (props) => {
                 ]}
                 autoCapitalize="none"
                 onChangeText={(text) => setTitle(text)}
+                editable={false}
               />
             </View>
             {/* // 제목 */}
@@ -577,8 +632,8 @@ const CopyOrder = (props) => {
                   <Image
                     source={
                       collapseArrow01
-                        ? require('../../../src/assets/collapse_up.png')
-                        : require('../../../src/assets/collapse_down.png')
+                        ? require('../../../src/assets/collapse_down.png')
+                        : require('../../../src/assets/collapse_up.png')
                     }
                     resizeMode="contain"
                     style={{width: 30, height: 20}}
@@ -636,8 +691,8 @@ const CopyOrder = (props) => {
                   <Image
                     source={
                       collapseArrow02
-                        ? require('../../../src/assets/collapse_up.png')
-                        : require('../../../src/assets/collapse_down.png')
+                        ? require('../../../src/assets/collapse_down.png')
+                        : require('../../../src/assets/collapse_up.png')
                     }
                     resizeMode="contain"
                     style={{width: 30, height: 20}}
@@ -861,8 +916,8 @@ const CopyOrder = (props) => {
                   <Image
                     source={
                       collapseArrow03
-                        ? require('../../../src/assets/collapse_up.png')
-                        : require('../../../src/assets/collapse_down.png')
+                        ? require('../../../src/assets/collapse_down.png')
+                        : require('../../../src/assets/collapse_up.png')
                     }
                     resizeMode="contain"
                     style={{width: 30, height: 20}}
@@ -968,8 +1023,8 @@ const CopyOrder = (props) => {
                   <Image
                     source={
                       collapseArrow04
-                        ? require('../../../src/assets/collapse_up.png')
-                        : require('../../../src/assets/collapse_down.png')
+                        ? require('../../../src/assets/collapse_down.png')
+                        : require('../../../src/assets/collapse_up.png')
                     }
                     resizeMode="contain"
                     style={{width: 30, height: 20}}
@@ -1032,8 +1087,8 @@ const CopyOrder = (props) => {
                   <Image
                     source={
                       collapseArrow05
-                        ? require('../../../src/assets/collapse_up.png')
-                        : require('../../../src/assets/collapse_down.png')
+                        ? require('../../../src/assets/collapse_down.png')
+                        : require('../../../src/assets/collapse_up.png')
                     }
                     resizeMode="contain"
                     style={{width: 30, height: 20}}
@@ -1083,7 +1138,7 @@ const CopyOrder = (props) => {
 
             <View style={{marginVertical: 10}} />
             <TouchableOpacity
-              onPress={() => Alert.alert('복사 후 재등록')}
+              onPress={() => estimateCopyHandler()}
               activeOpacity={0.9}>
               <View style={[styles.submitBtn]}>
                 <Text style={styles.submitBtnText}>복사 후 재등록</Text>

@@ -16,11 +16,15 @@ import Modal from './CancelModal';
 import OrderAPI from '../../../src/api/OrderAPI';
 import Partners from '../../../src/api/Partners';
 import OrderDetail from './OrderDetail';
+import moment from 'moment';
+import 'moment/locale/ko';
 
 const ReqDetailList = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const pe_id = props.route.params.orderId;
+
+  console.log("pe_id ???", pe_id);
 
   const [myOrderDetail, setMyOrderDetail] = React.useState([]);
   const [myOrderPartners, setMyOrderPartners] = React.useState([]);
@@ -449,14 +453,14 @@ const ReqDetailList = (props) => {
                 <View style={styles.details}>
                   <Text style={styles.detailsTitle}>견적 마감일</Text>
                   <Text style={styles.detailsDesc}>
-                    {myOrderDetail.estimate_date}
+                    {moment(myOrderDetail.estimate_date).format('YYYY.MM.DD')}
                   </Text>
                 </View>
                 <View style={styles.detailsEnd}>
                   <View style={styles.detailsEnd}>
                     <Text style={styles.detailsTitle}>납품 희망일</Text>
-                    <Text style={styles.detailsDesc}>
-                      {myOrderDetail.delivery_date}
+                    <Text style={styles.detailsDesc}>          
+                      {moment(myOrderDetail.delivery_date).format('YYYY.MM.DD')}
                     </Text>
                   </View>
                   <TouchableOpacity
