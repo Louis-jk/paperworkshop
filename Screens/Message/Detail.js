@@ -29,7 +29,10 @@ import ChatAPI from '../../src/api/Chat';
 const Detail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-  const {chatId} = props.route.params;
+  const {chatId, pmId} = props.route.params;
+
+  console.log("chatId:::::", chatId);
+  console.log("pmId:::::", pmId);
 
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
 
@@ -43,7 +46,7 @@ const Detail = (props) => {
   // 채팅방 글 히스토리 가져오기
   const getChatHistoryAPI = () => {
     setLoading(true);
-    ChatAPI.getChatHistory(chatId)
+    ChatAPI.getChatHistory(pmId)
       .then((res) => {
         console.log('ㅎㅎㅎ', res);
         if (res.data.result === '1' && res.data.count > 0) {
@@ -168,7 +171,7 @@ const Detail = (props) => {
     let frmData = new FormData();
     frmData.append('method', 'proc_my_message');
     frmData.append('mb_id', mb_id);
-    frmData.append('pm_id', chatId);
+    frmData.append('pm_id', pmId);
     frmData.append('msg', message);
     frmData.append('bf_file[]', msgFile);
 
@@ -454,6 +457,7 @@ const Detail = (props) => {
         <View>
           <View
             style={{
+              // height: Dimensions.get('window').height - 300,
               justifyContent: 'flex-start',
               paddingHorizontal: 20,
             }}>
@@ -921,6 +925,7 @@ const Detail = (props) => {
 
           <View
             style={{
+              flex: 1,
               alignSelf: 'center',
               marginTop: 80,
               marginBottom: 50,

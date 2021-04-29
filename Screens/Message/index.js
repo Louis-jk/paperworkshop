@@ -32,6 +32,8 @@ const index = (props) => {
     setLoading(true);
     ChatAPI.getChatRoomList(mb_id)
       .then((res) => {
+        console.log("chatList", res);
+        console.log("mb_id??", mb_id);
         if (res.data.result === '1') {
           setRooms(res.data.item);
         }
@@ -51,7 +53,7 @@ const index = (props) => {
     const unsubscribe = navigation.addListener('focus', () => {
       getChatRoomListAPI();
     });
-
+    
     return unsubscribe;
   }, [navigation]);
 
@@ -110,7 +112,7 @@ const index = (props) => {
         onPress={() =>
           navigation.navigate('MessageDetail', {
             screen: 'MessageDetail',
-            params: {chatId: item.pm_id},
+            params: {chatId: item.pe_id, pmId: item.pm_id}
           })
         }
         activeOpacity={0.8}>
@@ -120,15 +122,15 @@ const index = (props) => {
               source={{uri: `${item.mb_profile}`}}
               resizeMode="cover"
               style={{
-                width: 50,
-                height: 50,
-                borderRadius: 50,
+                width: 70,
+                height: 70,
+                borderRadius: 70,
                 marginRight: 20,
               }}
             />
             <View style={{flex: 2}}>
               <Text style={styles.msgInfoName}>{item.company_name}</Text>
-
+              <Text style={styles.msgInfoName} numberOfLines={1}>제목 : {item.title}</Text>
               {item.msg ? (
                 <View
                   style={{
@@ -157,8 +159,9 @@ const index = (props) => {
                 </Text>
               )}
             </View>
-            <View style={{position: 'relative'}}>
+            <View style={{position: 'absolute', top: -10, right: -10, width: 30, height: 30}}>
               <TouchableOpacity
+                style={{position:'absolute', top: 0, right: 0}}
                 activeOpacity={0.8}
                 onPress={() => goOutChatRoomChecking(item.pm_id)}>
                 <Image

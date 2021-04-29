@@ -767,7 +767,8 @@ const OrderDetail = (props) => {
                       </Text>
                     </View>
                   ) : null}
-                  {info02.paper_color && info02.paper_color !== '' ? (
+                  {console.log("info02", info02)}
+                  {info02.paper_color && info02.paper_color !== '' && info02.paper_color !== 'null' ? (
                     <View style={styles.details}>
                       <Text style={styles.detailsTitle02}>색상</Text>
                       <Text style={styles.detailsDesc}>

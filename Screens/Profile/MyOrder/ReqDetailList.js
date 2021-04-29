@@ -8,7 +8,9 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   FlatList,
+  Linking
 } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard'; // 클립보드 패키지
 import DetailHeader from '../../Common/DetailHeader';
@@ -34,6 +36,7 @@ const ReqDetailList = (props) => {
     OrderAPI.getMyOrderDetail(pe_id)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
+          console.log("dfsdfds", res);
           setMyOrderDetail(res.data.item[0]);
           if (
             res.data.item[0].list !== null ||
@@ -77,6 +80,12 @@ const ReqDetailList = (props) => {
           },
         ]);
       }
+    }).catch(err => {
+      Alert.alert(err, '관리자에게 문의하세요.', [
+        {
+          text: '확인'
+        }
+      ])
     });
   };
 
@@ -101,6 +110,12 @@ const ReqDetailList = (props) => {
           },
         ]);
       }
+    }).catch(err => {
+      Alert.alert(err, '관리자에게 문의하세요.', [
+        {
+          text: '확인'
+        }
+      ])
     });
   };
 
@@ -125,6 +140,12 @@ const ReqDetailList = (props) => {
           },
         ]);
       }
+    }).catch(err => {
+      Alert.alert(err, '관리자에게 문의하세요.', [
+        {
+          text: '확인'
+        }
+      ])
     });
   };
 
@@ -134,7 +155,7 @@ const ReqDetailList = (props) => {
       if (res.data.result === '1') {
         Alert.alert(
           res.data.message,
-          '파트너스 회원이 제작완료 후 "납품완료" 처리를 하게 됩니다.',
+          '수령완료 하였습니다.',
           [
             {
               text: '확인',
@@ -144,8 +165,8 @@ const ReqDetailList = (props) => {
         );
       } else {
         Alert.alert(
-          '수령완료를 하였습니다.',
-          '수령완료확인된 견적으로 처리됩니다.',
+          res.data.message,
+          '',
           [
             {
               text: '확인',
@@ -153,6 +174,12 @@ const ReqDetailList = (props) => {
           ],
         );
       }
+    }).catch(err => {
+      Alert.alert(err, '관리자에게 문의하세요.', [
+        {
+          text: '확인'
+        }
+      ])
     });
   };
 
@@ -218,6 +245,7 @@ const ReqDetailList = (props) => {
 
   const renderRow = ({item, index}) => {
     return (
+      <>
       <View
         style={{
           borderWidth: 1,
@@ -390,12 +418,67 @@ const ReqDetailList = (props) => {
               {item.deposit_rate}%
             </Text>
           </View>
+        </View>        
+      </View>
+      {/* 파트너 전화하기 메세지 */}
+      {myOrderDetail.status !== '0' && myOrderDetail.status !== '1' && myOrderDetail.status !== '2' && myOrderDetail.status !== '9' ? 
+        <View style={{paddingHorizontal:20, marginBottom:20}}>
+       <View
+          style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, backgroundColor: '#fff', marginBottom: 10}}>
+          <TouchableWithoutFeedback
+            onPress={() => Linking.openURL(`tel:${myOrderDetail.list[0].company_tel}`)}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical: 12,
+              }}>
+              <Image
+                source={require('../../../src/assets/call01.png')}                
+                resizeMode="cover"
+                style={{width: 24, height: 24}}
+              />
+              <Text
+                style={[styles.normalText, {fontSize: 14, marginLeft: 5}]}>
+                전화하기
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <View
+            style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+          />
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('MessageDetail', {screen: 'MessageDetail', params: {chatId: myOrderDetail.pe_id, pmId: myOrderDetail.pm_id}})}>
+            <View
+              style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: 12 }}>
+              <Image
+                source={require('../../../src/assets/msm01.png')}
+                resizeMode="cover"
+                style={{width: 24, height: 24}}
+              />
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 14,
+                    marginLeft: 5,
+                  },
+                ]}>
+                메세지보내기
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
+      : null }
+      {/* // 파트너 전화하기 메세지 */}
+      </>
     );
   };
 
-  console.log('myOrderDetail', myOrderDetail);
+  console.log('myOrderDetail :: ', myOrderDetail);
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -425,9 +508,9 @@ const ReqDetailList = (props) => {
                     : myOrderDetail.status === '4'
                     ? '파트너스최종선정 (계약금입금완료)'
                     : myOrderDetail.status === '5'
-                    ? '인쇄제작요청'
+                    ? '인쇄/제작요청'
                     : myOrderDetail.status === '6'
-                    ? '인쇄제작요청완료'
+                    ? '인쇄/제작요청완료'
                     : myOrderDetail.status === '7'
                     ? '납품완료'
                     : myOrderDetail.status === '8'
@@ -558,11 +641,6 @@ const ReqDetailList = (props) => {
                       activeOpacity={0.9}>
                       <View style={[styles.submitStepBtn, {marginTop: 20}]}>
                         <Text style={styles.submitStepBtnText}>수령확인</Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-                      <View style={[styles.submitBtn, {marginTop: 7}]}>
-                        <Text style={styles.submitBtnText}>요청 포기</Text>
                       </View>
                     </TouchableOpacity>
                   </>
@@ -754,17 +832,19 @@ const ReqDetailList = (props) => {
                     style={{
                       justifyContent: 'center',
                       alignItems: 'center',
-                      backgroundColor: '#275696',
+                      // backgroundColor: '#275696',
+                      borderWidth: 1,
+                      borderColor: '#275696',
                       marginHorizontal: 5,
                       paddingHorizontal: 10,
                       paddingVertical: 5,
-                      borderRadius: 10,
+                      borderRadius: 5,
                     }}>
                     <Text
                       style={{
-                        fontFamily: 'SCDream4',
+                        fontFamily: 'SCDream5',
                         fontSize: 8,
-                        color: '#fff',
+                        color: '#275696',
                       }}>
                       계약금 입금완료
                     </Text>

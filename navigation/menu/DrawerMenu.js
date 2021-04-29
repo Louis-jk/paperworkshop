@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   View,
   Text,
@@ -36,6 +36,7 @@ const DrawerMenu = (props) => {
   } = useSelector((state) => state.UserInfoReducer);
 
   const [imgMime, setImgMime] = React.useState(null);
+
 
   // Redux에서 가입시 회원 정보 가져오기
 
@@ -82,7 +83,6 @@ const DrawerMenu = (props) => {
         setImgMime('gif');
       }
     }
-
     getSliderBanners();
   }, [mb_profile_img]);
 
@@ -144,6 +144,8 @@ const DrawerMenu = (props) => {
       },
     ]);
   };
+
+
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

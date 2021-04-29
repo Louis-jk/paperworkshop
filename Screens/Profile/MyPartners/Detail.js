@@ -200,7 +200,7 @@ const Detail = (props) => {
           {/* // 회사정보 상단 fix */}
         </View>
         <View style={{paddingHorizontal: 20}}>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -268,10 +268,10 @@ const Detail = (props) => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-          </View>
+          </View> */}
 
           {/* 업체소개 */}
-          <View style={{marginTop: 20}}>
+          <View>
             <Text style={[styles.mediumText, {fontSize: 16, marginBottom: 15}]}>
               업체소개
             </Text>

@@ -696,8 +696,9 @@ const Step05 = (props) => {
         in_yn: 'N', // 내지 여부
       }),
     })
-      .then((res) => {
+      .then((res) => {        
         if (res.data.result === '1' && res.data.count > 0) {
+          console.log("지종세부 res", res);
           // setPaperDetail3(res.data.item);
           setGetWeight(res.data.item); // 상세 지종 평량 API 가져온 값 담기
           // setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기       
@@ -852,15 +853,18 @@ const Step05 = (props) => {
   // 지종 2차 선택 - 경우에 따라 표지용
   const setPaperType02 = (pd_id, pn_id, name) => {
     setPaperTypeDetail({pd_id: pd_id, pn_id: pn_id, name: name});
+    setIsLoading03(true);
+    setIsLoading04(true);   
     if(name !== '직접입력') {
       getPaperDetailStep02More(pd_id, name);
       setIsDirect01('n'); // 지종 1차 선택시 직접 유무 초기화
-      setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화  
+      setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화 
     } else {
+      setIsLoading02(false);
+      setIsLoading03(false);
+      setIsLoading04(false);  
       setIsDirect01('y');
-    }    
-    setIsLoading03(true);
-    setIsLoading04(true);    
+    }        
   };
 
   // 지종 2차 선택 - 내지용
@@ -1401,7 +1405,7 @@ const Step05 = (props) => {
                   </View>
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              ) : !isLoading02 &&
+              ) : !isLoading03 &&
                 (isDirect === '직접입력' || isDirect01 === 'y') &&
                 ca_id !== '10' ? (
                 <View
@@ -1409,7 +1413,7 @@ const Step05 = (props) => {
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
-                    marginBottom: 10,
+                    marginBottom: 0,
                   }}>
                   <View>
                     <Text style={[styles.profileTitle, {marginBottom: 5}]}>
@@ -1423,8 +1427,8 @@ const Step05 = (props) => {
               {/* paperDetail2 && paperDetail2[0].paper_name === '직접입력' */}
 
               {!isLoading03 && 
-              (isDirect === '직접입력' || isDirect01 === 'y') &&
-              ca_id !== '10' ? (
+              (isDirect01 === '직접입력' || isDirect01 === 'y') &&
+              ca_id !== '10' ? (                
                 <TextInput
                   value={directWeight}
                   placeholder="평량을 직접 입력해주세요."
@@ -1662,7 +1666,7 @@ const Step05 = (props) => {
               {/* // 골 선택 또는 입력 */}
 
               {/* 색상 선택  */}
-              {!isLoading04 && (getPaperColors !== null || getPaperColors !== '') ? (
+              {!isLoading04 && ca_id !== '11' && (getPaperColors !== null || getPaperColors !== '') ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1676,7 +1680,7 @@ const Step05 = (props) => {
                   </View>
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              ) : !isLoading04 && isDirect01 === 'y' ? (
+              ) : !isLoading04 && ca_id !== '11' && isDirect01 === 'y' ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1690,7 +1694,7 @@ const Step05 = (props) => {
                   </View>
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              ) : !isLoading04 && isDirect === '직접입력' ? (
+              ) : !isLoading04 && ca_id !== '11' && isDirect === '직접입력' ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1705,7 +1709,7 @@ const Step05 = (props) => {
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
               ) : null}
-              {!isLoading04 && (getPaperColors !== null || getPaperColors !== '') && getPaperColors.length > 0 && (
+              {!isLoading04 && ca_id !== '11' && (getPaperColors !== null || getPaperColors !== '') && getPaperColors.length > 0 && (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -1757,7 +1761,7 @@ const Step05 = (props) => {
                   색상을 선택해주세요.
                 </Text>
               ) : null}
-              {!isLoading04 && (isDirect === '직접입력' || isDirect01 === 'y') && getPaperColors === '' ? (
+              {!isLoading04 && ca_id !== '11' && (isDirect === '직접입력' || isDirect01 === 'y') && getPaperColors === '' ? (
                 <TextInput
                   ref={directColorRef}
                   value={directColor}
