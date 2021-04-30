@@ -480,71 +480,51 @@ const Detail = (props) => {
                 <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
               </View>
             ) : null}
-            {chatHistory && chatHistory.length > 0 && chatDateHistory
+           {chatHistory && chatHistory.length > 0
               ? chatHistory.map((history, idx) =>
                   history.mb_id === mb_id ? (
                     <View key={`p${history.pc_id}${idx}`}>
+                      {history.diff === 'Y' ? 
+                      <View
+                        style={{
+                          marginVertical: 20,
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text style={{marginRight: 10}}>- - - - - - - -</Text>
+                        <Text style={styles.normalText}>
+                          {moment(history.chat_date)
+                            .locale('kr')
+                            .format('YYYY.MM.DD (ddd)')}
+                        </Text>
+                        {/* <Text style={styles.normalText}>2021.01.28 (목)</Text> */}
+                        <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
+                      </View>
+                      : null}
                       {history.msg ? (
-                        <>
-                          {/* {console.log(
-                            'asdsdsads::::::::::',
-                            chatHistory[chatHistory.length - 1].chat_date,
-                          )} */}
-                          {moment(history.chat_date).diff(
-                            moment(
-                              chatHistory[chatHistory.length - 1].chat_date,
-                            ),
-                            'days',
-                          ) > 1 ? (
-                            <View
-                              style={{
-                                marginTop: 40,
-                                marginBottom: 20,
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                              }}>
-                              <Text style={{marginRight: 10}}>
-                                - - - - - - - -
-                              </Text>
-                              <Text style={styles.normalText}>
-                                {moment(history.chat_date)
-                                  .locale('kr')
-                                  .format('YYYY.MM.DD (ddd)')}
-                                {/* {setChatDateHistory((prev) => [
-                                  ...prev,
-                                  history.chat_date,
-                                ])} */}
-                              </Text>
-                              {/* <Text style={styles.normalText}>2021.01.28 (목)</Text> */}
-                              <Text style={{marginLeft: 10}}>
-                                - - - - - - - -
-                              </Text>
-                            </View>
-                          ) : null}
-                          <View
-                            style={{
-                              alignSelf: 'flex-end',
-                              flexDirection: 'row-reverse',
-                              justifyContent: 'flex-start',
-                              alignItems: 'flex-start',
-                              paddingVertical: 10,
-                              width: '70%',
-                            }}>
-                            <View style={styles.msgBubbleP}>
-                              <Text style={styles.msgTextP}>{history.msg}</Text>
-                            </View>
-                            <Text
-                              style={{
-                                fontFamily: 'SCDream4',
-                                alignSelf: 'flex-end',
-                                fontSize: 12,
-                                color: '#000000',
-                              }}>
-                              {moment(history.chat_date).format('HH:mm')}
-                            </Text>
+                        <View
+                          style={{
+                            alignSelf: 'flex-end',
+                            flexDirection: 'row-reverse',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-start',
+                            paddingVertical: 10,
+                            width: '70%',
+                          }}>
+                          <View style={styles.msgBubbleP}>
+                            <Text style={styles.msgTextP}>{history.msg}</Text>
                           </View>
-                        </>
+                          <Text
+                            style={{
+                              fontFamily: 'SCDream4',
+                              alignSelf: 'flex-end',
+                              fontSize: 12,
+                              color: '#000000',
+                            }}>
+                            {moment(history.chat_date).format('HH:mm')}
+                          </Text>
+                        </View>
                       ) : null}
                       {history.bf_file &&
                       (history.bf_file_ext === 'jpg' ||
@@ -687,237 +667,236 @@ const Detail = (props) => {
                         </TouchableOpacity>
                       ) : null}
                     </View>
-                  ) : moment(history.chat_date).diff(
-                      moment(firstDate),
-                      'days',
-                    ) > 1 ? (
-                    <View
-                      style={{
-                        marginTop: 40,
-                        marginBottom: 20,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text style={{marginRight: 10}}>- - - - - - - -</Text>
-                      <Text style={styles.normalText}>
-                        {moment(history.chat_date)
-                          .locale('kr')
-                          .format('YYYY.MM.DD (ddd)')}
-                      </Text>
-                      {/* <Text style={styles.normalText}>2021.01.28 (목)</Text> */}
-                      <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
-                    </View>
-                  ) : history.msg ? (
-                    <View
-                      key={`u${history.pc_id}${idx}`}
-                      style={{
-                        alignSelf: 'flex-start',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        paddingVertical: 10,
-                        width: '70%',
-                        marginBottom: 20,
-                      }}>
-                      <Image
-                        source={{uri: `${history.mb_profile}`}}
-                        resizeMode="cover"
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 50,
-                          marginRight: 10,
-                        }}
-                      />
-                      <View style={styles.msgBubble}>
-                        <Text style={styles.msgText}>{history.msg}</Text>
-                      </View>
-                      <Text
-                        style={{
-                          fontFamily: 'SCDream4',
-                          alignSelf: 'flex-end',
-                          fontSize: 12,
-                          color: '#000000',
-                        }}>
-                        {moment(history.chat_date).format('HH:mm')}
-                      </Text>
-                    </View>
-                  ) : history.bf_file &&
-                    (history.bf_file_ext === 'jpg' ||
-                      history.bf_file_ext === 'png') ? (
-                    <View
-                      key={`p${history.pc_id}${idx}`}
-                      style={{
-                        alignSelf: 'flex-start',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        paddingVertical: 10,
-                        width: '70%',
-                      }}>
-                      <Image
-                        source={{uri: `${history.mb_profile}`}}
-                        resizeMode="cover"
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 50,
-                          marginRight: 10,
-                        }}
-                      />
+                  ) : 
+                  (
+                    history.diff === 'Y' ? 
                       <View
                         style={{
-                          backgroundColor: '#fff',
-                          padding: 10,
-                          borderRadius: 5,
-                          marginRight: 10,
+                          marginVertical: 20,
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}>
-                        <TouchableOpacity
-                          activeOpacity={0.8}
-                          onPress={() => {
-                            imageModalHandler();
-                            setImgPath(history.bf_file);
-                          }}>
-                          <Image
-                            source={{uri: `${history.bf_file}`}}
-                            resizeMode="cover"
-                            style={{
-                              width: 120,
-                              height: 120,
-                              borderRadius: 5,
-                            }}
-                          />
-                        </TouchableOpacity>
+                        <Text style={{marginRight: 10}}>- - - - - - - -</Text>
+                        <Text style={styles.normalText}>
+                          {moment(history.chat_date)
+                            .locale('kr')
+                            .format('YYYY.MM.DD (ddd)')}
+                        </Text>
+                        {/* <Text style={styles.normalText}>2021.01.28 (목)</Text> */}
+                        <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
                       </View>
-                      <Text
-                        style={{
-                          fontFamily: 'SCDream4',
-                          alignSelf: 'flex-end',
-                          fontSize: 12,
-                          color: '#000000',
-                        }}>
-                        {moment(history.chat_date).format('HH:mm')}
-                      </Text>
-                    </View>
-                  ) : history.bf_file && history.bf_file_ext === 'gif' ? (
-                    <View
-                      key={`u${history.pc_id}${idx}`}
-                      style={{
-                        alignSelf: 'flex-start',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        paddingVertical: 10,
-                        width: '70%',
-                      }}>
-                      <Image
-                        source={{uri: `${history.mb_profile}`}}
-                        resizeMode="cover"
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 5,
-                          marginRight: 10,
-                        }}
-                      />
+                      : 
+                    history.msg ? (
                       <View
+                        key={`u${history.pc_id}${idx}`}
                         style={{
-                          backgroundColor: '#fff',
-                          padding: 10,
-                          borderRadius: 5,
-                          marginRight: 10,
-                        }}>
-                        <TouchableOpacity
-                          activeOpacity={0.8}
-                          onPress={() => {
-                            imageModalHandler();
-                            setImgPath(history.bf_file);
-                          }}>
-                          <FastImage
-                            source={{uri: `${history.bf_file}`}}
-                            resizeMode={FastImage.resizeMode.cover}
-                            style={{
-                              width: 120,
-                              height: 120,
-                              borderRadius: 5,
-                              marginRight: 10,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      <Text
-                        style={{
-                          fontFamily: 'SCDream4',
-                          alignSelf: 'flex-end',
-                          fontSize: 12,
-                          color: '#000000',
-                        }}>
-                        {moment(history.chat_date).format('HH:mm')}
-                      </Text>
-                    </View>
-                  ) : history.bf_file &&
-                    history.bf_file_ext !== 'gif' &&
-                    history.bf_file_ext !== 'jpg' &&
-                    history.bf_file_ext !== 'png' ? (
-                    <View
-                      key={`u${history.pc_id}${idx}`}
-                      style={{
-                        alignSelf: 'flex-start',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        paddingVertical: 10,
-                        width: '70%',
-                      }}>
-                      <Image
-                        source={{uri: `${history.mb_profile}`}}
-                        resizeMode="cover"
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 50,
-                          marginRight: 10,
-                        }}
-                      />
-                      <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() =>
-                          fileDownloadHandler(
-                            history.bf_file,
-                            history.bf_file_soure,
-                          )
-                        }
-                        style={{
+                          alignSelf: 'flex-start',
                           flexDirection: 'row',
                           justifyContent: 'flex-start',
-                          alignItems: 'center',
-                          backgroundColor: '#fff',
-                          padding: 10,
-                          borderRadius: 5,
-                          marginRight: 10,
+                          alignItems: 'flex-start',
+                          paddingVertical: 5,
+                          width: '70%',
+                          marginBottom: 10,
                         }}>
                         <Image
-                          source={require('../../src/assets/icon_down.png')}
+                          source={{uri: `${history.mb_profile}`}}
                           resizeMode="cover"
-                          style={{width: 30, height: 30, marginRight: 10}}
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 50,
+                            marginRight: 10,
+                          }}
                         />
-                        <Text style={styles.normalText}>
-                          {history.bf_file_soure}
+                        <View style={styles.msgBubble}>
+                          <Text style={styles.msgText}>{history.msg}</Text>
+                        </View>
+                        <Text
+                          style={{
+                            fontFamily: 'SCDream4',
+                            alignSelf: 'flex-end',
+                            fontSize: 12,
+                            color: '#000000',
+                          }}>
+                          {moment(history.chat_date).format('HH:mm')}
                         </Text>
-                      </TouchableOpacity>
-                      <Text
+                      </View>
+                    ) : history.bf_file &&
+                      (history.bf_file_ext === 'jpg' ||
+                        history.bf_file_ext === 'png') ? (
+                      <View
+                        key={`u${history.pc_id}${idx}`}
                         style={{
-                          fontFamily: 'SCDream4',
-                          alignSelf: 'flex-end',
-                          fontSize: 12,
-                          color: '#000000',
+                          alignSelf: 'flex-start',
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'flex-start',
+                          paddingVertical: 10,
+                          width: '70%',
                         }}>
-                        {moment(history.chat_date).format('HH:mm')}
-                      </Text>
-                    </View>
-                  ) : null,
-                )
+                        <Image
+                          source={{uri: `${history.mb_profile}`}}
+                          resizeMode="cover"
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 50,
+                            marginRight: 10,
+                          }}
+                        />
+                        <View
+                          style={{
+                            backgroundColor: '#fff',
+                            padding: 10,
+                            borderRadius: 5,
+                            marginRight: 10,
+                          }}>
+                          <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() => {
+                              imageModalHandler();
+                              setImgPath(history.bf_file);
+                            }}>
+                            <Image
+                              source={{uri: `${history.bf_file}`}}
+                              resizeMode="cover"
+                              style={{
+                                width: 120,
+                                height: 120,
+                                borderRadius: 5,
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                        <Text
+                          style={{
+                            fontFamily: 'SCDream4',
+                            alignSelf: 'flex-end',
+                            fontSize: 12,
+                            color: '#000000',
+                          }}>
+                          {moment(history.chat_date).format('HH:mm')}
+                        </Text>
+                      </View>
+                    ) : history.bf_file && history.bf_file_ext === 'gif' ? (
+                      <View
+                        key={`u${history.pc_id}${idx}`}
+                        style={{
+                          alignSelf: 'flex-start',
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'flex-start',
+                          paddingVertical: 10,
+                          width: '70%',
+                        }}>
+                        <Image
+                          source={{uri: `${history.mb_profile}`}}
+                          resizeMode="cover"
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 5,
+                            marginRight: 10,
+                          }}
+                        />
+                        <View
+                          style={{
+                            backgroundColor: '#fff',
+                            padding: 10,
+                            borderRadius: 5,
+                            marginRight: 10,
+                          }}>
+                          <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() => {
+                              imageModalHandler();
+                              setImgPath(history.bf_file);
+                            }}>
+                            <FastImage
+                              source={{uri: `${history.bf_file}`}}
+                              resizeMode={FastImage.resizeMode.cover}
+                              style={{
+                                width: 120,
+                                height: 120,
+                                borderRadius: 5,
+                                marginRight: 10,
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                        <Text
+                          style={{
+                            fontFamily: 'SCDream4',
+                            alignSelf: 'flex-end',
+                            fontSize: 12,
+                            color: '#000000',
+                          }}>
+                          {moment(history.chat_date).format('HH:mm')}
+                        </Text>
+                      </View>
+                    ) : history.bf_file &&
+                      history.bf_file_ext !== 'gif' &&
+                      history.bf_file_ext !== 'jpg' &&
+                      history.bf_file_ext !== 'png' ? (
+                      <View
+                        key={`u${history.pc_id}${idx}`}
+                        style={{
+                          alignSelf: 'flex-start',
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'flex-start',
+                          paddingVertical: 10,
+                          width: '70%',
+                        }}>
+                        <Image
+                          source={{uri: `${history.mb_profile}`}}
+                          resizeMode="cover"
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 50,
+                            marginRight: 10,
+                          }}
+                        />
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() =>
+                            fileDownloadHandler(
+                              history.bf_file,
+                              history.bf_file_soure,
+                            )
+                          }
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            backgroundColor: '#fff',
+                            padding: 10,
+                            borderRadius: 5,
+                            marginRight: 10,
+                          }}>
+                          <Image
+                            source={require('../../src/assets/icon_down.png')}
+                            resizeMode="cover"
+                            style={{width: 30, height: 30, marginRight: 10}}
+                          />
+                          <Text style={styles.normalText}>
+                            {history.bf_file_soure}
+                          </Text>
+                        </TouchableOpacity>
+                        <Text
+                          style={{
+                            fontFamily: 'SCDream4',
+                            alignSelf: 'flex-end',
+                            fontSize: 12,
+                            color: '#000000',
+                          }}>
+                          {moment(history.chat_date).format('HH:mm')}
+                        </Text>
+                      </View>
+                    ) : null
+                  ))
               : null}
 
             {/* 끝 */}

@@ -12,6 +12,8 @@ import {
   Animated,
   ActivityIndicator,
   FlatList,
+  Platform,
+  PermissionsAndroid
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
@@ -40,6 +42,27 @@ const index = (props) => {
 
   const dispatch = useDispatch();
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
+
+  // 안드로이드 권한 설정
+  const requestAndroidPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.requestMultiple(
+        [
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+        ]
+      );
+
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the camera");
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
   // 슬라이더 (배너) progress bar 표현식
   const calculator = (name) => {
@@ -243,6 +266,7 @@ const index = (props) => {
   };
 
   React.useEffect(() => {
+    requestAndroidPermission();
     setIsLoading(true);
     getMainTopSlider();
     getMainMiddleSlider();

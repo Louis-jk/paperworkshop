@@ -77,13 +77,15 @@ const ReqDetailList = (props) => {
         Alert.alert(res.data.message, '', [
           {
             text: '확인',
+            onPress: () => navigation.navigate('MyOrder')
           },
         ]);
       }
     }).catch(err => {
       Alert.alert(err, '관리자에게 문의하세요.', [
         {
-          text: '확인'
+          text: '확인',
+          onPress: () => navigation.navigate('MyOrder')
         }
       ])
     });
