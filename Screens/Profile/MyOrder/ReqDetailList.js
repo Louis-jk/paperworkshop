@@ -423,7 +423,7 @@ const ReqDetailList = (props) => {
         </View>        
       </View>
       {/* 파트너 전화하기 메세지 */}
-      {myOrderDetail.status !== '0' && (((myOrderDetail.cate1 === '1' && myOrderDetail.status !== '1') && (myOrderDetail.cate1 === '0' && myOrderDetail.status !== '1')) && ((cate1 === '1' && myOrderDetail.status !== '2') && (myOrderDetail.cate1 === '0' && myOrderDetail.status !== '1')) || (myOrderDetail.cate1 === '2')) && myOrderDetail.status !== '9' ? 
+      {/* {myOrderDetail.status !== '0' && (((myOrderDetail.cate1 === '1' && myOrderDetail.status !== '1') && (myOrderDetail.cate1 === '0' && myOrderDetail.status !== '1')) && ((cate1 === '1' && myOrderDetail.status !== '2') && (myOrderDetail.cate1 === '0' && myOrderDetail.status !== '1')) || (myOrderDetail.cate1 === '2')) && myOrderDetail.status !== '9' ?  */}
         <View style={{paddingHorizontal:20, marginBottom:20}}>
        <View
           style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, backgroundColor: '#fff', marginBottom: 10}}>
@@ -474,7 +474,7 @@ const ReqDetailList = (props) => {
           </TouchableWithoutFeedback>
         </View>
       </View>
-      : null }
+      {/* : null } */}
       {/* // 파트너 전화하기 메세지 */}
       </>
     );

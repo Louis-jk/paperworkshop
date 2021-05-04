@@ -36,6 +36,7 @@ import {
   setUserPageCnt2,
   setUserBindType,
   setUserStandard,
+  setUserStandardEtc,
   setUserFile02Url,
   setUserFile02Type,
   setUserFile02Name,
@@ -143,10 +144,10 @@ const Step04 = (props) => {
 
           setLoading(false);
         } else if (res.data.result === '1' && res.data.count <= 0) {
-          setGetQuantity(null);
+          setGetQuantity('');
           setLoading(false);
         } else {
-          setGetQuantity(null);
+          setGetQuantity('');
           setLoading(false);
         }
       })
@@ -164,8 +165,8 @@ const Step04 = (props) => {
   }, []);
 
   // 규격 입력 (일반 인쇄)
-  const [size, setSize] = React.useState(null);
-  const [sizeDirect, setSizeDirect] = React.useState(null);
+  const [size, setSize] = React.useState('');
+  const [sizeDirect, setSizeDirect] = React.useState('');
   const setOrderSize = (v) => {
     directSizeRef.current.focus();
     let value = v.replace(/(^0+)/, '');
@@ -173,8 +174,8 @@ const Step04 = (props) => {
   };
 
   // 수량 입력
-  const [quantity, setQuantity] = React.useState(null);
-  const [quantityDirect, setQuantityDirect] = React.useState(null);
+  const [quantity, setQuantity] = React.useState('');
+  const [quantityDirect, setQuantityDirect] = React.useState('');
   const setOrderQuantity = (v) => {
     directRef.current.focus();
     let value = v.replace(/(^0+)/, '');
@@ -587,34 +588,35 @@ const Step04 = (props) => {
               text: '확인',
             },
           ]);
-        } else {
-          dispatch(setUserPageCnt(pageCountCur));
-          dispatch(setUserPageCnt2(pageInnerCountCur));
-          dispatch(setUserBindType(bindTypeCur));
-          dispatch(setUserStandard(size !== '' ? size : sizeDirect));
-          dispatch(setUserFile02Url(fileUrlCurrent));
-          dispatch(setUserFile02Type(fileTypeCurrent));
-          dispatch(setUserFile02Name(fileName));
-          dispatch(setUserFile02Size(fileSizeCurrent));
+        } 
+        // else { 테스트
+        //   dispatch(setUserPageCnt(pageCountCur));
+        //   dispatch(setUserPageCnt2(pageInnerCountCur));
+        //   dispatch(setUserBindType(bindTypeCur));
+        //   dispatch(setUserStandard(size !== '' ? size : sizeDirect));
+        //   dispatch(setUserFile02Url(fileUrlCurrent));
+        //   dispatch(setUserFile02Type(fileTypeCurrent));
+        //   dispatch(setUserFile02Name(fileName));
+        //   dispatch(setUserFile02Size(fileSizeCurrent));
 
-          if (size !== 'direct') {
-            dispatch(setUserStandard(size));
-          } else {
-            dispatch(setUserStandard(sizeDirect));
-          }
+        //   if (size !== 'direct') {
+        //     dispatch(setUserStandard(size));
+        //   } else {
+        //     dispatch(setUserStandard(sizeDirect));
+        //   }
 
-          if (quantity !== 'direct') {
-            dispatch(setUserCnt(quantity));
-            dispatch(setUserCntEtc(0));
-          } else {
-            dispatch(setUserCntEtc(quantityDirect));
-            dispatch(setUserCnt(0));
-          }
+        //   if (quantity !== 'direct') {
+        //     dispatch(setUserCnt(quantity));
+        //     dispatch(setUserCntEtc(0));
+        //   } else {
+        //     dispatch(setUserCntEtc(quantityDirect));
+        //     dispatch(setUserCnt(0));
+        //   }
 
-          navigation.navigate('OrderStep05', {
-            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-          });
-        }
+        //   navigation.navigate('OrderStep05', {
+        //     screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+        //   });
+        // } 테스트
       } else if (
         ca_id === '4' &&
         (type_id === '74' || type_id === '75' || type_id === '76')
@@ -665,11 +667,12 @@ const Step04 = (props) => {
               text: '확인',
             },
           ]);
-        } else {
-          navigation.navigate('OrderStep05', {
-            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-          });
-        }
+        } 
+        // else { 테스트
+        //   navigation.navigate('OrderStep05', {
+        //     screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+        //   });
+        // } 테스트
       } else if (
         // 팜플렛, 리플렛
         (ca_id === '1' && (type_id === '72' || type_id === '73')) ||
@@ -711,11 +714,20 @@ const Step04 = (props) => {
               text: '확인',
             },
           ]);
-        } else {
+        } else { 
+          dispatch(setUserCnt(quantity));
+          dispatch(setUserCntEtc(quantityDirect));
+          dispatch(setUserStandard(sizeDirect));
+          dispatch(setUserThomsonType(thomsonCur));
+          dispatch(setUserFile02Url(fileUrlCurrent));
+          dispatch(setUserFile02Type(fileTypeCurrent));
+          dispatch(setUserFile02Name(fileName));
+          dispatch(setUserFile02Size(fileSizeCurrent));
+          
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
           });
-        }
+        } 
       } else if (
         ca_id === '6' &&
         (type_id === '81' ||
@@ -743,12 +755,12 @@ const Step04 = (props) => {
           // directSizeRef.current.focus();
         } else if (thomsonCur === null || thomsonCur === '') {
           setThomsonCurError(true);
-        } else {
+        } else { 
           // setModalVisible(!isModalVisible);
           // dispatch('hello');
-          dispatch(setUserCnt(quantity));
+          dispatch(setUserCnt(quantity !== 'direct' ? quantity : ''));
           dispatch(setUserCntEtc(quantityDirect));
-          dispatch(setUserStandard(sizeDirect));
+          dispatch(setUserStandardEtc(size));
           dispatch(setUserThomsonType(thomsonCur));
           dispatch(setUserFile02Url(fileUrlCurrent));
           dispatch(setUserFile02Type(fileTypeCurrent));
@@ -758,7 +770,7 @@ const Step04 = (props) => {
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
           });
-        }
+        } 
       } else if (ca_id === '7' && type_id === '90') {
         // 카드/안내장
         if (
@@ -779,11 +791,11 @@ const Step04 = (props) => {
         } else if (size === null || size === '') {
           setSizeDirectError(true);
           // directSizeRef.current.focus();
-        } else {
+        } else { 
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
           });
-        }
+        } 
       } else if (
         ca_id === '7' &&
         (type_id === '87' || type_id === '88' || type_id === '89')
@@ -804,15 +816,12 @@ const Step04 = (props) => {
               text: '확인',
             },
           ]);
-        } else {
+        } else { 
           navigation.navigate('OrderStep05', {
             screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
           });
-        }
-      } else {
-        navigation.navigate('OrderStep05', {
-          screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-        });
+        } 
+      } else {       
         dispatch(setUserPwidth(pWidth));
         dispatch(setUserPlength(pLength));
         dispatch(setUserPheight(pHeight));
@@ -832,6 +841,10 @@ const Step04 = (props) => {
           dispatch(setUserCntEtc(quantityDirect));
           dispatch(setUserCnt(0));
         }
+
+        navigation.navigate('OrderStep05', {
+          screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+        });
       }
     }
 

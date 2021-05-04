@@ -55,7 +55,7 @@ const Step03 = (props) => {
     isSelectDetailModalVisible,
     setSelectDetailModalVisible,
   ] = React.useState(false); // 타입 디테일 선택 모달
-  const [bindFix, setBindFix] = React.useState(null); // 리플렛 디테일 선택 모달
+  const [bindFix, setBindFix] = React.useState(''); // 리플렛 디테일 선택 모달
 
   const [type, setType] = React.useState('');
   const [typeName, setTypeName] = React.useState('');
@@ -96,7 +96,7 @@ const Step03 = (props) => {
   const selectDetail = (v, type_id) => {
     setDetail({type_id: type_id, detail: v});
     toggleSelectDetailModal();
-    setBindFix(null);
+    setBindFix('');
   };
 
   // 박스 정보 가져오기
@@ -131,7 +131,7 @@ const Step03 = (props) => {
     setType(v);
     setDetail({});
     setDetail02({});
-    setBindFix(null);
+    setBindFix('');
   };
 
   const nextBtn = () => {

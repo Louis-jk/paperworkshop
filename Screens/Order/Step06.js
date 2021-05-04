@@ -25,6 +25,7 @@ import {
   setUserPartialSilk2,
   setUserCoating,
   setUserCoating2,
+  setUserNumbering
 } from '../../Modules/OrderReducer';
 
 import BoxTypeAPI from '../../src/api/BoxType';
@@ -78,6 +79,7 @@ const Step06 = (props) => {
     page_cnt2,
     bind_type,
     standard,
+    standard_etc,
     thomson_type,
     writeing_paper,
     cover_color,
@@ -102,9 +104,10 @@ const Step06 = (props) => {
     proof_printing,
     proof_printing2,
     print_supervision,
-    print_supervision2,
+    print_supervision2,    
     outside,
     status,
+    way_edit
   } = useSelector((state) => state.OrderReducer);
 
 
@@ -118,12 +121,15 @@ const Step06 = (props) => {
   const [getSilk2, setGetSilk2] = React.useState([]); // 실크 정보 - 내지용
   const [getLaminate2, setGetLaminate2] = React.useState([]); // 코팅 정보 - 내지용
 
+  const [getNumbering, setGetNumbering] = React.useState([]); // 넘버링 정보 - 스티커의 경우
+
 
   const postProcessAPIHandler = () => {
    
     BoxTypeAPI.getPostProcess(cate1, ca_id)
       .then(res => {
         if(res.data.result === '1' && res.data.count > 0) {
+          console.log("후가공", res);
           setGetFoil(res.data.item[0].park_processing);
           setGetPress(res.data.item[0].press_design);
           setGetSilk(res.data.item[0].partial_silk);
@@ -133,6 +139,9 @@ const Step06 = (props) => {
             setGetPress2(res.data.item[0].press_design2);
             setGetSilk2(res.data.item[0].partial_silk2);
             setGetLaminate2(res.data.item[0].coating2);
+          }
+          if(cate1 === '0' && ca_id ==='6') {
+            setGetNumbering(res.data.item[0].numbering);
           }
         } else {
           Alert.alert(res.data.message, '관리자에게 문의하세요.', [
@@ -195,6 +204,14 @@ const Step06 = (props) => {
     dispatch(setUserPartialSilk(v));
   };
 
+   //  넘버링 유무
+   const [numbering, setNumbering] = React.useState('Y');
+
+   const setNumberingChoise = (v) => {
+     setNumbering(v);
+     dispatch(setUserNumbering(v));
+   };
+
   //  부분 실크 유무 - 내지
   const [silk02, setSilk02] = React.useState('Y');
 
@@ -224,6 +241,7 @@ const Step06 = (props) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
 
   const toggleModal = () => {
+    console.log("press");
     if (ca_id !== '10' && laminate === '') {
       setLaminateError(true);
     } 
@@ -231,7 +249,7 @@ const Step06 = (props) => {
       setLaminateError02(true);
     } else {
       setModalVisible(!isModalVisible);
-    }
+    }    
   };
 
   const [isInfoModalVisible, setInfoModalVisible] = React.useState(false);
@@ -240,29 +258,11 @@ const Step06 = (props) => {
     setInfoModalVisible(!isInfoModalVisible);
   };
 
-  const [source, setSource] = React.useState('');
-  const [source02, setSource02] = React.useState('');
-
-  const sendOrderBefore = () => {
-    if (pe_file_url && pe_file_type && pe_file_name !== null) {
-      setSource({
-        uri: pe_file_url,
-        type: pe_file_type,
-        name: pe_file_name,
-      });
-    }
-
-    if (pe_file02_url && pe_file02_type && pe_file02_name !== null) {
-      setSource02({
-        uri: pe_file02_url,
-        type: pe_file02_type,
-        name: pe_file02_name,
-      });
-    }
-    sendOrderAPI();
-  };
-
   const sendOrderAPI = () => {
+
+    let pe_file01 = {uri: pe_file_url, type: pe_file_type, name: pe_file_name};
+    let pe_file02 = {uri: pe_file02_url, type: pe_file02_type, name: pe_file02_name};
+
     const frmdata = new FormData();
     frmdata.append('method', 'proc_estimate');
     frmdata.append('cate1', cate1);
@@ -287,7 +287,7 @@ const Step06 = (props) => {
     frmdata.append('favor_area', favor_area);
     frmdata.append('delivery_date', delivery_date);
     frmdata.append('estimate_date', estimate_date);
-    frmdata.append('pe_file[]', source);
+    frmdata.append('pe_file[]', pe_file01);
     frmdata.append('memo', memo ? memo : '');
     frmdata.append('pwidth', pwidth);
     frmdata.append('plength', plength);
@@ -299,13 +299,15 @@ const Step06 = (props) => {
     frmdata.append('page_cnt2', page_cnt2);
     frmdata.append('bind_type', bind_type);
     frmdata.append('standard', standard);
+    frmdata.append('standard_etc', standard_etc);
+    frmdata.append('way_edit', way_edit);
+    frmdata.append('geomancer', geomancer);
     frmdata.append('thomson_type', thomson_type);
     frmdata.append('writeing_paper', writeing_paper);
     frmdata.append('cover_color', cover_color);
     frmdata.append('section_color', section_color);
     frmdata.append('back_side', back_side);
-    frmdata.append('geomancer', geomancer);
-    frmdata.append('pe_file2[]', source02);
+    frmdata.append('pe_file2[]', pe_file02);
     frmdata.append('wood_pattern', wood_pattern);
     frmdata.append('stype', stype);
     frmdata.append('board_tk', board_tk);
@@ -332,13 +334,17 @@ const Step06 = (props) => {
     frmdata.append('park_processing2', foil02);
     frmdata.append('press_design2', press02);
     frmdata.append('partial_silk2', silk02);
+    frmdata.append('numbering', numbering);
     frmdata.append('coating2', laminate02);
     frmdata.append('outside', outside);
     frmdata.append('status', status);
 
+    console.log("frmData :::::::::", frmdata);
+
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
+          console.log("return ::::::", res);
           setModalVisible(!isModalVisible);
           navigation.navigate('easyOrderComplete');
         } else if (res.data.result === '1' && res.data.count <= 0) {
@@ -369,7 +375,7 @@ const Step06 = (props) => {
       <Modal
         isVisible={isModalVisible}
         toggleModal={toggleModal}
-        goOrderComplete={sendOrderBefore}
+        goOrderComplete={sendOrderAPI}
       />
       <InfoModal isVisible={isInfoModalVisible} toggleModal={toggleInfoModal} />
       <DetailHeader
@@ -666,6 +672,60 @@ const Step06 = (props) => {
               </View>
             ) : null}
             {/* // 코팅  */}
+
+             {/* 넘버링  */}
+             {getNumbering &&
+             getNumbering.length > 1 && (
+                <View style={{marginBottom: 25}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 10,
+                    }}>
+                    <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                      넘버링
+                    </Text>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    {getNumbering.map((p, idx) => (
+                      <TouchableOpacity
+                        key={idx}
+                        activeOpacity={1}
+                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        onPress={() => setNumberingChoise(p)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                        }}>
+                        <Image
+                          source={
+                            numbering === p
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {p === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
+              )}
+            {/* // 넘버링  */}
+
           </View>
 
           {cate1 === '0' && (ca_id === '1' || ca_id === '4') ? (

@@ -54,11 +54,11 @@ const Step02 = (props) => {
   const {partner_location} = useSelector((state) => state.OrderHandlerReducer);
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
 
-  const titleRef = React.useRef(null); // 제작명 TextInpu
-  const nameRef = React.useRef(null); // 고객명 TextInpu
-  const mobileRef = React.useRef(null); // 휴대폰번호 TextInpu
-  const companyRef = React.useRef(null); // 휴대폰번호 TextInpu
-  const memoRef = React.useRef(null); // 메모 TextInpu
+  const titleRef = React.useRef(''); // 제작명 TextInpu
+  const nameRef = React.useRef(''); // 고객명 TextInpu
+  const mobileRef = React.useRef(''); // 휴대폰번호 TextInpu
+  const companyRef = React.useRef(''); // 휴대폰번호 TextInpu
+  const memoRef = React.useRef(''); // 메모 TextInpu
 
   const dispatch = useDispatch();
 
@@ -71,13 +71,13 @@ const Step02 = (props) => {
   // 기타인쇄물 견적 전 모달
   const [isModalVisible, setModalVisible] = React.useState(false);
 
-  const [title, setTitle] = React.useState(null); // 제작명 (필수)
-  const [name, setName] = React.useState(null); // 고객명 (필수)
-  const [mobile, setMobile] = React.useState(null); // 휴대폰 번호 (필수)
-  const [company, setCompany] = React.useState(null); // 회사명 (선택)
+  const [title, setTitle] = React.useState(''); // 제작명 (필수)
+  const [name, setName] = React.useState(''); // 고객명 (필수)
+  const [mobile, setMobile] = React.useState(''); // 휴대폰 번호 (필수)
+  const [company, setCompany] = React.useState(''); // 회사명 (선택)
   const [designOrder, setDesignOrder] = React.useState('P'); // 디자인 의뢰 (필수) : 인쇄만 의뢰/인쇄+디자인의뢰
   const [defaultLocat, setDefaultLocat] = React.useState([]); // 다일렉트 견적일 경우 해당 파트너스 등록 지역 초기 담기
-  const [location, setLocation] = React.useState(null); // 인쇄 업체 선호 지역 (필수)
+  const [location, setLocation] = React.useState(''); // 인쇄 업체 선호 지역 (필수)
   const [deliveryDate, setDeliveryDate] = React.useState(new Date()); // 납품 희망일 (필수)
   const [estimateDate, setEstimateDate] = React.useState(new Date()); // 견적 마감일 (필수)
 
@@ -87,7 +87,7 @@ const Step02 = (props) => {
   const [memoError, setMemoError] = React.useState(false); // 기타인쇄일 경우 메모(필수) 값 없을 때 에러 표시
 
   // const [file, setFile] = React.useState(null); // 파일 첨부 (선택)
-  const [memo, setMemo] = React.useState(null); // 메모 (선택)
+  const [memo, setMemo] = React.useState(''); // 메모 (선택)
 
   React.useEffect(() => {
     if (props.route.params.screen === 'DirectOrder') {
@@ -324,22 +324,22 @@ const Step02 = (props) => {
   // 기타인쇄 견적신청
   const toggleModal = () => {
     // Alert.alert('기타인쇄 견적을 신청하시겠습니까?');
-    if (title === null) {
+    if (title === null || title === '') {
       setTitleError(true);
       titleRef.current.focus();
-    } else if (name === null) {
+    } else if (name === null || name === '') {
       setNameError(true);
       nameRef.current.focus();
-    } else if (mobile === null) {
+    } else if (mobile === null || mobile === '') {
       setMobileError(true);
       mobileRef.current.focus();
-    } else if (location === null) {
+    } else if (location === null || location === '') {
       Alert.alert('인쇄 업체 선호 지역을 선택해주세요.', '', [
         {
           text: '확인',
         },
       ]);
-    } else if (memo === null) {
+    } else if (memo === null || memo === '') {
       setMemoError(true);
       memoRef.current.focus();
     } else {

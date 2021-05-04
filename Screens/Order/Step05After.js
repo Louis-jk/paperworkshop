@@ -31,17 +31,17 @@ const Step05After = (props) => {
     const [getPrtFrequency, setGetPrtFrequency] = React.useState([]); //  인쇄도수 API 가져온 값 - 경우에 따라 표지용
     const [getPrtFrequencyInner, setGetPrtFrequencyInner] = React.useState([]); //  인쇄도수 - 내지용
   
-    const [getProofPrinting, setGetProofPrinting] = React.useState(null); //  인쇄교정 API 가져온 값 - 경우에 따라 표지용 
-    const [getProofPrintingInner, setGetProofPrintingInner] = React.useState(null); //  인쇄교정 - 내지용 
+    const [getProofPrinting, setGetProofPrinting] = React.useState([]); //  인쇄교정 API 가져온 값 - 경우에 따라 표지용 
+    const [getProofPrintingInner, setGetProofPrintingInner] = React.useState([]); //  인쇄교정 - 내지용 
   
-    const [getPrtSupervision, setGetPrtSupervision] = React.useState(null); //  인쇄감리 API 가져온 값 - 경우에 따라 표지용
-    const [getPrtSupervisionInner, setGetPrtSupervisionInner] = React.useState(null); //  인쇄감리 - 내지용
+    const [getPrtSupervision, setGetPrtSupervision] = React.useState([]); //  인쇄감리 API 가져온 값 - 경우에 따라 표지용
+    const [getPrtSupervisionInner, setGetPrtSupervisionInner] = React.useState([]); //  인쇄감리 - 내지용
 
-    const [printColor, setPrintColor] = React.useState(null); //  인쇄도수 - 경우에 따라 표지용
+    const [printColor, setPrintColor] = React.useState(''); //  인쇄도수 - 경우에 따라 표지용
     const [correction, setCorrection] = React.useState('Y'); //  인쇄교정 - 경우에 따라 표지용
     const [inspection, setInspection] = React.useState('Y'); //  인쇄감리 - 경우에 따라 표지용
   
-    const [innerPrintColor, setInnerPrintColor] = React.useState(null); //  인쇄도수 - 내지용
+    const [innerPrintColor, setInnerPrintColor] = React.useState(''); //  인쇄도수 - 내지용
     const [innerCorrection, setInnerCorrection] = React.useState('Y'); //  인쇄교정 - 내지용
     const [innerInspection, setInnerInspection] = React.useState('Y'); //  인쇄감리 - 내지용
 
@@ -108,12 +108,15 @@ const Step05After = (props) => {
         } else if(cate1 === '0' && (ca_id === '1' || ca_id === '4') && (innerPrintColor === null || innerPrintColor === '')) {
             setInnerPrintColorError(true);
         } else {
-            dispatch(setUserFrequency(printColor));
-            dispatch(setUserFrequency2(innerPrintColor));
-            dispatch(setUserPrinting(correction));
-            dispatch(setUserPrinting2(innerCorrection));
+            if(cate1 === '0' && (ca_id === '1' || ca_id === '4')) {
+                dispatch(setUserFrequency2(innerPrintColor));
+                dispatch(setUserPrinting2(innerCorrection));
+                dispatch(setUserPrintSup2(innerInspection));
+            } 
+            dispatch(setUserFrequency(printColor));            
+            dispatch(setUserPrinting(correction));            
             dispatch(setUserPrintSup(inspection));
-            dispatch(setUserPrintSup2(innerInspection));
+            
 
             navigation.navigate('OrderStep06', {
                 screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
@@ -193,7 +196,8 @@ const Step05After = (props) => {
                     items={getPrtFrequency.map((v, _i) => {
                         return {value: v, label: v};
                     })}
-                    dropDownMaxHeight={200}
+                    dropDownMaxHeight={150}
+                    zIndex={1000}
                     containerStyle={{height: 50}}
                     style={{
                         backgroundColor: '#fff',

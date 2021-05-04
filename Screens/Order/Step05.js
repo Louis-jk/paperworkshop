@@ -80,8 +80,8 @@ const Step05 = (props) => {
   const [boardTk, setBoardTk] = React.useState(''); // 속지 판지 두께 담기 (ca_id === 12 : 싸바리 박스일 경우)
 
   // ca_id 1, ca_id 4 일반인쇄 '카달로그/브로슈어/판플렛' 또는 '책자/서적류' 일 경우 표지 내지로 분류됨
-  const [paper, setPaper] = React.useState(null); // 지류 선택 (pf_id 지류아이디) - 경우에 따라 표지용
-  const [paperInner, setPaperInner] = React.useState(null); // 지류 선택 (pf_id 지류아이디) - 내지 용
+  const [paper, setPaper] = React.useState(''); // 지류 선택 (pf_id 지류아이디) - 경우에 따라 표지용
+  const [paperInner, setPaperInner] = React.useState(''); // 지류 선택 (pf_id 지류아이디) - 내지 용
 
   const [paperName, setPaperName] = React.useState(''); // 지류 선택 시 지류 명 담기 - 경우에 따라 표지용
   const [paperNameInner, setPaperNameInner] = React.useState(''); // 지류 선택 시 지류 명 담기 - 내지 용
@@ -89,8 +89,8 @@ const Step05 = (props) => {
   const [typeDetail, setTypeDetail] = React.useState([]); // 지류 상세 정보 담기 - 경우에 따라 표지용
   const [typeDetailInner, setTypeDetailInner] = React.useState([]); // 지류 상세 정보 담기 - 내지 용
 
-  const [paperType, setPaperType] = React.useState(null); // 지종 선택 - 경우에 따라 표지용
-  const [paperTypeInner, setPaperTypeInner] = React.useState(null); // 지종 선택 - 내지용
+  const [paperType, setPaperType] = React.useState(''); // 지종 선택 - 경우에 따라 표지용
+  const [paperTypeInner, setPaperTypeInner] = React.useState(''); // 지종 선택 - 내지용
 
   const [isDirect01, setIsDirect01] = React.useState('n'); // 지종 2차 정보 중 "직접입력" 란 유무 담기 - 경우에 따라 표지용
   const [isDirect01Inner, setIsDirect01Inner] = React.useState('n'); // 지종 2차 정보 중 "직접입력" 란 유무 담기 - 내지 용
@@ -111,35 +111,35 @@ const Step05 = (props) => {
   const [paperDetail2More, setPaperDetail2More] = React.useState([]); // 지종 2차 지종세부 정보 담기 - 경우에 따라 표지용
   const [paperDetail2MoreInner, setPaperDetail2MoreInner] = React.useState([]); // 지종 2차 지종세부 정보 담기 - 내지용
 
-  const [getGoal, setGetGoal] = React.useState(null); // 지종 1차 Response 골 값 및 유무 (paper_goal)
+  const [getGoal, setGetGoal] = React.useState([]); // 지종 1차 Response 골 값 및 유무 (paper_goal)
 
   const [getWeight, setGetWeight] = React.useState([]); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 경우에 따라 표지용
   const [getWeightInner, setGetWeightInner] = React.useState([]); // 지종 1차 Response 평량 값 및 유무 (paper_weight) - 내지용
 
   const [goal, setGoal] = React.useState(''); //  골 정보 담기
 
-  const [isDirect, setIsDirect] = React.useState(null); // 지종 2차 직접 입력 선택 유무 - 경우에 따라 표지용
-  const [isDirectInner, setIsDirectInner] = React.useState(null); // 지종 2차 직접 입력 선택 유무 - 내지용
+  const [isDirect, setIsDirect] = React.useState(''); // 지종 2차 직접 입력 선택 유무 - 경우에 따라 표지용
+  const [isDirectInner, setIsDirectInner] = React.useState(''); // 지종 2차 직접 입력 선택 유무 - 내지용
 
-  const [directPaperName, setDirectPaperName] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 지종 직접 입력 값 담기 - 경우에 따라 표지용
-  const [directPaperNameInner, setDirectPaperNameInner] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 지종 직접 입력 값 담기 - 내지용
+  const [directPaperName, setDirectPaperName] = React.useState(''); // 지종 1차 또는 2차 직접 입력란 선택시 지종 직접 입력 값 담기 - 경우에 따라 표지용
+  const [directPaperNameInner, setDirectPaperNameInner] = React.useState(''); // 지종 1차 또는 2차 직접 입력란 선택시 지종 직접 입력 값 담기 - 내지용
 
-  const [directWeight, setDirectWeight] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기 - 경우에 따라 표지용
-  const [directWeightInner, setDirectWeightInner] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기 - 내지용
+  const [directWeight, setDirectWeight] = React.useState(''); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기 - 경우에 따라 표지용
+  const [directWeightInner, setDirectWeightInner] = React.useState(''); // 지종 1차 또는 2차 직접 입력란 선택시 평량 직접 입력 값 담기 - 내지용
 
-  const [directGoal, setDirectGoal] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기
+  const [directGoal, setDirectGoal] = React.useState(''); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기
 
-  const [directColor, setDirectColor] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기 - 경우에 따라 표지용
-  const [directColorInner, setDirectColorInner] = React.useState(null); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기 - 내지용
+  const [directColor, setDirectColor] = React.useState(''); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기 - 경우에 따라 표지용
+  const [directColorInner, setDirectColorInner] = React.useState(''); // 지종 1차 또는 2차 직접 입력란 선택시 골 직접 입력 값 담기 - 내지용
 
   const [getPaperColors, setGetPaperColors] = React.useState([]); //  색상 - 경우에 따라 표지용
   const [getPaperColorsInner, setGetPaperColorsInner] = React.useState([]); //  색상 - 내지용
 
-  const [paperColor, setPaperColor] = React.useState(null); //  색상 지정 index - 경우에 따라 표지용
-  const [paperColorInner, setPaperColorInner] = React.useState(null); //  색상 지정 index - 내지용
+  const [paperColor, setPaperColor] = React.useState(''); //  색상 지정 index - 경우에 따라 표지용
+  const [paperColorInner, setPaperColorInner] = React.useState(''); //  색상 지정 index - 내지용
 
-  const [paperColorName, setPaperColorName] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로) - 경우에 따라 표지용
-  const [paperColorNameInner, setPaperColorNameInner] = React.useState(null); //  색상 지정 색상명(API 받아온 그대로) - 내지용
+  const [paperColorName, setPaperColorName] = React.useState(''); //  색상 지정 색상명(API 받아온 그대로) - 경우에 따라 표지용
+  const [paperColorNameInner, setPaperColorNameInner] = React.useState(''); //  색상 지정 색상명(API 받아온 그대로) - 내지용
 
   // 2차 지종 유무
   const [isPaperType02, setIsPaperType02] = React.useState(false);
@@ -175,21 +175,22 @@ const Step05 = (props) => {
     false,
   ); // 색상 직접 입력 선택시 입력 안했을 경우 - 내지용
 
-  // 직접입력란 TextInput
+
+  const [paperDetailName, setPaperDetailName] = React.useState(''); // 지종세부 이름 입력
+  const [innerPaperDetailName, setInnerPaperDetailName] = React.useState(''); // 지종세부 이름 입력 - 내지용
+  const [pdId, setPdId] = React.useState(''); // 지종 pd_id 입력  
+  const [pdIdInner, setPdIdInner] = React.useState(''); // 지종 pd_id 입력 - 내지용
+  const [pnId, setPnId] = React.useState(''); // 지종세부 pn_id 입력  
+  const [pnIdInner, setPnIdInner] = React.useState(''); // 지종세부 pn_id 입력 - 내지용
+
+
+  // 직접입력란 TextInput Ref
   const directPaperRef = React.useRef(null); // 경우에 따라 표지용
   const directPaperInnerRef = React.useRef(null); // 내지용
-
   const directGoalRef = React.useRef(null);
-
   const directColorRef = React.useRef(null); // 경우에 따라 표지용
   const directColorInnerRef = React.useRef(null); // 내지용
 
-  const [paperDetailName, setPaperDetailName] = React.useState(null); // 지종세부 이름 입력
-  const [innerPaperDetailName, setInnerPaperDetailName] = React.useState(null); // 지종세부 이름 입력 - 내지용
-  const [pdId, setPdId] = React.useState(null); // 지종 pd_id 입력  
-  const [pdIdInner, setPdIdInner] = React.useState(null); // 지종 pd_id 입력 - 내지용
-  const [pnId, setPnId] = React.useState(null); // 지종세부 pn_id 입력  
-  const [pnIdInner, setPnIdInner] = React.useState(null); // 지종세부 pn_id 입력 - 내지용
 
   //////////////////////////
   /////// FUNCTIONS ///////
@@ -243,7 +244,7 @@ const Step05 = (props) => {
           },
         ]);
       } else if (
-        directGoal === null &&
+        (directGoal === null || directGoal === '') &&
         cate1 === '1' &&
         ca_id !== '9' &&
         ca_id !== '12' &&
@@ -256,7 +257,7 @@ const Step05 = (props) => {
             text: '확인',
           },
         ]);
-      } else if (ca_id !== '11' && ca_id !== '6' && directColor === null || directColor === '') {
+      } else if ((ca_id !== '11' && ca_id !== '6') && (directColor === null || directColor === '')) {
         setDirectColorError(true);
         Alert.alert('색상을 직접 입력해주세요.', '', [
           {
@@ -279,7 +280,7 @@ const Step05 = (props) => {
         });
       }
     } else if (isDirect01 === 'n' || isDirect !== '직접입력') {
-      if (weight === null && ca_id !== '10') {
+      if ((weight === null || weight === '') && ca_id !== '10') {
         setWeightError(true);
         Alert.alert('평량을 선택해주세요.', '', [
           {
@@ -287,7 +288,7 @@ const Step05 = (props) => {
           },
         ]);
       } else if (
-        goal === null &&
+        (goal === null || goal === '') &&
         cate1 === '1' &&
         ca_id !== '9' &&
         ca_id !== '12' &&
@@ -562,14 +563,14 @@ const Step05 = (props) => {
     setIsLoading03(true); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading04(true); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading05(true); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
-    setWeight(null); // 평량 초기화
-    setGoal(null); // 골 초기화
-    setDirectPaperName(null); // 지종 직접 입력값 초기화
-    setDirectWeight(null); // 평량 직접 입력값 초기화
-    setDirectGoal(null); // 골 직접 입력값 초기화
+    setWeight(''); // 평량 초기화
+    setGoal(''); // 골 초기화
+    setDirectPaperName(''); // 지종 직접 입력값 초기화
+    setDirectWeight(''); // 평량 직접 입력값 초기화
+    setDirectGoal(''); // 골 직접 입력값 초기화
     setIsDirect01('n'); // 지종 1차 선택시 직접 유무 초기화
-    setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화
-    setPaperType(null); // 지종 초기화
+    setIsDirect(''); // 지종 2차 선택시 직접 유무 초기화
+    setPaperType(''); // 지종 초기화
   };
 
   // 지류 선택시 실행될 기능 - 내지용
@@ -580,12 +581,12 @@ const Step05 = (props) => {
     setIsLoading03Inner(true); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading04Inner(true); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading05Inner(true); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
-    setWeightInner(null); // 평량 초기화
-    setDirectPaperNameInner(null); // 지종 직접 입력값 초기화
-    setDirectWeightInner(null); // 평량 직접 입력값 초기화
+    setWeightInner(''); // 평량 초기화
+    setDirectPaperNameInner(''); // 지종 직접 입력값 초기화
+    setDirectWeightInner(''); // 평량 직접 입력값 초기화
     setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
-    setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화
-    setPaperTypeInner(null); // 지종 초기화
+    setIsDirectInner(''); // 지종 2차 선택시 직접 유무 초기화
+    setPaperTypeInner(''); // 지종 초기화
   };
 
   // ca_id 1 또는 ca_id 4 (카달로그/브로슈어/리플렛 또는 책자/서적류) - 표지용
@@ -671,8 +672,8 @@ const Step05 = (props) => {
     setIsLoading03(true); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading04(true); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading05(true); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
-    setPaperColor(null);
-    setPaperColorName(null);
+    setPaperColor('');
+    setPaperColorName('');
     
     BoxTypeAPI.getPaperNoDetailInfo(cate1, ca_id, paper, pd_id, paper_name)
       .then((res) => {
@@ -718,8 +719,8 @@ const Step05 = (props) => {
     setIsLoading03Inner(true); // 지종 직접 입력 TextInput 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading04Inner(true); // 색상 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
     setIsLoading05Inner(true); // 골 활성화 여부 (false: 활성(표시) / true: 비활성(숨김))
-    setPaperColorInner(null);
-    setPaperColorNameInner(null);
+    setPaperColorInner('');
+    setPaperColorNameInner('');
 
     BoxTypeAPI.getPaperNoDetailInfo(cate1, ca_id, paperInner, pd_id, paper_name)
       .then((res) => {
@@ -762,8 +763,8 @@ const Step05 = (props) => {
   // 지종세부일 경우 평량 정보 가져오기 - 경우에 따라 표지용
   const getPaperDetailStep02More = (pd_id, name) => {
     setIsLoading02(true);
-    setPaperColor(null);
-    setPaperColorName(null);
+    setPaperColor('');
+    setPaperColorName('');
     axios({
       url: `${baseUrl}`,
       method: 'post',
@@ -801,8 +802,8 @@ const Step05 = (props) => {
     // 지종세부일 경우 평량 정보 가져오기 - 내지용
     const getPaperDetailStep02MoreInner = (pd_id, name) => {
       setIsLoading02Inner(true);
-      setPaperColorInner(null);
-      setPaperColorNameInner(null);
+      setPaperColorInner('');
+      setPaperColorNameInner('');
       axios({
         url: `${baseUrl}`,
         method: 'post',
@@ -837,28 +838,28 @@ const Step05 = (props) => {
         });
     };
 
-  const reset = () => { 
-    setPaper(null);
-    setPaperInner(null);
-    setPaperType(null);
-    setPaperTypeInner(null);
-    setPaperName(null);
-    setPaperNameInner(null);
-    setPdId(null);
-    setPdIdInner(null);
-    setPnId(null);
-    setPnIdInner(null);
-    setDirectPaperName(null);
-    setDirectPaperNameInner(null);
-    setWeight(null);
-    setWeightInner(null);
-    setPaperColor(null);
-    setPaperColorInner(null);
-  }
+  // const reset = () => { 
+  //   setPaper('');
+  //   setPaperInner('');
+  //   setPaperType('');
+  //   setPaperTypeInner('');
+  //   setPaperName('');
+  //   setPaperNameInner('');
+  //   setPdId('');
+  //   setPdIdInner('');
+  //   setPnId('');
+  //   setPnIdInner('');
+  //   setDirectPaperName('');
+  //   setDirectPaperNameInner('');
+  //   setWeight('');
+  //   setWeightInner('');
+  //   setPaperColor('');
+  //   setPaperColorInner('');
+  // }
 
   React.useEffect(() => {
     getTypeDetailAPIHandler();
-    reset();
+    // reset();
   }, [cate1, ca_id]);
 
 
@@ -892,7 +893,7 @@ const Step05 = (props) => {
     setIsLoading02(false);
     setIsLoading03(true);
     setIsDirect01('n'); // 지종 1차 선택시 직접 유무 초기화
-    setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화
+    setIsDirect(''); // 지종 2차 선택시 직접 유무 초기화
   };
 
   // 지종 1차 선택 - 내지용
@@ -903,7 +904,7 @@ const Step05 = (props) => {
     setIsLoading02Inner(false);
     setIsLoading03Inner(true);
     setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
-    setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화
+    setIsDirectInner(''); // 지종 2차 선택시 직접 유무 초기화
   };
 
   // 지종 1차 선택(지종 2차(지종세부)없을 시) - 경우에 따라 표지용
@@ -914,7 +915,7 @@ const Step05 = (props) => {
     setIsLoading02(false);
     setIsLoading03(true);
     setIsDirect01('n'); // 지종 1차 선택시 직접 유무 초기화
-    setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화
+    setIsDirect(''); // 지종 2차 선택시 직접 유무 초기화
   };
 
   // 지종 1차 선택(지종 2차(지종세부)없을 시) - 내지용
@@ -925,7 +926,7 @@ const Step05 = (props) => {
     setIsLoading02Inner(false);
     setIsLoading03Inner(true);
     setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
-    setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화
+    setIsDirectInner(''); // 지종 2차 선택시 직접 유무 초기화
   };
 
   // 지종 2차 선택 - 경우에 따라 표지용
@@ -936,7 +937,7 @@ const Step05 = (props) => {
     if(name !== '직접입력') {
       getPaperDetailStep02More(pd_id, name);
       setIsDirect01('n'); // 지종 1차 선택시 직접 유무 초기화
-      setIsDirect(null); // 지종 2차 선택시 직접 유무 초기화 
+      setIsDirect(''); // 지종 2차 선택시 직접 유무 초기화 
     } else {
       setIsLoading02(false);
       setIsLoading03(false);
@@ -951,7 +952,7 @@ const Step05 = (props) => {
     if(name !== '직접입력') {
       getPaperDetailStep02MoreInner(pd_id, name);
       setIsDirect01Inner('n'); // 지종 1차 선택시 직접 유무 초기화
-      setIsDirectInner(null); // 지종 2차 선택시 직접 유무 초기화  
+      setIsDirectInner(''); // 지종 2차 선택시 직접 유무 초기화  
     } else {
       setIsDirect01Inner('y');
     }    
@@ -2221,7 +2222,7 @@ const Step05 = (props) => {
 
                 {!isLoading03Inner &&
                 (isDirectInner === '직접입력' || isDirect01Inner === 'y') &&
-                getWeightInner === null &&
+                (getWeightInner === null || getWeightInner === '') &&
                 ca_id !== '10' ? (
                   <TextInput
                     value={directWeightInner}

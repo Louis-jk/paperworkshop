@@ -48,6 +48,7 @@ const OrderDetail = (props) => {
     OrderAPI.getMyOrderParticulars(method, pe_id)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
+          console.log("에라이 ", res);
           setDetails(res.data.item.basic);
           if (cate1 !== '2') {
             setInfo01(res.data.item.basic2);
@@ -947,7 +948,6 @@ const OrderDetail = (props) => {
             {/* // 경계 라인 */}
             {/* // 간편 견적 유무에 따른 표시 Area */}
             {details.easy_yn === 'N' &&
-            (details.ca_id === '1' || details.ca_id === '4') &&
             (info04.park_processing !== '' ||
               info04.press_design !== '' ||
               info04.partial_silk !== '' ||
@@ -1003,10 +1003,17 @@ const OrderDetail = (props) => {
                     <Text style={styles.detailsTitle02}>코팅</Text>
                     <Text style={styles.detailsDesc}>{info04.coating}</Text>
                   </View>
+                  {details.ca_id === '6' ? 
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>넘버링</Text>
+                    <Text style={styles.detailsDesc}>{info04.numbering === 'Y' ? '있음' : '없음'}</Text>
+                  </View>
+                  : null }
                 </View>
               </View>
             ) : null}
             {details.easy_yn === 'N' &&
+            (details.ca_id === '1' || details.ca_id === '4') &&
             (info04.park_processing !== '' ||
               info04.press_design !== '' ||
               info04.partial_silk !== '' ||
@@ -1047,6 +1054,7 @@ const OrderDetail = (props) => {
                     <Text style={styles.detailsTitle02}>코팅</Text>
                     <Text style={styles.detailsDesc}>{info04.coating2}</Text>
                   </View>
+                  
                 </View>
               </View>
             ) : null}
