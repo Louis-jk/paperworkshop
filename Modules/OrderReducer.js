@@ -52,6 +52,7 @@ const SET_PRINT_SUPERVISION = 'SET_PRINT_SUPERVISION';
 const SET_PARK_PROCESSING = 'SET_PARK_PROCESSING';
 const SET_PRESS_DESIGN = 'SET_PRESS_DESIGN';
 const SET_PARTIAL_SILK = 'SET_PARTIAL_SILK';
+const SET_NUMBERING = 'SET_NUMBERING';
 const SET_COATING = 'SET_COATING';
 const SET_OUTSIDE = 'SET_OUTSIDE';
 const SET_STATUS = 'SET_STATUS';
@@ -61,6 +62,7 @@ const SET_PAGE_CNT = 'SET_PAGE_CNT';
 const SET_PAGE_CNT2 = 'SET_PAGE_CNT2';
 const SET_BIND_TYPE = 'SET_BIND_TYPE';
 const SET_STANDARD = 'SET_STANDARD';
+const SET_STANDARD_ETC = 'SET_STANDARD_ETC';
 const SET_THOMSON_TYPE = 'SET_THOMSON_TYPE';
 const SET_WRITEING_PAPER = 'SET_WRITEING_PAPER';
 const SET_COVER_COLOR = 'SET_COVER_COLOR';
@@ -79,6 +81,8 @@ const SET_PARK_PROCESSING2 = 'SET_PARK_PROCESSING2';
 const SET_PRESS_DESIGN2 = 'SET_PRESS_DESIGN2';
 const SET_PARTIAL_SILK2 = 'SET_PARTIAL_SILK2';
 const SET_COATING2 = 'SET_COATING2';
+
+const RESET = 'RESET';
 
 // action method
 export const selectCate1 = (payload) => ({type: SELECT_CATE1, payload});
@@ -160,6 +164,7 @@ export const setUserPageCnt = (payload) => ({type: SET_PAGE_CNT, payload});
 export const setUserPageCnt2 = (payload) => ({type: SET_PAGE_CNT2, payload});
 export const setUserBindType = (payload) => ({type: SET_BIND_TYPE, payload});
 export const setUserStandard = (payload) => ({type: SET_STANDARD, payload});
+export const setUserStandardEtc = (payload) => ({type: SET_STANDARD_ETC, payload});
 export const setUserThomsonType = (payload) => ({
   type: SET_THOMSON_TYPE,
   payload,
@@ -218,8 +223,14 @@ export const setUserPartialSilk2 = (payload) => ({
   type: SET_PARTIAL_SILK2,
   payload,
 });
+export const setUserNumbering = (payload) => ({
+  type: SET_NUMBERING,
+  payload,
+});
 export const setUserCoating = (payload) => ({type: SET_COATING, payload});
 export const setUserCoating2 = (payload) => ({type: SET_COATING2, payload});
+
+export const resetState = () => ({type: RESET, initialize});
 
 // initialize
 const initialize = {
@@ -265,6 +276,7 @@ const initialize = {
   page_cnt2: '', // 페이지수(내지)
   bind_type: '', // 제본방식
   standard: '', // 규격
+  standard_etc: '', // 규격 직접입력
   thomson_type: '', // 톰슨모양
   writeing_paper: '', // 간지
   cover_color: '', // 표지간지색상
@@ -306,6 +318,88 @@ const initialize = {
 // reducer create
 export default function setOrder(state = initialize, action) {
   switch (action.type) {
+    case RESET: 
+      return {
+        cate1: '', 
+        ca_id: '', 
+        type_id: '', 
+        type_name: '', 
+        pf_id: '', 
+        pf_id2: '', 
+        pd_id: '', 
+        pd_id2: '', 
+        pn_id: '', 
+        pn_id2: '', 
+        paper_name2: '', 
+        paper_name2_02: '', 
+        mb_id: '', 
+        company_id: '',
+        title: '', 
+        company: '',
+        mb_name: '',
+        mb_hp: '',
+        design_print: '', 
+        favor_area: '', 
+        delivery_date: '',
+        estimate_date: '',
+        pe_file_url: '',
+        pe_file_type: '',
+        pe_file_name: '',
+        pe_file_size: '',
+        memo: '',
+        pwidth: '',
+        plength: '',
+        pheight: '',
+        cnt: '',
+        cnt_etc: '',
+        wood_pattern: '',
+        stype: '', 
+        board_tk: '',
+        ground_method: '',
+        way_edit: '',
+        easy_yn: 'N',
+        page_cnt: '',
+        page_cnt2: '',
+        bind_type: '',
+        standard: '', 
+        thomson_type: '', 
+        writeing_paper: '',
+        cover_color: '', 
+        section_color: '',
+        back_side: '', 
+        geomancer: '', 
+        pe_file02_url: '',
+        pe_file02_type: '',
+        pe_file02_name: '',
+        pe_file02_size: '',
+        paper_weight: '', 
+        paper_weight2: '',
+        paper_weight_etc: '', 
+        paper_weight_etc2: '',
+        paper_goal: '',
+        paper_goal_etc: '',
+        paper_color: '',
+        paper_color2: '',
+        paper_color_etc: '',
+        paper_color_etc2: '',
+        print_frequency: '',
+        print_frequency2: '',
+        proof_printing: '',
+        proof_printing2: '',
+        print_supervision: '',
+        print_supervision2: '',
+        park_processing: '', 
+        park_processing2: '',
+        press_design: '',
+        press_design2: '',
+        partial_silk: '',
+        partial_silk2: '',
+        numbering: '',
+        coating: '',
+        coating2: '',
+        outside: 'N',
+        status: '',
+      };
     case SELECT_CATE1:
       return {
         ...state,
@@ -606,6 +700,11 @@ export default function setOrder(state = initialize, action) {
         ...state,
         standard: action.payload,
       };
+    case SET_STANDARD_ETC:
+      return {
+        ...state,
+        standard_etc: action.payload,
+      };
     case SET_THOMSON_TYPE:
       return {
         ...state,
@@ -690,6 +789,11 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         partial_silk2: action.payload,
+      };
+    case SET_NUMBERING:
+      return {
+        ...state,
+        numbering: action.payload,
       };
     case SET_COATING2:
       return {
