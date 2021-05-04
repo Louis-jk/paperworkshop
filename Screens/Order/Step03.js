@@ -265,7 +265,7 @@ const Step03 = (props) => {
             <Text style={[styles.normalText, {fontSize: 14, color: '#366DE5'}]}>
               원하시는 세부 {cate1 === '1' ? '박스' : '인쇄'}
               타입을 선택해주세요.
-            </Text>
+            </Text>            
           </View>
 
           {/* 타입 부분 */}
