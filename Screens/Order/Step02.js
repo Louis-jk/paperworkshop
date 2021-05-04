@@ -203,30 +203,19 @@ const Step02 = (props) => {
       }
     }
   };
-
-  const [source, setSource] = React.useState('');
-  // const [deliDate, setDeliDate] = React.useState('');
-  // const [estiDate, setEstiDate] = React.useState('');
+  
 
   const sendOrderBefore = () => {
     let deli = moment(deliveryDate).format('YYYY-MM-DD'); // 납품 희망일 형식 변환
     let esti = moment(estimateDate).format('YYYY-MM-DD'); // 견적 마감일 형식 변환
-    // setDeliDate(deli);
-    // setEstiDate(esti);
-
-    if (fileUrlCurrent && fileTypeCurrent && fileName !== null) {
-      setSource({
-        uri: fileUrlCurrent,
-        type: fileTypeCurrent,
-        name: fileName,
-      });
-      sendOrderAPI(deli, esti);
-    } else {
-      sendOrderAPI(deli, esti);
-    }
+        
+    sendOrderAPI(deli, esti);
   };
 
   const sendOrderAPI = (deli, esti) => {
+
+    let file = {uri: fileUrlCurrent, type: fileTypeCurrent, name: fileName};
+
     const frmdata = new FormData();
     frmdata.append('method', 'proc_estimate_etc');
     frmdata.append('cate1', cate1);
@@ -241,7 +230,7 @@ const Step02 = (props) => {
     frmdata.append('memo', memo);
     frmdata.append('delivery_date', deli);
     frmdata.append('estimate_date', esti);
-    frmdata.append('pe_file[]', source);
+    frmdata.append('pe_file[]', file);
     frmdata.append('status', '0');
 
     OrderAPI.sendOrder(frmdata)
