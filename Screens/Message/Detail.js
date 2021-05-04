@@ -168,15 +168,24 @@ const Detail = (props) => {
   };
 
   // 채팅 메세지 전송
-  const sendMessageAPI = () => {
-    let frmData = new FormData();
-    frmData.append('method', 'proc_my_message');
-    frmData.append('mb_id', mb_id);
-    frmData.append('pm_id', pmId);
-    frmData.append('msg', message);
-    frmData.append('bf_file[]', msgFile);
+  const sendMessageAPI = (type, payload) => {
 
-    console.log('frmData', frmData);
+    let frmData = new FormData();
+
+    if(type === 'msg') {      
+      frmData.append('method', 'proc_my_message');
+      frmData.append('mb_id', mb_id);
+      frmData.append('pm_id', pmId);
+      frmData.append('msg', payload);
+      frmData.append('bf_file[]', '');
+    } else {
+      frmData.append('method', 'proc_partner_message');
+      frmData.append('company_id', mb_id);
+      frmData.append('pm_id', pmId);
+      frmData.append('msg', '');
+      frmData.append('bf_file[]', payload);
+    }
+    
     ChatAPI.sendMessage(frmData)
       .then((res) => {
         if (res.data.result === '1') {
@@ -200,7 +209,14 @@ const Detail = (props) => {
       });
   };
 
-  console.log('msgFile', msgFile);
+
+  // 채팅 메세지 파일 전송
+  const sendMessageFileAPI = (uri, type, name) => {
+
+    let file = {uri, type, name};
+    sendMessageAPI('file', file);
+
+  };
 
   // 파일 다운로드 메소드
   const downloader = async (filePath, fileName) => {
@@ -228,37 +244,27 @@ const Detail = (props) => {
 
   const [source, setSource] = React.useState({});
 
+
   // 파일 업로드 메소드
   const filePicker = async () => {
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      // setMsgFile({
-      //   uri: res.uri,
-      //   type: res.type,
-      //   name: res.name,
-      // });
-      setSource({
+      setMsgFile({
         uri: res.uri,
         type: res.type,
         name: res.name,
       });
-      console.log('size:', res.size);
-      if (res.size > 150000) {
-        Alert.alert(
-          '이미지 사이즈가 너무 큽니다.',
-          '사이즈를 줄이시거나 확인해주세요',
-          [
-            {
-              text: '확인',
-              onPress: () => setSource({}),
-            },
-          ],
-        );
-      } else {
-        onChatFileUploadHandler();
-      }
+      Alert.alert('파일을 전송하시겠습니까?', '', [
+        {
+          text: '확인',
+          onPress: () => sendMessageFileAPI(res.uri, res.type, res.name),
+        },
+        {
+          text: '취소'
+        }
+      ]);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -350,14 +356,14 @@ const Detail = (props) => {
         {item.msg ? 
           <View
             style={{
-              alignSelf: item.mb_id === mb_email ? 'flex-end' : 'flex-start',
-              flexDirection: item.mb_id === mb_email ? 'row-reverse' : 'row',
+              alignSelf: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
+              flexDirection: item.mb_id === mb_id ? 'row-reverse' : 'row',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
               paddingVertical: 10,
               width: '70%',
             }}>
-            {item.mb_id !== mb_email ? 
+            {item.mb_id !== mb_id ? 
             <Image
               source={{uri: `${item.mb_profile}`}}
               resizeMode="cover"
@@ -368,8 +374,8 @@ const Detail = (props) => {
                 marginRight: 10,
               }}
             /> : null}
-            <View style={item.mb_id === mb_email ? styles.msgBubbleP : styles.msgBubble}>
-              <Text style={item.mb_id === mb_email ? styles.msgTextP : styles.msgText}>{item.msg}</Text>
+            <View style={item.mb_id === mb_id ? styles.msgBubbleP : styles.msgBubble}>
+              <Text style={item.mb_id === mb_id ? styles.msgTextP : styles.msgText}>{item.msg}</Text>
             </View>
             <Text
               style={{
@@ -386,14 +392,14 @@ const Detail = (props) => {
           item.bf_file && (item.bf_file_ext === 'jpg' || item.bf_file_ext === 'png') ?
           <View
             style={{
-              alignSelf: item.mb_id === mb_email ? 'flex-end' : 'flex-start',
-              flexDirection: item.mb_id === mb_email ? 'row-reverse' : 'row',
+              alignSelf: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
+              flexDirection: item.mb_id === mb_id ? 'row-reverse' : 'row',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
               paddingVertical: 10,
               width: '70%',
             }}>
-            {item.mb_id !== mb_email ? 
+            {item.mb_id !== mb_id ? 
               <Image
                 source={{uri: `${item.mb_profile}`}}
                 resizeMode="cover"
@@ -409,8 +415,8 @@ const Detail = (props) => {
                 backgroundColor: '#fff',
                 padding: 10,
                 borderRadius: 5,
-                marginLeft: item.mb_id === mb_email ? 10 : 0,
-                marginRight: item.mb_id !== mb_email ? 10 : 0,
+                marginLeft: item.mb_id === mb_id ? 10 : 0,
+                marginRight: item.mb_id !== mb_id ? 10 : 0,
               }}>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -445,14 +451,14 @@ const Detail = (props) => {
           item.bf_file && item.bf_file_ext === 'gif' ? 
           <View
             style={{
-              alignSelf: item.mb_id === mb_email ? 'flex-end' : 'flex-start',
-              flexDirection: item.mb_id === mb_email ? 'row-reverse' : 'row',
+              alignSelf: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
+              flexDirection: item.mb_id === mb_id ? 'row-reverse' : 'row',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
               paddingVertical: 10,
               width: '70%',
             }}>
-            {item.mb_id !== mb_email ? 
+            {item.mb_id !== mb_id ? 
               <Image
                 source={{uri: `${item.mb_profile}`}}
                 resizeMode="cover"
@@ -468,8 +474,8 @@ const Detail = (props) => {
                 backgroundColor: '#fff',
                 padding: 10,
                 borderRadius: 5,
-                marginLeft: item.mb_id === mb_email ? 10 : 0,
-                marginRight: item.mb_id !== mb_email ? 10 : 0,
+                marginLeft: item.mb_id === mb_id ? 10 : 0,
+                marginRight: item.mb_id !== mb_id ? 10 : 0,
               }}>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -505,8 +511,8 @@ const Detail = (props) => {
           item.bf_file_ext !== 'gif' &&
           item.bf_file_ext !== 'jpg' &&
           item.bf_file_ext !== 'png' ? 
-          <View style={{flexDirection: 'row', justifyContent: item.mb_id === mb_email ? 'flex-end' : 'flex-start'}}>
-            {item.mb_id !== mb_email ? 
+          <View style={{flexDirection: 'row', justifyContent: item.mb_id === mb_id ? 'flex-end' : 'flex-start'}}>
+            {item.mb_id !== mb_id ? 
               <Image
                 source={{uri: `${item.mb_profile}`}}
                 resizeMode="cover"
@@ -526,20 +532,19 @@ const Detail = (props) => {
                 )
               }
               style={{
-                flexDirection: item.mb_id === mb_email ? 'row-reverse' : 'row',
+                flexDirection: item.mb_id === mb_id ? 'row-reverse' : 'row',
                 paddingVertical: 10,
                 width: '70%',
               }}>
               <View
                 style={{
-                  // alignSelf: item.mb_id === mb_email ? 'flex-end' : 'flex-start',
                   flexDirection: 'row',
                   alignItems: 'center',
                   backgroundColor: '#fff',
                   padding: 10,
                   borderRadius: 5,
-                  marginLeft: item.mb_id === mb_email ? 10 : 0,
-                  marginRight: item.mb_id !== mb_email ? 10 : 0,
+                  marginLeft: item.mb_id === mb_id ? 10 : 0,
+                  marginRight: item.mb_id !== mb_id ? 10 : 0,
                 }}>
                 <Image
                   source={require('../../src/assets/icon_down.png')}
@@ -665,7 +670,7 @@ const Detail = (props) => {
         </View>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => sendMessageAPI()}
+          onPress={() => sendMessageAPI('msg', message)}
           style={{flex: 1}}>
           <Image
             source={require('../../src/assets/icon01.png')}
