@@ -38,7 +38,7 @@ import {
   setUserFileType,
   setUserFileName,
   setUserFileSize,
-  setUserMemo,
+  setUserMemo
 } from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
 
@@ -391,7 +391,7 @@ const Step02 = (props) => {
                 <Text
                   style={[styles.boldText, {fontSize: 16, marginBottom: 20}]}>
                   기본 정보
-                </Text>
+                </Text>              
                 <View
                   style={{
                     flexDirection: 'row',
