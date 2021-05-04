@@ -256,7 +256,7 @@ const Step05 = (props) => {
             text: '확인',
           },
         ]);
-      } else if (directColor === null || directColor === '') {
+      } else if (ca_id !== '11' && ca_id !== '6' && directColor === null || directColor === '') {
         setDirectColorError(true);
         Alert.alert('색상을 직접 입력해주세요.', '', [
           {
@@ -300,14 +300,92 @@ const Step05 = (props) => {
             text: '확인',
           },
         ]);
-      } else if (ca_id !== '11' && (paperColor === null || paperColor === '')) {
+      } else if (ca_id !== '11' && ca_id !== '6' && (paperColor === null || paperColor === '')) {
         setColorError(true);
         Alert.alert('색상을 선택해주세요.', '', [
           {
             text: '확인',
           },
         ]);
-      } else {
+      }
+      else if (ca_id === '1' || ca_id === '4') {
+        if(paperInner === '' || paperInner === null) {
+          setPaperTypeInnerError(true);
+          Alert.alert("내지 지류를 선택해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
+        } else if(paperTypeInner === '' || paperTypeInner === null) {
+          setPaperInnerError(true);
+          Alert.alert("내지 지종을 선택해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
+        } else if(isDirectInner === '직접입력' || isDirect01Inner === 'y') {
+          setDirectPaperInnerError(true);
+          Alert.alert("내지 지종 직접입력을 선택하셨습니다.", "입력란에 지종을 입력해주세요.", [
+            {
+              text: '확인'
+            }
+          ]);
+        } else if(weightInner === '' || weightInner === null) {
+          setWeightInnerError(true);
+          Alert.alert("내지 평량을 선택해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
+        } else if((isDirectInner === '직접입력' || isDirect01Inner === 'y') && (directWeightInner === '' || directWeightInner === null)) {
+          setDirectWeightInnerError(true);
+          Alert.alert("내지 평량 직접입력을 선택하셨습니다.", "입력란에 평량을 입력해주세요.", [
+            {
+              text: '확인'
+            }
+          ]);
+        } else if(paperColorInner === '' || paperColorInner === null) {
+          setColorInnerError(true);
+          Alert.alert("내지 색상을 선택해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
+        } else if((isDirectInner === '직접입력' || isDirect01Inner === 'y') && (directColorInner === '' || directColorInner === null)) {
+          setDirectColorInnerError(true);
+          Alert.alert("내지 색상 직접입력을 선택하셨습니다.", "입력란에 색상을 입력해주세요.", [
+            {
+              text: '확인'
+            }
+          ]);
+        } else {
+          dispatch(selectPfId(paper));
+          dispatch(selectPfId02(paperInner));
+          dispatch(selectPdId(pdId));
+          dispatch(selectPdId02(pdIdInner));
+          dispatch(selectPnId(pnId));
+          dispatch(selectPnId02(pnIdInner));
+          dispatch(selectPaperName(directPaperName));
+          dispatch(selectPaperName02(directPaperNameInner));
+          dispatch(setUserWeightEtc(directWeight));
+          dispatch(setUserWeightEtc02(directWeightInner));
+          dispatch(setUserGoalEtc(directGoal));
+          dispatch(setUserColorEtc(directColor));
+          dispatch(setUserColorEtc02(directColorInner));      
+          dispatch(setOrderDetails(paperDetail2));
+          dispatch(setUserWeight(weight));
+          dispatch(setUserWeight2(weightInner));
+          dispatch(setUserGoal(goal));
+          dispatch(setUserColor(paperColor));
+          dispatch(setUserColor02(paperColorInner));
+          dispatch(setUserBoardTk(boardTk));
+  
+          navigation.navigate('OrderStep05After', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
+        }
+      }
+      else {
         dispatch(selectPfId(paper));
         dispatch(selectPfId02(paperInner));
         dispatch(selectPdId(pdId));
@@ -1666,7 +1744,7 @@ const Step05 = (props) => {
               {/* // 골 선택 또는 입력 */}
 
               {/* 색상 선택  */}
-              {!isLoading04 && ca_id !== '11' && (getPaperColors !== null || getPaperColors !== '') ? (
+              {!isLoading04 && ca_id !== '11' && ca_id !== '6' && (getPaperColors !== null || getPaperColors !== '') ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1680,7 +1758,7 @@ const Step05 = (props) => {
                   </View>
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              ) : !isLoading04 && ca_id !== '11' && isDirect01 === 'y' ? (
+              ) : !isLoading04 && ca_id !== '11' && ca_id !== '6' && isDirect01 === 'y' ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1694,7 +1772,7 @@ const Step05 = (props) => {
                   </View>
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              ) : !isLoading04 && ca_id !== '11' && isDirect === '직접입력' ? (
+              ) : !isLoading04 && ca_id !== '11' && ca_id !== '6' && isDirect === '직접입력' ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1709,7 +1787,7 @@ const Step05 = (props) => {
                   {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
               ) : null}
-              {!isLoading04 && ca_id !== '11' && (getPaperColors !== null || getPaperColors !== '') && getPaperColors.length > 0 && (
+              {!isLoading04 && ca_id !== '11' && ca_id !== '6' && (getPaperColors !== null || getPaperColors !== '') && getPaperColors.length > 0 && (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -1750,7 +1828,7 @@ const Step05 = (props) => {
                     ))}
                   </View>
                 )}
-              {colorError ? (
+              {ca_id !== '11' && ca_id !== '6' && colorError ? (
                 <Text
                   style={{
                     fontFamily: 'SCDream4',
@@ -1761,7 +1839,7 @@ const Step05 = (props) => {
                   색상을 선택해주세요.
                 </Text>
               ) : null}
-              {!isLoading04 && ca_id !== '11' && (isDirect === '직접입력' || isDirect01 === 'y') && getPaperColors === '' ? (
+              {!isLoading04 && ca_id !== '11' && ca_id !== '6' && (isDirect === '직접입력' || isDirect01 === 'y') && getPaperColors === '' ? (
                 <TextInput
                   ref={directColorRef}
                   value={directColor}
