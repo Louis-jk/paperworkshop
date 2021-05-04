@@ -6,10 +6,6 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard,
-  Dimensions,
-  TextInput,
-  Button,
   Image,
   Alert,
 } from 'react-native';
@@ -19,7 +15,6 @@ import DetailHeader from '../Common/DetailHeader';
 import Modal from './detailOrderModal';
 import InfoModal from '../Common/infoModal02';
 import OrderAPI from '../../src/api/OrderAPI';
-
 
 import {
   setUserParkProc,
@@ -158,7 +153,7 @@ const Step06 = (props) => {
 
   React.useEffect(() => {
     postProcessAPIHandler();
-  },[cate1, ca_id])
+  },[])
 
   //  박가공 유무
   const [foil, setFoil] = React.useState('Y');
