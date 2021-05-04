@@ -100,6 +100,11 @@ const Step05After = (props) => {
         
         if(printColor === null || printColor === '') {
             setPrintColorError(true);
+            Alert.alert("인쇄도수를 선택해주세요.", "", [
+                {
+                    text: '확인',
+                }
+            ])
         } else if(cate1 === '0' && (ca_id === '1' || ca_id === '4') && (innerPrintColor === null || innerPrintColor === '')) {
             setInnerPrintColorError(true);
         } else {
