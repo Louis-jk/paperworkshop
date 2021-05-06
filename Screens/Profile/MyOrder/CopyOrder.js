@@ -132,6 +132,8 @@ const CopyOrder = (props) => {
             <AutoHeightImage
               width={Dimensions.get('window').width - 40}
               source={{uri: `${imgPath}`}}
+              maxHeight={600}
+              resizeMode="contain"
             />
           </View>
           <TouchableOpacity

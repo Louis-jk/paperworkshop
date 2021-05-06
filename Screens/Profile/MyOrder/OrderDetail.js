@@ -120,6 +120,8 @@ const OrderDetail = (props) => {
             <AutoHeightImage
               width={Dimensions.get('window').width - 40}
               source={{uri: `${imgPath}`}}
+              maxHeight={600}
+              resizeMode="contain"
             />
           </View>
           <TouchableOpacity
@@ -999,10 +1001,13 @@ const OrderDetail = (props) => {
                     </Text>
                   </View>
 
+                  {info04.coating ? 
                   <View style={styles.details}>
                     <Text style={styles.detailsTitle02}>코팅</Text>
                     <Text style={styles.detailsDesc}>{info04.coating}</Text>
                   </View>
+                  : null }
+
                   {details.ca_id === '6' ? 
                   <View style={styles.details}>
                     <Text style={styles.detailsTitle02}>넘버링</Text>
