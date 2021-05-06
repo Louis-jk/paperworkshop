@@ -37,14 +37,15 @@ export default {
     })
   },
   // 지류 해당 상세 정보 가져오기 - 경우에 따라 표지용
-  getPaper1DepthInfo(cate1, ca_id, pf_id) {
+  getPaper1DepthInfo(cate1, ca_id, pf_id, type_id) {
     return Send({
       method: 'post', 
       data: qs.stringify({
         method: 'proc_paper_list',
         cate1,
         ca_id,
-        pf_id
+        pf_id,
+        type_id
       })
     })
   },
