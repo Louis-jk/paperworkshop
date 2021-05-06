@@ -527,9 +527,7 @@ const Step04 = (props) => {
           },
         ]);
       } else {
-        navigation.navigate('OrderStep05', {
-          screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-        });
+       
         dispatch(setUserPwidth(pWidth));
         dispatch(setUserPlength(pLength));
         dispatch(setUserPheight(pHeight));
@@ -547,6 +545,15 @@ const Step04 = (props) => {
         } else {
           dispatch(setUserWoodPattern('N'));
         }
+
+        dispatch(setUserFile02Url(fileUrlCurrent));
+        dispatch(setUserFile02Type(fileTypeCurrent));
+        dispatch(setUserFile02Name(fileName));
+        dispatch(setUserFile02Size(fileSizeCurrent));
+
+        navigation.navigate('OrderStep05', {
+          screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+        });
       }
     } else if (cate1 === '0') {
       if (ca_id === '1' && type_id === '71') {
