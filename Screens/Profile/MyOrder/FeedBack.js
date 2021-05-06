@@ -38,6 +38,8 @@ const FeedBack = (props) => {
 
   const [isLoading, setLoading] = React.useState(false);
 
+  // console.log("pd_id ?????", pd_id);
+
   const getOfferDetailAPI = () => {
     setLoading(true);
     let method = '';
@@ -55,13 +57,13 @@ const FeedBack = (props) => {
         console.log('테스트', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setDetails(res.data.item.basic);
+          setInfo05(res.data.item.estimate);
           if (cate1 !== '2') {
             setInfo01(res.data.item.basic2);
             setInfo02(res.data.item.feeder);
             setInfo03(res.data.item.print);
             setInfo04(res.data.item.end);
-            setInfo05(res.data.item.estimate);
-          }
+          } 
           setLoading(false);
         }
       })
@@ -78,12 +80,13 @@ const FeedBack = (props) => {
     getOfferDetailAPI();
   }, []);
 
-  console.log('details', details);
-  console.log('info01', info01);
-  console.log('info02', info02);
-  console.log('info03', info03);
-  console.log('info04', info04);
-  console.log('info05', info05);
+  // console.log('견적제안 상세 페이지 :', details);
+  // // console.log('info01', info01);
+  // // console.log('info02', info02);
+  // // console.log('info03', info03);
+  // // console.log('info04', info04);
+  // console.log('info05', info05);
+  
 
   // 파일 다운로드 핸들러
   const fileDownloadHandler = (filePath, fileName) => {
@@ -138,6 +141,8 @@ const FeedBack = (props) => {
             <AutoHeightImage
               width={Dimensions.get('window').width - 40}
               source={{uri: `${imgPath}`}}
+              maxHeight={600}
+              resizeMode="contain"
             />
           </View>
           <TouchableOpacity
@@ -377,7 +382,7 @@ const FeedBack = (props) => {
             </View>
           </View>
 
-          {/* 경계 라인 */}
+          {/* 경계 라인 */}          
           <View
             style={{
               height: 1,
@@ -393,6 +398,29 @@ const FeedBack = (props) => {
             }}
           />
           {/* // 경계 라인 */}
+
+          {cate1 == '2' &&
+            <View style={[styles.wrap, {marginVertical: 10}]}>
+              <Text
+                style={[
+                  styles.mediumText,
+                  {fontSize: 16, color: '#275696', marginBottom: 10},
+                ]}>
+                인쇄물 희망 사항
+              </Text>
+              <View style={[styles.infoBox, {marginBottom: 10}]}>
+                <View style={styles.details}>
+                  <Text
+                    style={[
+                      styles.detailsTitle02,
+                      {color: '#111', lineHeight: 22, width: '100%'},
+                    ]}>
+                    {details.memo}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          }
 
           {/* 커스텀 */}
           {cate1 !== '2' && info05 !== null ? (
@@ -1635,38 +1663,81 @@ const FeedBack = (props) => {
                 ]}>
                 견적서 파일
               </Text>
-              {info05.bf_file_source ? (
-                <View style={[styles.infoBox, {marginBottom: 10}]}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      fileDownloadHandler(info05.bf_file, info05.bf_file_source)
-                    }
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      borderRadius: 5,
-                      marginRight: 10,
-                    }}>
-                    <Image
-                      source={require('../../../src/assets/icon_down.png')}
-                      resizeMode="cover"
-                      style={{width: 30, height: 30, marginRight: 10}}
-                    />
-                    <Text style={styles.normalText}>
-                      {info05.bf_file_source}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  {info05.bf_file &&
+                  (info05.type_name === 'jpg' || info05.type_name === 'png') ? (
+                    <TouchableOpacity
+                      onPress={() => imageModalHandler(info05.bf_file)}>
+                      <Image
+                        source={{uri: `${info05.bf_file}`}}
+                        resizeMode="cover"
+                        style={{
+                          width: 114,
+                          height: 114,
+                          borderRadius: 5,
+                          marginRight: 10,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ) : info05.bf_file && info05.type_name === 'gif' ? (
+                    <TouchableOpacity
+                      onPress={() => imageModalHandler(info05.bf_file)}>
+                      <FastImage
+                        source={{uri: `${info05.bf_file}`}}
+                        resizeMode={FastImage.resizeMode.cover}
+                        style={{
+                          width: 114,
+                          height: 114,
+                          borderRadius: 5,
+                          marginRight: 10,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ) : info05.bf_file &&
+                    (info05.type_name !== 'jpg' ||
+                    info05.type_name !== 'png' ||
+                    info05.type_name !== 'gif') ? (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() =>
+                        fileDownloadHandler(details.pe_file, details.pe_source_file)
+                      }
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                      }}>
+                      <Image
+                        source={require('../../../src/assets/icon_down.png')}
+                        resizeMode="cover"
+                        style={{
+                          width: 20,
+                          height: 20,
+                          borderRadius: 5,
+                          marginRight: 5,
+                        }}
+                      />
+                      <Text style={{fontFamily: 'SCDream4'}}>
+                        {info05.bf_file_source}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <Text
+                      style={{
+                        fontFamily: 'SCDream4',
+                        color: '#B5B5B5',
+                        fontSize: 13,
+                      }}>
+                      첨부파일이 없습니다.
                     </Text>
-                  </TouchableOpacity>
+                  )}
                 </View>
-              ) : (
-                <View style={[styles.infoBox, {marginBottom: 10}]}>
-                  <View style={styles.details02}>
-                    <Text style={styles.detailsTitle02}>
-                      첨부된 견적서가 없습니다.
-                    </Text>
-                  </View>
-                </View>
-              )}
+               
             </View>
           )}
         </ScrollView>
