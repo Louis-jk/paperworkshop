@@ -469,8 +469,8 @@ const Step05 = (props) => {
           console.log("최초 지류", res);
           setTypeDetail(res.data.item);
           if(cate1 === '0' && (ca_id === '1' || ca_id === '4')) {
-            setPaperTypeInner(null);
-            setPaperInner(null);
+            setPaperTypeInner('');
+            setPaperInner('');
             setTypeDetailInner(res.data.item);
             setIsLoadingInner(false);
           }
@@ -500,7 +500,7 @@ const Step05 = (props) => {
     setIsLoading01(true);
     setIsLoading02(true);
 
-    BoxTypeAPI.getPaper1DepthInfo(cate1, ca_id, pf_id)
+    BoxTypeAPI.getPaper1DepthInfo(cate1, ca_id, pf_id, type_id)
       .then((res) => {     
         if (res.data.result === '1') {
           setIsLoading(false);
@@ -530,7 +530,7 @@ const Step05 = (props) => {
     setIsLoading01Inner(true);
     setIsLoading02Inner(true);
 
-    BoxTypeAPI.getPaper1DepthInfo(cate1, ca_id, pf_id)
+    BoxTypeAPI.getPaper1DepthInfo(cate1, ca_id, pf_id, type_id)
       .then((res) => {
         
         if (res.data.result === '1') {
@@ -1319,11 +1319,11 @@ const Step05 = (props) => {
                           paper.include_detail === 'Y' ? setPaperType01(paper.pd_id) : setPaperType01NotDetail(paper.pd_id, paper.paper_name);
                           setIsLoading01(true);
                           setPaperError(false);
-                          setDirectPaperName(null);
+                          setDirectPaperName('');
                           setPdId(paper.pd_id);
-                          setWeight(null);
-                          setDirectWeight(null);
-                          setDirectGoal(null);
+                          setWeight('');
+                          setDirectWeight('');
+                          setDirectGoal('');
                           setIsLoading02(true);
                           setIsLoading03(true);
                           setIsLoading04(true);
@@ -2038,10 +2038,10 @@ const Step05 = (props) => {
                             paper.include_detail === 'Y' ? setPaperType01Inner(paper.pd_id) : setPaperType01NotDetailInner(paper.pd_id, paper.paper_name);
                             setIsLoading01Inner(true);
                             setPaperInnerError(false);
-                            setDirectPaperNameInner(null);
+                            setDirectPaperNameInner('');
                             setPdIdInner(paper.pd_id);
-                            setWeightInner(null);
-                            setDirectWeightInner(null);
+                            setWeightInner('');
+                            setDirectWeightInner('');
                             setIsLoading02Inner(true);
                             setIsLoading03Inner(true);
                             setIsLoading04Inner(true);
