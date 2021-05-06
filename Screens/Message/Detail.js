@@ -43,7 +43,9 @@ const Detail = (props) => {
   const [msgFile, setMsgFile] = React.useState(''); // 채팅 파일(이미지 또는 엑셀, pdf 등) 값
   const [firstDate, setFirstDate] = React.useState(null); // 채팅 최초 시작일
   const [chatDateHistory, setChatDateHistory] = React.useState([]); // 채팅 날짜 갱신일
-
+  
+  const listRef = React.useRef(null);
+  
   // 채팅방 글 히스토리 가져오기
   const getChatHistoryAPI = () => {
     setLoading(true);
@@ -52,9 +54,7 @@ const Detail = (props) => {
         console.log('ㅎㅎㅎ', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setChatHistory(res.data.item);
-          setChatDateHistory((prev) => [...prev, res.data.item[0].chat_date]);
-
-          setLoading(false);
+          setLoading(false);          
         } else if (res.data.result === '1' && res.data.count === 0) {
           setLoading(false);
         } else {
@@ -341,7 +341,7 @@ const Detail = (props) => {
       });
   };
 
-  const listRef = React.useRef(null);
+ 
 
   const renderRow = ({item, idx}) => {
     return (
@@ -611,7 +611,7 @@ const Detail = (props) => {
         showsVerticalScrollIndicator={false}
         progressViewOffset={true}
         refreshing={true}
-        onContentSizeChange={() => listRef.current.scrollToEnd()}
+        onContentSizeChange={() => listRef.current.scrollToEnd( {animated : true, duration : 500})}
         ListEmptyComponent={(
           <View
             style={{
