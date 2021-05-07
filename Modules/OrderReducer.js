@@ -311,7 +311,7 @@ const initialize = {
   partial_silk2: '', // 부분실크(내지)
   coating: '', // 코팅
   coating2: '', // 코팅(내지)
-  outside: 'N', // 바깥면여부
+  outside: '', // 바깥면여부
   status: '', // 상태
 };
 
