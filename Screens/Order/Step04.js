@@ -42,6 +42,9 @@ import {
   setUserFile02Name,
   setUserFile02Size,
   setUserThomsonType,
+  setUserWriteP,
+  setUserCoverColor,
+  setUserSectionColor
 } from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 import BoxType from '../../src/api/BoxType';
@@ -477,12 +480,12 @@ const Step04 = (props) => {
         dispatch(setUserPlength(pLength));
         dispatch(setUserPheight(pHeight));
 
-        if (quantity !== 'direct') {
+        if(quantity !== 'direct') {
           dispatch(setUserCnt(quantity));
-          dispatch(setUserCntEtc(0));
+          dispatch(setUserCntEtc(''));
         } else {
           dispatch(setUserCntEtc(quantityDirect));
-          dispatch(setUserCnt(0));
+          dispatch(setUserCnt(''));
         }
 
         if (pattern) {
@@ -534,10 +537,10 @@ const Step04 = (props) => {
 
         if (quantity !== 'direct') {
           dispatch(setUserCnt(quantity));
-          dispatch(setUserCntEtc(0));
+          dispatch(setUserCntEtc(''));
         } else {
           dispatch(setUserCntEtc(quantityDirect));
-          dispatch(setUserCnt(0));
+          dispatch(setUserCnt(''));
         }
 
         if (pattern) {
@@ -596,34 +599,37 @@ const Step04 = (props) => {
             },
           ]);
         } 
-        // else { 테스트
-        //   dispatch(setUserPageCnt(pageCountCur));
-        //   dispatch(setUserPageCnt2(pageInnerCountCur));
-        //   dispatch(setUserBindType(bindTypeCur));
-        //   dispatch(setUserStandard(size !== '' ? size : sizeDirect));
-        //   dispatch(setUserFile02Url(fileUrlCurrent));
-        //   dispatch(setUserFile02Type(fileTypeCurrent));
-        //   dispatch(setUserFile02Name(fileName));
-        //   dispatch(setUserFile02Size(fileSizeCurrent));
+        else {       
+          dispatch(setUserBindType(bindTypeCur)); // 제본방식
+          dispatch(setUserPageCnt(pageCountCur)); // 표지 페이지수
+          dispatch(setUserPageCnt2(pageInnerCountCur)); // 내지 페이지수          
 
-        //   if (size !== 'direct') {
-        //     dispatch(setUserStandard(size));
-        //   } else {
-        //     dispatch(setUserStandard(sizeDirect));
-        //   }
+          if (quantity !== 'direct') {
+            dispatch(setUserCnt(quantity));
+            dispatch(setUserCntEtc(0));
+          } else {
+            dispatch(setUserCntEtc(quantityDirect));
+            dispatch(setUserCnt(0));
+          }
 
-        //   if (quantity !== 'direct') {
-        //     dispatch(setUserCnt(quantity));
-        //     dispatch(setUserCntEtc(0));
-        //   } else {
-        //     dispatch(setUserCntEtc(quantityDirect));
-        //     dispatch(setUserCnt(0));
-        //   }
+          if((size === 'direct' && sizeDirect !== null) ||
+          (size === 'direct' && sizeDirect !== '')) {
+            dispatch(setUserStandardEtc(sizeDirect));
+            dispatch(setUserStandard(''));
+          } else {
+            dispatch(setUserStandard(size));
+            dispatch(setUserStandardEtc(''));
+          }  
 
-        //   navigation.navigate('OrderStep05', {
-        //     screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-        //   });
-        // } 테스트
+          dispatch(setUserFile02Url(fileUrlCurrent));
+          dispatch(setUserFile02Type(fileTypeCurrent));
+          dispatch(setUserFile02Name(fileName));
+          dispatch(setUserFile02Size(fileSizeCurrent));
+
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
+        } 
       } else if (
         ca_id === '4' &&
         (type_id === '74' || type_id === '75' || type_id === '76')
@@ -675,11 +681,40 @@ const Step04 = (props) => {
             },
           ]);
         } 
-        // else { 테스트
-        //   navigation.navigate('OrderStep05', {
-        //     screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-        //   });
-        // } 테스트
+        else {           
+          dispatch(setUserBindType(bindTypeCur)); // 제본방식
+          dispatch(setUserPageCnt(pageCountCur)); // 표지 페이지수
+          dispatch(setUserPageCnt2(pageInnerCountCur)); // 내지 페이지수
+          dispatch(setUserWriteP(writeingCur)); // 간지 종류
+          dispatch(setUserCoverColor(coverColorCur)); // 표지간지 색상
+          dispatch(setUserSectionColor(sectionColorCur)); // 섹션간지 색상
+
+          if (quantity !== 'direct') {
+            dispatch(setUserCnt(quantity));
+            dispatch(setUserCntEtc(0));
+          } else {
+            dispatch(setUserCntEtc(quantityDirect));
+            dispatch(setUserCnt(0));
+          }
+
+          if((size === 'direct' && sizeDirect !== null) ||
+          (size === 'direct' && sizeDirect !== '')) {
+            dispatch(setUserStandardEtc(sizeDirect));
+            dispatch(setUserStandard(''));
+          } else {
+            dispatch(setUserStandard(size));
+            dispatch(setUserStandardEtc(''));
+          }  
+
+          dispatch(setUserFile02Url(fileUrlCurrent));
+          dispatch(setUserFile02Type(fileTypeCurrent));
+          dispatch(setUserFile02Name(fileName));
+          dispatch(setUserFile02Size(fileSizeCurrent));
+
+          navigation.navigate('OrderStep05', {
+            screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+          });
+        }
       } else if (
         // 팜플렛, 리플렛
         (ca_id === '1' && (type_id === '72' || type_id === '73')) ||
@@ -722,9 +757,21 @@ const Step04 = (props) => {
             },
           ]);
         } else { 
-          dispatch(setUserCnt(quantity));
-          dispatch(setUserCntEtc(quantityDirect));
-          dispatch(setUserStandard(sizeDirect));
+          if(quantity !== 'direct') {
+            dispatch(setUserCnt(quantity));
+            dispatch(setUserCntEtc(''));
+          } else {
+            dispatch(setUserCntEtc(quantityDirect));
+            dispatch(setUserCnt(''));
+          }
+          if((size === 'direct' && sizeDirect !== null) ||
+          (size === 'direct' && sizeDirect !== '')) {
+            dispatch(setUserStandardEtc(sizeDirect));
+            dispatch(setUserStandard(''));
+          } else {
+            dispatch(setUserStandard(size));
+            dispatch(setUserStandardEtc(''));
+          }          
           dispatch(setUserThomsonType(thomsonCur));
           dispatch(setUserFile02Url(fileUrlCurrent));
           dispatch(setUserFile02Type(fileTypeCurrent));
@@ -765,9 +812,24 @@ const Step04 = (props) => {
         } else { 
           // setModalVisible(!isModalVisible);
           // dispatch('hello');
-          dispatch(setUserCnt(quantity !== 'direct' ? quantity : ''));
-          dispatch(setUserCntEtc(quantityDirect));
-          dispatch(setUserStandardEtc(size));
+
+          if (quantity !== 'direct') {
+            dispatch(setUserCnt(quantity));
+            dispatch(setUserCntEtc(''));
+          } else {
+            dispatch(setUserCntEtc(quantityDirect));
+            dispatch(setUserCnt(''));
+          }
+          
+          if((size === 'direct' && sizeDirect !== null) ||
+          (size === 'direct' && sizeDirect !== '')) {
+            dispatch(setUserStandardEtc(sizeDirect));
+            dispatch(setUserStandard(''));
+          } else {
+            dispatch(setUserStandard(size));
+            dispatch(setUserStandardEtc(''));
+          }  
+
           dispatch(setUserThomsonType(thomsonCur));
           dispatch(setUserFile02Url(fileUrlCurrent));
           dispatch(setUserFile02Type(fileTypeCurrent));
@@ -805,7 +867,7 @@ const Step04 = (props) => {
         } 
       } else if (
         ca_id === '7' &&
-        (type_id === '87' || type_id === '88' || type_id === '89')
+        (type_id === '87' && type_id === '88' && type_id === '89')
       ) {
         // 맞춤/칼라봉투
         if (
@@ -984,7 +1046,8 @@ const Step04 = (props) => {
     frmdata.append('page_cnt', pageCountCur);
     frmdata.append('page_cnt2', pageInnerCountCur);
     frmdata.append('bind_type', bindType);
-    frmdata.append('standard', size !== null ? size : sizeDirect);
+    frmdata.append('standard', size !== 'direct' ? size : '');
+    frmdata.append('standard_etc', size === 'direct' ? sizeDirect : '');
     frmdata.append('writeing_paper', writeingCur);
     frmdata.append('cover_color', coverColorCur);
     frmdata.append('section_color', sectionColorCur);
@@ -1993,7 +2056,7 @@ const Step04 = (props) => {
                                   }}
                                   onPress={() => {
                                     setQuantity(q);
-                                    setQuantityDirect(null);
+                                    setQuantityDirect('');
                                     setQuantityError(false);
                                     setQuantityDirectError(false);
                                   }}
@@ -2239,7 +2302,7 @@ const Step04 = (props) => {
                               onChangeText={(text) => {
                                 setSizeDirect(text);
                                 setSizeDirectError(false);
-                              }}
+                              }}                              
                               onFocus={() => {
                                 setSize('direct');
                                 setSizeError(false);
