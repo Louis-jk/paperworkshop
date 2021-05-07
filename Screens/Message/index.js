@@ -129,8 +129,8 @@ const index = (props) => {
               }}
             />
             <View style={{flex: 2}}>
-              <Text style={styles.msgInfoName}>{item.company_name}</Text>
-              <Text style={styles.msgInfoName} numberOfLines={1}>제목 : {item.title}</Text>
+              <Text style={{...styles.msgInfoName, width: '87%'}} numberOfLines={1}>{item.company_name}</Text>
+              <Text style={{...styles.msgInfoName, width: '87%'}} numberOfLines={1}>제목 : {item.title}</Text>
               {item.msg ? (
                 <View
                   style={{
@@ -146,7 +146,7 @@ const index = (props) => {
                     numberOfLines={1}>
                     최신글 :
                   </Text>
-                  <Text style={styles.msgInfoContent} numberOfLines={1}>
+                  <Text style={{...styles.msgInfoContent, width: '67%'}} numberOfLines={1}>
                     {' '}
                     {item.msg}
                   </Text>
