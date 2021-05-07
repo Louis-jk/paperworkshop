@@ -21,10 +21,6 @@ const easyOrderComplete = (props) => {
 
   const dispatch = useDispatch();  
 
-  React.useEffect(() => {
-    dispatch(resetState());
-  },[])
-
   return (
     <>
       <DetailHeader title={routeName} navigation={navigation} />
@@ -100,14 +96,20 @@ const easyOrderComplete = (props) => {
             width: '100%',
           }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Stack')}
+            onPress={() => {
+              // dispatch(resetState());
+              navigation.navigate('Stack')
+            }}
             activeOpacity={0.8}>
             <View style={[styles.goHomeBtn, {marginBottom: 10}]}>
               <Text style={styles.goHomeBtnText}>홈으로</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('MyOrder', {screen: 'MyOrder'})}
+            onPress={() => {
+              // dispatch(resetState());
+              navigation.navigate('MyOrder', {screen: 'MyOrder'})
+            }}
             activeOpacity={0.8}>
             <View style={[styles.submitBtn, {marginBottom: 10}]}>
               <Text style={styles.submitBtnText}>나의 견적 의뢰건</Text>
