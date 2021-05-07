@@ -200,7 +200,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    implementation project(':react-native-fs') 
+//    implementation project(':react-native-fs')
 
     implementation project(':react-native-seoul-kakao-login')
     implementation project(':react-native-seoul-naver-login')
