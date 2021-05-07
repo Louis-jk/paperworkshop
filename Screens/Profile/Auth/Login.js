@@ -145,13 +145,27 @@ const Login = (props) => {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
-        alert('Cancel');
+        Alert.alert('구글 로그인을 취소하셨습니다.','', [
+          {
+            text: '확인'
+          }
+        ]);
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation (e.g. sign in) is in progress already
-        alert('Signin in progress');
+        // alert('Signin in progress');
+        Alert.alert('구글 로그인 진행 중.','', [
+          {
+            text: '확인'
+          }
+        ]);
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
-        alert('PLAY_SERVICES_NOT_AVAILABLE');
+        // alert('PLAY_SERVICES_NOT_AVAILABLE');
+        Alert.alert('귀하의 구글 계정은 사용하실 수 없는 계정입니다.','', [
+          {
+            text: '확인'
+          }
+        ]);
       } else {
         // some other error happened
         console.log('else err');
@@ -174,7 +188,7 @@ const Login = (props) => {
       await getKakaoProfileHandler(kakaoToken.accessToken);
     } catch (err) {
       console.log(err);
-      Alert.alert('카카오톡 계정 정보가 없습니다.', '다시 확인해주세요.', [
+      Alert.alert('카카오톡 계정 정보가 없습니다.', '카카오톡을 사용 중이신지 확인해주세요.', [
         {
           text: '확인',
         },
@@ -232,7 +246,7 @@ const Login = (props) => {
   const getUserProfile = async (token) => {
     const profileResult = await getProfile(token.accessToken);
     if (profileResult.resultcode === '024') {
-      Alert.alert('로그인 실패', profileResult.message);
+      Alert.alert('네이버 계정 로그인을 실패하였습니다.', profileResult.message);
       return;
     }
     console.log('profileResult', profileResult);
