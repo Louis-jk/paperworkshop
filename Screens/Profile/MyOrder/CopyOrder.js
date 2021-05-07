@@ -279,7 +279,8 @@ const CopyOrder = (props) => {
   const estimateCopyHandler = () => {
     OrderAPI.estimateCopy(pe_id).then(res => {
       if(res.data.result === '1') {
-        sendEstimateCopyAPIHandler();
+        console.log("복사 후 반환값 : ", res);
+        sendEstimateCopyAPIHandler(res.data.item);
       } else {
         Alert.alert(res.data.message, '관리자에게 문의하세요.', [
           {
@@ -296,12 +297,15 @@ const CopyOrder = (props) => {
     })
   }
 
-  const sendEstimateCopyAPIHandler = () => {
+  const sendEstimateCopyAPIHandler = (newPeId) => {
     let arrDate = moment(arriveDate).format('YYYY-MM-DD');
     let dDate = moment(dDayDate).format('YYYY-MM-DD');
 
-    OrderAPI.sendEstimateCopy(pe_id, arrDate, dDate).then(res => {
-      console.log("어찌됐노", res);
+    console.log("arrDate ::::", arrDate);
+    console.log("dDate ::::", dDate);
+
+    OrderAPI.sendEstimateCopy(newPeId, arrDate, dDate).then(res => {
+      console.log("복사 후 재등록 된 반환값 : ", res);
       if(res.data.result === '1') {
         Alert.alert(res.data.message, '나의 견적 페이지로 이동합니다.', [
           {
