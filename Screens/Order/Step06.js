@@ -260,9 +260,20 @@ const Step06 = (props) => {
 
   const sendOrderAPI = () => {
 
-    let pe_file01 = {uri: pe_file_url, type: pe_file_type, name: pe_file_name};
-    let pe_file02 = {uri: pe_file02_url, type: pe_file02_type, name: pe_file02_name};
+    let pe_file01 = {};
+    if(pe_file_url !== null && pe_file_type !== null && pe_file_name !== null) {
+      pe_file01 = {uri: pe_file_url, type: pe_file_type, name: pe_file_name};
+    } else {
+      pe_file01 = '';
+    }
 
+    let pe_file02 = {};
+    if(pe_file02_url !== null && pe_file02_type !== null && pe_file02_name !== null) {
+      pe_file02 = {uri: pe_file02_url, type: pe_file02_type, name: pe_file02_name};
+    } else {
+      pe_file02 = '';
+    }
+    
     const frmdata = new FormData();
     frmdata.append('method', 'proc_estimate');
     frmdata.append('cate1', cate1);
