@@ -406,7 +406,7 @@ const FeedBack = (props) => {
                   styles.mediumText,
                   {fontSize: 16, color: '#275696', marginBottom: 10},
                 ]}>
-                인쇄물 희망 사항
+                희망 인쇄물 기입사항
               </Text>
               <View style={[styles.infoBox, {marginBottom: 10}]}>
                 <View style={styles.details}>
