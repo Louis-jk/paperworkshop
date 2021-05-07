@@ -361,8 +361,8 @@ const OrderDetail = (props) => {
           <View style={[styles.infoBox, {marginBottom: 10}]}>
             <View style={styles.details}>
               {details.memo ? 
-              <Text style={styles.detailsTitle01}>{details.memo}</Text>
-              : <Text style={styles.detailsTitle02}>작성된 글이 없습니다.</Text>
+              <Text style={{fontSize:14, fontFamily: 'SCDream4'}}>{details.memo}</Text>
+              : <Text style={{fontSize:14, fontFamily: 'SCDream4'}}>작성된 글이 없습니다.</Text>
               }
             </View>
           </View>
@@ -476,9 +476,16 @@ const OrderDetail = (props) => {
                   </View>
                 ) : null}
 
+                {cate1 === '0' && info01.standard_etc && info01.standard_etc !== '' ? (
+                  <View style={styles.details}>
+                    <Text style={styles.detailsTitle02}>규격(직접입력)</Text>
+                    <Text style={styles.detailsDesc}>{info01.standard_etc}</Text>
+                  </View>
+                ) : null}
+
                 {cate1 === '0' && info01.way_edit && info01.way_edit !== '' ? (
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>편집방법</Text>
+                    <Text style={styles.detailsTitle02}>{details.ca_id === '6' ? '재단/지관' : '편집방법'}</Text>
                     <Text style={styles.detailsDesc}>{info01.way_edit}</Text>
                   </View>
                 ) : null}
@@ -745,7 +752,7 @@ const OrderDetail = (props) => {
                 <View style={[styles.infoBox]}>
                   {info02.paper_name && info02.paper_name !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>지종</Text>
+                      <Text style={styles.detailsTitle03}>지종</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_name}
                       </Text>
@@ -753,7 +760,7 @@ const OrderDetail = (props) => {
                   ) : null}
                   {info02.paper_name2 && info02.paper_name2 !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>지종세부</Text>
+                      <Text style={styles.detailsTitle03}>지종세부</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_name2}
                       </Text>
@@ -761,7 +768,7 @@ const OrderDetail = (props) => {
                   ) : null}
                   {info02.paper_weight && info02.paper_weight !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>평량</Text>
+                      <Text style={styles.detailsTitle03}>평량</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_weight}
                       </Text>
@@ -769,7 +776,7 @@ const OrderDetail = (props) => {
                   ) : null}
                   {info02.paper_weight_etc && info02.paper_weight_etc !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>평량(직접입력)</Text>
+                      <Text style={styles.detailsTitle03}>평량(직접입력)</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_weight_etc}
                       </Text>
@@ -777,7 +784,7 @@ const OrderDetail = (props) => {
                   ) : null}
                   {info02.paper_goal && info02.paper_goal !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>골</Text>
+                      <Text style={styles.detailsTitle03}>골</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_goal}
                       </Text>
@@ -785,7 +792,7 @@ const OrderDetail = (props) => {
                   ) : null}
                   {info02.paper_goal_etc && info02.paper_goal_etc !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>골(직접입력)</Text>
+                      <Text style={styles.detailsTitle03}>골(직접입력)</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_goal_etc}
                       </Text>
@@ -794,9 +801,17 @@ const OrderDetail = (props) => {
                   {console.log("info02", info02)}
                   {info02.paper_color && info02.paper_color !== '' && info02.paper_color !== 'null' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>색상</Text>
+                      <Text style={styles.detailsTitle03}>색상</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_color}
+                      </Text>
+                    </View>
+                  ) : null}
+                   {info02.paper_color && info02.paper_color_etc !== '' && info02.paper_color_etc !== 'null' ? (
+                    <View style={styles.details}>
+                      <Text style={styles.detailsTitle03}>색상(직접입력)</Text>
+                      <Text style={styles.detailsDesc}>
+                        {info02.paper_color_etc}
                       </Text>
                     </View>
                   ) : null}
@@ -843,23 +858,23 @@ const OrderDetail = (props) => {
                 <View style={[styles.infoBox]}>
                   {info02.paper2_name && info02.paper2_name !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>지종</Text>
+                      <Text style={styles.detailsTitle03}>지종</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper2_name}
                       </Text>
                     </View>
                   ) : null}
-                  {info02.paper_name2_02 && info02.paper_name2_02 !== '' ? (
+                  {info02.paper_name22 && info02.paper_name22 !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>지종세부</Text>
+                      <Text style={styles.detailsTitle03}>지종세부</Text>
                       <Text style={styles.detailsDesc}>
-                        {info02.paper_name2_02}
+                        {info02.paper_name22}
                       </Text>
                     </View>
                   ) : null}
-                  {info02.paper_weight && info02.paper_weight !== '' ? (
+                  {info02.paper_weight2 && info02.paper_weight2 !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>평량</Text>
+                      <Text style={styles.detailsTitle03}>평량</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_weight2}
                       </Text>
@@ -868,15 +883,15 @@ const OrderDetail = (props) => {
                   {info02.paper_weight_etc2 &&
                   info02.paper_weight_etc2 !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>평량(직접입력)</Text>
+                      <Text style={styles.detailsTitle03}>평량(직접입력)</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_weight_etc2}
                       </Text>
                     </View>
                   ) : null}
-                  {info02.paper_color && info02.paper_color !== '' ? (
+                  {info02.paper_color2 && info02.paper_color2 !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>색상</Text>
+                      <Text style={styles.detailsTitle03}>색상</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_color2}
                       </Text>
@@ -884,7 +899,7 @@ const OrderDetail = (props) => {
                   ) : null}
                   {info02.paper_color_etc2 && info02.paper_color_etc2 !== '' ? (
                     <View style={styles.details}>
-                      <Text style={styles.detailsTitle02}>색상(직접입력)</Text>
+                      <Text style={styles.detailsTitle03}>색상(직접입력)</Text>
                       <Text style={styles.detailsDesc}>
                         {info02.paper_color_etc2}
                       </Text>
@@ -926,26 +941,76 @@ const OrderDetail = (props) => {
                   ]}>
                   인쇄도수/교정/감리
                 </Text>
+                {details.ca_id === '1' || details.ca_id === '4' ? 
+                  <Text
+                  style={{
+                    fontFamily: 'SCDream5',
+                    fontSize: 15,
+                    marginTop: 20,
+                    marginBottom: 10,
+                  }}>
+                  {'<표지>'}
+                </Text>
+                : null}
                 <View style={[styles.infoBox, {marginBottom: 10}]}>
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>인쇄도수</Text>
+                    <Text style={styles.detailsTitle03}>인쇄도수</Text>
                     <Text style={styles.detailsDesc}>
                       {info03.print_frequency}
                     </Text>
                   </View>
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>인쇄교정</Text>
+                    <Text style={styles.detailsTitle03}>인쇄교정</Text>
                     <Text style={styles.detailsDesc}>
                       {info03.proof_printing === 'Y' ? '있음' : '없음'}
                     </Text>
                   </View>
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>인쇄감리</Text>
+                    <Text style={styles.detailsTitle03}>인쇄감리</Text>
                     <Text style={styles.detailsDesc}>
                       {info03.print_supervision === 'Y' ? '있음' : '없음'}
                     </Text>
                   </View>
                 </View>
+              
+                {details.easy_yn === 'N' &&
+                (details.ca_id === '1' || details.ca_id === '4') &&
+                (info03.print_frequency2 !== '' ||
+                  info03.proof_printing2 !== '' ||
+                  info03.print_supervision2 !== '') ? (
+                  <View>
+                    <Text
+                      style={{
+                        fontFamily: 'SCDream5',
+                        fontSize: 15,
+                        marginTop: 20,
+                        marginBottom: 10,
+                      }}>
+                      {'<내지>'}
+                    </Text>
+                    <View style={[styles.infoBox, {marginBottom: 10}]}>
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle03}>인쇄도수</Text>
+                        <Text style={styles.detailsDesc}>
+                          {info03.print_frequency2}
+                        </Text>
+                      </View>
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle03}>인쇄교정</Text>
+                        <Text style={styles.detailsDesc}>
+                          {info03.proof_printing2 === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </View>
+                      <View style={styles.details}>
+                        <Text style={styles.detailsTitle03}>인쇄감리</Text>
+                        <Text style={styles.detailsDesc}>
+                          {info03.print_supervision2 === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </View>
+                    </View>
+                </View>
+            ) : null}
+
               </View>
             ) : null}
             {/* // 간편 견적 유무에 따른 표시 Area */}
@@ -1002,21 +1067,21 @@ const OrderDetail = (props) => {
                     },
                   ]}>
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>박가공</Text>
+                    <Text style={styles.detailsTitle03}>박가공</Text>
                     <Text style={styles.detailsDesc}>
                       {info04.park_processing === 'Y' ? '있음' : '없음'}
                     </Text>
                   </View>
 
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>형압</Text>
+                    <Text style={styles.detailsTitle03}>형압</Text>
                     <Text style={styles.detailsDesc}>
                       {info04.press_design === 'Y' ? '있음' : '없음'}
                     </Text>
                   </View>
 
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>부분 실크</Text>
+                    <Text style={styles.detailsTitle03}>부분 실크</Text>
                     <Text style={styles.detailsDesc}>
                       {info04.partial_silk === 'Y' ? '있음' : '없음'}
                     </Text>
@@ -1024,14 +1089,14 @@ const OrderDetail = (props) => {
 
                   {info04.coating ? 
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>코팅</Text>
+                    <Text style={styles.detailsTitle03}>코팅</Text>
                     <Text style={styles.detailsDesc}>{info04.coating}</Text>
                   </View>
                   : null }
 
                   {details.ca_id === '6' ? 
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>넘버링</Text>
+                    <Text style={styles.detailsTitle03}>넘버링</Text>
                     <Text style={styles.detailsDesc}>{info04.numbering === 'Y' ? '있음' : '없음'}</Text>
                   </View>
                   : null }
@@ -1056,28 +1121,28 @@ const OrderDetail = (props) => {
 
                 <View style={[styles.infoBox, {marginBottom: 10}]}>
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>박가공</Text>
+                    <Text style={styles.detailsTitle03}>박가공</Text>
                     <Text style={styles.detailsDesc}>
                       {info04.park_processing2 === 'Y' ? '있음' : '없음'}
                     </Text>
                   </View>
 
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>형압</Text>
+                    <Text style={styles.detailsTitle03}>형압</Text>
                     <Text style={styles.detailsDesc}>
                       {info04.press_design2 === 'Y' ? '있음' : '없음'}
                     </Text>
                   </View>
 
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>부분 실크</Text>
+                    <Text style={styles.detailsTitle03}>부분 실크</Text>
                     <Text style={styles.detailsDesc}>
                       {info04.partial_silk2 === 'Y' ? '있음' : '없음'}
                     </Text>
                   </View>
 
                   <View style={styles.details}>
-                    <Text style={styles.detailsTitle02}>코팅</Text>
+                    <Text style={styles.detailsTitle03}>코팅</Text>
                     <Text style={styles.detailsDesc}>{info04.coating2}</Text>
                   </View>
                   
@@ -1157,6 +1222,13 @@ const styles = StyleSheet.create({
   detailsTitle02: {
     fontFamily: 'SCDream4',
     width: 200,
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#A2A2A2',
+  },
+  detailsTitle03: {
+    fontFamily: 'SCDream4',
+    width: 100,
     fontSize: 14,
     lineHeight: 22,
     color: '#A2A2A2',
