@@ -157,7 +157,7 @@ const Detail = (props) => {
   const fileDownloadHandler = (filePath, fileName) => {
     Alert.alert('파일을 다운로드 하시겠습니까?', '', [
       {
-        text: '다운드로',
+        text: '다운로드',
         // onPress: () => console.log(filePath, fileName),
         onPress: () => downloader(filePath, fileName),
       },

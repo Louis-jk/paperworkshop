@@ -48,7 +48,7 @@ const OrderDetail = (props) => {
     OrderAPI.getMyOrderParticulars(method, pe_id)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
-          console.log("에라이 ", res);
+          console.log("허허허", res);
           setDetails(res.data.item.basic);
           if (cate1 !== '2') {
             setInfo01(res.data.item.basic2);
@@ -77,7 +77,7 @@ const OrderDetail = (props) => {
   const fileDownloadHandler = (filePath, fileName) => {
     Alert.alert('파일을 다운로드 하시겠습니까?', '', [
       {
-        text: '다운드로',
+        text: '다운로드',
         onPress: () => downloader(filePath, fileName),
       },
       {
