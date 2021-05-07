@@ -9,10 +9,21 @@ import {
 } from 'react-native';
 
 import DetailHeader from '../Common/DetailHeader';
+import {useDispatch} from 'react-redux';
+
+import {
+  resetState
+} from '../../Modules/OrderReducer';
 
 const easyOrderComplete = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+
+  const dispatch = useDispatch();  
+
+  React.useEffect(() => {
+    dispatch(resetState());
+  },[])
 
   return (
     <>
