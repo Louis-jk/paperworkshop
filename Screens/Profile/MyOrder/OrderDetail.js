@@ -349,23 +349,42 @@ const OrderDetail = (props) => {
           }}
         />
         {/* // 경계 라인 */}
-
-        {cate1 === '2' ? (
-          <View style={[styles.wrap, {marginVertical: 10}]}>
-            <Text
-              style={[
-                styles.mediumText,
-                {fontSize: 16, color: '#275696', marginBottom: 10},
-              ]}>
-              희망 인쇄물 기입사항
-            </Text>
-            <View style={[styles.infoBox, {marginBottom: 10}]}>
-              <View style={styles.details}>
-                <Text style={styles.detailsTitle02}>{details.memo}</Text>
-              </View>
+        
+        <View style={[styles.wrap, {marginVertical: 10}]}>
+          <Text
+            style={[
+              styles.mediumText,
+              {fontSize: 16, color: '#275696', marginBottom: 10},
+            ]}>
+            희망 인쇄물 기입사항
+          </Text>
+          <View style={[styles.infoBox, {marginBottom: 10}]}>
+            <View style={styles.details}>
+              {details.memo ? 
+              <Text style={styles.detailsTitle01}>{details.memo}</Text>
+              : <Text style={styles.detailsTitle02}>작성된 글이 없습니다.</Text>
+              }
             </View>
           </View>
-        ) : null}
+        </View>
+
+         {/* 경계 라인 */}
+         <View
+            style={{
+              height: 1,
+              backgroundColor: '#E3E3E3',
+              width: Dimensions.get('window').width,
+            }}
+          />
+        <View
+          style={{
+            height: 6,
+            backgroundColor: '#F5F5F5',
+            width: Dimensions.get('window').width,
+          }}
+        />
+        {/* // 경계 라인 */}
+        
         {cate1 !== '2' ? (
           <>
             <View style={[styles.wrap, {marginVertical: 10}]}>
@@ -392,6 +411,7 @@ const OrderDetail = (props) => {
                 </Text>
               </View>
             </View>
+
             {/* 경계 라인 */}
             <View
               style={{
@@ -408,6 +428,7 @@ const OrderDetail = (props) => {
               }}
             />
             {/* // 경계 라인 */}
+
             <View style={[styles.wrap, {marginVertical: 10}]}>
               <Text
                 style={[
@@ -1124,6 +1145,13 @@ const styles = StyleSheet.create({
   detailsDesc: {
     fontFamily: 'SCDream4',
     fontSize: 14,
+    color: '#000',
+  },
+  detailsTitle01: {
+    fontFamily: 'SCDream4',
+    width: 200,
+    fontSize: 14,
+    lineHeight: 22,
     color: '#000',
   },
   detailsTitle02: {
