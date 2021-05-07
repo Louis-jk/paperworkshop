@@ -92,7 +92,7 @@ const FeedBack = (props) => {
   const fileDownloadHandler = (filePath, fileName) => {
     Alert.alert('파일을 다운로드 하시겠습니까?', '', [
       {
-        text: '다운드로',
+        text: '다운로드',
         // onPress: () => console.log(filePath, fileName),
         onPress: () => downloader(filePath, fileName),
       },
@@ -1669,6 +1669,7 @@ const FeedBack = (props) => {
                     justifyContent: 'flex-start',
                     alignItems: 'center',
                   }}>
+                    {console.log("info05",info05)}
                   {info05.bf_file &&
                   (info05.type_name === 'jpg' || info05.type_name === 'png') ? (
                     <TouchableOpacity
@@ -1705,7 +1706,7 @@ const FeedBack = (props) => {
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() =>
-                        fileDownloadHandler(details.pe_file, details.pe_source_file)
+                        fileDownloadHandler(info05.bf_file, info05.bf_file_source)
                       }
                       style={{
                         flexDirection: 'row',
