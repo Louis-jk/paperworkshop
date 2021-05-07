@@ -279,7 +279,7 @@ const CopyOrder = (props) => {
   const estimateCopyHandler = () => {
     OrderAPI.estimateCopy(pe_id).then(res => {
       if(res.data.result === '1') {
-        console.log("복사 후 반환값 : ", res);
+        
         sendEstimateCopyAPIHandler(res.data.item);
       } else {
         Alert.alert(res.data.message, '관리자에게 문의하세요.', [
@@ -305,7 +305,7 @@ const CopyOrder = (props) => {
     console.log("dDate ::::", dDate);
 
     OrderAPI.sendEstimateCopy(newPeId, arrDate, dDate).then(res => {
-      console.log("복사 후 재등록 된 반환값 : ", res);
+      
       if(res.data.result === '1') {
         Alert.alert(res.data.message, '나의 견적 페이지로 이동합니다.', [
           {
