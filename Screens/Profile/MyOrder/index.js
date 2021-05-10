@@ -45,7 +45,7 @@ const index = (props) => {
     setLoading(true);
 
     OrderAPI.getMyOrder(mb_id, status, cate1, search)
-      .then((res) => {
+      .then((res) => {        
         if (res.data.result === '1' && res.data.count > 0) {
           console.log("result :: ", res);
           setMyOrders(res.data.item);
