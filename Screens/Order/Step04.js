@@ -1021,6 +1021,21 @@ const Step04 = (props) => {
   };
 
   const easyOrderSubmit = () => {
+
+    let pe_file01 = {};
+    if(pe_file_url !== null && pe_file_type !== null && pe_file_name !== null) {
+      pe_file01 = {uri: pe_file_url, type: pe_file_type, name: pe_file_name};
+    } else {
+      pe_file01 = '';
+    }
+
+    let pe_file02 = {};
+    if(fileUrlCurrent !== null && fileTypeCurrent !== null && fileName !== null) {
+      pe_file02 = {uri: fileUrlCurrent, type: fileTypeCurrent, name: fileName};
+    } else {
+      pe_file02 = '';
+    }
+    
     const frmdata = new FormData();
     frmdata.append('method', 'proc_estimate');
     frmdata.append('cate1', cate1);
@@ -1035,7 +1050,7 @@ const Step04 = (props) => {
     frmdata.append('favor_area', favor_area);
     frmdata.append('delivery_date', delivery_date);
     frmdata.append('estimate_date', estimate_date);
-    frmdata.append('pe_file[]', source);
+    frmdata.append('pe_file[]', pe_file01);
     frmdata.append('memo', memo ? memo : '');
     frmdata.append('pwidth', pWidth);
     frmdata.append('plength', pLength);
@@ -1045,20 +1060,22 @@ const Step04 = (props) => {
     frmdata.append('wood_pattern', wood_pattern);
     frmdata.append('page_cnt', pageCountCur);
     frmdata.append('page_cnt2', pageInnerCountCur);
-    frmdata.append('bind_type', bindType);
+    frmdata.append('bind_type', bindTypeCur);
     frmdata.append('standard', size !== 'direct' ? size : '');
     frmdata.append('standard_etc', size === 'direct' ? sizeDirect : '');
     frmdata.append('writeing_paper', writeingCur);
     frmdata.append('cover_color', coverColorCur);
     frmdata.append('section_color', sectionColorCur);
-    frmdata.append('pe_file2[]', source02);
+    frmdata.append('pe_file2[]', pe_file02);
     frmdata.append('easy_yn', 'Y');
 
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
-        if (res.data.result === '1' && res.data.count > 0) {
+        
+        if (res.data.result === '1' && res.data && res.data.count > 0) {
           setModalVisible(!isModalVisible);
           navigation.navigate('easyOrderComplete');
+ 
         } else if (res.data.result === '1' && res.data.count <= 0) {
           Alert.alert(res.data.message, '', [
             {
@@ -1072,6 +1089,7 @@ const Step04 = (props) => {
             },
           ]);
         }
+         
       })
       .catch((err) => {
         Alert.alert(err, '관리자에게 문의하세요', [
@@ -1107,7 +1125,7 @@ const Step04 = (props) => {
       <Modal
         isVisible={isModalVisible}
         toggleModal={toggleModal}
-        goEasyComplete={easyOrderBefore}
+        goEasyComplete={easyOrderSubmit}
       />
       {isLoading ? (
         <View
