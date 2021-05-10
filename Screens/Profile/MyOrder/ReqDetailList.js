@@ -498,6 +498,7 @@ const ReqDetailList = (props) => {
           <>
             <View style={[styles.container, styles.wrap]}>
               <View style={styles.infoBox}>
+                <View style={{flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}}>
                 <Text style={styles.infoStepDesc}>
                   {myOrderDetail.status === '0'
                     ? '견적요청'
@@ -521,6 +522,8 @@ const ReqDetailList = (props) => {
                     ? '마감'
                     : null}
                 </Text>
+                <Text style={{fontSize:10, paddingVertical: 3, paddingHorizontal: 5, backgroundColor:'#275696', color:'#fff', borderRadius:2, marginLeft: 5}}>{myOrderDetail.easy_yn === 'Y' ? '간편견적' : '세부견적'}</Text>
+                </View>
                 <Text style={styles.infoStepTitle}>{myOrderDetail.title}</Text>
                 <View style={styles.line} />
                 <View style={styles.details}>
