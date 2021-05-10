@@ -262,10 +262,11 @@ const OrderDetail = (props) => {
               flexDirection: 'row',
               justifyContent: 'flex-start',
               alignItems: 'center',
-            }}>
+            }}>            
             {details.pe_file &&
             (details.type_name === 'jpg' || details.type_name === 'png') ? (
               <TouchableOpacity
+                activeOpacity={0.8}
                 onPress={() => imageModalHandler(details.pe_file)}>
                 <Image
                   source={{uri: `${details.pe_file}`}}
