@@ -13,7 +13,8 @@ import {
   ActivityIndicator,
   FlatList,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
+  BackHandler
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
@@ -21,6 +22,7 @@ import {TabView, SceneMap} from 'react-native-tab-view';
 import Footer from '../Common/Footer';
 import Main from '../../src/api/Main';
 import {useDispatch, useSelector} from 'react-redux';
+import { CommonActions } from '@react-navigation/native';
 
 import {selectCate1} from '../../Modules/OrderReducer';
 import OrderAPI from '../../src/api/OrderAPI';
@@ -42,6 +44,17 @@ const index = (props) => {
 
   const dispatch = useDispatch();
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
+
+  // var screen = 'Main';
+  // var screenParams = {};
+  
+  // const resetAction = CommonActions.reset({
+  //     index: 1,
+  //     routes: [
+  //         { name: 'Main' },
+  //     ],
+  // });
+  // props.navigation.dispatch(resetAction);
 
   // 안드로이드 권한 설정
   const requestAndroidPermission = async () => {
@@ -265,12 +278,28 @@ const index = (props) => {
     );
   };
 
+  const backAction = () => {
+    Alert.alert("이미 로그인된 상태입니다.", "앱을 종료하시겠습니까?", [
+      {
+        text: "아니요",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "앱종료하기", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
+
   React.useEffect(() => {
     requestAndroidPermission();
     setIsLoading(true);
     getMainTopSlider();
     getMainMiddleSlider();
     getAllOrderList();
+
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
 
   const mainCarouselRef = React.useRef(null);
