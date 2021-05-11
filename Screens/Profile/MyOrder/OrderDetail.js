@@ -808,7 +808,7 @@ const OrderDetail = (props) => {
                       </Text>
                     </View>
                   ) : null}
-                   {info02.paper_color && info02.paper_color_etc !== '' && info02.paper_color_etc !== 'null' ? (
+                   {info02.paper_color === "" && info02.paper_color_etc !== '' && info02.paper_color_etc !== 'null' ? (
                     <View style={styles.details}>
                       <Text style={styles.detailsTitle03}>색상(직접입력)</Text>
                       <Text style={styles.detailsDesc}>
@@ -898,7 +898,7 @@ const OrderDetail = (props) => {
                       </Text>
                     </View>
                   ) : null}
-                  {info02.paper_color_etc2 && info02.paper_color_etc2 !== '' ? (
+                  {info02.paper_color2 === "" && info02.paper_color_etc2 && info02.paper_color_etc2 !== '' ? (
                     <View style={styles.details}>
                       <Text style={styles.detailsTitle03}>색상(직접입력)</Text>
                       <Text style={styles.detailsDesc}>
