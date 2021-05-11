@@ -10,6 +10,8 @@ import {
   Alert,
   ScrollView,
   Platform,
+  BackHandler, 
+  ToastAndroid
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {
@@ -273,6 +275,26 @@ const Login = (props) => {
     setPwdEyes(!pwdEyes);
   };
 
+  // 안드로이드 뒤로가기 버튼 제어  
+  let currentCount = 0;
+
+  const backAction = () => {    
+    if (currentCount < 1) {      
+      ToastAndroid.show("한번 더 누르면 앱을 종료합니다.", ToastAndroid.SHORT);
+      console.log("0에 해당");
+      currentCount++;
+    } else {
+      console.log("1에 해당");
+      BackHandler.exitApp();
+    }
+
+    setTimeout(() => {
+      currentCount = 0;
+    }, 2000);
+
+    return true;
+  };
+  
   React.useEffect(() => {
     messaging()
       .getToken()
@@ -295,6 +317,11 @@ const Login = (props) => {
     } else {
       setCheckPlatform('aos');
     }
+
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
+
   }, []);
 
   // 로그인 API
