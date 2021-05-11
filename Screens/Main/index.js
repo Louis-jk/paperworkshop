@@ -14,7 +14,6 @@ import {
   FlatList,
   Platform,
   PermissionsAndroid,
-  BackHandler
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
@@ -278,28 +277,12 @@ const index = (props) => {
     );
   };
 
-  const backAction = () => {
-    Alert.alert("이미 로그인된 상태입니다.", "앱을 종료하시겠습니까?", [
-      {
-        text: "아니요",
-        onPress: () => null,
-        style: "cancel"
-      },
-      { text: "앱종료하기", onPress: () => BackHandler.exitApp() }
-    ]);
-    return true;
-  };
-
   React.useEffect(() => {
     requestAndroidPermission();
     setIsLoading(true);
     getMainTopSlider();
     getMainMiddleSlider();
     getAllOrderList();
-
-    BackHandler.addEventListener("hardwareBackPress", backAction);
-
-    return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
 
   const mainCarouselRef = React.useRef(null);
