@@ -94,14 +94,30 @@ const Step02 = (props) => {
       let pLocation = partner_location.split(',');
       setDefaultLocat(pLocation);
     }
+    
+    const nowDate = new Date();
+
+    let defaultDeliveryDate = new Date(nowDate.setDate(nowDate.getDate() + 7));   
+    setDeliveryDate(defaultDeliveryDate);
+
   }, []);
 
+  console.log("date 오늘날짜 ?", date);
+  console.log("deliveryDate 납품 희망일 ?", deliveryDate);
+
   const onChange01 = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
     setShow01(Platform.OS === 'ios');
 
     const nowDate = new Date();
     let weekAgo = nowDate.setDate(nowDate.getDate() + 7);
+    let weekAgoDate = new Date(weekAgo);
+
+    let selectedDateFormated = moment(selectedDate).format('YYYY-MM-DD');
+    let weekAgoDateFormated = moment(weekAgoDate).format('YYYY-MM-DD');
+
+    // const nowDate02 = new Date();
+    // let weekAgoPlus = nowDate02.setDate(nowDate02.getDate() + 8);
+    // let weekAgoPlusDate = new Date(weekAgoPlus);
 
     if (selectedDate < date) {
       Alert.alert(
@@ -113,9 +129,9 @@ const Step02 = (props) => {
           },
         ],
       );
-      setDeliveryDate(date);
+      setDeliveryDate(weekAgoDate);
     } 
-    else if (selectedDate < weekAgo) {
+    else if (selectedDateFormated < weekAgoDateFormated) {
       Alert.alert(
         '납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.',
         '날짜를 다시 선택해주세요.',
@@ -125,15 +141,14 @@ const Step02 = (props) => {
           },
         ],
       );
-      setDeliveryDate(date);
+      setDeliveryDate(weekAgoDate);
     } 
     else {
-      setDeliveryDate(currentDate);
+      setDeliveryDate(selectedDate);
     }
   };
 
   const onChange02 = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
     setShow02(Platform.OS === 'ios');
 
     if (selectedDate < date) {
@@ -147,8 +162,19 @@ const Step02 = (props) => {
         ],
       );
       setEstimateDate(date);
+    } else if(selectedDate >= deliveryDate) {
+      Alert.alert(
+        '견적 마감일은 납품 희망일과 같은 날짜이거나 그 후 날짜일 수 없습니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
+      setEstimateDate(date);
     } else {
-      setEstimateDate(currentDate);
+      setEstimateDate(selectedDate);
     }
   };
 
@@ -280,7 +306,10 @@ const Step02 = (props) => {
     const nowDate = new Date();
     let weekAgo = nowDate.setDate(nowDate.getDate() + 7);
 
-    if(deliveryDate < weekAgo ) {
+    let deliveryDateFormated = moment(deliveryDate).format('YYYY-MM-DD');
+    let weekAgoDateFormated = moment(weekAgo).format('YYYY-MM-DD');
+
+    if(deliveryDateFormated < weekAgoDateFormated ) {
       Alert.alert(
         '납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.',
         '날짜를 다시 선택해주세요.',
@@ -585,7 +614,7 @@ const Step02 = (props) => {
                       {formikProps.touched.order_mobile &&
                         formikProps.errors.order_mobile}
                     </Text>
-                  )}
+                  )}                 
               </View>
               {/* // 휴대폰 번호  */}
 
