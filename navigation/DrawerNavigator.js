@@ -16,10 +16,14 @@ const DrawerNavigator = () => {
         initialRouteName="Home"
         drawerPosition="right"
         drawerType="front"
+        keyboardDismissMode="on-drag"
         detachInactiveScreens={false}
         drawerStyle={{
           backgroundColor: '#fff',
           width: Dimensions.get('window').width,
+        }}
+        screenOptions={{
+          gestureEnabled: false
         }}
         drawerContent={(props) => <DrawerMenu {...props} />}>
         <Drawer.Screen name="Home" component={TabNavigator} />
