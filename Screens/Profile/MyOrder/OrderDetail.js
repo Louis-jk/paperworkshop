@@ -853,7 +853,7 @@ const OrderDetail = (props) => {
                         color: '#000000',
                       },
                     ]}>
-                    {info02.feeder_name2}
+                    {info02.feeder_name2 ? info02.feeder_name2 : null}
                   </Text>
                 </View>
                 <View style={[styles.infoBox]}>
