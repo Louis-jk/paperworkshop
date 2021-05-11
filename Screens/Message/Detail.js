@@ -126,7 +126,7 @@ const Detail = (props) => {
           </View>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={toggleModal}
+            onPress={() => setModalVisible(!isModalVisible)}
             style={{
               justifyContent: 'center',
               alignItems: 'center',
