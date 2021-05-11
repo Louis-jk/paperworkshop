@@ -11,7 +11,8 @@ import {
   ScrollView,
   Platform,
   BackHandler, 
-  ToastAndroid
+  ToastAndroid,
+  ActivityIndicator
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {
@@ -55,6 +56,7 @@ const Login = (props) => {
   const [checkPlatform, setCheckPlatform] = React.useState(null); // OS 체크
   const [loginId, setLoginId] = React.useState(null);
   const [loginPwd, setLoginPwd] = React.useState(null);
+  const [isLoading, setLoading] = React.useState(false);
 
   const [autoLogin, setAutoLogin] = React.useState(false); // 자동 로그인
   const toggleCheck = () => {
@@ -326,6 +328,7 @@ const Login = (props) => {
 
   // 로그인 API
   const login = () => {
+    setLoading(true);
     Auth.onLogin(loginId, loginPwd, fFcmToken, checkPlatform)
       .then((res) => {
         if (res.data.result === '1') {
@@ -345,7 +348,9 @@ const Login = (props) => {
           } else {
             navigation.navigate('EntryBefore');
           }
+          setLoading(false);
         } else {
+          setLoading(false);
           Alert.alert(res.data.message, '다시 시도해주세요.', [
             {
               text: '확인',
@@ -354,17 +359,38 @@ const Login = (props) => {
           ]);
         }
       })
-      .catch((err) =>
+      .catch((err) => {
+        setLoading(false);
         Alert.alert(err, '관리자에게 문의하세요', [
           {
             text: '확인',
           },
-        ]),
-      );
+        ])
+      });
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <>
+    {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View
         style={{
           flex: 1,
@@ -673,6 +699,7 @@ const Login = (props) => {
         </View>
       </View>
     </ScrollView>
+    </>
   );
 };
 
