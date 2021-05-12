@@ -10,7 +10,7 @@ import {
     setUserPrintSup,
     setUserFrequency2,
     setUserPrinting2,
-    setUserPrintSup2,
+    setUserPrintSup2
   } from '../../Modules/OrderReducer';
 
 import DropDownPicker from 'react-native-dropdown-picker';
