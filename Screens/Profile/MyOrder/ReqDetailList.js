@@ -423,7 +423,62 @@ const ReqDetailList = (props) => {
         </View>        
       </View>
       {/* 파트너 전화하기 메세지 */}
-      {myOrderDetail.status !== '0' && (((myOrderDetail.cate1 === '1' && myOrderDetail.status !== '1') && (myOrderDetail.cate1 === '0' && myOrderDetail.status !== '1')) && ((cate1 === '1' && myOrderDetail.status !== '2') && (myOrderDetail.cate1 === '0' && myOrderDetail.status !== '2')) || (myOrderDetail.cate1 === '2' && myOrderDetail.status !== '0')) && myOrderDetail.status !== '9' ? 
+      {myOrderDetail.status !== '0' && myOrderDetail.status !== '1' && myOrderDetail.status !== '2' && myOrderDetail.status !== '9' ? 
+        <View style={{paddingHorizontal:20, marginBottom:20}}>
+       <View
+          style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, backgroundColor: '#fff', marginBottom: 10}}>
+          <TouchableWithoutFeedback
+            onPress={() => Linking.openURL(`tel:${myOrderDetail.list[0].company_tel}`)}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical: 12,
+              }}>
+              <Image
+                source={require('../../../src/assets/call01.png')}                
+                resizeMode="cover"
+                style={{width: 24, height: 24}}
+              />
+              <Text
+                style={[styles.normalText, {fontSize: 14, marginLeft: 5}]}>
+                전화하기
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <View
+            style={{borderWidth: 0.5, height: '100%', borderColor: '#E3E3E3'}}
+          />
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('MessageDetail', {screen: 'MessageDetail', params: {chatId: myOrderDetail.pe_id, pmId: myOrderDetail.pm_id}})}>
+            <View
+              style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: 12 }}>
+              <Image
+                source={require('../../../src/assets/msm01.png')}
+                resizeMode="cover"
+                style={{width: 24, height: 24}}
+              />
+              <Text
+                style={[
+                  styles.normalText,
+                  {
+                    fontSize: 14,
+                    marginLeft: 5,
+                  },
+                ]}>
+                메세지보내기
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+      : null }
+      {/* // 파트너 전화하기 메세지 */}
+
+        {/* 파트너 전화하기 메세지 */}
+        { (myOrderDetail.cate1 === '2' && (myOrderDetail.status !== '0' && myOrderDetail.status !== '1')) && myOrderDetail.status !== '9' ? 
         <View style={{paddingHorizontal:20, marginBottom:20}}>
        <View
           style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E3E3E3', borderRadius: 5, backgroundColor: '#fff', marginBottom: 10}}>
