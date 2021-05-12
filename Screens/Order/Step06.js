@@ -354,7 +354,7 @@ const Step06 = (props) => {
     frmdata.append('outside', outside);
     frmdata.append('status', status);
 
-    console.log("frmData :::::::::", frmdata);
+    // console.log("frmData :::::::::", frmdata);
 
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
