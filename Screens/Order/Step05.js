@@ -207,8 +207,6 @@ const Step05 = (props) => {
   const [boardTkError, setBoardTkError] = React.useState(false);
   const [notWeight, setNotWeight] = React.useState('n');
 
-  console.log("detailPaperYn",detailPaperYn);
-  console.log("pnId",pnId);
   //////////////////////////
   /////// FUNCTIONS ///////
   /////////////////////////
@@ -517,7 +515,6 @@ const Step05 = (props) => {
     BoxTypeAPI.getPaperInitialInfo(cate1, ca_id, type_id)
       .then((res) => {
         if (res.data.result === '1') {
-          console.log("최초 지류", res);
           setTypeDetail(res.data.item);
           if(cate1 === '0' && (ca_id === '1' || ca_id === '4')) {
             setPaperTypeInner('');
@@ -721,7 +718,6 @@ const Step05 = (props) => {
     BoxTypeAPI.getPaperDetailInfo(ca_id, pd_id, 'N')
       .then((res) => {
         if (res.data.result === '1') {
-          console.log("반환 내지", res);
           if (res.data.item[0].paper_name !== '직접입력') {
             setPaperDetail2MoreInner(res.data.item[0].paper_name2); // 상세 지종 API 가져온 값 담기
             setIsDirect01Inner('n'); // 지종 1차에서 직접 입력이 아니란 값 담기
@@ -764,7 +760,6 @@ const Step05 = (props) => {
     
     BoxTypeAPI.getPaperNoDetailInfo(cate1, ca_id, paper, pd_id, paper_name)
       .then((res) => {
-        console.log("1차 선택 :: ", res);
         if (res.data.result === '1') {
           if (res.data.item[0].paper_name !== '직접입력') {
             setPaperDetail2(res.data.item); // 상세 지종 API 가져온 값 담기
@@ -798,9 +793,6 @@ const Step05 = (props) => {
       });
   };
 
-  console.log('====================================');
-  console.log("paperDetail2", paperDetail2[0]);
-  console.log('====================================');
 
   // 지종 1차(pd_id) 선택 및 가져오기 (지종 아이디 필요 : pd_id) - 내지용
   // 지류 선택 후에 지종 출력된 값들 중에 선택했을 시 호출될 Fn
@@ -817,7 +809,6 @@ const Step05 = (props) => {
 
     BoxTypeAPI.getPaperNoDetailInfo(cate1, ca_id, paperInner, pd_id, paper_name)
       .then((res) => {
-        console.log("hey", res);
         if (res.data.result === '1') {
           if (res.data.item[0].paper_name !== '직접입력') {
             setPaperDetail2Inner(res.data.item); // 상세 지종 API 가져온 값 담기
@@ -857,8 +848,6 @@ const Step05 = (props) => {
 
   // 지종세부일 경우 평량 정보 가져오기 - 경우에 따라 표지용
   const getPaperDetailStep02More = (pd_id, name) => {
-    console.log("??? pd_id", pd_id);
-    console.log("??? name", name);
 
     setIsLoading02(true);
     setNotWeight('n');
@@ -881,10 +870,7 @@ const Step05 = (props) => {
       })
         .then((res) => {        
           if (res.data.result === '1' && res.data.count > 0) {
-            console.log("지종세부 res", res);
-            // setPaperDetail3(res.data.item);
             setGetWeight(res.data.item); // 상세 지종 평량 API 가져온 값 담기
-            // setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기       
             setIsLoading02(false);
             weightRef.current.focus();
           } else {
@@ -921,11 +907,8 @@ const Step05 = (props) => {
         }),
       })
         .then((res) => {
-          console.log("평량 정보는?", res);
           if (res.data.result === '1' && res.data.count > 0) {
-            // setPaperDetail3(res.data.item);
             setGetWeightInner(res.data.item); // 상세 지종 평량 API 가져온 값 담기
-            // setGetGoal(res.data.item[0].paper_goal); // 상세 지종 골 API 가져온 값 담기       
             setIsLoading02Inner(false);
           } else {
             Alert.alert(res.data.message, '', [
@@ -1132,10 +1115,6 @@ const Step05 = (props) => {
       setDirectGoal('');
   };
 
-  console.log("getPaperColors", getPaperColors);
-  console.log("==============================");
-  console.log("paperName", paperName);
-  console.log("==============================");
 
    return (
     <>
