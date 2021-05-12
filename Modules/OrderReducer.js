@@ -9,6 +9,8 @@ const SELECT_PD_ID = 'SELECT_PD_ID';
 const SELECT_PD_ID02 = 'SELECT_PD_ID02';
 const SELECT_PN_ID = 'SELECT_PN_ID';
 const SELECT_PN_ID02 = 'SELECT_PN_ID02';
+const SELECT_PF_DIRECT_NAME = 'SELECT_PF_DIRECT_NAME';
+const SELECT_PF_DIRECT_NAME2 = 'SELECT_PF_DIRECT_NAME2';
 const SELECT_PAPER_NAME = 'SELECT_PAPER_NAME';
 const SELECT_PAPER_NAME02 = 'SELECT_PAPER_NAME02';
 const SET_USER_ID = 'SET_USER_ID';
@@ -101,6 +103,14 @@ export const selectPaperName = (payload) => ({
 });
 export const selectPaperName02 = (payload) => ({
   type: SELECT_PAPER_NAME02,
+  payload,
+});
+export const selectPfDirectName = (payload) => ({
+  type: SELECT_PF_DIRECT_NAME,
+  payload,
+});
+export const selectPfDirectName2 = (payload) => ({
+  type: SELECT_PF_DIRECT_NAME2,
   payload,
 });
 export const setUserId = (payload) => ({type: SET_USER_ID, payload});
@@ -244,6 +254,8 @@ const initialize = {
   pd_id2: '', // 지종아이디 - 내지
   pn_id: '', // 지종상세아이디
   pn_id2: '', // 지종상세아이디 - 내지
+  pf_direct_name: '', // 지류 (직접입력)
+  pf_direct_name2: '', // 지류 - 내지 (직접입력)
   paper_name2: '', // 지종상세(직접입력)
   paper_name2_02: '', // 지종상세(직접입력) - 내지
   mb_id: '', // 회원 아이디
@@ -450,6 +462,16 @@ export default function setOrder(state = initialize, action) {
         ...state,
         pn_id2: action.payload,
       };
+    case SELECT_PF_DIRECT_NAME:
+      return {
+        ...state,
+        pf_direct_name: action.payload,
+      };
+    case SELECT_PF_DIRECT_NAME2:
+      return {
+        ...state,
+        pf_direct_name2: action.payload,
+      };      
     case SELECT_PAPER_NAME:
       return {
         ...state,
