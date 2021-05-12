@@ -107,7 +107,9 @@ const Step06 = (props) => {
     print_supervision2,    
     outside,
     status,
-    way_edit
+    way_edit,
+    pf_direct_name,
+    pf_direct_name2
   } = useSelector((state) => state.OrderReducer);
 
 
@@ -286,6 +288,8 @@ const Step06 = (props) => {
     frmdata.append('pd_id2', pd_id2);
     frmdata.append('pn_id', pn_id);
     frmdata.append('pn_id2', pn_id2);
+    frmdata.append('pf_direct_name', pf_direct_name ? pf_direct_name : '');
+    frmdata.append('pf_direct_name2', pf_direct_name2 ? pf_direct_name2 : '');
     frmdata.append('paper_name2', paper_name2 ? paper_name2 : '');
     frmdata.append('paper_name2_02', paper_name2_02 ? paper_name2_02 : '');
     frmdata.append('mb_id', mb_id);
@@ -321,7 +325,7 @@ const Step06 = (props) => {
     frmdata.append('pe_file2[]', pe_file02);
     frmdata.append('wood_pattern', wood_pattern);
     frmdata.append('stype', stype);
-    frmdata.append('board_tk', board_tk);
+    frmdata.append('board_tk', board_tk ? board_tk : '');
     frmdata.append('paper_weight', paper_weight);
     frmdata.append('paper_weight2', paper_weight2);
     frmdata.append('paper_weight_etc', paper_weight_etc);
