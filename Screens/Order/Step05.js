@@ -39,6 +39,8 @@ import {
   setUserColorEtc,
   setUserColorEtc02,
   setUserBoardTk,
+  selectPfDirectName,
+  selectPfDirectName2
 } from '../../Modules/OrderReducer';
 import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 
@@ -277,7 +279,7 @@ const Step05 = (props) => {
           },
         ]);
       } 
-      else if ((paperName !== '직접입력') && (isDirect01 === 'n' || isDirect !== '직접입력') && (goal === null || goal === '') && cate1 === '1' && ca_id !== '9' && ca_id !== '12' && ca_id !== '13' && ca_id !== '14') {
+      else if ((paperName !== '직접입력') && (isDirect01 === 'n' && isDirect !== '직접입력') && (goal === null || goal === '') && cate1 === '1' && ca_id !== '9' && ca_id !== '12' && ca_id !== '13' && ca_id !== '14') {
         setGoalError(true);
         Alert.alert('골을 선택해주세요.', '', [
           {
@@ -285,7 +287,7 @@ const Step05 = (props) => {
           },
         ]);
       }
-      else if ((paperName !== '직접입력') && (isDirect01 === 'n' || isDirect !== '직접입력') && notWeight === 'n' && (weight === null || weight === '') && ca_id !== '10') {
+      else if ((paperName !== '직접입력') && (isDirect01 === 'n' && isDirect !== '직접입력') && notWeight === 'n' && (weight === null || weight === '') && ca_id !== '10') {
         setWeightError(true);
         Alert.alert('평량을 선택해주세요.', '', [
           {
@@ -293,7 +295,7 @@ const Step05 = (props) => {
           },
         ]);
       }
-      else if ((paperName !== '직접입력') && (isDirect01 === 'n' || isDirect !== '직접입력') && ca_id !== '11' && ca_id !== '6' && (paperColor === null || paperColor === ''))
+      else if ((paperName !== '직접입력') && (isDirect01 === 'n' && isDirect !== '직접입력') && ca_id !== '11' && ca_id !== '6' && (paperColor === null || paperColor === ''))
        {
         setColorError(true);
         Alert.alert('색상을 선택해주세요.', '', [
@@ -421,38 +423,56 @@ const Step05 = (props) => {
           dispatch(selectPnId(paperTypeDetail.pn_id));
         } 
       
-        if((isDirect01 === 'y' || isDirect === '직접입력') && directWeight !== '' || directWeight !== null) {
-          dispatch(setUserWeightEtc(directWeight));
-          dispatch(setUserWeight(''));
-        } 
-
-        if ((isDirect01 === 'n' || isDirect !== '직접입력') && (weight !== null || weight !== '') && ca_id !== '10') {
-          dispatch(setUserWeightEtc(''));
-          dispatch(setUserWeight(weight));
-        }   
-      
-        if((isDirect01 === 'y' || isDirect === '직접입력') && directGoal !== '' || directGoal !== null) {
+        if(isDirect01 === 'y' || isDirect === '직접입력') {
           dispatch(setUserGoalEtc(directGoal));
-          dispatch(setUserGoal(''));
-        } 
-
-        if((isDirect01 === 'n' || isDirect !== '직접입력') && (goal !== null || goal !== '') && cate1 === '1' && ca_id !== '9' && ca_id !== '12' && ca_id !== '13' && ca_id !== '14') {
-          dispatch(setUserGoalEtc(''));
-          dispatch(setUserGoal(goal));
-        } 
-
-        if((isDirect01 === 'y' || isDirect === '직접입력') && directColor !== '' || directColor !== null) {
+          dispatch(setUserWeightEtc(directWeight));
           dispatch(setUserColorEtc(directColor));
+          dispatch(setUserGoal(''));
+          dispatch(setUserWeight(''));
           dispatch(setUserColor(''));
-        } 
-
-        if ((isDirect01 === 'n' || isDirect !== '직접입력') && ca_id !== '11' && ca_id !== '6' && (paperColor !== null || paperColor !== '')) {
-          dispatch(setUserColorEtc(''));
+          dispatch(selectPnId(''));    
+        } else {
+          dispatch(setUserGoal(goal));
+          dispatch(setUserWeight(weight));
           dispatch(setUserColor(paperColor));
+          dispatch(setUserGoalEtc(''));
+          dispatch(setUserWeightEtc(''));
+          dispatch(setUserColorEtc(''));
         }
 
+        // if((isDirect01 === 'y' || isDirect === '직접입력') && directWeight !== '' || directWeight !== null) {
+        //   dispatch(setUserWeightEtc(directWeight));
+        //   dispatch(setUserWeight(''));
+        // } 
+
+        // if ((isDirect01 === 'n' || isDirect !== '직접입력') && (weight !== null || weight !== '') && ca_id !== '10') {
+        //   dispatch(setUserWeightEtc(''));
+        //   dispatch(setUserWeight(weight));
+        // }   
+      
+        // if((isDirect01 === 'y' || isDirect === '직접입력') && directGoal !== '' || directGoal !== null) {
+        //   dispatch(setUserGoalEtc(directGoal));
+        //   dispatch(setUserGoal(''));
+        // } 
+
+        // if((isDirect01 === 'n' || isDirect !== '직접입력') && (goal !== null || goal !== '') && cate1 === '1' && ca_id !== '9' && ca_id !== '12' && ca_id !== '13' && ca_id !== '14') {
+        //   dispatch(setUserGoalEtc(''));
+        //   dispatch(setUserGoal(goal));
+        // } 
+
+        // if((isDirect01 === 'y' || isDirect === '직접입력') && directColor !== '' || directColor !== null) {
+        //   dispatch(setUserColorEtc(directColor));
+        //   dispatch(setUserColor(''));
+        // } 
+
+        // if ((isDirect01 === 'n' || isDirect !== '직접입력') && ca_id !== '11' && ca_id !== '6' && (paperColor !== null || paperColor !== '')) {
+        //   dispatch(setUserColorEtc(''));
+        //   dispatch(setUserColor(paperColor));
+        // }
+
         if (paperName === '직접입력') {
-          dispatch(selectPaperName(directPaperName));  
+          dispatch(selectPfDirectName(directPaperName));  
+          dispatch(selectPaperName(''));
           dispatch(setUserGoalEtc(directGoal));
           dispatch(setUserWeightEtc(directWeight));
           dispatch(setUserColorEtc(directColor));
@@ -461,12 +481,13 @@ const Step05 = (props) => {
         }
         
         if (cate1 === '0' && (ca_id === '1' || ca_id === '4')) {
-          dispatch(selectPfId02(paperInner));          
+          dispatch(selectPfId02(paperInner));
           dispatch(selectPdId02(pdIdInner));  
           dispatch(selectPnId02(pnIdInner));  
         
           if (paperNameInner === '직접입력') {
-            dispatch(selectPaperName02(directPaperNameInner));  
+            dispatch(selectPfDirectName2(directPaperNameInner));  
+            dispatch(selectPaperName02(''));
             dispatch(setUserWeightEtc02(directWeightInner));
             dispatch(setUserColorEtc02(directColorInner));
             dispatch(setUserWeight2(''));  
@@ -1457,7 +1478,6 @@ const Step05 = (props) => {
                   </View>
                 ) : null}
                 {/* // 지종 1차 */}
-
                 {paperError01 ? (
                 <Text
                   style={{
@@ -1613,7 +1633,7 @@ const Step05 = (props) => {
                     alignItems: 'center',
                   }}>
                   <View>
-                    <Text style={[styles.profileTitle, {marginBottom: (isDirect === '직접입력' || isDirect01 === 'y') ? 5 : 20}]}>
+                    <Text style={[styles.profileTitle, {marginTop: 20, marginBottom: (isDirect === '직접입력' || isDirect01 === 'y') ? 5 : 20}]}>
                       골
                     </Text>
                   </View>
@@ -1645,7 +1665,7 @@ const Step05 = (props) => {
               ) : null}
               {!isLoading05 && getGoal !== null && getGoal.length > 0 && (
                  
-                <View style={{marginBottom: 20}}>
+                <View>
                  {getGoal.map((v, idx) => (
                   // <Text key={v}>{v}</Text>
                   <TouchableOpacity
