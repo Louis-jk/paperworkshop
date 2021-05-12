@@ -78,6 +78,8 @@ const Step04 = (props) => {
     pe_file_size,
     memo,
     wood_pattern,
+    way_edit,
+    stype
   } = useSelector((state) => state.OrderReducer);
 
   const directRef = React.useRef(null); // 수량 직접 입력폼 ref
@@ -259,6 +261,11 @@ const Step04 = (props) => {
           setPageCountError(true);
         } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
           setPageInnerCountError(true);
+          Alert.alert("페이지수(내지)를 입력해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
         } else if (bindTypeCur === null || bindTypeCur === '') {
           setBindTypeCurError(true);
         } else if (
@@ -304,6 +311,11 @@ const Step04 = (props) => {
           setPageCountError(true);
         } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
           setPageInnerCountError(true);
+          Alert.alert("페이지수(내지)를 입력해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
         } else if (writeingCur === null || writeingCur === '') {
           // 일반인쇄 - 간지종류
           setWriteingCurError(true);
@@ -565,6 +577,11 @@ const Step04 = (props) => {
           setPageCountError(true);
         } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
           setPageInnerCountError(true);
+          Alert.alert("페이지수(내지)를 입력해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
         } else if (bindTypeCur === null || bindTypeCur === '') {
           setBindTypeCurError(true);
         } else if (
@@ -638,6 +655,11 @@ const Step04 = (props) => {
           setPageCountError(true);
         } else if (pageInnerCountCur === null || pageInnerCountCur === '') {
           setPageInnerCountError(true);
+          Alert.alert("페이지수(내지)를 입력해주세요.", "", [
+            {
+              text: '확인'
+            }
+          ]);
         } else if (writeingCur === null || writeingCur === '') {
           // 일반인쇄 - 간지종류
           setWriteingCurError(true);
@@ -997,29 +1019,6 @@ const Step04 = (props) => {
   // 간단 견적 전 모달
   const [isModalVisible, setModalVisible] = React.useState(false);
 
-  const easyOrderBefore = () => {
-    if (
-      pe_file_url &&
-      pe_file_type &&
-      pe_file_name !== null &&
-      pe_file_name !== ''
-    ) {
-      setSource({
-        uri: pe_file_url,
-        type: pe_file_type,
-        name: pe_file_name,
-      });
-    }
-    if (fileUrlCurrent && fileTypeCurrent && fileName) {
-      setSource02({
-        uri: fileUrlCurrent,
-        type: fileTypeCurrent,
-        name: fileName,
-      });
-    }
-    easyOrderSubmit();
-  };
-
   const easyOrderSubmit = () => {
 
     let pe_file01 = {};
@@ -1052,6 +1051,8 @@ const Step04 = (props) => {
     frmdata.append('estimate_date', estimate_date);
     frmdata.append('pe_file[]', pe_file01);
     frmdata.append('memo', memo ? memo : '');
+    frmdata.append('way_edit', way_edit ? way_edit : '');
+    frmdata.append('stype', stype ? stype : '');
     frmdata.append('pwidth', pWidth);
     frmdata.append('plength', pLength);
     frmdata.append('pheight', pHeight);
@@ -2335,7 +2336,6 @@ const Step04 = (props) => {
                                 },
                               ]}
                               autoCapitalize="none"
-                              keyboardType="number-pad"
                             />
                             {sizeDirectError ? (
                               <Text
