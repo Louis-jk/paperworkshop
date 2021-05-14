@@ -48,7 +48,7 @@ export default {
     });
   },
   // 나의 파트너스 불러오기
-  getMyPartners(mb_id, ptype, cate1, popular, location) {
+  getMyPartners(mb_id, ptype, cate1, popular, location, search) {
     return Send({
       method: 'post',
       data: qs.stringify({
@@ -58,6 +58,7 @@ export default {
         cate1,
         popular,
         location,
+        search
       }),
     });
   },
