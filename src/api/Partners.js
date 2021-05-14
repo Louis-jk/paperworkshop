@@ -3,7 +3,7 @@ import qs from 'qs';
 
 export default {
   // 파트너스 불러오기
-  getPartners(ptype, cate1, popular, location) {
+  getPartners(ptype, cate1, popular, location, search) {
     return Send({
       method: 'post',
       data: qs.stringify({
@@ -12,6 +12,7 @@ export default {
         cate1,
         popular,
         location,
+        search
       }),
     });
   },

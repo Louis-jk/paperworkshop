@@ -1,11 +1,14 @@
-import React from 'react';
-import {View, Text, StyleSheet, FlatList, Dimensions} from 'react-native';
+import * as React from 'react';
+import {View, Text, StyleSheet, FlatList, Dimensions, TextInput, TouchableOpacity, Image, Alert} from 'react-native';
 
 import List from '../List';
 
 const Package = (props) => {
   const navigation = props.navigation;
   const partners = props.partners;
+  const searchHandler = props.searchHandler;
+
+  const [keyword, setKeyword] = React.useState('');
 
   const renderRow = ({item, index}) => {
     return <List item={item} index={index} navigation={navigation} />;
@@ -13,6 +16,66 @@ const Package = (props) => {
 
   return (
     <View style={{paddingHorizontal: 16}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 10,
+          borderWidth: 1,
+          borderColor: '#DEDEDE',
+          borderRadius: 5,
+          paddingHorizontal: 10,
+        }}>
+        <TextInput
+          value={keyword}
+          placeholder="업체명을 입력하세요."
+          placeholderTextColor="#BEBEBE"
+          autoFocus={false}
+          onChangeText={(text) => setKeyword(text)}
+          style={[styles.normalText, {width: '80%'}]}
+          onSubmitEditing={() => searchHandler(keyword)}
+          autoCapitalize="none"
+        />
+        {keyword ? 
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => {
+            setKeyword(null);
+            searchHandler(null);
+          }}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 23,
+              height: 23,
+              borderRadius: 23,
+              backgroundColor: '#EFEFEF',
+            }}>
+            <Image
+              source={require('../../../../src/assets/icon_close02.png')}
+              resizeMode="cover"
+              style={{
+                width: 15,
+                height: 15,
+              }}
+              fadeDuration={1000}
+            />
+          </View>
+        </TouchableOpacity>
+        : null}
+        <TouchableOpacity 
+          activeOpacity={0.8}
+          onPress={() => searchHandler(keyword)}
+        >
+          <Image
+            source={require('../../../../src/assets/top_seach.png')}
+            resizeMode="contain"
+            style={{width: 30, height: 30}}
+          />
+        </TouchableOpacity>
+      </View>
       <FlatList
         data={partners}
         renderItem={renderRow}

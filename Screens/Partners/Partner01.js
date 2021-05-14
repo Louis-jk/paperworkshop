@@ -31,10 +31,10 @@ const Partner01 = (props) => {
   const [pEtc, setPetc] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const getPartnersAll = () => {
+  const getPartnersAll = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('sincere', null, null, null)
+    PartnersApi.getPartners('sincere', null, null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
@@ -53,10 +53,10 @@ const Partner01 = (props) => {
       });
   };
 
-  const getPartnersPackage = () => {
+  const getPartnersPackage = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('sincere', '1', null, null)
+    PartnersApi.getPartners('sincere', '1', null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPpackages(res.data.item);
@@ -75,10 +75,10 @@ const Partner01 = (props) => {
       });
   };
 
-  const getPartnersGeneral = () => {
+  const getPartnersGeneral = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('sincere', '0', null, null)
+    PartnersApi.getPartners('sincere', '0', null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPgeneral(res.data.item);
@@ -97,10 +97,10 @@ const Partner01 = (props) => {
       });
   };
 
-  const getPartnersEtc = () => {
+  const getPartnersEtc = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getPartners('sincere', '2', null, null)
+    PartnersApi.getPartners('sincere', '2', null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPetc(res.data.item);
@@ -120,15 +120,28 @@ const Partner01 = (props) => {
   };
 
   React.useEffect(() => {
-    getPartnersAll();
-    getPartnersPackage();
-    getPartnersGeneral();
-    getPartnersEtc();
+    getPartnersAll(null);
+    getPartnersPackage(null);
+    getPartnersGeneral(null);
+    getPartnersEtc(null);
   }, []);
 
-  // const renderRow = ({item, index}) => {
-  //   return <List item={item} index={index} navigation={navigation} />;
-  // };
+  const allSearchHandler = (keyword) => {
+    getPartnersAll(keyword);
+  }
+
+  const packageSearchHandler = (keyword) => {
+    getPartnersPackage(keyword);
+  }
+
+  const generalSearchHandler = (keyword) => {
+    getPartnersGeneral(keyword);
+  }
+
+  const etcSearchHandler = (keyword) => {
+    getPartnersEtc(keyword);
+  }
+
 
   const initialLayout = {width: Dimensions.get('window').width};
 
@@ -143,13 +156,13 @@ const Partner01 = (props) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'all':
-        return <All navigation={navigation} partners={partners} />;
+        return <All navigation={navigation} partners={partners} searchHandler={allSearchHandler} />;
       case 'package':
-        return <Package navigation={navigation} partners={pPackage} />;
+        return <Package navigation={navigation} partners={pPackage} searchHandler={packageSearchHandler} />;
       case 'general':
-        return <General navigation={navigation} partners={pGeneral} />;
+        return <General navigation={navigation} partners={pGeneral} searchHandler={generalSearchHandler} />;
       case 'etc':
-        return <Etc navigation={navigation} partners={pEtc} />;
+        return <Etc navigation={navigation} partners={pEtc} searchHandler={etcSearchHandler}/>;
     }
   };
 
@@ -299,31 +312,6 @@ const Partner01 = (props) => {
               ]}>
               기타인쇄
             </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 10,
-            borderWidth: 1,
-            borderColor: '#DEDEDE',
-            borderRadius: 5,
-            paddingHorizontal: 10,
-          }}>
-          <TextInput
-            placeholder="업체명을 입력하세요."
-            placeholderTextColor="#BEBEBE"
-            autoFocus={false}
-            style={[styles.normalText, {width: '80%'}]}
-          />
-          <TouchableOpacity>
-            <Image
-              source={require('../../src/assets/top_seach.png')}
-              resizeMode="contain"
-              style={{width: 30, height: 30}}
-            />
           </TouchableOpacity>
         </View>
       </View>
