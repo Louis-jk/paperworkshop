@@ -663,7 +663,7 @@ const Edit = (props) => {
               }}>
               <TextInput
                 ref={mobileRef}
-                value={mobileNo}
+                value={mb_hp ? mb_hp : mobileNo}
                 placeholder="휴대전화번호를 입력해주세요."
                 placeholderTextColor="#A2A2A2"
                 style={[
