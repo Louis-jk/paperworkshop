@@ -301,6 +301,7 @@ const Search = (props) => {
             style={[styles.normalText, {width: '80%'}]}
             onSubmitEditing={() => sendSearchAPI()}
           />
+          {keyword ? 
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
@@ -325,9 +326,11 @@ const Search = (props) => {
                   width: 15,
                   height: 15,
                 }}
+                fadeDuration={1000}
               />
             </View>
           </TouchableOpacity>
+          : null}
           <TouchableOpacity activeOpacity={1} onPress={() => sendSearchAPI()}>
             <Image
               source={require('../../src/assets/top_seach.png')}
