@@ -551,6 +551,7 @@ const Step05 = (props) => {
     BoxTypeAPI.getPaper1DepthInfo(cate1, ca_id, pf_id, type_id)
       .then((res) => {     
         if (res.data.result === '1') {
+          console.log("지종", res);
           setIsLoading(false);
           setPaperDetail(res.data.item);
           setIsLoadingPrev(false);         
@@ -1724,7 +1725,11 @@ const Step05 = (props) => {
                   }}
                   autoCapitalize="none"
                   keyboardType="default"
-                  onSubmitEditing={() => directWeightRef.current.focus()}
+                  onSubmitEditing={() => {
+                    if(ca_id !== '10') {
+                      directWeightRef.current.focus();
+                    }
+                  }}
                 />
               ) : null}
               {directGoalError ? (
@@ -1803,7 +1808,11 @@ const Step05 = (props) => {
                   }}
                   autoCapitalize="none"
                   keyboardType="number-pad"
-                  onSubmitEditing={() => directColorRef.current.focus()}
+                  onSubmitEditing={() => {
+                    if(ca_id !== '11') {
+                      directColorRef.current.focus()
+                    }
+                    }}
                 />
               ) : null}
 
