@@ -12,20 +12,29 @@ const index = (props) => {
   const [getHeight, setGetHeight] = React.useState(null);
 
   return (
-    <>
+    <View style={{flex:1, backgroundColor: '#fff'}}>
       <Header title={routeName} navigation={navigation} />
 
       <AutoHeightWebView
         style={{
-          width: Dimensions.get('window').width - 20,
+          width: Dimensions.get('window').width - 30,
         }}
         source={{
           uri: `http://dmonster1506.cafe24.com/bbs/content.php?co_id=provision`,
         }}
+        customStyle={`
+          * {
+            font-family: 'Times New Roman';
+          }
+          p {
+            font-size: 16px;
+            line-height: 2em;
+          }
+        `}
         scalesPageToFit={Platform.OS === 'Android' ? true : false}
         viewportContent={'width=device-width, user-scalable=no'}
       />
-    </>
+    </View>
   );
 };
 
