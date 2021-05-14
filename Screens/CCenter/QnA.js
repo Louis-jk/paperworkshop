@@ -31,9 +31,9 @@ const QnA = (props) => {
   const [step01, setStep01] = React.useState('');
   const [search, setSearch] = React.useState(null);
 
-  const qnaListAPI = () => {
+  const qnaListAPIHandler = (payload) => {
     setLoading(true);
-    Info.getQnaList(mb_id, search)
+    Info.getQnaList(mb_id, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setList(res.data.item);
@@ -55,7 +55,7 @@ const QnA = (props) => {
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      qnaListAPI();
+      qnaListAPIHandler();
     });
 
     return unsubscribe;
@@ -258,15 +258,43 @@ const QnA = (props) => {
               backgroundColor: '#fff',
               width: '100%',
             }}>
-            <TextInput
+           <TextInput
               value={search}
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
               style={[styles.normalText, {width: '80%'}]}
               onChangeText={(text) => setSearch(text)}
-              onSubmitEditing={() => qnaListAPI()}
+              onSubmitEditing={() => qnaListAPIHandler(search)}
             />
+            {search ? 
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                setSearch(null);
+                qnaListAPIHandler(null);
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 23,
+                  height: 23,
+                  borderRadius: 23,
+                  backgroundColor: '#EFEFEF',
+                }}>
+                <Image
+                  source={require('../../src/assets/icon_close02.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 15,
+                    height: 15,
+                  }}
+                  fadeDuration={1000}
+                />
+              </View>
+            </TouchableOpacity>
+            : null}
             <TouchableOpacity
               onPress={() => {
                 Keyboard.dismiss();

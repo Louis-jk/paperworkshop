@@ -36,11 +36,12 @@ export default {
     });
   },
   // FAQ 리스트
-  getFaqList() {
+  getFaqList(search) {
     return Send({
       method: 'post',
       data: qs.stringify({
         method: 'proc_faq_list',
+        search
       }),
     });
   },
@@ -55,11 +56,12 @@ export default {
     });
   },
   // 공지사항 리스트
-  getNoticeList() {
+  getNoticeList(search) {
     return Send({
       method: 'post',
       data: qs.stringify({
         method: 'proc_notice_list',
+        search
       }),
     });
   },

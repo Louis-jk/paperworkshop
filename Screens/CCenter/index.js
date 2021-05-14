@@ -23,10 +23,11 @@ const index = (props) => {
   const [isLoading, setLoading] = React.useState(false);
   const [list, setList] = React.useState([]);
   const [step01, setStep01] = React.useState('');
+  const [keyword, setKeyword] = React.useState('');
 
-  const getFaqList = () => {
+  const getFaqListHandler = (payload) => {
     setLoading(true);
-    Info.getFaqList()
+    Info.getFaqList(payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setList(res.data.item);
@@ -47,7 +48,7 @@ const index = (props) => {
   };
 
   React.useEffect(() => {
-    getFaqList();
+    getFaqListHandler();
   }, []);
 
   const renderRow = ({item, index}) => {
@@ -200,12 +201,46 @@ const index = (props) => {
               width: '100%',
             }}>
             <TextInput
+              value={keyword}
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
               style={[styles.normalText, {width: '80%'}]}
+              onChangeText={text => setKeyword(text)}
+              onSubmitEditing={() => getFaqListHandler(keyword)}
             />
-            <TouchableOpacity>
+            {keyword ? 
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                setKeyword(null);
+                getFaqListHandler(null);
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 23,
+                  height: 23,
+                  borderRadius: 23,
+                  backgroundColor: '#EFEFEF',
+                }}>
+                <Image
+                  source={require('../../src/assets/icon_close02.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 15,
+                    height: 15,
+                  }}
+                  fadeDuration={1000}
+                />
+              </View>
+            </TouchableOpacity>
+            : null}
+             <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => getFaqListHandler(keyword)}
+              >
               <Image
                 source={require('../../src/assets/top_seach.png')}
                 resizeMode="contain"
