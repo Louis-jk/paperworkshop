@@ -27,6 +27,16 @@ export default {
       }),
     });
   },
+  // 리뷰 등록하기
+  sendReview(frmData) {
+    return Send({
+      method: 'post',
+      data: frmData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
   // 리뷰 가져오기
   getReview(company_id) {
     return Send({

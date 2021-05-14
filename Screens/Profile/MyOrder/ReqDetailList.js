@@ -687,7 +687,6 @@ const ReqDetailList = (props) => {
                         인쇄제작요청완료
                       </Text>
                     </View>
-
                     <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
                       <View style={[styles.submitBtn, {marginTop: 7}]}>
                         <Text style={styles.submitBtnText}>요청 포기</Text>
@@ -705,11 +704,20 @@ const ReqDetailList = (props) => {
                     </TouchableOpacity>
                   </>
                 ) : myOrderDetail.status === '8' ? (
+                  <>
                   <View style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
                     <Text style={styles.submitStepBtnTextDisable}>
                       수령완료
                     </Text>
                   </View>
+                  <TouchableOpacity onPress={() => navigation.navigate('Review', {screen: 'Review', params: {partnerId: myOrderPartners[0].company_id, userId: myOrderDetail.mb_id}})} 
+                  activeOpacity={0.9}
+                  >
+                    <View style={[styles.submitBtn, {marginTop: 7}]}>
+                      <Text style={styles.submitBtnText}>후기작성</Text>
+                    </View>
+                  </TouchableOpacity>
+                  </>
                 ) : (
                   <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
                     <View style={[styles.submitBtn, {marginTop: 20}]}>
