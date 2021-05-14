@@ -25,8 +25,6 @@ const Partner01 = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
 
-  // const cateName = props.route.params.name;
-
   const {mb_id} = useSelector((state) => state.UserInfoReducer); // 내 아이디 가져오기(redux)
 
   const [partners, setPartners] = React.useState([]);
@@ -34,11 +32,15 @@ const Partner01 = (props) => {
   const [pGeneral, setPgeneral] = React.useState([]);
   const [pEtc, setPetc] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [keyword01, setKeyword01] = React.useState(''); // 전체 키워드
+  const [keyword02, setKeyword02] = React.useState(''); // 패키지 키워드
+  const [keyword03, setKeyword03] = React.useState(''); // 일반인쇄 키워드
+  const [keyword04, setKeyword04] = React.useState(''); // 기타인쇄 키워드
 
-  const getPartnersAll = () => {
+  const getPartnersAll = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getMyPartners(mb_id, 'sincere', null, null, null)
+    PartnersApi.getMyPartners(mb_id, 'sincere', null, null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPartners(res.data.item);
@@ -57,10 +59,10 @@ const Partner01 = (props) => {
       });
   };
 
-  const getPartnersPackage = () => {
+  const getPartnersPackage = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getMyPartners(mb_id, 'sincere', '1', null, null)
+    PartnersApi.getMyPartners(mb_id, 'sincere', '1', null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPpackages(res.data.item);
@@ -79,10 +81,10 @@ const Partner01 = (props) => {
       });
   };
 
-  const getPartnersGeneral = () => {
+  const getPartnersGeneral = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getMyPartners(mb_id, 'sincere', '0', null, null)
+    PartnersApi.getMyPartners(mb_id, 'sincere', '0', null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPgeneral(res.data.item);
@@ -101,10 +103,10 @@ const Partner01 = (props) => {
       });
   };
 
-  const getPartnersEtc = () => {
+  const getPartnersEtc = (payload) => {
     setIsLoading(true);
 
-    PartnersApi.getMyPartners(mb_id, 'sincere', '2', null, null)
+    PartnersApi.getMyPartners(mb_id, 'sincere', '2', null, null, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setPetc(res.data.item);
@@ -134,9 +136,21 @@ const Partner01 = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  // const renderRow = ({item, index}) => {
-  //   return <List item={item} index={index} navigation={navigation} />;
-  // };
+  const allSearchHandler = (payload) => {
+    getPartnersAll(payload);
+  }
+
+  const packageSearchHandler = (payload) => {
+    getPartnersPackage(payload);
+  }
+
+  const generalSearchHandler = (payload) => {
+    getPartnersGeneral(payload);
+  }
+
+  const etcSearchHandler = (payload) => {
+    getPartnersEtc(payload);
+  }
 
   const initialLayout = {width: Dimensions.get('window').width};
 
@@ -151,13 +165,13 @@ const Partner01 = (props) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'all':
-        return <All navigation={navigation} partners={partners} />;
+        return <All navigation={navigation} partners={partners} searchHandler={allSearchHandler} setKeyword={setKeyword01} keyword={keyword01} />;
       case 'package':
-        return <Package navigation={navigation} partners={pPackage} />;
+        return <Package navigation={navigation} partners={pPackage} searchHandler={packageSearchHandler} setKeyword={setKeyword02} keyword={keyword02} />;
       case 'general':
-        return <General navigation={navigation} partners={pGeneral} />;
+        return <General navigation={navigation} partners={pGeneral} searchHandler={generalSearchHandler} setKeyword={setKeyword03} keyword={keyword03} />;
       case 'etc':
-        return <Etc navigation={navigation} partners={pEtc} />;
+        return <Etc navigation={navigation} partners={pEtc} searchHandler={etcSearchHandler} setKeyword={setKeyword04} keyword={keyword04} />;
     }
   };
 
@@ -307,31 +321,6 @@ const Partner01 = (props) => {
               ]}>
               기타인쇄
             </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 10,
-            borderWidth: 1,
-            borderColor: '#DEDEDE',
-            borderRadius: 5,
-            paddingHorizontal: 10,
-          }}>
-          <TextInput
-            placeholder="업체명을 입력하세요."
-            placeholderTextColor="#BEBEBE"
-            autoFocus={false}
-            style={[styles.normalText, {width: '80%'}]}
-          />
-          <TouchableOpacity>
-            <Image
-              source={require('../../../src/assets/top_seach.png')}
-              resizeMode="contain"
-              style={{width: 30, height: 30}}
-            />
           </TouchableOpacity>
         </View>
       </View>
