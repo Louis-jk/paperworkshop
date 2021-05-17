@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   Alert,
   Dimensions,
@@ -10,7 +9,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   FlatList,
-  Linking
+  Linking,
+  ActivityIndicator
 } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard'; // 클립보드 패키지
 import DetailHeader from '../../Common/DetailHeader';
@@ -18,6 +18,7 @@ import Modal from './CancelModal';
 import OrderAPI from '../../../src/api/OrderAPI';
 import Partners from '../../../src/api/Partners';
 import OrderDetail from './OrderDetail';
+import {useSelector} from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/ko';
 
@@ -28,23 +29,45 @@ const ReqDetailList = (props) => {
 
   console.log("pe_id ???", pe_id);
 
+  const [isLoading, setLoading] = React.useState(false);
   const [myOrderDetail, setMyOrderDetail] = React.useState([]);
   const [myOrderPartners, setMyOrderPartners] = React.useState([]);
 
+    // Redux 에서 유저 정보 가져오기
+    const {mb_id} = useSelector((state) => state.UserInfoReducer);
+
   // 나의 견적 상세 API 호출
   const getMyOrderDetailAPI = () => {
-    OrderAPI.getMyOrderDetail(pe_id)
+    setLoading(true);
+    OrderAPI.getMyOrderDetail(pe_id, mb_id, '')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
-          console.log("견적 상세 :::::::", res);
           setMyOrderDetail(res.data.item[0]);
           if (
             res.data.item[0].list !== null ||
             res.data.item[0].list.length > 0
           ) {
             setMyOrderPartners(res.data.item[0].list);
+            setLoading(false);
+          }
+          if (res.data.item[0].status === '8') {
+            OrderAPI.getMyOrderDetail(pe_id, mb_id, res.data.item[0].list[0].company_id)
+            .then(res => {
+              if (res.data.result === '1' && res.data.count > 0) {
+                setMyOrderDetail(res.data.item[0]);
+                setLoading(false);
+                if (
+                  res.data.item[0].list !== null ||
+                  res.data.item[0].list.length > 0
+                ) {
+                  setMyOrderPartners(res.data.item[0].list);
+                  setLoading(false);
+                }
+              }
+            });
           }
         } else {
+          setLoading(false);
           Alert.alert(res.data.message, '', [
             {
               text: '확인',
@@ -53,6 +76,7 @@ const ReqDetailList = (props) => {
         }
       })
       .catch((err) => {
+        setLoading(false);
         Alert.alert(err, '관리자에게 문의하세요', [
           {
             text: '확인',
@@ -61,12 +85,13 @@ const ReqDetailList = (props) => {
       });
   };
 
-  console.log('myOrderPartners', myOrderPartners);
 
   // 파트너 선정(나의 견적에서 파트너 선정)
   const setEstimatePartnerAPI = (pd_id) => {
+    setLoading(true);
     Partners.setEstimatePartner(pd_id).then((res) => {
       if (res.data.result === '1') {
+        setLoading(false);
         Alert.alert(res.data.message, '', [
           {
             text: '확인',
@@ -74,6 +99,7 @@ const ReqDetailList = (props) => {
           },
         ]);
       } else {
+        setLoading(false);
         Alert.alert(res.data.message, '', [
           {
             text: '확인',
@@ -82,6 +108,7 @@ const ReqDetailList = (props) => {
         ]);
       }
     }).catch(err => {
+      setLoading(false);
       Alert.alert(err, '관리자에게 문의하세요.', [
         {
           text: '확인',
@@ -93,8 +120,10 @@ const ReqDetailList = (props) => {
 
   // 파트너 선정(계약금 입금완료)
   const setDepositPartnerAPI = () => {
+    setLoading(true);
     Partners.setDepositPartner(pe_id).then((res) => {
       if (res.data.result === '1') {
+        setLoading(false);
         Alert.alert(
           '계약금 입금완료 요청하였습니다.',
           '파트너회원이 입금확인할 때까지 기다려주세요.',
@@ -106,6 +135,7 @@ const ReqDetailList = (props) => {
           ],
         );
       } else {
+        setLoading(false);
         Alert.alert(res.data.message, '', [
           {
             text: '확인',
@@ -113,6 +143,7 @@ const ReqDetailList = (props) => {
         ]);
       }
     }).catch(err => {
+      setLoading(false);
       Alert.alert(err, '관리자에게 문의하세요.', [
         {
           text: '확인'
@@ -123,8 +154,10 @@ const ReqDetailList = (props) => {
 
   // 파트너 선정(인쇄 제작요청)
   const setOrderProductAPI = () => {
+    setLoading(true);
     Partners.setOrderProduct(pe_id).then((res) => {
       if (res.data.result === '1') {
+        setLoading(false);
         Alert.alert(
           '인쇄제작요청을 하였습니다.',
           '파트너스 회원이 제작완료 후 "납품완료" 처리를 하게 됩니다.',
@@ -136,6 +169,7 @@ const ReqDetailList = (props) => {
           ],
         );
       } else {
+        setLoading(false);
         Alert.alert(res.data.message, '', [
           {
             text: '확인',
@@ -143,6 +177,7 @@ const ReqDetailList = (props) => {
         ]);
       }
     }).catch(err => {
+      setLoading(false);
       Alert.alert(err, '관리자에게 문의하세요.', [
         {
           text: '확인'
@@ -153,7 +188,9 @@ const ReqDetailList = (props) => {
 
   // 파트너 선정(수령완료)
   const setOrderCompleteAPI = () => {
+    setLoading(true);
     Partners.setOrderComplete(pe_id).then((res) => {
+      setLoading(false);
       if (res.data.result === '1') {
         Alert.alert(
           res.data.message,
@@ -166,6 +203,7 @@ const ReqDetailList = (props) => {
           ],
         );
       } else {
+        setLoading(false);
         Alert.alert(
           res.data.message,
           '',
@@ -177,6 +215,7 @@ const ReqDetailList = (props) => {
         );
       }
     }).catch(err => {
+      setLoading(false);
       Alert.alert(err, '관리자에게 문의하세요.', [
         {
           text: '확인'
@@ -185,13 +224,17 @@ const ReqDetailList = (props) => {
     });
   };
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getMyOrderDetailAPI();
-    });
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     getMyOrderDetailAPI();
+  //   });
 
-    return unsubscribe;
-  }, [navigation]);
+  //   return unsubscribe;
+  // }, [navigation]);
+
+  React.useEffect(() => {    
+      getMyOrderDetailAPI();
+  }, []);
 
   const copyToClipboard = (copyTxt) => {
     Clipboard.setString(copyTxt);
@@ -214,21 +257,17 @@ const ReqDetailList = (props) => {
 
   // 견적 요청 포기
   const delOrderAPI = () => {
+    setLoading(true);
     OrderAPI.delOrder(pe_id)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
+          setLoading(false);
           setModalVisible(!isModalVisible);
           navigation.navigate('CancelOrder');
         }
-        //  else {
-        //   Alert.alert(res.data.message, '', [
-        //     {
-        //       text: '확인',
-        //     },
-        //   ]);
-        // }
       })
       .catch((err) => {
+        setLoading(false);
         Alert.alert(err, '관리자에게 문의하세요.', [
           {
             text: '확인',
@@ -547,7 +586,26 @@ const ReqDetailList = (props) => {
       />
       <DetailHeader title={routeName} navigation={navigation} />
       {/* 입찰업체 리스트 */}
-
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            flex: 1,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            elevation: 0,
+            backgroundColor: 'rgba(255,255,255,0.5)',
+          }}>
+          <ActivityIndicator size="large" color="#275696" />
+        </View>
+      )}
+      
       <FlatList
         ListHeaderComponent={
           <>
@@ -630,7 +688,7 @@ const ReqDetailList = (props) => {
                 </View>
               </View>
               {myOrderDetail.status !== '9' ? (
-                myOrderDetail.status === '3' ? (
+                 myOrderDetail.status === '3' ? (
                   <>
                     <TouchableOpacity
                       onPress={() => setDepositPartnerAPI()}
@@ -647,106 +705,114 @@ const ReqDetailList = (props) => {
                       </View>
                     </TouchableOpacity>
                   </>
-                ) : myOrderDetail.status === '4' ? (
-                  <>
-                    <View
-                      style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
-                      <Text style={styles.submitStepBtnTextDisable}>
-                        계약금 입금 확인 대기
-                      </Text>
-                    </View>
-
-                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-                      <View style={[styles.submitBtn, {marginTop: 7}]}>
-                        <Text style={styles.submitBtnText}>요청 포기</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </>
-                ) : myOrderDetail.status === '5' ? (
-                  <>
-                    <TouchableOpacity
-                      onPress={() => setOrderProductAPI()}
-                      activeOpacity={0.9}>
-                      <View style={[styles.submitStepBtn, {marginTop: 20}]}>
-                        <Text style={styles.submitStepBtnText}>
-                          인쇄제작요청
+                  ) : myOrderDetail.status === '4' ? (
+                    <>
+                      <View
+                        style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
+                        <Text style={styles.submitStepBtnTextDisable}>
+                          계약금 입금 확인 대기
                         </Text>
                       </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-                      <View style={[styles.submitBtn, {marginTop: 7}]}>
-                        <Text style={styles.submitBtnText}>요청 포기</Text>
+
+                      <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                        <View style={[styles.submitBtn, {marginTop: 7}]}>
+                          <Text style={styles.submitBtnText}>요청 포기</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </>
+                  ) : myOrderDetail.status === '5' ? (
+                    <>
+                      <TouchableOpacity
+                        onPress={() => setOrderProductAPI()}
+                        activeOpacity={0.9}>
+                        <View style={[styles.submitStepBtn, {marginTop: 20}]}>
+                          <Text style={styles.submitStepBtnText}>
+                            인쇄제작요청
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                        <View style={[styles.submitBtn, {marginTop: 7}]}>
+                          <Text style={styles.submitBtnText}>요청 포기</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </>
+                  ) : myOrderDetail.status === '6' ? (
+                    <>
+                      <View
+                        style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
+                        <Text style={styles.submitStepBtnTextDisable}>
+                          인쇄제작요청완료
+                        </Text>
                       </View>
-                    </TouchableOpacity>
-                  </>
-                ) : myOrderDetail.status === '6' ? (
-                  <>
-                    <View
-                      style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
+                      <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                        <View style={[styles.submitBtn, {marginTop: 7}]}>
+                          <Text style={styles.submitBtnText}>요청 포기</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </>
+                  ) : myOrderDetail.status === '7' ? (
+                    <>
+                      <TouchableOpacity
+                        onPress={() => setOrderCompleteAPI()}
+                        activeOpacity={0.9}>
+                        <View style={[styles.submitBtn, {marginTop: 20}]}>
+                          <Text style={styles.submitBtnText}>수령확인</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </>
+                  ) : myOrderDetail.status === '8' && myOrderDetail.review_yn === 'N' ? (
+                    <>
+                      <View style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
+                        <Text style={styles.submitStepBtnTextDisable}>
+                          수령완료
+                        </Text>
+                      </View>
+                      <TouchableOpacity onPress={() => navigation.navigate('Review', {screen: 'Review', params: {pe_id: pe_id, partnerId: myOrderPartners[0].company_id, userId: myOrderDetail.mb_id}})} 
+                        activeOpacity={0.9}
+                        >
+                        <View style={[styles.submitBtn, {marginTop: 7}]}>
+                          <Text style={styles.submitBtnText}>후기작성</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </>
+                  ) : myOrderDetail.status === '8' && myOrderDetail.review_yn === 'Y' ? (
+                    <>
+                    <View style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
                       <Text style={styles.submitStepBtnTextDisable}>
-                        인쇄제작요청완료
+                        수령완료
                       </Text>
                     </View>
+                    <View style={[styles.submitStepBtnDisable, {marginTop: 5}]}>
+                      <Text style={styles.submitStepBtnTextDisable}>
+                        후기작성완료
+                      </Text>
+                    </View>
+                    </>
+                  ) : 
+                  (
                     <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
-                      <View style={[styles.submitBtn, {marginTop: 7}]}>
+                      <View style={[styles.submitBtn, {marginTop: 20}]}>
                         <Text style={styles.submitBtnText}>요청 포기</Text>
                       </View>
                     </TouchableOpacity>
-                  </>
-                ) : myOrderDetail.status === '7' ? (
-                  <>
-                    <TouchableOpacity
-                      onPress={() => setOrderCompleteAPI()}
-                      activeOpacity={0.9}>
-                      <View style={[styles.submitStepBtn, {marginTop: 20}]}>
-                        <Text style={styles.submitStepBtnText}>수령확인</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </>
-                ) : myOrderDetail.status === '8' ? (
-                  <>
-                  <View style={[styles.submitStepBtnDisable, {marginTop: 20}]}>
-                    <Text style={styles.submitStepBtnTextDisable}>
-                      수령완료
-                    </Text>
-                  </View>
-                  {myOrderDetail.ecnt !== '1' ? 
-                  <TouchableOpacity onPress={() => navigation.navigate('Review', {screen: 'Review', params: {partnerId: myOrderPartners[0].company_id, userId: myOrderDetail.mb_id}})} 
-                  activeOpacity={0.9}
-                  >
-                    <View style={[styles.submitBtn, {marginTop: 7}]}>
-                      <Text style={styles.submitBtnText}>후기작성</Text>
-                    </View>
-                  </TouchableOpacity>
-                  :
-                   <View style={[styles.submitStepBtnDisable, {marginTop: 5}]}>
-                    <Text style={styles.submitStepBtnTextDisable}>
-                      후기작성완료
-                      </Text>
-                    </View>
-                  }
-                  </>
+                  ) 
                 ) : (
-                  <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('CopyOrder', {
+                        pe_id: pe_id,
+                        cate1: myOrderDetail.cate1,
+                      })
+                    }
+                    activeOpacity={0.9}>
                     <View style={[styles.submitBtn, {marginTop: 20}]}>
-                      <Text style={styles.submitBtnText}>요청 포기</Text>
+                      <Text style={styles.submitBtnText}>복사 후 재등록</Text>
                     </View>
                   </TouchableOpacity>
                 )
-              ) : (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('CopyOrder', {
-                      pe_id: pe_id,
-                      cate1: myOrderDetail.cate1,
-                    })
-                  }
-                  activeOpacity={0.9}>
-                  <View style={[styles.submitBtn, {marginTop: 20}]}>
-                    <Text style={styles.submitBtnText}>복사 후 재등록</Text>
-                  </View>
-                </TouchableOpacity>
-              )}
+              }
+         
             </View>
             {/* 경계 라인 */}
             <View
@@ -999,6 +1065,7 @@ const ReqDetailList = (props) => {
           ) : null
         }
       />
+      
 
       {/* // 입찰업체 리스트 */}
     </View>
