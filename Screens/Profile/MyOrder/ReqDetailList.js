@@ -36,7 +36,7 @@ const ReqDetailList = (props) => {
     OrderAPI.getMyOrderDetail(pe_id)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
-          console.log("dfsdfds", res);
+          console.log("견적 상세 :::::::", res);
           setMyOrderDetail(res.data.item[0]);
           if (
             res.data.item[0].list !== null ||
@@ -710,6 +710,7 @@ const ReqDetailList = (props) => {
                       수령완료
                     </Text>
                   </View>
+                  {myOrderDetail.ecnt !== '1' ? 
                   <TouchableOpacity onPress={() => navigation.navigate('Review', {screen: 'Review', params: {partnerId: myOrderPartners[0].company_id, userId: myOrderDetail.mb_id}})} 
                   activeOpacity={0.9}
                   >
@@ -717,6 +718,13 @@ const ReqDetailList = (props) => {
                       <Text style={styles.submitBtnText}>후기작성</Text>
                     </View>
                   </TouchableOpacity>
+                  :
+                   <View style={[styles.submitStepBtnDisable, {marginTop: 5}]}>
+                    <Text style={styles.submitStepBtnTextDisable}>
+                      후기작성완료
+                      </Text>
+                    </View>
+                  }
                   </>
                 ) : (
                   <TouchableOpacity onPress={toggleModal} activeOpacity={0.9}>
