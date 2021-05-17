@@ -26,7 +26,7 @@ import qs from 'qs';
 import ImagePicker from 'react-native-image-crop-picker';
 import FastImage from 'react-native-fast-image';
 
-import Header from '../Common/Header';
+import Header from '../Common/DetailHeader';
 import Timer from '../Common/Timer';
 
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
