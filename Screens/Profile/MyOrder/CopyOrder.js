@@ -249,6 +249,17 @@ const CopyOrder = (props) => {
         ],
       );
       setdDayDate(date);
+    } else if(selectedDate >= arriveDate) {
+      Alert.alert(
+        '견적 마감일은 납품 희망일과 같은 날짜이거나 이후 날짜일 수 없습니다.',
+        '날짜를 다시 선택해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
+      setdDayDate(date);
     } else {
       setdDayDate(currentDate);
     }
@@ -456,12 +467,8 @@ const CopyOrder = (props) => {
                 {/* <Text style={[styles.profileRequired, {marginLeft: 5}]}>
                   (필수)
                 </Text> */}
-              </View>              
-              <TextInput
-                value={title}
-                placeholder="제목을 입력해주세요."
-                placeholderTextColor="#A2A2A2"
-                style={[
+              </View>
+              <View style={[
                   styles.normalText,
                   {
                     borderWidth: 1,
@@ -469,12 +476,13 @@ const CopyOrder = (props) => {
                     borderRadius: 4,
                     paddingHorizontal: 10,
                     marginBottom: 5,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
                   },
-                ]}
-                autoCapitalize="none"
-                onChangeText={(text) => setTitle(text)}
-                editable={false}
-              />
+                ]}>
+                <Text style={{fontFamily: 'SCDream4', fontSize:14}}>{title}</Text>  
+              </View>
             </View>
             {/* // 제목 */}
 
