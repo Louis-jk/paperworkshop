@@ -158,6 +158,9 @@ const DetailHeader = (props) => {
       case 'Privacy':
         setTitle('개인정보 처리방침');
         break;
+      case 'ProfileEdit':
+        setTitle('회원 정보 수정');
+        break;
       default:
         return false;
     }
