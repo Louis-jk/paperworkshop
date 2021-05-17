@@ -82,6 +82,12 @@ const index = (props) => {
           text: '확인'
         }
       ])
+    } else if(reviewUploadImg.length === 0) {
+      Alert.alert("후기 사진을 첨부해주세요.", "", [
+        {
+          text: '확인'
+        }
+      ])
     } else {
       let frmData = new FormData();
   
@@ -92,8 +98,15 @@ const index = (props) => {
       frmData.append('grade1', rating01);
       frmData.append('grade2', rating02);
       frmData.append('grade3', rating03);
-      // frmData.append('bf_file[]', reviewUploadImg);
-  
+      
+      if(reviewUploadImg.length > 0) {
+        reviewUploadImg.map(r => {
+          frmData.append('bf_file[]', r);
+        })
+      } else {
+        frmData.append('bf_file[]',reviewUploadImg);
+      }
+
       console.log("frmData", frmData);
   
       PartnersAPI.sendReview(frmData).then(res => {
