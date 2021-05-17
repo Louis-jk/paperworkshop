@@ -39,13 +39,13 @@ const index = (props) => {
   // 검색 삭제 버튼
   const onSearchCleanHandler = () => {
     setSearch(null);
-    getEventListAPI();
+    getEventListAPI(null);
   };
 
   // 이벤트 리스트 불러오기
-  const getEventListAPI = () => {
+  const getEventListAPI = (payload) => {
     setLoading(true);
-    EventAPI.getEvent(search).then((res) => {
+    EventAPI.getEvent(payload).then((res) => {
       if (res.data.result === '1') {
         setList(res.data.item);
         setLoading(false);
@@ -255,8 +255,10 @@ const index = (props) => {
             autoFocus={false}
             style={[styles.normalText, {width: '80%'}]}
             onChangeText={(text) => setSearch(text)}
-            onSubmitEditing={() => getEventListAPI()}
+            onSubmitEditing={() => getEventListAPI(search)}
+            autoCapitalize="none"
           />
+          {search ? 
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
@@ -278,9 +280,11 @@ const index = (props) => {
                   width: 15,
                   height: 15,
                 }}
+                fadeDuration={1000}
               />
             </View>
           </TouchableOpacity>
+          : null }
           <TouchableOpacity activeOpacity={1} onPress={() => getEventListAPI()}>
             <Image
               source={require('../../src/assets/top_seach.png')}
