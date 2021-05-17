@@ -164,7 +164,7 @@ const Step02 = (props) => {
       setEstimateDate(date);
     } else if(selectedDate >= deliveryDate) {
       Alert.alert(
-        '견적 마감일은 납품 희망일과 같은 날짜이거나 그 후 날짜일 수 없습니다.',
+        '견적 마감일은 납품 희망일과 같은 날짜이거나 이후 날짜일 수 없습니다.',
         '날짜를 다시 선택해주세요.',
         [
           {
