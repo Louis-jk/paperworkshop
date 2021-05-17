@@ -1,20 +1,41 @@
 import * as React from 'react';
-import {View, Text, StatusBar, Alert} from 'react-native';
+import {StatusBar, BackHandler, ToastAndroid} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import messaging from '@react-native-firebase/messaging';
-// import Toast from 'react-native-toast-message';
 import Toast from 'react-native-simple-toast';
 
 import DrawerNavigator from './navigation/DrawerNavigator';
 
-// import MainScreen from './Screens/Main';
-// import PartnersScreen from './Screens/Partners';
-
-// import {MainStackNavigator} from './navigation/StackNavigation';
-// import {BottomTabNavigator} from './navigation/TabNavigator';
 
 const App = () => {
+
+ // 안드로이드 뒤로가기 버튼 제어  
+ const [exitApp, setExitApp] = React.useState(false);
+ const ref = React.createRef(null);
+
+ const backAction = () => {   
+   let tmp = (ref.current?.getRootState().routes[0].state.index!=undefined)? ref.current?.getRootState().routes[0].state.index:tmp;
+
+   let timeout;
+
+   if(tmp==0){
+ 
+     if (exitApp == undefined || !exitApp) {
+       ToastAndroid.show("한번 더 누르면 앱을 종료합니다.", ToastAndroid.SHORT);
+         setExitApp(true);
+ 
+         timeout = setTimeout(() => {
+               setExitApp(false);
+             },2000);
+     } else {
+         clearTimeout(timeout);
+         BackHandler.exitApp();  // 앱 종료
+     }
+     return true;
+   }
+ };
+
   React.useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
@@ -27,17 +48,23 @@ const App = () => {
         Toast.TOP,
         [' UIAlertController '],
       );
-      // Toast.show({
-      //   text1: `${remoteMessage.notification.title}`,
-      //   text2: `${remoteMessage.notification.body}`,
-      // });
     });
   }, []);
+
+  React.useEffect(() => {
+    
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    
+    return () => BackHandler.removeEventListener('hardwareBackPress', backHandler);
+  }, [exitApp]);
 
   return (
     <>
       <StatusBar hidden={true} />
-      <NavigationContainer>
+      <NavigationContainer ref={ref}>
         <DrawerNavigator />
       </NavigationContainer>
     </>

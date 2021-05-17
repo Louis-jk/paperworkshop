@@ -9,9 +9,9 @@ const EntryBefore = (props) => {
 
   const loginTrueFalse = () => {
     if (login_yn === 'Y') {
-      navigation.navigate('Stack');
+      navigation.reset({routes: [{name: 'Stack'}]});
     } else {
-      navigation.navigate('Login');
+      navigation.reset({routes: [{name: 'Login'}]});
     }
   };
 

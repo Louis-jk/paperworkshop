@@ -123,7 +123,14 @@ const Login = (props) => {
           dispatch(SnsCheck(res.data.item.sns_check));
           dispatch(SnsType(res.data.item.sns_type));
           dispatch(LoginCheck('Y'));
-          navigation.navigate('EntryBefore');
+          // navigation.navigate('EntryBefore');
+          const resetAction = CommonActions.reset({
+            index: 1,
+            routes: [
+              { name: 'EntryBefore' },
+            ],
+          });
+          navigation.dispatch(resetAction);
         }
       })
       .catch((err) => {
@@ -345,8 +352,22 @@ const Login = (props) => {
           if (autoLogin) {
             storeData();
             navigation.navigate('EntryBefore');
+            // const resetAction = CommonActions.reset({
+            //   index: 1,
+            //   routes: [
+            //     { name: 'EntryBefore' },
+            //   ],
+            // });
+            // navigation.dispatch(resetAction);
           } else {
             navigation.navigate('EntryBefore');
+            // const resetAction = CommonActions.reset({
+            //   index: 1,
+            //   routes: [
+            //     { name: 'EntryBefore' },
+            //   ],
+            // });
+            // navigation.dispatch(resetAction);            
           }
           setLoading(false);
         } else {
