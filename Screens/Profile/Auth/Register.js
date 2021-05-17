@@ -46,13 +46,11 @@ const Register = (props) => {
   const confirmCount = (num) => {
     setIsCounter(true);
     setMinutes(num);
-    // setSeconds(num);
   };
 
   const confirmClearCount = (num) => {
     setIsCounter(false);
     setMinutes(num);
-    // setSeconds(num);
   };
 
   // 아이디 중복체크
@@ -173,7 +171,12 @@ const Register = (props) => {
           if (res.data.result == '1') {
             setMobileConfimed(false);
           } else {
-            Alert.alert('휴대전화번호를 올바르게 입력해주세요.');
+            Alert.alert(res.data.message, '가입여부를 확인해주세요.',[
+              {
+                text: '확인',
+                onPress: () => confirmClearCount(0)
+              },
+            ]);
           }
         })
         .catch((err) =>

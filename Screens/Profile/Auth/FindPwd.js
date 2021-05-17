@@ -85,8 +85,7 @@ const FindPwd = (props) => {
                   text: '확인',
                   onPress: () => {
                     setIsSend(true);
-                    confirmCount(3);
-                    mobileCertNumRef.current.focus();
+                    confirmCount(3);                    
                   },
                 },
               ],

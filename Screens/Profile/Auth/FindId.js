@@ -21,6 +21,9 @@ import Timer from '../../Common/Timer';
 const FindId = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
+  
+  const mobileRef = React.useRef(null);
+  const mobileCertNumRef = React.useRef(null);
 
   // 인증시 카운터
   const [minutes, setMinutes] = React.useState(0);
@@ -182,6 +185,7 @@ const FindId = (props) => {
               ]}
               onChangeText={(text) => setUserName(text)}
               autoCapitalize="none"
+              onSubmitEditing={() => mobileRef.current.focus()}
             />
           </View>
           {/* // 성함  */}
@@ -199,6 +203,7 @@ const FindId = (props) => {
                 marginBottom: 5,
               }}>
               <TextInput
+                ref={mobileRef}
                 value={userMobile}
                 placeholder="휴대전화번호를 입력해주세요."
                 placeholderTextColor="#A2A2A2"
@@ -220,6 +225,7 @@ const FindId = (props) => {
                 editable={!isSend ? true : false}
                 keyboardType="number-pad"
                 autoCapitalize="none"
+                onSubmitEditing={() => getUserIdStep01()}
               />
               <TouchableOpacity
                 onPress={() => getUserIdStep01()}
