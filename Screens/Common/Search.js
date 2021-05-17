@@ -300,6 +300,7 @@ const Search = (props) => {
             autoFocus={false}
             style={[styles.normalText, {width: '80%'}]}
             onSubmitEditing={() => sendSearchAPI()}
+            autoCapitalize="none"
           />
           {keyword ? 
           <TouchableOpacity
