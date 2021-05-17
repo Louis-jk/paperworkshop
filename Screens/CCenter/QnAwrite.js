@@ -157,6 +157,7 @@ const QnAwrite = (props) => {
               setContentError(false);
             }}
             multiline={true}
+            autoCapitalize="none"
           />
           {contentError ? (
             <Text
