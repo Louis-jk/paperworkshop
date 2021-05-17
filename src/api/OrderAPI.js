@@ -23,12 +23,14 @@ export default {
       }),
     });
   },
-  getMyOrderDetail(pe_id) {
+  getMyOrderDetail(pe_id, mb_id, company_id) {
     return Send({
       method: 'post',
       data: qs.stringify({
         method: 'proc_my_estimate_detail',
         pe_id,
+        mb_id,
+        company_id
       }),
     });
   },
