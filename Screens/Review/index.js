@@ -22,7 +22,7 @@ import PartnersAPI from '../../src/api/Partners';
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-  const {partnerId, userId} = props.route.params;
+  const {partnerId, userId, pe_id} = props.route.params;
 
   const [isLoading, setLoading] = React.useState(false);
   const [partnerInfo, setPartnerInfo] = React.useState(null);
@@ -92,6 +92,7 @@ const index = (props) => {
       let frmData = new FormData();
   
       frmData.append('method', 'proc_review_add');
+      frmData.append('pe_id', pe_id);
       frmData.append('mb_id', userId);
       frmData.append('company_id', partnerId);
       frmData.append('review_content', reviewText);
