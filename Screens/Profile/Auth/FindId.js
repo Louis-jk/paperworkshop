@@ -148,7 +148,14 @@ const FindId = (props) => {
             ]);
           }
         })
-        .catch((err) => Alert.alert(`${err.messaging()}`));
+        .catch((err) => {
+          Alert.alert(err, '관리자에게 문의하세요.', '', [
+            {
+              text: '확인'
+            }
+          ]);
+        }
+       );
     }
   };
 

@@ -31,7 +31,7 @@ const SetPwd = (props) => {
     register_pw: yup
       .string()
       .matches(
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%&\w'*+-/=?^_{|}~])(?=.*[0-9]).{6,20}$/,
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
         {
           message:
             '비밀번호는 8자리 이상 16자리 이하로 영문 소문자/대문자, 숫자, 특수기호 조합으로 입력해주세요.',
@@ -79,7 +79,7 @@ const SetPwd = (props) => {
         // navigation.navigate('SetPwdComplete')
       })
       .catch((err) =>
-        Alert.alert(`${err.message()}`, '관리자에게 문의하세요', [
+        Alert.alert(err, '관리자에게 문의하세요', [
           {
             text: '확인',
           },

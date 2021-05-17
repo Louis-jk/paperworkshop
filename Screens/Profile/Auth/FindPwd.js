@@ -85,7 +85,7 @@ const FindPwd = (props) => {
                   text: '확인',
                   onPress: () => {
                     setIsSend(true);
-                    confirmCount(30);
+                    confirmCount(3);
                     mobileCertNumRef.current.focus();
                   },
                 },
@@ -99,7 +99,14 @@ const FindPwd = (props) => {
             ]);
           }
         })
-        .catch((err) => Alert.alert(`${err.messaging()}`));
+        .catch((err) => {
+          Alert.alert(err, '관리자에게 문의하세요.', '', [
+            {
+              text: '확인'
+            }
+          ]);
+        }
+       );
     }
   };
 
