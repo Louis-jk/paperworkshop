@@ -361,7 +361,8 @@ const Step06 = (props) => {
         if (res.data.result === '1' && res.data.count > 0) {
           console.log("return ::::::", res);
           setModalVisible(!isModalVisible);
-          navigation.navigate('easyOrderComplete');
+          // navigation.navigate('easyOrderComplete');
+          navigation.reset({routes: [{name: 'easyOrderComplete'}]});
         } else if (res.data.result === '1' && res.data.count <= 0) {
           Alert.alert(res.data.message, '', [
             {
