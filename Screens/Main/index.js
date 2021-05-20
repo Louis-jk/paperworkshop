@@ -401,7 +401,7 @@ const index = (props) => {
     const {tabIndex, jumpTo} = props;
 
     return (
-      <SafeAreaView>
+      <View>
         <View
           style={{
             flexDirection: 'row',
@@ -507,7 +507,7 @@ const index = (props) => {
             ) : null}
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </View>
     );
   };
 
@@ -528,8 +528,9 @@ const index = (props) => {
     setOffsetY(e.nativeEvent.contentOffset.y);
   };
 
-  return (
-    <View style={{position: 'relative'}}>
+  return (    
+    <SafeAreaView>
+      <View style={{position: 'relative'}}>
       {isLoading && (
         <View
           style={{
@@ -549,7 +550,7 @@ const index = (props) => {
           <ActivityIndicator size="large" color="#275696" />
         </View>
       )}
-      <StatusBar hidden={true} />
+      {Platform.os === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> }
 
       <Animated.View
         style={{
@@ -1250,7 +1251,8 @@ const index = (props) => {
         <Footer navigation={navigation} />
       </Animated.ScrollView>
     </View>
-  );
+    </SafeAreaView>
+    );
 };
 
 const styles = StyleSheet.create({
