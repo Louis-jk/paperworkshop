@@ -12,7 +12,8 @@ import {
   Platform,
   BackHandler, 
   ToastAndroid,
-  ActivityIndicator
+  ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {
@@ -412,315 +413,317 @@ const Login = (props) => {
           <ActivityIndicator size="large" color="#275696" />
         </View>
       )}
-      <ScrollView showsVerticalScrollIndicator={false}>
-      <View
-        style={{
-          flex: 1,
-          height: Dimensions.get('window').height,
-          backgroundColor: '#fff',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          paddingTop: 70,
-          zIndex: -100,
-        }}>
+      <SafeAreaView>
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
-            justifyContent: 'center',
+            flex: 1,
+            height: Dimensions.get('window').height,
+            backgroundColor: '#fff',
+            justifyContent: 'space-around',
             alignItems: 'center',
-            marginBottom: 30,
+            paddingTop: 70,
+            zIndex: -100,
           }}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image
-              source={require('../../../src/assets/logo02.png')}
-              resizeMode="contain"
-              style={{
-                width: Dimensions.get('window').width - 150,
-                height: 50,
-                marginBottom: 50,
-              }}
-            />
-            <View style={{marginBottom: 30, paddingHorizontal: 40}}>
-              <View
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: 30,
+            }}>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Image
+                source={require('../../../src/assets/logo02.png')}
+                resizeMode="contain"
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingHorizontal: 10,
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  marginBottom: 10,
+                  width: Dimensions.get('window').width - 150,
                   height: 50,
-                }}>
-                <TextInput
-                  ref={loginIdRef}
-                  value={loginId}
-                  placeholder="아이디"
-                  style={[styles.normalText, {width: '80%'}]}
-                  onChangeText={(text) => setLoginId(text)}
-                  autoCapitalize="none"
-                  onSubmitEditing={() => loginPwdRef.current.focus()}
-                />
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingHorizontal: 10,
-                  borderWidth: 1,
-                  borderColor: '#E3E3E3',
-                  borderRadius: 4,
-                  marginBottom: 10,
-                  height: 50,
-                }}>
-                <TextInput
-                  ref={loginPwdRef}
-                  value={loginPwd}
-                  placeholder="비밀번호"
-                  placeholderTextColor="#A2A2A2"
-                  style={[styles.normalText, {width: '80%'}]}
-                  onChangeText={(text) => setLoginPwd(text)}
-                  autoCapitalize="none"
-                  secureTextEntry={pwdEyes}
-                  // onSubmitEditing={() => login()}
-                />
+                  marginBottom: 50,
+                }}
+              />
+              <View style={{marginBottom: 30, paddingHorizontal: 40}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    marginBottom: 10,
+                    height: 50,
+                  }}>
+                  <TextInput
+                    ref={loginIdRef}
+                    value={loginId}
+                    placeholder="아이디"
+                    style={[styles.normalText, {width: '80%'}]}
+                    onChangeText={(text) => setLoginId(text)}
+                    autoCapitalize="none"
+                    onSubmitEditing={() => loginPwdRef.current.focus()}
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                    borderWidth: 1,
+                    borderColor: '#E3E3E3',
+                    borderRadius: 4,
+                    marginBottom: 10,
+                    height: 50,
+                  }}>
+                  <TextInput
+                    ref={loginPwdRef}
+                    value={loginPwd}
+                    placeholder="비밀번호"
+                    placeholderTextColor="#A2A2A2"
+                    style={[styles.normalText, {width: '80%'}]}
+                    onChangeText={(text) => setLoginPwd(text)}
+                    autoCapitalize="none"
+                    secureTextEntry={pwdEyes}
+                    // onSubmitEditing={() => login()}
+                  />
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={togglePwdEyes}
+                    hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
+                    <Image
+                      source={
+                        pwdEyes
+                          ? require('../../../src/assets/icon_eye.png')
+                          : require('../../../src/assets/icon_eye_on.png')
+                      }
+                      resizeMode="center"
+                      style={{width: 35, height: 20}}
+                    />
+                  </TouchableOpacity>
+                </View>
+
                 <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={togglePwdEyes}
-                  hitSlop={{top: 5, bottom: 5, right: 5, left: 5}}>
+                  activeOpacity={1}
+                  onPress={toggleCheck}
+                  style={{
+                    alignSelf: 'flex-end',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                  }}
+                  hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
+                  <Text
+                    style={[
+                      {fontSize: 14, color: '#111111', marginRight: 5},
+                      styles.normalText,
+                    ]}>
+                    자동 로그인
+                  </Text>
                   <Image
                     source={
-                      pwdEyes
-                        ? require('../../../src/assets/icon_eye.png')
-                        : require('../../../src/assets/icon_eye_on.png')
+                      autoLogin
+                        ? require('../../../src/assets/radio_on.png')
+                        : require('../../../src/assets/radio_off.png')
                     }
-                    resizeMode="center"
-                    style={{width: 35, height: 20}}
+                    resizeMode="cover"
+                    style={{
+                      width: 17,
+                      height: 17,
+                    }}
                   />
                 </TouchableOpacity>
               </View>
-
+            </View>
+            <View style={{marginBottom: 20}}>
               <TouchableOpacity
-                activeOpacity={1}
-                onPress={toggleCheck}
+                activeOpacity={0.8}
+                onPress={() => login()}
                 style={{
-                  alignSelf: 'flex-end',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                }}
-                hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
-                <Text
-                  style={[
-                    {fontSize: 14, color: '#111111', marginRight: 5},
-                    styles.normalText,
-                  ]}>
-                  자동 로그인
+                  width: Dimensions.get('window').width - 100,
+                  backgroundColor: '#275696',
+                  borderRadius: 4,
+                  paddingVertical: 15,
+                }}>
+                <Text style={[{fontSize: 16, color: '#fff'}, styles.normalText]}>
+                  로그인
                 </Text>
-                <Image
-                  source={
-                    autoLogin
-                      ? require('../../../src/assets/radio_on.png')
-                      : require('../../../src/assets/radio_off.png')
-                  }
-                  resizeMode="cover"
-                  style={{
-                    width: 17,
-                    height: 17,
-                  }}
-                />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: Dimensions.get('window').width - 100,
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('FindId')}
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                <Text style={styles.normalText}>아이디 찾기</Text>
+              </TouchableOpacity>
+              <View
+                style={{height: '90%', width: 1, backgroundColor: '#E3E3E3'}}
+              />
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('FindPwd')}
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                <Text style={styles.normalText}>비밀번호 찾기</Text>
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{marginBottom: 20}}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => login()}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: Dimensions.get('window').width - 100,
-                backgroundColor: '#275696',
-                borderRadius: 4,
-                paddingVertical: 15,
-              }}>
-              <Text style={[{fontSize: 16, color: '#fff'}, styles.normalText]}>
-                로그인
-              </Text>
-            </TouchableOpacity>
-          </View>
+
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-around',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              width: Dimensions.get('window').width - 100,
+              marginBottom: 20,
             }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('FindId')}
-              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-              <Text style={styles.normalText}>아이디 찾기</Text>
-            </TouchableOpacity>
-            <View
-              style={{height: '90%', width: 1, backgroundColor: '#E3E3E3'}}
-            />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('FindPwd')}
-              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-              <Text style={styles.normalText}>비밀번호 찾기</Text>
-            </TouchableOpacity>
+            <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
+            <Text
+              style={[
+                {fontSize: 16, color: '#111111', marginHorizontal: 16},
+                styles.mediumText,
+              ]}>
+              소셜 로그인
+            </Text>
+            <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
           </View>
-        </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 20,
-          }}>
-          <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
-          <Text
-            style={[
-              {fontSize: 16, color: '#111111', marginHorizontal: 16},
-              styles.mediumText,
-            ]}>
-            소셜 로그인
-          </Text>
-          <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
-        </View>
-
-        <View style={{marginBottom: 10}}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => kakaoLogin()}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: Dimensions.get('window').width - 100,
-              backgroundColor: '#FAE105',
-              borderRadius: 4,
-              paddingVertical: 10,
-              marginBottom: 10,
-            }}>
-            <Image
-              source={require('../../../src/assets/kakao.png')}
-              resizeMode="contain"
-              style={{width: 30, height: 30}}
-            />
-            <Text style={[{fontSize: 14, color: '#2A1617'}, styles.normalText]}>
-              카카오로 로그인
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => naverLoginHandler(initials)}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: Dimensions.get('window').width - 100,
-              backgroundColor: '#27D34A',
-              borderRadius: 4,
-              paddingVertical: 16,
-              marginBottom: 10,
-            }}>
-            <Image
-              source={require('../../../src/assets/icon_n.png')}
-              resizeMode="contain"
-              style={{width: 30, height: 18}}
-            />
-            <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
-              네이버로 로그인
-            </Text>
-          </TouchableOpacity>
-          {Platform.OS === 'ios' ? (
+          <View style={{marginBottom: 10}}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => Alert.alert('애플로그인')}
+              onPress={() => kakaoLogin()}
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: Dimensions.get('window').width - 100,
-                backgroundColor: '#333333',
+                backgroundColor: '#FAE105',
                 borderRadius: 4,
                 paddingVertical: 10,
                 marginBottom: 10,
               }}>
               <Image
-                source={require('../../../src/assets/apple.png')}
+                source={require('../../../src/assets/kakao.png')}
                 resizeMode="contain"
                 style={{width: 30, height: 30}}
               />
-              <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
-                애플로 로그인
+              <Text style={[{fontSize: 14, color: '#2A1617'}, styles.normalText]}>
+                카카오로 로그인
               </Text>
             </TouchableOpacity>
-          ) : null}
-          {/* <GoogleSigninButton
-            style={{width: 192, height: 48}}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={gSignIn}
-            // disabled={this.state.isSigninInProgress}
-          /> */}
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => gSignIn()}
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => naverLoginHandler(initials)}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: Dimensions.get('window').width - 100,
+                backgroundColor: '#27D34A',
+                borderRadius: 4,
+                paddingVertical: 16,
+                marginBottom: 10,
+              }}>
+              <Image
+                source={require('../../../src/assets/icon_n.png')}
+                resizeMode="contain"
+                style={{width: 30, height: 18}}
+              />
+              <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
+                네이버로 로그인
+              </Text>
+            </TouchableOpacity>
+            {Platform.OS === 'ios' ? (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => Alert.alert('애플로그인')}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: Dimensions.get('window').width - 100,
+                  backgroundColor: '#333333',
+                  borderRadius: 4,
+                  paddingVertical: 10,
+                  marginBottom: 10,
+                }}>
+                <Image
+                  source={require('../../../src/assets/apple.png')}
+                  resizeMode="contain"
+                  style={{width: 30, height: 30}}
+                />
+                <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
+                  애플로 로그인
+                </Text>
+              </TouchableOpacity>
+            ) : null}
+            {/* <GoogleSigninButton
+              style={{width: 192, height: 48}}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={gSignIn}
+              // disabled={this.state.isSigninInProgress}
+            /> */}
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => gSignIn()}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: Dimensions.get('window').width - 100,
+                borderWidth: 1,
+                borderColor: '#333333',
+                backgroundColor: '#fff',
+                borderRadius: 4,
+                paddingVertical: 4,
+              }}>
+              <Image
+                source={require('../../../src/assets/gg.png')}
+                resizeMode="contain"
+                style={{width: 38, height: 40}}
+              />
+              <Text style={[{fontSize: 14, color: '#333333'}, styles.normalText]}>
+                구글로 로그인
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
             style={{
+              flex: 1,
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              width: Dimensions.get('window').width - 100,
-              borderWidth: 1,
-              borderColor: '#333333',
-              backgroundColor: '#fff',
-              borderRadius: 4,
-              paddingVertical: 4,
             }}>
-            <Image
-              source={require('../../../src/assets/gg.png')}
-              resizeMode="contain"
-              style={{width: 38, height: 40}}
-            />
-            <Text style={[{fontSize: 14, color: '#333333'}, styles.normalText]}>
-              구글로 로그인
+            <Text
+              style={[
+                styles.normalText,
+                {fontSize: 14, color: '#ADADAD', marginRight: 10},
+              ]}>
+              아직 가입되지 않은 회원입니까?
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('Register')}
+              style={{
+                paddingHorizontal: 10,
+                paddingVertical: 10,
+              }}>
+              <Text style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
+                회원가입
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={[
-              styles.normalText,
-              {fontSize: 14, color: '#ADADAD', marginRight: 10},
-            ]}>
-            아직 가입되지 않은 회원입니까?
-          </Text>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate('Register')}
-            style={{
-              paddingHorizontal: 10,
-              paddingVertical: 10,
-            }}>
-            <Text style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
-              회원가입
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      </SafeAreaView>
     </>
   );
 };

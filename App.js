@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StatusBar, BackHandler, ToastAndroid} from 'react-native';
+import {StatusBar, BackHandler, ToastAndroid, Platform} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import messaging from '@react-native-firebase/messaging';
@@ -63,7 +63,7 @@ const App = () => {
 
   return (
     <>
-      <StatusBar hidden={true} />
+      {Platform.os === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> }
       <NavigationContainer ref={ref}>
         <DrawerNavigator />
       </NavigationContainer>
