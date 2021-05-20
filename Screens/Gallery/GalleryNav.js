@@ -477,7 +477,7 @@ const GalleryNav = (props) => {
           placeholder="키워드를 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
-          style={[styles.normalText, {width: '80%'}]}
+          style={[styles.normalText, {width: '80%', height: 45}]}
         />
         <TouchableOpacity>
           <Image
