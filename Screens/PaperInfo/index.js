@@ -19,7 +19,7 @@ const index = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#fff',
+    backgroundColor: '#fff',
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
