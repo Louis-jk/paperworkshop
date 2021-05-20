@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import Header from '../../Common/HeaderNotBackBtnDrawer';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const SetPwdComplete = (props) => {
   const navigation = props.navigation;
@@ -36,7 +37,7 @@ const SetPwdComplete = (props) => {
           }}>
           <Text
             style={{
-              fontFamily: 'SCDream5',
+              fontFamily: SCDream5,
               fontSize: 18,
               color: '#275696',
               marginTop: 20,
@@ -45,7 +46,7 @@ const SetPwdComplete = (props) => {
           </Text>
           <Text
             style={{
-              fontFamily: 'SCDream4',
+              fontFamily: SCDream4,
               fontSize: 16,
               color: '#111',
               marginTop: 10,
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',

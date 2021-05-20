@@ -18,6 +18,7 @@ import * as yup from 'yup';
 
 import DetailHeader from '../../Common/HeaderNotBackBtnDrawer';
 import Auth from '../../../src/api/Auth.js';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const SetPwd = (props) => {
   const navigation = props.navigation;
@@ -160,7 +161,7 @@ const SetPwd = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         lineHeight: 18,
                         color: '#B5B5B5',
@@ -175,7 +176,7 @@ const SetPwd = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         lineHeight: 18,
                         color: '#366DE5',
@@ -233,7 +234,7 @@ const SetPwd = (props) => {
                       <Text
                         style={{
                           width: '100%',
-                          fontFamily: 'SCDream4',
+                          fontFamily: SCDream4,
                           fontSize: 12,
                           lineHeight: 18,
                           color: '#366DE5',
@@ -346,13 +347,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

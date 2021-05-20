@@ -18,6 +18,7 @@ import {
 
 import Header from '../Common/Header';
 import CcenterAPI from '../../src/api/Ccenter';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Tips = (props) => {
   const navigation = props.navigation;
@@ -240,7 +241,7 @@ const Tips = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontFamily: 'SCDream4'}}>리뷰가 없습니다.</Text>
+            <Text style={{fontFamily: SCDream4}}>리뷰가 없습니다.</Text>
           </View>
         }
       />
@@ -271,7 +272,7 @@ const Tips = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>일반인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: SCDream4}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -283,7 +284,7 @@ const Tips = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>패키지</Text>
+            <Text style={{fontSize: 15, fontFamily: SCDream4}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -295,7 +296,7 @@ const Tips = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>기타인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: SCDream4}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
@@ -318,33 +319,33 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   categoryBtnTxt: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 11,
     color: '#fff',
   },
   new: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 12,
     color: '#366DE5',
   },
   categoryTitle: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 15,
     color: '#000',
   },
   categoryDate: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 13,
     color: '#A2A2A2',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

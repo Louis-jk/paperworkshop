@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, Text, Alert, ActivityIndicator} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -18,6 +18,7 @@ import {
   LoginCheck,
 } from '../../../Modules/UserInfoReducer';
 import Auth from '../../../src/api/Auth.js';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const Check = (props) => {
   const navigation = props.navigation;
@@ -38,11 +39,12 @@ const Check = (props) => {
         }
       })
       .catch((err) =>
-        Alert.alert(err, '관리자에게 문의하세요', [
-          {
-            text: '확인',
-          },
-        ]),
+        // Alert.alert(err, '관리자 양반에게 문의하세요.', [
+        //   {
+        //     text: '확인',
+        //   },
+        // ])
+        navigation.navigate('Login')
       );
   };
 
@@ -60,8 +62,14 @@ const Check = (props) => {
         // 없다면 로그인 화면으로 이동
         navigation.navigate('Login');
       }
-    } catch (e) {
+    } catch (err) {
       // error reading value
+      Alert.alert("회원정보를 들고오지 못했습니다.", err, [
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Login')
+        }
+      ])
       console.log('스토리지 에러', e);
     }
   };
@@ -104,7 +112,7 @@ const Check = (props) => {
         alignItems: 'center',
         backgroundColor: '#275696',
       }}>
-      <Text style={{fontFamily: 'SCDream4', color: '#fff', marginBottom: 10}}>
+      <Text style={{fontFamily: SCDream4, color: '#fff', marginBottom: 10}}>
         사용자 확인중...
       </Text>
       <ActivityIndicator size="large" color="#fff" />

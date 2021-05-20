@@ -22,6 +22,7 @@ import {
   UserEmail,
   UserCompany,
 } from '../../../Modules/UserInfoReducer';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
@@ -128,19 +129,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

@@ -36,6 +36,7 @@ import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 
 import BoxType from '../../src/api/BoxType';
 import List from './Components/List';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Step03 = (props) => {
   const navigation = props.navigation;
@@ -293,7 +294,7 @@ const Step03 = (props) => {
                       flex: 1,
                       height: Dimensions.get('window').height - 300,
                     }}>
-                    <Text style={{fontFamily: 'SCDream4'}}>
+                    <Text style={{fontFamily: SCDream4}}>
                       해당 인쇄 타입이 없습니다.
                     </Text>
                   </View>
@@ -547,7 +548,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     width: 120,
     textAlign: 'center',
     fontSize: 14,
@@ -556,7 +557,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   categoryItemText02: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     width: 120,
     textAlign: 'center',
     fontSize: 14,
@@ -565,13 +566,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

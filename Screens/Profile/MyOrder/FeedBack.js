@@ -19,6 +19,7 @@ import 'moment/locale/ko';
 
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const FeedBack = (props) => {
   const navigation = props.navigation;
@@ -157,7 +158,7 @@ const FeedBack = (props) => {
               paddingHorizontal: 14,
               paddingVertical: 7,
             }}>
-            <Text style={{fontFamily: 'SCDream4', fontSize: 13, color: '#fff'}}>
+            <Text style={{fontFamily: SCDream4, fontSize: 13, color: '#fff'}}>
               닫기
             </Text>
           </TouchableOpacity>
@@ -365,14 +366,14 @@ const FeedBack = (props) => {
                       marginRight: 5,
                     }}
                   />
-                  <Text style={{fontFamily: 'SCDream4'}}>
+                  <Text style={{fontFamily: SCDream4}}>
                     {details.pe_source_file}
                   </Text>
                 </TouchableOpacity>
               ) : (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     color: '#B5B5B5',
                     fontSize: 13,
                   }}>
@@ -779,14 +780,14 @@ const FeedBack = (props) => {
                             marginRight: 5,
                           }}
                         />
-                        <Text style={{fontFamily: 'SCDream4'}}>
+                        <Text style={{fontFamily: SCDream4}}>
                           {info01.pe_source_file2}
                         </Text>
                       </TouchableOpacity>
                     ) : (
                       <Text
                         style={{
-                          fontFamily: 'SCDream4',
+                          fontFamily: SCDream4,
                           color: '#B5B5B5',
                           fontSize: 13,
                         }}>
@@ -1317,7 +1318,7 @@ const FeedBack = (props) => {
                       <View style={styles.details}>
                         <Text
                           style={{
-                            fontFamily: 'SCDream5',
+                            fontFamily: SCDream5,
                             fontSize: 15,
                             marginTop: 20,
                             marginBottom: 7,
@@ -1723,14 +1724,14 @@ const FeedBack = (props) => {
                           marginRight: 5,
                         }}
                       />
-                      <Text style={{fontFamily: 'SCDream4'}}>
+                      <Text style={{fontFamily: SCDream4}}>
                         {info05.bf_file_source}
                       </Text>
                     </TouchableOpacity>
                   ) : (
                     <Text
                       style={{
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         color: '#B5B5B5',
                         fontSize: 13,
                       }}>
@@ -1769,13 +1770,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#A2A2A2',
     lineHeight: 23,
   },
   infoStepTitle: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 16,
     color: '#000000',
   },
@@ -1797,19 +1798,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   detailsTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     width: 150,
     fontSize: 14,
     color: '#A2A2A2',
   },
   detailsDesc: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#000',
     marginTop: 5,
   },
   detailsTitle02: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     width: 200,
     fontSize: 14,
     color: '#A2A2A2',
@@ -1820,20 +1821,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 18,
     color: '#000000',
     marginTop: 20,
     marginBottom: 25,
   },
   orderInfoDesc: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 15,
     color: '#000',
     marginBottom: 10,
   },
   textInput: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     borderWidth: 1,
     borderColor: '#E3E3E3',
     borderRadius: 4,
@@ -1868,12 +1869,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoContentTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 15,
     color: '#111',
   },
   orderInfoContentDetail: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#707070',
   },
@@ -1904,13 +1905,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

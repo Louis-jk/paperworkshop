@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const PartnersNav = (props) => {
   const navigation = props.navigation;
@@ -259,7 +260,7 @@ const PartnersNav = (props) => {
                 }}>
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#707070',
                   }}>
@@ -305,13 +306,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

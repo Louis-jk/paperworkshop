@@ -47,6 +47,7 @@ import {setOrderDetails} from '../../Modules/OrderHandlerReducer';
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
 import BoxTypeAPI from '../../src/api/BoxType';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 
 const Step05 = (props) => {
@@ -1210,7 +1211,7 @@ const Step05 = (props) => {
                           justifyContent: 'flex-start',
                           paddingVertical: 10,
                         }}                     
-                        labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                        labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
                         dropDownStyle={{backgroundColor: '#fff'}}
                         onChangeItem={(item) => {
                           setBoardTk(item.value);
@@ -1241,7 +1242,7 @@ const Step05 = (props) => {
               {boardTkError && 
                 <Text
                  style={{
-                   fontFamily: 'SCDream4',
+                   fontFamily: SCDream4,
                    fontSize: 12,
                    color: '#366DE5',
                    marginBottom: 20,
@@ -1325,7 +1326,7 @@ const Step05 = (props) => {
               {paperTypeError ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginVertical: 5,
@@ -1366,7 +1367,7 @@ const Step05 = (props) => {
               {directFirstPaperError ?
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginVertical: 5,                    
@@ -1461,7 +1462,7 @@ const Step05 = (props) => {
                 {paperError01 ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginBottom: 5,                    
@@ -1543,7 +1544,7 @@ const Step05 = (props) => {
               {paperError ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginVertical: 5,
@@ -1588,7 +1589,7 @@ const Step05 = (props) => {
               {directPaperError ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginBottom: directPaperError ? 20 : 5,
@@ -1686,7 +1687,7 @@ const Step05 = (props) => {
                   {goalError ? (
                     <Text
                       style={{
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         color: '#366DE5',
                         marginVertical: 5,
@@ -1735,7 +1736,7 @@ const Step05 = (props) => {
               {directGoalError ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginVertical: 5,
@@ -1861,7 +1862,7 @@ const Step05 = (props) => {
               {directWeightError ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginBottom: directWeightError? 20 : 5,
@@ -1920,7 +1921,7 @@ const Step05 = (props) => {
                 {weightError ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2021,7 +2022,7 @@ const Step05 = (props) => {
               {ca_id !== '11' && ca_id !== '6' && colorError ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginVertical: 5,
@@ -2097,7 +2098,7 @@ const Step05 = (props) => {
               {directColorError ? (
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 12,
                     color: '#366DE5',
                     marginBottom: directColorError ? 20 : 5,
@@ -2190,7 +2191,7 @@ const Step05 = (props) => {
                 {paperTypeInnerError ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2226,7 +2227,7 @@ const Step05 = (props) => {
                 {directFirstPaperInnerError ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2319,7 +2320,7 @@ const Step05 = (props) => {
                   {paperInnerError ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2395,7 +2396,7 @@ const Step05 = (props) => {
                 {paperInnerError02 ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2432,7 +2433,7 @@ const Step05 = (props) => {
                 {directPaperInnerError ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2542,7 +2543,7 @@ const Step05 = (props) => {
                 : null }
 
                 {directWeightInnerError ? (
-                  <Text style={{fontFamily: 'SCDream4', fontSize: 12, color: '#366DE5', marginTop: 5, marginBottom: directWeightInnerError ? 20 : 0}}>
+                  <Text style={{fontFamily: SCDream4, fontSize: 12, color: '#366DE5', marginTop: 5, marginBottom: directWeightInnerError ? 20 : 0}}>
                     내지 평량을 직접 입력해주세요.
                   </Text>
                 ) : null}
@@ -2598,7 +2599,7 @@ const Step05 = (props) => {
                    {weightInnerError ? (
                       <Text
                         style={{
-                          fontFamily: 'SCDream4',
+                          fontFamily: SCDream4,
                           fontSize: 12,
                           color: '#366DE5',
                           marginVertical: 5,
@@ -2698,7 +2699,7 @@ const Step05 = (props) => {
                 {colorInnerError ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2760,7 +2761,7 @@ const Step05 = (props) => {
                 {directColorInnerError ? (
                   <Text
                     style={{
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       color: '#366DE5',
                       marginVertical: 5,
@@ -2883,12 +2884,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   profileTitle: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 15,
     color: '#111',
   },
   profileRequired: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#366DE5',
   },
@@ -2965,13 +2966,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

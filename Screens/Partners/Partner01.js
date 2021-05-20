@@ -19,6 +19,7 @@ import Package from './Components/Tabs/Package';
 import General from './Components/Tabs/General';
 import Etc from './Components/Tabs/Etc';
 import PartnersApi from '../../src/api/Partners';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Partner01 = (props) => {
   const navigation = props.navigation;
@@ -200,7 +201,7 @@ const Partner01 = (props) => {
                   : styles.mediumText,
                 {
                   fontFamily:
-                    tabIndex === 'all' && index === 0 ? 'SCDream5' : 'SCDream4',
+                    tabIndex === 'all' && index === 0 ? SCDream5 : SCDream4,
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -233,8 +234,8 @@ const Partner01 = (props) => {
                 {
                   fontFamily:
                     tabIndex === 'package' || index === 1
-                      ? 'SCDream5'
-                      : 'SCDream4',
+                      ? SCDream5
+                      : SCDream4,
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -269,8 +270,8 @@ const Partner01 = (props) => {
                 {
                   fontFamily:
                     tabIndex === 'general' || index === 2
-                      ? 'SCDream5'
-                      : 'SCDream4',
+                      ? SCDream5
+                      : SCDream4,
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -303,7 +304,7 @@ const Partner01 = (props) => {
                   : styles.mediumText,
                 {
                   fontFamily:
-                    tabIndex === 'etc' || index === 3 ? 'SCDream5' : 'SCDream4',
+                    tabIndex === 'etc' || index === 3 ? SCDream5 : SCDream4,
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -394,13 +395,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

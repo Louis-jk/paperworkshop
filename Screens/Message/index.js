@@ -17,6 +17,7 @@ import {useSelector} from 'react-redux';
 
 import Header from '../Common/Header';
 import ChatAPI from '../../src/api/Chat';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -141,7 +142,7 @@ const index = (props) => {
                   <Text
                     style={[
                       styles.msgInfoContent,
-                      {fontFamily: 'SCDream5', color: '#275696'},
+                      {fontFamily: SCDream5, color: '#275696'},
                     ]}
                     numberOfLines={1}>
                     최신글 :
@@ -224,7 +225,7 @@ const index = (props) => {
                   flex: 1,
                   height: Dimensions.get('window').height - 200,
                 }}>
-                <Text style={{fontFamily: 'SCDream4'}}>
+                <Text style={{fontFamily: SCDream4}}>
                   채팅 내역이 없습니다.
                 </Text>
               </View>
@@ -256,24 +257,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   msgInfoName: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#000000',
     marginBottom: 5,
   },
   msgInfoContent: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 13,
     color: '#000000',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

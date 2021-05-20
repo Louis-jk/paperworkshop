@@ -12,6 +12,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import GalleryApi from '../../src/api/Gallery';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const GalleryNav = (props) => {
   const navigation = props.navigation;
@@ -243,7 +244,7 @@ const GalleryNav = (props) => {
                 setIsActiveGeneral(false);
                 setIsActiveEtc(false);
               }}>
-              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
+              <Text style={{fontFamily: SCDream4, fontSize: 12}}>전체</Text>
             </TouchableOpacity>
             {packagesInfo.map((v, idx) => (
               <TouchableOpacity
@@ -261,7 +262,7 @@ const GalleryNav = (props) => {
                   setIsActiveGeneral(false);
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
+                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
                 </Text>
               </TouchableOpacity>
@@ -339,7 +340,7 @@ const GalleryNav = (props) => {
                 setIsActiveGeneral(false);
                 setIsActiveEtc(false);
               }}>
-              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
+              <Text style={{fontFamily: SCDream4, fontSize: 12}}>전체</Text>
             </TouchableOpacity>
             {generalInfo.map((v, idx) => (
               <TouchableOpacity
@@ -357,7 +358,7 @@ const GalleryNav = (props) => {
                   setIsActiveGeneral(false);
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
+                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
                 </Text>
               </TouchableOpacity>
@@ -435,7 +436,7 @@ const GalleryNav = (props) => {
                 setIsActiveGeneral(false);
                 setIsActiveEtc(false);
               }}>
-              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
+              <Text style={{fontFamily: SCDream4, fontSize: 12}}>전체</Text>
             </TouchableOpacity>
             {etcInfo.map((v, idx) => (
               <TouchableOpacity
@@ -453,7 +454,7 @@ const GalleryNav = (props) => {
                   setIsActiveGeneral(false);
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
+                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
                 </Text>
               </TouchableOpacity>
@@ -495,13 +496,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

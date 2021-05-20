@@ -44,6 +44,7 @@ import DetailHeader from '../Common/DetailHeader';
 
 import OrderAPI from '../../src/api/OrderAPI';
 import Modal from './EtcOrderModal';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Step02 = (props) => {
   const navigation = props.navigation;
@@ -451,7 +452,7 @@ const Step02 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -465,7 +466,7 @@ const Step02 = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         lineHeight: 18,
                         color: '#366DE5',
@@ -520,7 +521,7 @@ const Step02 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -534,7 +535,7 @@ const Step02 = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         lineHeight: 18,
                         color: '#366DE5',
@@ -591,7 +592,7 @@ const Step02 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -605,7 +606,7 @@ const Step02 = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         lineHeight: 18,
                         color: '#366DE5',
@@ -778,7 +779,7 @@ const Step02 = (props) => {
                       justifyContent: 'flex-start',
                       paddingVertical: 10,
                     }}
-                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                    labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
                     dropDownStyle={{backgroundColor: '#fff'}}
                     onChangeItem={(item) => setLocation(item.value)}
                     autoCapitalize="none"
@@ -871,7 +872,7 @@ const Step02 = (props) => {
                       justifyContent: 'flex-start',
                       paddingVertical: 10,
                     }}
-                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                    labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
                     dropDownStyle={{backgroundColor: '#fff'}}
                     onChangeItem={(item) => setLocation(item.value)}
                     autoCapitalize="none"
@@ -896,7 +897,7 @@ const Step02 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -1202,7 +1203,7 @@ const Step02 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -1339,12 +1340,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   profileTitle: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 15,
     color: '#111',
   },
   profileRequired: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#366DE5',
   },
@@ -1421,13 +1422,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

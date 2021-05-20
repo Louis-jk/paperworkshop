@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const List = (props) => {
   const {
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     width: 120,
     textAlign: 'center',
     fontSize: 14,
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   categoryItemText02: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     width: 120,
     textAlign: 'center',
     fontSize: 14,

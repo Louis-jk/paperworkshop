@@ -19,6 +19,7 @@ import 'moment/locale/ko';
 
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -277,7 +278,7 @@ const index = (props) => {
                 value={step01}
                 placeholder="진행현황 선택"
                 style={{
-                  fontFamily: 'SCDream4',
+                  fontFamily: SCDream4,
                   width: '80%',
                   color: step01 ? '#000' : '#A2A2A2',
                 }}
@@ -322,7 +323,7 @@ const index = (props) => {
                 value={step02}
                 placeholder="분류 선택"
                 style={{
-                  fontFamily: 'SCDream4',
+                  fontFamily: SCDream4,
                   width: '80%',
                   color: step02 ? '#000' : '#A2A2A2',
                 }}
@@ -407,7 +408,7 @@ const index = (props) => {
                 flex: 1,
                 height: Dimensions.get('window').height,
               }}>
-              <Text style={{marginTop: -300, fontFamily: 'SCDream4'}}>
+              <Text style={{marginTop: -300, fontFamily: SCDream4}}>
                 견적 의뢰 건이 없습니다.
               </Text>
             </View>
@@ -445,7 +446,7 @@ const index = (props) => {
               setStatus('');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>전체</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -458,7 +459,7 @@ const index = (props) => {
               setStatus('0');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>견적요청</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>견적요청</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -471,7 +472,7 @@ const index = (props) => {
               setStatus('1');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>입찰중</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>입찰중</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -484,7 +485,7 @@ const index = (props) => {
               setStatus('2');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
               파트너최종선정(견적확정대기)
             </Text>
           </TouchableOpacity>
@@ -499,7 +500,7 @@ const index = (props) => {
               setStatus('3');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
               파트너최종선정(계약금입금대기)
             </Text>
           </TouchableOpacity>
@@ -514,7 +515,7 @@ const index = (props) => {
               setStatus('4');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
               파트너최종선정(계약금입금완료)
             </Text>
           </TouchableOpacity>
@@ -529,7 +530,7 @@ const index = (props) => {
               setStatus('5');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
               인쇄제작요청가능
             </Text>
           </TouchableOpacity>
@@ -544,7 +545,7 @@ const index = (props) => {
               setStatus('6');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
               인쇄제작요청완료
             </Text>
           </TouchableOpacity>
@@ -559,7 +560,7 @@ const index = (props) => {
               setStatus('7');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>납품완료</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>납품완료</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -572,7 +573,7 @@ const index = (props) => {
               setStatus('8');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>수령완료</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>수령완료</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -585,7 +586,7 @@ const index = (props) => {
               setStatus('9');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>마감</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>마감</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
@@ -619,7 +620,7 @@ const index = (props) => {
               setCate1('');
               setVisibleStep02(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>전체</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -632,7 +633,7 @@ const index = (props) => {
               setCate1('1');
               setVisibleStep02(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -645,7 +646,7 @@ const index = (props) => {
               setCate1('0');
               setVisibleStep02(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
               일반인쇄물
             </Text>
           </TouchableOpacity>
@@ -660,7 +661,7 @@ const index = (props) => {
               setCate1('2');
               setVisibleStep02(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
               기타인쇄물
             </Text>
           </TouchableOpacity>
@@ -778,13 +779,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   listTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     lineHeight: 19,
     marginBottom: 5,
   },
   listDesc: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 12,
     lineHeight: 16,
     color: '#A2A2A2',
@@ -799,19 +800,19 @@ const styles = StyleSheet.create({
     color: '#A2A2A2',
   },
   listStep02: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#275696',
     marginBottom: 2,
   },
   listDday02: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     alignSelf: 'flex-end',
     fontSize: 14,
     color: '#000000',
   },
   listStep03: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#000000',
   },
@@ -852,7 +853,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep02BadgeText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
@@ -867,20 +868,20 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep03BadgeText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
     paddingHorizontal: 5,
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

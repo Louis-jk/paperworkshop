@@ -7,7 +7,10 @@ import {
   Image,
   TouchableWithoutFeedback,
   SafeAreaView,
+  Platform
 } from 'react-native';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
+
 
 const DetailHeader = (props) => {
   const navigation = props.navigation;
@@ -226,7 +229,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: '#fff',
     paddingHorizontal: 25,
-    paddingVertical: 3,
+    paddingVertical: Platform.os === 'android' ? 3 : 0,
     // height: 55,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -248,13 +251,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

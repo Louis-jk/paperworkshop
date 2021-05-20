@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import {
   resetState
 } from '../../Modules/OrderReducer';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const OrderComplete = (props) => {
   const navigation = props.navigation;
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   goHomeBtnText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
@@ -123,19 +124,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

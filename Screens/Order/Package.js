@@ -18,6 +18,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {selectCate1, selectCaId, setUserId} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Package = (props) => {
   const navigation = props.navigation;
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     width: 120,
     textAlign: 'center',
     fontSize: 14,
@@ -287,13 +288,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

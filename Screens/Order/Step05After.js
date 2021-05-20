@@ -14,6 +14,7 @@ import {
   } from '../../Modules/OrderReducer';
 
 import DropDownPicker from 'react-native-dropdown-picker';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Step05After = (props) => {
 
@@ -210,7 +211,7 @@ const Step05After = (props) => {
                         justifyContent: 'flex-start',
                         paddingVertical: 10,
                     }}
-                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                    labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
                     dropDownStyle={{backgroundColor: '#fff'}}
                     onChangeItem={(item) => {
                         setPrintColorError(false);
@@ -233,13 +234,13 @@ const Step05After = (props) => {
                     />
                 ) : (
                     <View>
-                    <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                    <Text style={{fontFamily: SCDream4}}>없음</Text>
                     </View>
                 )}
                 {printColorError ? (
                     <Text
                     style={{
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         color: '#366DE5',
                         marginVertical: 5,
@@ -305,7 +306,7 @@ const Step05After = (props) => {
                     </View>
                     ) : (
                     <View>
-                        <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                        <Text style={{fontFamily: SCDream4}}>없음</Text>
                     </View>
                     )}
                 </View>
@@ -367,7 +368,7 @@ const Step05After = (props) => {
                     </View>
                     ) : (
                     <View>
-                        <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                        <Text style={{fontFamily: SCDream4}}>없음</Text>
                     </View>
                     )}
                 </View>
@@ -436,7 +437,7 @@ const Step05After = (props) => {
                             justifyContent: 'flex-start',
                             paddingVertical: 10,
                             }}
-                            labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
+                            labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
                             dropDownStyle={{backgroundColor: '#fff'}}
                             onChangeItem={(item) => {
                             setInnerPrintColorError(false);
@@ -459,13 +460,13 @@ const Step05After = (props) => {
                         />
                         ) : (
                         <View>
-                            <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                            <Text style={{fontFamily: SCDream4}}>없음</Text>
                         </View>
                         )}
                         {innerPrintColorError ? (
                         <Text
                             style={{
-                            fontFamily: 'SCDream4',
+                            fontFamily: SCDream4,
                             fontSize: 12,
                             color: '#366DE5',
                             marginVertical: 5,
@@ -531,7 +532,7 @@ const Step05After = (props) => {
                             </View>
                         ) : (
                             <View>
-                            <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                            <Text style={{fontFamily: SCDream4}}>없음</Text>
                             </View>
                         )}
                         </View>
@@ -593,7 +594,7 @@ const Step05After = (props) => {
                             </View>
                         ) : (
                             <View>
-                            <Text style={{fontFamily: 'SCDream4'}}>없음</Text>
+                            <Text style={{fontFamily: SCDream4}}>없음</Text>
                             </View>
                         )}
                         </View>
@@ -711,12 +712,12 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     profileTitle: {
-      fontFamily: 'SCDream5',
+      fontFamily: SCDream5,
       fontSize: 15,
       color: '#111',
     },
     profileRequired: {
-      fontFamily: 'SCDream4',
+      fontFamily: SCDream4,
       fontSize: 14,
       color: '#366DE5',
     },
@@ -793,13 +794,13 @@ const styles = StyleSheet.create({
       backgroundColor: '#E3E3E3',
     },
     normalText: {
-      fontFamily: 'SCDream4',
+      fontFamily: SCDream4,
     },
     mediumText: {
-      fontFamily: 'SCDream5',
+      fontFamily: SCDream5,
     },
     boldText: {
-      fontFamily: 'SCDream6',
+      fontFamily: SCDream6,
     },
   });
   

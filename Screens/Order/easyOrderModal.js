@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import Modal from 'react-native-modal';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const easyOrderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
   return (
@@ -136,25 +137,25 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   partnerInfoTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#366DE5',
     marginBottom: 10,
   },
   partnerInfoDesc: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     lineHeight: 20,
     color: '#000000',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

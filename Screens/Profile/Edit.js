@@ -28,6 +28,7 @@ import FastImage from 'react-native-fast-image';
 
 import Header from '../Common/DetailHeader';
 import Timer from '../Common/Timer';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
@@ -456,7 +457,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 14,
                   }}>
                   구글 로그인 완료
@@ -487,7 +488,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 14,
                   }}>
                   카카오 로그인 완료
@@ -518,7 +519,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 14,
                     color: '#fff',
                   }}>
@@ -550,7 +551,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: 'SCDream4',
+                    fontFamily: SCDream4,
                     fontSize: 14,
                     color: '#fff',
                   }}>
@@ -639,7 +640,7 @@ const Edit = (props) => {
               </View>
               <Text
                 style={{
-                  fontFamily: 'SCDream4',
+                  fontFamily: SCDream4,
                   fontSize: 12,
                   color: '#366DE5',
                 }}>
@@ -761,7 +762,7 @@ const Edit = (props) => {
             </View>
             <Text
                 style={{
-                  fontFamily: 'SCDream4',
+                  fontFamily: SCDream4,
                   fontSize: 12,
                   color: '#366DE5',
                 }}>
@@ -858,13 +859,13 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   profileTitle: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 15,
     lineHeight: 19,
     marginBottom: 10,
   },
   profileDesc: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 15,
     color: '#111',
   },
@@ -875,7 +876,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
@@ -887,7 +888,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   cancelBtnText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 16,
     color: '#111',
     textAlign: 'center',
@@ -899,13 +900,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   listTitle: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     lineHeight: 19,
     marginBottom: 5,
   },
   listDesc: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 12,
     lineHeight: 16,
     color: '#A2A2A2',
@@ -925,13 +926,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

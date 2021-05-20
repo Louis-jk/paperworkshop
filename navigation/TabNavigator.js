@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -41,10 +41,10 @@ export const BottomTabNavigator = () => {
         labelStyle: {
           fontSize: 12,
           letterSpacing: -1,
-          paddingBottom: 5,
+          paddingBottom: 5,          
         },
         style: {
-          height: 70,
+          height: Platform.os === 'android' ? 70 : 100,
           width: '100%',
           paddingRight: 5,
         },

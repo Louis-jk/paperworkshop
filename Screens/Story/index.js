@@ -19,6 +19,7 @@ import StarRating from 'react-native-star-rating';
 
 import Header from '../Common/Header';
 import CcenterAPI from '../../src/api/Ccenter';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -99,7 +100,7 @@ const index = (props) => {
             paddingHorizontal: 20,
             paddingTop: 20,
           }}>
-          <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
+          <Text style={{fontFamily: SCDream6, marginRight: 5}}>
             {item.ccompany_name}
           </Text>
           <View
@@ -437,7 +438,7 @@ const index = (props) => {
                 }
                 placeholder="인쇄종류"
                 style={{
-                  fontFamily: 'SCDream4',
+                  fontFamily: SCDream4,
                   width: '80%',
                   color: cate1 ? '#000' : '#A2A2A2',
                 }}
@@ -510,7 +511,7 @@ const index = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontFamily: 'SCDream4'}}>리뷰가 없습니다.</Text>
+            <Text style={{fontFamily: SCDream4}}>리뷰가 없습니다.</Text>
           </View>
         }
       />
@@ -543,7 +544,7 @@ const index = (props) => {
                 setCategoryFn(c);
                 setVisibleStep01(false);
               }}>
-              <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>{c}</Text>
+              <Text style={{fontSize: 14, fontFamily: SCDream4}}>{c}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -557,13 +558,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

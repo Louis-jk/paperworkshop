@@ -15,6 +15,7 @@ import Header from '../Common/Header';
 import GalleryNav from './GalleryNav';
 import List from './Components/List';
 import GalleryApi from '../../src/api/Gallery';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -104,7 +105,7 @@ const index = (props) => {
                 flex: 1,
                 height: Dimensions.get('window').height - 300,
               }}>
-              <Text style={{fontFamily: 'SCDream4'}}>
+              <Text style={{fontFamily: SCDream4}}>
                 해당 갤러리가 없습니다.
               </Text>
             </View>
@@ -120,13 +121,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

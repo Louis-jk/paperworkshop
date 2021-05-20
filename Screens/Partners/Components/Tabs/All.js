@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, FlatList, Dimensions, TextInput, TouchableOpacit
 
 import List from '../List';
 import PartnersApi from '../../../../src/api/Partners';
+import {SCDream4, SCDream5, SCDream6} from '../../../../src/font';
+
 
 const All = (props) => {
   const navigation = props.navigation;
@@ -95,7 +97,7 @@ const All = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
+            <Text style={{fontFamily: SCDream4}}>해당 업체가 없습니다.</Text>
           </View>
         }
         // onEndReached={handleLoadMore}
@@ -109,13 +111,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

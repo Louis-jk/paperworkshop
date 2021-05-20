@@ -23,6 +23,7 @@ import FastImage from 'react-native-fast-image';
 
 import DetailHeader from '../Common/DetailHeader';
 import PartnersAPI from '../../src/api/Partners';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Detail = (props) => {
   const navigation = props.navigation;
@@ -164,7 +165,7 @@ const Detail = (props) => {
               paddingHorizontal: 14,
               paddingVertical: 7,
             }}>
-            <Text style={{fontFamily: 'SCDream4', fontSize: 13, color: '#fff'}}>
+            <Text style={{fontFamily: SCDream4, fontSize: 13, color: '#fff'}}>
               닫기
             </Text>
           </TouchableOpacity>
@@ -546,13 +547,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

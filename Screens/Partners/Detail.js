@@ -26,6 +26,7 @@ import Footer from '../Common/Footer';
 import {setCompanyId} from '../../Modules/OrderReducer';
 import {setPartnerLocation} from '../../Modules/OrderHandlerReducer';
 import PartnersAPI from '../../src/api/Partners';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Detail = (props) => {
   const navigation = props.navigation;
@@ -680,7 +681,7 @@ const Detail = (props) => {
                       alignItems: 'center',
                       height: 150,
                     }}>
-                    <Text style={{fontFamily: 'SCDream4'}}>
+                    <Text style={{fontFamily: SCDream4}}>
                       등록된 리뷰가 없습니다.
                     </Text>
                   </View>
@@ -799,13 +800,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

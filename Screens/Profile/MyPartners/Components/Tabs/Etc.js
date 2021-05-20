@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text, StyleSheet, FlatList, Dimensions, TextInput, TouchableOpacity, Image, Alert} from 'react-native';
 
 import List from '../List';
+import {SCDream4, SCDream5, SCDream6} from '../../../../../src/font';
 
 const Etc = (props) => {
   const navigation = props.navigation;
@@ -94,7 +95,7 @@ const Etc = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
+            <Text style={{fontFamily: SCDream4}}>해당 업체가 없습니다.</Text>
           </View>
         }
       />
@@ -107,13 +108,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

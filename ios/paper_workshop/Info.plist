@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>paper_workshop</string>
+	<string>페이퍼공작소</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -20,8 +20,39 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>kakao</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao2194770efdaf3f52d4f09e1dc7f0c83b</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>google</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.512027257209-3i9bsi7t6ocuvhcpsjjdn6ftrvmebjgl</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>2194770efdaf3f52d4f09e1dc7f0c83b</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -39,8 +70,14 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/S-CoreDream-4Regular.otf</string>
+		<string>Fonts/S-CoreDream-5Medium.otf</string>
+		<string>Fonts/S-CoreDream-6Bold.otf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>SplashScreen</string>
+	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -48,8 +85,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {View, Text, ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const EntryBefore = (props) => {
   const navigation = props.navigation;
@@ -31,7 +32,7 @@ const EntryBefore = (props) => {
         alignItems: 'center',
         backgroundColor: '#275696',
       }}>
-      <Text style={{fontFamily: 'SCDream4', color: '#fff', marginBottom: 10}}>
+      <Text style={{fontFamily: SCDream4, color: '#fff', marginBottom: 10}}>
         로그인 확인중...
       </Text>
       <ActivityIndicator size="large" color="#fff" />

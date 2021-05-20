@@ -14,6 +14,7 @@ import {
   FlatList,
   Platform,
   PermissionsAndroid,
+  SafeAreaView
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
@@ -29,6 +30,7 @@ import OrderAPI from '../../src/api/OrderAPI';
 import FirstRoute from './Component/FirstRoute';
 import SecondRoute from './Component/SecondRoute';
 import ThirdRoute from './Component/ThirdRoute';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -278,7 +280,9 @@ const index = (props) => {
   };
 
   React.useEffect(() => {
-    requestAndroidPermission();
+    if(Platform.os === 'android') {
+      requestAndroidPermission();
+    }
     setIsLoading(true);
     getMainTopSlider();
     getMainMiddleSlider();
@@ -289,6 +293,7 @@ const index = (props) => {
   const stepCarouselRef = React.useRef(null);
   const bannerCarouselRef = React.useRef(null);
 
+  // 페이퍼공작소의 제작과정 슬라이더 이미지
   const steps = [
     {
       id: 1,
@@ -396,7 +401,7 @@ const index = (props) => {
     const {tabIndex, jumpTo} = props;
 
     return (
-      <View>
+      <SafeAreaView>
         <View
           style={{
             flexDirection: 'row',
@@ -502,7 +507,7 @@ const index = (props) => {
             ) : null}
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   };
 
@@ -1207,7 +1212,7 @@ const index = (props) => {
                     flex: 1,
                     height: 200,
                   }}>
-                  <Text style={{fontFamily: 'SCDream4'}}>
+                  <Text style={{fontFamily: SCDream4}}>
                     실시간 견적 처리 현황 리스트가 없습니다.
                   </Text>
                 </View>
@@ -1285,20 +1290,20 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep02BadgeText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
     paddingHorizontal: 5,
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

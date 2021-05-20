@@ -16,6 +16,8 @@ import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import Header from '../Common/Header';
 import Footer from '../Common/Footer';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
+
 
 // import { WebView } from 'react-native-webview';
 
@@ -55,13 +57,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

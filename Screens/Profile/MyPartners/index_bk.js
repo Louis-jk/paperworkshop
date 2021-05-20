@@ -12,6 +12,7 @@ import {
 
 import Header from '../../Common/Header';
 import Footer from '../../Common/Footer';
+import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -819,13 +820,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

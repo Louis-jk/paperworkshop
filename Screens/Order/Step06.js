@@ -15,6 +15,7 @@ import DetailHeader from '../Common/DetailHeader';
 import Modal from './detailOrderModal';
 import InfoModal from '../Common/infoModal02';
 import OrderAPI from '../../src/api/OrderAPI';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 import {
   setUserParkProc,
@@ -456,7 +457,7 @@ const Step06 = (props) => {
                   {cate1 === '0' && (ca_id === '1' || ca_id === '4') ? (
                     <Text
                       style={{
-                        fontFamily: 'SCDream5',
+                        fontFamily: SCDream5,
                         fontSize: 15,
                         marginBottom: 20,
                       }}>
@@ -676,7 +677,7 @@ const Step06 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: 'SCDream4',
+                      fontFamily: SCDream4,
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -748,7 +749,7 @@ const Step06 = (props) => {
             <View style={styles.wrap}>
               <Text
                 style={{
-                  fontFamily: 'SCDream5',
+                  fontFamily: SCDream5,
                   fontSize: 15,
                   marginBottom: 20,
                 }}>
@@ -971,7 +972,7 @@ const Step06 = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: 'SCDream4',
+                        fontFamily: SCDream4,
                         fontSize: 12,
                         lineHeight: 18,
                         color: '#366DE5',
@@ -1082,12 +1083,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   profileTitle: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
     fontSize: 15,
     color: '#111',
   },
   profileRequired: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
     fontSize: 14,
     color: '#366DE5',
   },
@@ -1164,13 +1165,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

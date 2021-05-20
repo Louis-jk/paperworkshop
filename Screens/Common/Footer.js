@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
+
 
 const Footer = (props) => {
   const navigation = props.navigation;
@@ -93,13 +95,13 @@ const Footer = (props) => {
 
 const styles = StyleSheet.create({
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 

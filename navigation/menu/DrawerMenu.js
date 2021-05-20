@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Collapsible from 'react-native-collapsible';
 import FastImage from 'react-native-fast-image';
+import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 import Main from '../../src/api/Main';
 
@@ -978,13 +979,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   normalText: {
-    fontFamily: 'SCDream4',
+    fontFamily: SCDream4,
   },
   mediumText: {
-    fontFamily: 'SCDream5',
+    fontFamily: SCDream5,
   },
   boldText: {
-    fontFamily: 'SCDream6',
+    fontFamily: SCDream6,
   },
 });
 
