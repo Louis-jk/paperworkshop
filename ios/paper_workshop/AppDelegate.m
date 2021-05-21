@@ -1,3 +1,5 @@
+#import <RNAKakaoSDK/WithKakaoSDK.h>
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
 #import <Firebase.h>
 #import "AppDelegate.h"
 #import <React/RCTBridge.h>
@@ -5,7 +7,6 @@
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
 #import <RNGoogleSignin/RNGoogleSignin.h>
-
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -63,4 +64,24 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 }
 
+
+- (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
+
+  if ([url.scheme isEqualToString:@"com.dmonster.paperworkshop"]) {
+
+    return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
+
+  }
+
+  if ([WithKakaoSDK isKakaoTalkLoginUrl:url]) {
+
+    return [WithKakaoSDK handleOpenUrl:url];
+
+  }
+
+ 
+
+  return false;
+
+}
 @end
