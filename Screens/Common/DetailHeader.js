@@ -229,17 +229,16 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: '#fff',
     paddingHorizontal: 25,
-    paddingVertical: Platform.os === 'android' ? 3 : 0,
+    paddingVertical: Platform.OS === 'android' ? 3 : 0,
     // height: 55,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   headerCtrl: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    // backgroundColor: '#ffaaee',
+    alignItems: 'center'
   },
   headerTitle: {
     fontSize: 18,

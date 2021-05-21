@@ -19,6 +19,7 @@ import {
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
 import {TabView, SceneMap} from 'react-native-tab-view';
+import messaging from '@react-native-firebase/messaging';
 import Footer from '../Common/Footer';
 import Main from '../../src/api/Main';
 import {useDispatch, useSelector} from 'react-redux';
@@ -44,18 +45,29 @@ const index = (props) => {
   const [middleBanners, setMiddleBanners] = React.useState([]); // 메인 중간 슬라이더(배너)
 
   const dispatch = useDispatch();
-  const {mb_id} = useSelector((state) => state.UserInfoReducer);
+  const {mb_id, mb_hp, sns_check} = useSelector((state) => state.UserInfoReducer);
 
-  // var screen = 'Main';
-  // var screenParams = {};
-  
-  // const resetAction = CommonActions.reset({
-  //     index: 1,
-  //     routes: [
-  //         { name: 'Main' },
-  //     ],
-  // });
-  // props.navigation.dispatch(resetAction);
+  // SNS 로그인일 경우 휴대폰번호가 없으면 회원정보 수정페이지로 보내기
+  const checkSNSLoginMobileNumHandler = () => {
+    if(mb_hp === '' || mb_hp === null) {
+      Alert.alert('휴대폰번호를 입력해주세요.', '회원정보수정페이지로 이동합니다.', [
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('ProfileEdit')
+        }
+      ])
+    }
+    else {
+      return false;
+    }
+  }
+
+  React.useEffect(() => {
+    if(sns_check === 'Y') {
+      console.log("SNS 로그인 중");
+      checkSNSLoginMobileNumHandler();
+    }
+  }, []);
 
   // 안드로이드 권한 설정
   const requestAndroidPermission = async () => {
@@ -280,7 +292,7 @@ const index = (props) => {
   };
 
   React.useEffect(() => {
-    if(Platform.os === 'android') {
+    if(Platform.OS === 'android') {
       requestAndroidPermission();
     }
     setIsLoading(true);
@@ -529,7 +541,7 @@ const index = (props) => {
   };
 
   return (    
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <View style={{position: 'relative'}}>
       {isLoading && (
         <View
@@ -549,8 +561,8 @@ const index = (props) => {
           }}>
           <ActivityIndicator size="large" color="#275696" />
         </View>
-      )}
-      {Platform.os === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> }
+      )}      
+      {Platform.OS === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> }
 
       <Animated.View
         style={{
@@ -638,9 +650,9 @@ const index = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={minItemWidth}
               layout="default"
-              autoplay={false}
-              autoplayDelay={1000}
-              autoplayInterval={3000}
+              autoplay={true}
+              autoplayDelay={3000}
+              autoplayInterval={1000}
               loop={true}
               onSnapToItem={(index) => {
                 setMainActiveSlide(index);
@@ -1016,7 +1028,10 @@ const index = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
               layout="default"
-              loop={false}
+              autoplay={true}
+              autoplayDelay={3000}
+              autoplayInterval={1000}
+              loop={true}
               onSnapToItem={(index) => {
                 setStepActiveSlide(index);
 
@@ -1045,9 +1060,9 @@ const index = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
               layout="default"
-              // autoplay={true}
-              // autoplayDelay={1000}
-              // autoplayInterval={5000}
+              autoplay={true}
+              autoplayDelay={3000}
+              autoplayInterval={1000}
               loop={true}
               onSnapToItem={(index) => {
                 setActiveSlide(index);

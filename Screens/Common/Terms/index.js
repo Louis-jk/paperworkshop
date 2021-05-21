@@ -13,13 +13,10 @@ const index = (props) => {
   const [getHeight, setGetHeight] = React.useState(null);
 
   return (
-    <View style={{flex:1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Header title={routeName} navigation={navigation} />
-
       <AutoHeightWebView
-        style={{
-          width: Dimensions.get('window').width - 30,
-        }}
+        style={{width: '100%'}}
         source={{
           uri: `http://dmonster1506.cafe24.com/bbs/content.php?co_id=provision`,
         }}
@@ -27,12 +24,15 @@ const index = (props) => {
           * {
             font-family: 'Times New Roman';
           }
+          body {
+            font-size: 22px;
+          }
           p {
-            font-size: 16px;
-            line-height: 2em;
+            font-size: 20px;
+            line-height: 25px;
           }
         `}
-        scalesPageToFit={Platform.OS === 'Android' ? true : false}
+        scalesPageToFit={Platform.OS === 'android' ? true : false}
         viewportContent={'width=device-width, user-scalable=no'}
       />
     </View>

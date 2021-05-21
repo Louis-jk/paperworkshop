@@ -676,6 +676,7 @@ const Edit = (props) => {
                     borderRadius: 4,
                     paddingHorizontal: 10,
                     marginRight: 10,
+                    height: 50
                   },
                 ]}
                 onChangeText={(text) => setMobileNo(text)}
@@ -733,6 +734,7 @@ const Edit = (props) => {
                     borderRadius: 4,
                     paddingHorizontal: 10,
                     marginRight: 10,
+                    height: 50
                   },
                 ]}
                 onChangeText={(text) => setMobileConfirmId(text)}
@@ -818,6 +820,7 @@ const Edit = (props) => {
                   borderColor: '#E3E3E3',
                   borderRadius: 4,
                   paddingHorizontal: 10,
+                  height: 50
                 },
               ]}
               onChangeText={(text) => setCompany(text)}

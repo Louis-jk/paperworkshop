@@ -663,7 +663,9 @@ const Detail = (props) => {
               backgroundColor: '#fff',
               borderRadius: 5,
               paddingLeft: 10,
+              paddingVertical: 20,
               marginHorizontal: 10,
+              marginBottom: 10
             }}
             onChangeText={(text) => setMessage(text)}
             multiline={true}

@@ -44,7 +44,7 @@ export const BottomTabNavigator = () => {
           paddingBottom: 5,          
         },
         style: {
-          height: Platform.os === 'android' ? 70 : 100,
+          height: Platform.OS === 'android' ? 70 : 100,
           width: '100%',
           paddingRight: 5,
         },

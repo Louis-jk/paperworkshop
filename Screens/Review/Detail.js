@@ -391,6 +391,7 @@ const Detail = (props) => {
                     maxStars={5}
                     rating={Math.floor(review.grade1)}
                     starSize={16}
+                    activeOpacity={1}
                   />
                 </View>
               </TouchableWithoutFeedback>
@@ -429,6 +430,7 @@ const Detail = (props) => {
                     maxStars={5}
                     rating={Math.floor(review.grade2)}
                     starSize={16}
+                    activeOpacity={1}
                   />
                 </View>
               </TouchableWithoutFeedback>
@@ -467,6 +469,7 @@ const Detail = (props) => {
                     maxStars={5}
                     rating={Math.floor(review.grade3)}
                     starSize={16}
+                    activeOpacity={1}
                   />
                 </View>
               </TouchableWithoutFeedback>

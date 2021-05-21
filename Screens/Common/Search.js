@@ -15,6 +15,8 @@ import {
   Keyboard,
   ImageBackground,
   ActivityIndicator,
+  Platform,
+  StatusBar
 } from 'react-native';
 
 import moment from 'moment';
@@ -156,58 +158,6 @@ const Search = (props) => {
     setKeyword(null);
   }, []);
 
-  console.log('historyKeyword', historyKeyword);
-
-  // const resultRender = ({item, index}) => {
-  //   return (
-  //     <>
-  //       {item.notice !== null ? (
-  //         <>
-  //           <TouchableOpacity
-  //             key={index}
-  //             style={{paddingHorizontal: 20}}
-  //             activeOpacity={0.8}
-  //             onPress={() =>
-  //               navigation.navigate('CCenterNoticeDetail', {item: item.notice})
-  //             }>
-  //             <View style={styles.categoryWrap}>
-  //               <View
-  //                 style={{
-  //                   justifyContent: 'flex-start',
-  //                   alignItems: 'flex-start',
-  //                 }}>
-  //                 <View
-  //                   style={{
-  //                     flexDirection: 'row',
-  //                     justifyContent: 'flex-start',
-  //                     alignItems: 'center',
-  //                     marginBottom: 12,
-  //                   }}>
-  //                   <Text style={styles.categoryTitle}>
-  //                     {item.notice.title}
-  //                   </Text>
-  //                   {/* <Text style={styles.new}>
-  //                     {item.notice.new_yn === 'Y' ? 'NEW' : null}
-  //                   </Text> */}
-  //                 </View>
-  //                 <Text style={styles.categoryDate}>
-  //                   {item.notice.datetime}
-  //                 </Text>
-  //               </View>
-  //             </View>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               height: 0.5,
-  //               width: Dimensions.get('window').width,
-  //               backgroundColor: '#E3E3E3',
-  //             }}
-  //           />
-  //         </>
-  //       ) : null}
-  //     </>
-  //   );
-  // };
 
   const renderRow = ({item, index}) => {
     return (
@@ -258,6 +208,8 @@ const Search = (props) => {
 
   return (
     <>
+    {/* {Platform.OS === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> } */}
+    <SafeAreaView>
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={styles.headerCtrl}>
@@ -299,7 +251,7 @@ const Search = (props) => {
             placeholderTextColor="#BEBEBE"
             onChangeText={(text) => setKeyword(text)}
             autoFocus={false}
-            style={[styles.normalText, {width: '80%'}]}
+            style={[styles.normalText, {width: '80%', height: 45}]}
             onSubmitEditing={() => sendSearchAPI()}
             autoCapitalize="none"
           />
@@ -959,6 +911,7 @@ const Search = (props) => {
           </ScrollView>
         )}
       </View>
+    </SafeAreaView>
     </>
   );
 };

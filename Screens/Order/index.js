@@ -32,16 +32,7 @@ const index = (props) => {
   );
 
   React.useEffect(() => {
-    if(mb_hp === null || mb_hp === "") {
-      Alert.alert('견적을 신청하시려면 휴대폰 번호가 있어야 합니다.', '회원정보수정 페이지에서 휴대폰 번호를 입력해주세요.', [
-        {
-          text: '확인',
-          onPress: () => navigation.navigate('ProfileEdit')
-        }
-      ])
-    } else {
       dispatch(setUserId(mb_id));
-    }    
   }, []);
 
   return (

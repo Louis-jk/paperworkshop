@@ -16,10 +16,11 @@ import {
   SafeAreaView
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import {
-  login as kLogin,
-  getProfile as getKakaoProfile,
-} from '@react-native-seoul/kakao-login'; // 카카오 로그인
+// import {
+//   login as kLogin,
+//   getProfile as getKakaoProfile,
+// } from '@react-native-seoul/kakao-login'; // 카카오 로그인
+import KakaoSDK from '@actbase/react-kakaosdk';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -77,7 +78,8 @@ const Login = (props) => {
   const SnsLoginHandler = (payload, token, type) => {
     let kakaoPhoneNum = '';
     if (type === 'kakao') {
-      kakaoPhoneNum = payload.phoneNumber !== 'null' ? payload.phoneNumber : '';
+      // kakaoPhoneNum = payload.phoneNumber !== 'null' ? payload.phoneNumber : '';
+      kakaoPhoneNum = '';
     }
 
     let id = type !== 'google' ? payload.id : payload.user.id;
@@ -86,14 +88,14 @@ const Login = (props) => {
       type === 'naver'
         ? payload.name
         : type === 'kakao'
-        ? payload.nickname
+        ? payload.properties.nickname
         : payload.user.name;
-    let email = type !== 'google' ? payload.email : payload.user.email;
+    let email = type === 'google' ? payload.user.email : type === 'kakao' ? payload.kakao_account.email : payload.email;
     let profileImg =
       type === 'naver'
         ? payload.profile_image
         : type === 'kakao'
-        ? payload.profileImageUrl
+        ? payload.properties.profile_image
         : payload.user.photo;
     let mobile =
       type === 'naver' ? payload.mobile : type === 'kakao' ? kakaoPhoneNum : '';
@@ -125,14 +127,14 @@ const Login = (props) => {
           dispatch(SnsCheck(res.data.item.sns_check));
           dispatch(SnsType(res.data.item.sns_type));
           dispatch(LoginCheck('Y'));
-          // navigation.navigate('EntryBefore');
-          const resetAction = CommonActions.reset({
-            index: 1,
-            routes: [
-              { name: 'EntryBefore' },
-            ],
-          });
-          navigation.dispatch(resetAction);
+          navigation.navigate('Stack');
+          // const resetAction = CommonActions.reset({
+          //   index: 1,
+          //   routes: [
+          //     { name: 'EntryBefore' },
+          //   ],
+          // });
+          // navigation.dispatch(resetAction);
         }
       })
       .catch((err) => {
@@ -195,33 +197,67 @@ const Login = (props) => {
 
   // 카카오 로그인
   const kakaoLogin = async () => {
-    try {
-      const kakaoToken = await kLogin();
-      console.log('kakao ', kakaoToken);
-      await getKakaoProfileHandler(kakaoToken.accessToken);
-    } catch (err) {
-      console.log(err);
+    try{
+      KakaoSDK.init('2194770efdaf3f52d4f09e1dc7f0c83b');
+      const tokens = await KakaoSDK.login();
+      console.log("kakao login tokens :: ", tokens);
+      await kakaoGetProfile(tokens.access_token);
+      // const accessToken = await KakaoSDK.getAccessToken();
+      // console.log("kakao accessToken :: ", accessToken);
+    }catch(err) {
       Alert.alert('카카오톡 계정 정보가 없습니다.', '카카오톡을 사용 중이신지 확인해주세요.', [
         {
           text: '확인',
         },
       ]);
     }
-  };
+    
+  }
 
-  const getKakaoProfileHandler = async (accessToken) => {
-    try {
-      const profile = await getKakaoProfile();
-      console.log('profile', profile);
+  const kakaoGetProfile = async (accessToken) => {
+    try{
+      const profile = await KakaoSDK.getProfile();
+      console.log("kakao profile ::", profile);
       await SnsLoginHandler(profile, accessToken, 'kakao');
-    } catch (err) {
+    } catch(err) {
       Alert.alert('오류가 발생하였습니다.', '다시 확인해주세요.', [
         {
           text: '확인',
         },
       ]);
-    }
-  };
+    }    
+  }
+  
+  // const kakaoLogin = async () => {
+  //   try {
+  //     const kakaoToken = await kLogin();
+  //     console.log('kakao ', kakaoToken);
+  //     alert("kakao", kakaoToken);
+  //     await getKakaoProfileHandler(kakaoToken.accessToken);
+  //   } catch (err) {
+  //     console.log(err);
+  //     alert("err", err);
+  //     Alert.alert('카카오톡 계정 정보가 없습니다.', '카카오톡을 사용 중이신지 확인해주세요.', [
+  //       {
+  //         text: '확인',
+  //       },
+  //     ]);
+  //   }
+  // };
+
+  // const getKakaoProfileHandler = async (accessToken) => {
+  //   try {
+  //     const profile = await getKakaoProfile();
+  //     console.log('profile', profile);
+  //     await SnsLoginHandler(profile, accessToken, 'kakao');
+  //   } catch (err) {
+  //     Alert.alert('오류가 발생하였습니다.', '다시 확인해주세요.', [
+  //       {
+  //         text: '확인',
+  //       },
+  //     ]);
+  //   }
+  // };
 
   // 네이버 로그인
   const ioskeys = {
@@ -353,7 +389,7 @@ const Login = (props) => {
           dispatch(LoginCheck('Y'));
           if (autoLogin) {
             storeData();
-            navigation.navigate('EntryBefore');
+            navigation.navigate('Stack');
             // const resetAction = CommonActions.reset({
             //   index: 1,
             //   routes: [
@@ -362,7 +398,7 @@ const Login = (props) => {
             // });
             // navigation.dispatch(resetAction);
           } else {
-            navigation.navigate('EntryBefore');
+            navigation.navigate('Stack');
             // const resetAction = CommonActions.reset({
             //   index: 1,
             //   routes: [
@@ -413,7 +449,7 @@ const Login = (props) => {
           <ActivityIndicator size="large" color="#275696" />
         </View>
       )}
-      <SafeAreaView>
+      <SafeAreaView style={{ backgroundColor: '#fff' }}>
         <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{

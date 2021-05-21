@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
+  Platform
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -157,6 +158,7 @@ const DrawerMenu = (props) => {
             paddingHorizontal: 20,
             paddingVertical: 25,
             marginBottom: 20,
+            paddingTop: Platform.OS === 'ios' ? 50 : 0
           }}>
           <View
             style={{

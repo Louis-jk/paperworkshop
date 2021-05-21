@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingBottom: 10,
     backgroundColor: '#fff',
   },
   infoBox: {

@@ -37,7 +37,7 @@ const CompanyInfo = (props) => {
         source={{
           uri: `http://dmonster1506.cafe24.com/bbs/content.php?co_id=company`,
         }}
-        scalesPageToFit={Platform.OS === 'Android' ? true : false}
+        scalesPageToFit={Platform.OS === 'android' ? true : false}
         viewportContent={'width=device-width, user-scalable=no'}
       />
       <Footer navigation={navigation} />

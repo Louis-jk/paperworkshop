@@ -36,7 +36,7 @@ const All = (props) => {
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
           onChangeText={(text) => setKeyword(text)}
-          style={[styles.normalText, {width: '80%'}]}
+          style={[styles.normalText, {width: '80%', height:45}]}
           onSubmitEditing={() => searchHandler(keyword)}
           autoCapitalize="none"
         />

@@ -73,7 +73,7 @@ const TipsDetail = (props) => {
           width: '100%',
           height: Dimensions.get('window').height - 210,
         }}>
-        <AutoHeightWebView
+        {/* <AutoHeightWebView
           customScript={`
               document.body.style.background = '#fff'; 
               document.body.style.fontSize = '14px';
@@ -92,6 +92,25 @@ const TipsDetail = (props) => {
             uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=info&wr_id=${id}`,
           }}
           scalesPageToFit={Platform.OS === 'ios' ? false : true}
+          viewportContent={'width=device-width, user-scalable=no'}
+        /> */}
+        <AutoHeightWebView
+          style={{
+            width: Dimensions.get('window').width,
+          }}
+          source={{
+            uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=info&wr_id=${id}`,
+          }}
+          customStyle={`
+            * {
+              font-family: 'Times New Roman';
+            }
+            p {
+              font-size: 16px;
+              line-height: 2em;
+            }
+          `}
+          scalesPageToFit={Platform.OS === 'android' ? true : false}
           viewportContent={'width=device-width, user-scalable=no'}
         />
       </View>

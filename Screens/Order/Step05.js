@@ -1348,6 +1348,7 @@ const Step05 = (props) => {
                       borderColor: '#E3E3E3',
                       borderRadius: 4,
                       paddingHorizontal: 10,
+                      height: 50
                     },
                   ]}
                   onChangeText={(text) => {
@@ -1569,6 +1570,7 @@ const Step05 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: directPaperError ? 5 : 20,
+                      height: 50
                     },
                   ]}
                   onChangeText={(text) => {
@@ -1718,6 +1720,7 @@ const Step05 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 20,
+                      height: 50
                     },
                   ]}
                   onChangeText={(text) => {
@@ -1801,6 +1804,7 @@ const Step05 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: directWeightError ? 5 : 20,
+                      height: 50
                     },
                   ]}
                   onChangeText={(text) => {
@@ -1847,6 +1851,7 @@ const Step05 = (props) => {
                         borderRadius: 4,
                         paddingHorizontal: 10,
                         marginBottom: directWeightError ? 5 : 20,
+                        height: 50
                       },
                     ]}
                     onChangeText={(text) => {
@@ -2044,6 +2049,7 @@ const Step05 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: directColorError ? 5 : 20,
+                      height: 50
                     },
                   ]}
                   onChangeText={(text) =>  { 
@@ -2084,6 +2090,7 @@ const Step05 = (props) => {
                         borderRadius: 4,
                         paddingHorizontal: 10,
                         marginBottom: directColorError ? 5 : 20,
+                        height: 50
                       },
                     ]}
                     onChangeText={(text) =>  { 
@@ -2213,6 +2220,7 @@ const Step05 = (props) => {
                         borderColor: '#E3E3E3',
                         borderRadius: 4,
                         paddingHorizontal: 10,
+                        height: 50
                       },
                     ]}
                     onChangeText={(text) => {
@@ -2420,6 +2428,7 @@ const Step05 = (props) => {
                         borderRadius: 4,
                         paddingHorizontal: 10,
                         marginBottom: 20,
+                        height: 50
                       },
                     ]}
                     onChangeText={(text) => {
@@ -2497,6 +2506,7 @@ const Step05 = (props) => {
                         borderRadius: 4,
                         paddingHorizontal: 10,
                         marginVertical: 10,
+                        height: 50
                       },
                     ]}
                     onChangeText={(text) => {
@@ -2529,6 +2539,7 @@ const Step05 = (props) => {
                           borderRadius: 4,
                           paddingHorizontal: 10,
                           marginBottom: directWeightInnerError ? 0 : 20,
+                          height: 50
                         },
                       ]}
                       onChangeText={(text) => {
@@ -2721,6 +2732,7 @@ const Step05 = (props) => {
                         borderRadius: 4,
                         paddingHorizontal: 10,
                         marginBottom: 5,
+                        height: 50
                       },
                     ]}
                     onChangeText={(text) => setDirectColorInner(text)}
@@ -2748,6 +2760,7 @@ const Step05 = (props) => {
                           borderRadius: 4,
                           paddingHorizontal: 10,
                           marginBottom: directColorInnerError ? 0 : 20,
+                          height: 50
                         },
                       ]}
                       onChangeText={(text) => {

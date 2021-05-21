@@ -63,7 +63,8 @@ const App = () => {
 
   return (
     <>
-      {Platform.os === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> }
+      {Platform.OS === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content" /> }
+      <StatusBar translucent barStyle="dark-content" />
       <NavigationContainer ref={ref}>
         <DrawerNavigator />
       </NavigationContainer>

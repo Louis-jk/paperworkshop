@@ -183,76 +183,80 @@ const Step05After = (props) => {
                     {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
                 {getPrtFrequency.length > 0 ? (
+                    <View style={{flex:1}}>
                     <DropDownPicker
-                    placeholder={'도수 선택'}
-                    placeholderStyle={{
-                        fontSize: 14,
-                        color: '#A2A2A2',
-                        fontWeight: '400',
-                    }}
-                    activeLabelStyle={{color: '#000'}}
-                    activeItemStyle={{color: '#000'}}
-                    selectedLabelStyle={{color: '#000'}}
-                    value={printColor}
-                    items={getPrtFrequency.map((v, _i) => {
-                        return {value: v, label: v};
-                    })}
-                    dropDownMaxHeight={150}
-                    zIndex={1000}
-                    containerStyle={{height: 50}}
-                    style={{
-                        backgroundColor: '#fff',
-                        borderTopRightRadius: 4,
-                        borderTopLeftRadius: 4,
-                        borderBottomRightRadius: 4,
-                        borderBottomLeftRadius: 4,
-                    }}
-                    itemStyle={{
-                        justifyContent: 'flex-start',
-                        paddingVertical: 10,
-                    }}
-                    labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
-                    dropDownStyle={{backgroundColor: '#fff'}}
-                    onChangeItem={(item) => {
-                        setPrintColorError(false);
-                        setPrintColor(item.value);
-                    }}
-                    customArrowDown={() => (
-                        <Image
-                        source={require('../../src/assets/arr01.png')}
-                        style={{width: 25, height: 25}}
-                        resizeMode="contain"
-                        />
-                    )}
-                    customArrowUp={() => (
-                        <Image
-                        source={require('../../src/assets/arr01_top.png')}
-                        style={{width: 25, height: 25}}
-                        resizeMode="contain"
-                        />
-                    )}
+                        placeholder={'도수 선택'}
+                        placeholderStyle={{
+                            fontSize: 14,
+                            color: '#A2A2A2',
+                            fontWeight: '400',
+                        }}
+                        activeLabelStyle={{color: '#000'}}
+                        activeItemStyle={{color: '#000'}}
+                        selectedLabelStyle={{color: '#000'}}
+                        value={printColor}
+                        items={getPrtFrequency.map((v, _i) => {
+                            return {value: v, label: v};
+                        })}
+                        dropDownMaxHeight={200}
+                        zIndex={1000}
+                        containerStyle={{height: 50}}
+                        style={{
+                            backgroundColor: '#fff',
+                            borderTopRightRadius: 4,
+                            borderTopLeftRadius: 4,
+                            borderBottomRightRadius: 4,
+                            borderBottomLeftRadius: 4,
+                        }}
+                        itemStyle={{
+                            justifyContent: 'flex-start',
+                            paddingVertical: 10,
+                        }}
+                        labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
+                        dropDownStyle={{backgroundColor: '#fff'}}
+                        onChangeItem={(item) => {
+                            setPrintColorError(false);
+                            setPrintColor(item.value);
+                        }}
+                        customArrowDown={() => (
+                            <Image
+                            source={require('../../src/assets/arr01.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                            />
+                        )}
+                        customArrowUp={() => (
+                            <Image
+                            source={require('../../src/assets/arr01_top.png')}
+                            style={{width: 25, height: 25}}
+                            resizeMode="contain"
+                            />
+                        )}
                     />
+                    </View>
                 ) : (
                     <View>
                     <Text style={{fontFamily: SCDream4}}>없음</Text>
                     </View>
                 )}
                 {printColorError ? (
-                    <Text
-                    style={{
-                        fontFamily: SCDream4,
-                        fontSize: 12,
-                        color: '#366DE5',
-                        marginVertical: 5,
-                    }}>
-                    인쇄도수를 선택해주세요.
-                    </Text>
+                    <View style={{zIndex:-1}}>
+                        <Text
+                        style={{
+                            fontFamily: SCDream4,
+                            fontSize: 12,
+                            color: '#366DE5',
+                            marginVertical: 5,
+                        }}>
+                        인쇄도수를 선택해주세요.
+                        </Text>
+                    </View>
                 ) : null}
                 </View>
                 {/* // 인쇄 도수  */}
 
                 {/* 인쇄 교정  */}
-                <View style={{marginBottom: 20}}>
+                <View style={{marginBottom: 20, zIndex: -1}}>
                 <View
                     style={{
                     flexDirection: 'row',
@@ -314,7 +318,7 @@ const Step05After = (props) => {
                 {/* // 인쇄 교정  */}
 
                 {/* 인쇄 감리  */}
-                <View style={{marginBottom: 25}}>
+                <View style={{marginBottom: 25, zIndex: -1}}>
                 <View
                     style={{
                     flexDirection: 'row',
@@ -329,7 +333,7 @@ const Step05After = (props) => {
 
                     {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-                <View>
+                <View style={{zIndex:-1}}>
                     {getPrtSupervision !== null && getPrtSupervision.length > 0 ? (
                     <View
                         style={{

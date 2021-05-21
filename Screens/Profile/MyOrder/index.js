@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -281,6 +282,7 @@ const index = (props) => {
                   fontFamily: SCDream4,
                   width: '80%',
                   color: step01 ? '#000' : '#A2A2A2',
+                  height: 45
                 }}
                 editable={false}
                 collapsable={true}
@@ -299,46 +301,60 @@ const index = (props) => {
 
           <View
             style={{
-              zIndex: 2000,
+              flex:1,
               position: 'relative',
               width: '39%',
-              borderWidth: 1,
-              borderColor: '#E3E3E3',
-              borderTopRightRadius: 4,
-              borderTopLeftRadius: 4,
-              borderBottomRightRadius: visibleStep02 ? 0 : 4,
-              borderBottomLeftRadius: visibleStep02 ? 0 : 4,
               paddingHorizontal: 10,
-              backgroundColor: '#fff',
             }}>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={toggleMenu02}
+            <DropDownPicker
+              placeholder={'분류 선택'}
+              placeholderStyle={{
+                fontSize: 14,
+                color: '#A2A2A2',
+                fontWeight: '400',
+              }}
+              value={location}
+              activeLabelStyle={{color: '#000'}}
+              activeItemStyle={{color: '#000'}}
+              selectedLabelStyle={{color: '#000'}}
+              items={[
+                {label: '전체', value: '전체'},
+                {label: '패키지', value: '패키지'},
+                {label: '일반인쇄물', value: '일반인쇄물'},
+                {label: '기타인쇄물', value: '기타인쇄물'},
+              ]}
+              zIndex={3000}
+              containerStyle={{height: 50}}
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <TextInput
-                value={step02}
-                placeholder="분류 선택"
-                style={{
-                  fontFamily: SCDream4,
-                  width: '80%',
-                  color: step02 ? '#000' : '#A2A2A2',
-                }}
-                editable={false}
-              />
-              <Image
-                source={
-                  visibleStep02
-                    ? require('../../../src/assets/arr01_top.png')
-                    : require('../../../src/assets/arr01.png')
-                }
-                style={{width: 25, height: 25}}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
+                backgroundColor: '#fff',
+                borderTopRightRadius: 4,
+                borderTopLeftRadius: 4,
+                borderBottomRightRadius: 4,
+                borderBottomLeftRadius: 4,
+              }}
+              itemStyle={{
+                justifyContent: 'flex-start',
+                paddingVertical: 10,
+              }}
+              labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
+              dropDownStyle={{backgroundColor: '#fff'}}
+              onChangeItem={(item) => setLocation(item.value)}
+              autoCapitalize="none"
+              customArrowDown={() => (
+                <Image
+                  source={require('../../../src/assets/arr01.png')}
+                  style={{width: 25, height: 25}}
+                  resizeMode="contain"
+                />
+              )}
+              customArrowUp={() => (
+                <Image
+                  source={require('../../../src/assets/arr01_top.png')}
+                  style={{width: 25, height: 25}}
+                  resizeMode="contain"
+                />
+              )}
+            />
           </View>
         </View>
         <View
@@ -346,6 +362,7 @@ const index = (props) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
+            zIndex: -1
           }}>
           <TextInput
             value={keyword}
@@ -360,6 +377,7 @@ const index = (props) => {
                 paddingHorizontal: 15,
                 flex: 2,
                 marginRight: 5,
+                height: 50
               },
             ]}
             onChangeText={(text) => setKeyword(text)}
@@ -591,82 +609,7 @@ const index = (props) => {
         </ScrollView>
       )}
 
-      {visibleStep02 && (
-        <ScrollView
-          nestedScrollEnabled={true}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{zIndex: 1000}}
-          style={{
-            position: 'absolute',
-            top: 126,
-            right: 20,
-            backgroundColor: '#fff',
-            width: '35.2%',
-            zIndex: 1000,
-            borderWidth: 1,
-            borderColor: '#E3E3E3',
-            paddingVertical: 10,
-            borderBottomRightRadius: 4,
-            borderBottomLeftRadius: 4,
-          }}>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep02('전체');
-              setCate1('');
-              setVisibleStep02(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>전체</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep02('패키지');
-              setCate1('1');
-              setVisibleStep02(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>패키지</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep02('일반인쇄물');
-              setCate1('0');
-              setVisibleStep02(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
-              일반인쇄물
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-            }}
-            onPress={() => {
-              setStep02('기타인쇄물');
-              setCate1('2');
-              setVisibleStep02(false);
-            }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
-              기타인쇄물
-            </Text>
-          </TouchableOpacity>
-        </ScrollView>
-      )}
+     
     </>
   );
 };

@@ -136,31 +136,41 @@ const Step03 = (props) => {
   };
 
   const nextBtn = () => {
-    if (type === '0') {
-      dispatch(selectTypeId(type));
-      dispatch(selectTypeName(directTypeName));
+    if(type === '' || type === null) {
+      
+      Alert.alert('타입을 선택해주세요.','',[
+        {
+          text: '확인'
+        }
+      ])
+      
     } else {
-      dispatch(selectTypeId(type));
-      dispatch(selectTypeName(typeName));
-    }
-
-    if (ca_id === '12') {
-      dispatch(setUserStype(sabari.sabari));
-    }
-
-    if ((ca_id === '1' && typeId === '71') || ca_id === '6') {
-      dispatch(setUserWayEdit(detail.detail));
-      dispatch(setUserGroundMethod(''));
-    }
-
-    if (ca_id === '1' && typeId === '73') {
-      dispatch(setUserGroundMethod(detail02.detail));
-      dispatch(setUserWayEdit(''));
-    }
-
-    navigation.navigate('OrderStep04', {
-      screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
-    });
+      if (type === '0') {
+        dispatch(selectTypeId(type));
+        dispatch(selectTypeName(directTypeName));
+      } else {
+        dispatch(selectTypeId(type));
+        dispatch(selectTypeName(typeName));
+      }
+  
+      if (ca_id === '12') {
+        dispatch(setUserStype(sabari.sabari));
+      }
+  
+      if ((ca_id === '1' && typeId === '71') || ca_id === '6') {
+        dispatch(setUserWayEdit(detail.detail));
+        dispatch(setUserGroundMethod(''));
+      }
+  
+      if (ca_id === '1' && typeId === '73') {
+        dispatch(setUserGroundMethod(detail02.detail));
+        dispatch(setUserWayEdit(''));
+      }
+  
+      navigation.navigate('OrderStep04', {
+        screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
+      });
+    }    
   };
 
   const directInput = React.useRef(null);

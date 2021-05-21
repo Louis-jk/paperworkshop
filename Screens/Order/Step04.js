@@ -1330,6 +1330,7 @@ const Step04 = (props) => {
                                 borderColor: '#E3E3E3',
                                 borderRadius: 4,
                                 paddingHorizontal: 10,
+                                height: 50
                               },
                             ]}
                             onChangeText={(value) => {
@@ -1835,6 +1836,7 @@ const Step04 = (props) => {
                                 borderColor: '#E3E3E3',
                                 borderRadius: 4,
                                 paddingHorizontal: 10,
+                                height: 50
                               },
                             ]}
                             onChangeText={(value) => {
@@ -1918,6 +1920,7 @@ const Step04 = (props) => {
                                 borderColor: '#E3E3E3',
                                 borderRadius: 4,
                                 paddingHorizontal: 10,
+                                height: 50
                               },
                             ]}
                             onChangeText={(value) => {
@@ -2001,6 +2004,7 @@ const Step04 = (props) => {
                                 borderColor: '#E3E3E3',
                                 borderRadius: 4,
                                 paddingHorizontal: 10,
+                                height: 50
                               },
                             ]}
                             onChangeText={(value) => {
@@ -2163,6 +2167,7 @@ const Step04 = (props) => {
                                 borderColor: '#E3E3E3',
                                 borderRadius: 4,
                                 paddingHorizontal: 10,
+                                height: 50
                               },
                             ]}
                             autoCapitalize="none"
@@ -2334,6 +2339,7 @@ const Step04 = (props) => {
                                   borderColor: '#E3E3E3',
                                   borderRadius: 4,
                                   paddingHorizontal: 10,
+                                  height: 50
                                 },
                               ]}
                               autoCapitalize="none"
@@ -2418,6 +2424,7 @@ const Step04 = (props) => {
                                   infoDetail[0].standard_text !== ''
                                     ? 5
                                     : 0,
+                                height: 50
                               },
                             ]}
                             onChangeText={(value) => {
@@ -2678,6 +2685,7 @@ const Step04 = (props) => {
                                   borderRadius: 4,
                                   paddingHorizontal: 10,
                                   marginRight: 10,
+                                  height: 50
                                 },
                               ]}
                               editable={false}

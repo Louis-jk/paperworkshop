@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, Alert, ActivityIndicator} from 'react-native';
+import {View, Text, Alert, ActivityIndicator, Platform} from 'react-native';
 import {useDispatch} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,7 +18,7 @@ import {
   LoginCheck,
 } from '../../../Modules/UserInfoReducer';
 import Auth from '../../../src/api/Auth.js';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
+import {SCDream4} from '../../../src/font';
 
 const Check = (props) => {
   const navigation = props.navigation;
@@ -39,12 +39,16 @@ const Check = (props) => {
         }
       })
       .catch((err) =>
-        // Alert.alert(err, '관리자 양반에게 문의하세요.', [
-        //   {
-        //     text: '확인',
-        //   },
-        // ])
-        navigation.navigate('Login')
+        {
+          console.log("token err :: ", err);
+          Alert.alert('토큰을 받지 못했습니다.', JSON.stringify(err), [
+            {
+              text: '확인',
+              onPress: () => navigation.navigate('Login')
+            }
+          ])
+          // navigation.navigate('Login');
+        }
       );
   };
 

@@ -437,6 +437,7 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
+                      height: 50
                     },
                   ]}
                   onChangeText={(value) => {
@@ -506,6 +507,7 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
+                      height: 50
                     },
                   ]}
                   onChangeText={(value) => {
@@ -576,6 +578,7 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
+                      height: 50
                     },
                   ]}
                   onChangeText={(value) => {
@@ -649,6 +652,7 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
+                      height: 50
                     },
                   ]}
                   onChangeText={(text) => setCompany(text)}
@@ -953,6 +957,7 @@ const Step02 = (props) => {
                           paddingHorizontal: 10,
                           width: '70%',
                           color: deliveryDate ? '#111' : '#A2A2A2',
+                          height: 50
                         },
                       ]}
                       autoCapitalize="none"
@@ -1010,6 +1015,7 @@ const Step02 = (props) => {
                           paddingHorizontal: 10,
                           width: '70%',
                           color: estimateDate ? '#111' : '#A2A2A2',
+                          height: 50
                         },
                       ]}
                       autoCapitalize="none"
@@ -1077,6 +1083,7 @@ const Step02 = (props) => {
                         borderRadius: 4,
                         paddingHorizontal: 10,
                         marginRight: 10,
+                        height: 50
                       },
                     ]}
                     editable={false}

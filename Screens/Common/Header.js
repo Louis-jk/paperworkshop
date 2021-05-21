@@ -7,6 +7,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   SafeAreaView,
+  Platform
 } from 'react-native';
 import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    lineHeight: 50,
+    lineHeight: Platform.OS === 'android' ? 50 : 0,
   },
   icons: {
     flexDirection: 'row',

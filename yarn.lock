@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@actbase/react-kakaosdk@^0.9.4":
+  version "0.9.4"
+  resolved "https://registry.npmjs.org/@actbase/react-kakaosdk/-/react-kakaosdk-0.9.4.tgz"
+  integrity sha512-GVx0ajy0qn0SKHcG2YIt1ZUNbug5MKgw0QKPZHVBoLXW/qdsxovltpc8YldDqcw47fIKK1P8fxtvMa7n64ZLzA==
+  dependencies:
+    plist "^3.0.2"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.13.tgz"
@@ -1247,13 +1254,6 @@
   version "6.0.0"
   resolved "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-6.0.0.tgz"
   integrity sha512-xmrrG2muhwmoPy9AdfP+ceLBZtnrXkZwgN/jR5u3xOHadyerJfvD76w2BSmm7zeoiMB1wwSkZkzFSa9+i1BdKA==
-
-"@react-native-seoul/kakao-login@3.0.6":
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/@react-native-seoul/kakao-login/-/kakao-login-3.0.6.tgz"
-  integrity sha512-s+GTD1d581AF3Q6bybh11+Q87mAxpmUe5d8Z1ec+QrKDbC10AX0haq/FLLEseVToBqVgBwuK3ToQnObccu9KYQ==
-  dependencies:
-    dooboolab-welcome "^1.2.0"
 
 "@react-native-seoul/naver-login@2.1.0":
   version "2.1.0"
@@ -2828,7 +2828,7 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
-dooboolab-welcome@^1.1.1, dooboolab-welcome@^1.2.0:
+dooboolab-welcome@^1.1.1:
   version "1.2.0"
   resolved "https://registry.npmjs.org/dooboolab-welcome/-/dooboolab-welcome-1.2.0.tgz"
   integrity sha512-XgEbjJHAsKLge/e8jtuHsv84Ovg1Gx0GvnOTOmOlVGV1643nduTAkT3fyo/mxKbzvyXBr47RHaJAY4R2toI0UA==
@@ -6246,7 +6246,7 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-plist@^3.0.1:
+plist@^3.0.1, plist@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.2.tgz"
   integrity sha512-MSrkwZBdQ6YapHy87/8hDU8MnIcyxBKjeF+McXnr5A9MtffPewTs7G3hlpodT5TacyfIyFTaJEhh3GGcmasTgQ==
