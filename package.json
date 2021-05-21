@@ -5,12 +5,14 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
     "format": "prettier --check ./Screens"
   },
   "dependencies": {
+    "@actbase/react-kakaosdk": "^0.9.4",
     "@react-native-async-storage/async-storage": "1.14.1",
     "@react-native-clipboard/clipboard": "1.7.0",
     "@react-native-community/datetimepicker": "3.0.9",
@@ -19,7 +21,6 @@
     "@react-native-firebase/app": "10.8.0",
     "@react-native-firebase/messaging": "10.8.0",
     "@react-native-google-signin/google-signin": "6.0.0",
-    "@react-native-seoul/kakao-login": "3.0.6",
     "@react-native-seoul/naver-login": "2.1.0",
     "@react-navigation/bottom-tabs": "5.11.2",
     "@react-navigation/drawer": "5.11.4",
