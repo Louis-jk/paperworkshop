@@ -97,14 +97,12 @@ const TipsDetail = (props) => {
         <AutoHeightWebView
           style={{
             width: Dimensions.get('window').width,
+            backgroundColor: '#fff'
           }}
           source={{
             uri: `http://dmonster1506.cafe24.com/bbs/board.php?bo_table=info&wr_id=${id}`,
           }}
           customStyle={`
-            * {
-              font-family: 'Times New Roman';
-            }
             p {
               font-size: 16px;
               line-height: 2em;
