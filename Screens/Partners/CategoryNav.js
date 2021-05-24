@@ -41,7 +41,7 @@ const CategoryNav = (props) => {
   };
 
   return (
-    <View>
+    <View style={{zIndex:3000}}>
       <View
         style={{
           flexDirection: 'row',
@@ -117,6 +117,7 @@ const CategoryNav = (props) => {
               borderColor: '#E3E3E3',
               borderRadius: 4,
               paddingVertical: 10,
+              zIndex: 3000
             }}>
             {packageIds.map((v, idx) => (
               <TouchableOpacity

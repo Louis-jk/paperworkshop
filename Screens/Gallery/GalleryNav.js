@@ -477,6 +477,7 @@ const GalleryNav = (props) => {
           borderColor: '#DEDEDE',
           borderRadius: 5,
           paddingHorizontal: 10,
+          zIndex: -1
         }}>
         <TextInput
           value={keyword}

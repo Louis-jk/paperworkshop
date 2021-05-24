@@ -85,6 +85,7 @@ const index = (props) => {
           paddingHorizontal: 20,
           paddingTop: 20,
           backgroundColor: '#fff',
+          zIndex: -1
           // paddingBottom: 10,
         }}>
         <GalleryNav navigation={navigation} routeName={routeName} getGallery={getApi} keyword={keyword} setKeyword={setKeyword} />
@@ -99,6 +100,7 @@ const index = (props) => {
           showsVerticalScrollIndicator={false}
           progressViewOffset={true}
           refreshing={true}
+          style={{zIndex: -1}}
           ListEmptyComponent={
             <View
               style={{

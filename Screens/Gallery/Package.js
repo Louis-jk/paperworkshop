@@ -94,6 +94,7 @@ const Package = (props) => {
           paddingTop: 20,
           backgroundColor: '#fff',
           // paddingBottom: 10,
+          zIndex: -1
         }}>
         <GalleryNav navigation={navigation} routeName={routeName} getGallery={getApi} keyword={keyword} setKeyword={setKeyword} />
 
@@ -102,6 +103,7 @@ const Package = (props) => {
           renderItem={renderRow}
           keyExtractor={(list, index) => index.toString()}
           numColumns={2}
+          style={{zIndex: -1}}
           // pagingEnabled={true}
           persistentScrollbar={true}
           showsVerticalScrollIndicator={false}

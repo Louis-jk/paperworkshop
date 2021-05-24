@@ -209,7 +209,7 @@ const Search = (props) => {
   return (
     <>
     {/* {Platform.OS === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> } */}
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor:'#fff'}}>
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={styles.headerCtrl}>

@@ -101,6 +101,7 @@ const General = (props) => {
           renderItem={renderRow}
           keyExtractor={(list, index) => index.toString()}
           numColumns={2}
+          style={{zIndex: -1}}
           // pagingEnabled={true}
           persistentScrollbar={true}
           showsVerticalScrollIndicator={false}
