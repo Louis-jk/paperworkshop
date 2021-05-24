@@ -315,35 +315,6 @@ const index = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 10,
-            borderWidth: 1,
-            borderColor: '#DEDEDE',
-            borderRadius: 5,
-            paddingHorizontal: 10,
-          }}>
-          <TextInput
-            value={keyword}
-            placeholder="업체명을 입력하세요."
-            placeholderTextColor="#BEBEBE"
-            autoFocus={false}
-            onChangeText={(text) => setKeyword(text)}
-            style={[styles.normalText, {width: '80%'}]}
-          />
-          <TouchableOpacity 
-            activeOpacity={0.8}
-          >
-            <Image
-              source={require('../../src/assets/top_seach.png')}
-              resizeMode="contain"
-              style={{width: 30, height: 30}}
-            />
-          </TouchableOpacity>
-        </View> */}
       </View>
     );
   };
@@ -374,7 +345,6 @@ const index = (props) => {
         style={{
           position: 'relative',
           flex: 1,
-
           paddingTop: 20,
           backgroundColor: '#fff',
           // paddingBottom: 10,
@@ -392,7 +362,7 @@ const index = (props) => {
         /> */}
 
         {/* TabView */}
-
+        <View style={{zIndex:-1, height: Dimensions.get('window').height}}>
         <TabView
           renderTabBar={(props) => (
             <TabBar
@@ -409,7 +379,7 @@ const index = (props) => {
           initialLayout={initialLayout}
           swipeEnabled={false}
         />
-
+        </View>
         {/* // TabView */}
       </View>
 

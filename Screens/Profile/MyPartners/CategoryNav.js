@@ -316,7 +316,7 @@ const CategoryNav = (props) => {
           placeholder="업체명을 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
-          style={[styles.normalText, {width: '80%'}]}
+          style={[styles.normalText, {width: '80%', height:50}]}
         />
         <TouchableOpacity>
           <Image

@@ -636,7 +636,9 @@ const ReqDetailList = (props) => {
                     ? '마감'
                     : null}
                 </Text>
-                <Text style={{fontSize:10, paddingVertical: 3, paddingHorizontal: 5, backgroundColor:'#275696', color:'#fff', borderRadius:2, marginLeft: 5}}>{myOrderDetail.easy_yn === 'Y' ? '간편견적' : '세부견적'}</Text>
+                <View style={{paddingVertical: 3, paddingHorizontal: 5, backgroundColor:'#275696', borderRadius:2, marginLeft: 5}}>
+                <Text style={{fontSize:10, color:'#fff'}}>{myOrderDetail.easy_yn === 'Y' ? '간편견적' : '세부견적'}</Text>
+                </View>
                 </View>
                 <Text style={styles.infoStepTitle}>{myOrderDetail.title}</Text>
                 <View style={styles.line} />

@@ -33,6 +33,7 @@ const List = ({item, index, navigation}) => {
         height: 220,
         backgroundColor: '#fff',
         paddingHorizontal: 2,
+        zIndex: -1
         // marginRight: index % 2 === 0 ? '1%' : 0,
         // marginLeft: index % 2 !== 0 ? '1%' : 0,
       }}>

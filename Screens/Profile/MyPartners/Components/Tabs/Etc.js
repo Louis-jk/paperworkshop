@@ -34,7 +34,7 @@ const Etc = (props) => {
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
           onChangeText={(text) => setKeyword(text)}
-          style={[styles.normalText, {width: '80%'}]}
+          style={[styles.normalText, {width: '80%', height:50}]}
           onSubmitEditing={() => searchHandler(keyword)}
           autoCapitalize="none"
         />
