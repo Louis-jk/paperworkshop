@@ -5,8 +5,7 @@ import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PartnersNav = (props) => {
-  const navigation = props.navigation;
-  const {routeName, toggleLocation, isActiveLocation, setActiveLocation} = props;
+  const {navigation, routeName, toggleLocation, isActiveLocation, setActiveLocation} = props;
 
   // const [isActiveLocation, setActiveLocation] = React.useState(false);
   // const toggleLocation = () => {

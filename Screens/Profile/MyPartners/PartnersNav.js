@@ -4,13 +4,12 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const PartnersNav = (props) => {
-  const navigation = props.navigation;
-  const routeName = props.routeName;
+  const {navigation, routeName, toggleLocation, isActiveLocation, setActiveLocation} = props;
 
-  const [isActiveLocation, setActiveLocation] = React.useState(false);
-  const toggleLocation = () => {
-    setActiveLocation(!isActiveLocation);
-  };
+  // const [isActiveLocation, setActiveLocation] = React.useState(false);
+  // const toggleLocation = () => {
+  //   setActiveLocation(!isActiveLocation);
+  // };
 
   const locations = [
     'seoul',
@@ -35,6 +34,7 @@ const PartnersNav = (props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        zIndex: 3000,
       }}>
       {routeName === 'Partners' || routeName === 'MyPartners' ? (
         <View style={{position: 'relative'}}>

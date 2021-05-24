@@ -8,6 +8,8 @@ import {
   TextInput,
   Dimensions,
   ActivityIndicator,
+  Keyboard,
+  Alert
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import {useSelector} from 'react-redux';
@@ -54,6 +56,18 @@ const Partner03 = (props) => {
   const [keyword02, setKeyword02] = React.useState(''); // 패키지 키워드
   const [keyword03, setKeyword03] = React.useState(''); // 일반인쇄 키워드
   const [keyword04, setKeyword04] = React.useState(''); // 기타인쇄 키워드
+
+  // 지역 파트너스 지역 리스트 출력부분 toggle
+  const [isActiveLocation, setActiveLocation] = React.useState(false);
+  const toggleLocation = () => {
+    setActiveLocation(!isActiveLocation);
+    Keyboard.dismiss();
+  };
+
+  // 업체명 검색 input 선택시 실행 메소드
+  const hiddenLocationHandler = () => {
+    setActiveLocation(false);
+  };
 
   const getPartnersAll = (payload) => {
     setIsLoading(true);
@@ -182,13 +196,13 @@ const Partner03 = (props) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'all':
-        return <All navigation={navigation} partners={partners} searchHandler={allSearchHandler} setKeyword={setKeyword01} keyword={keyword01} />;
+        return <All navigation={navigation} partners={partners} searchHandler={allSearchHandler} setKeyword={setKeyword01} keyword={keyword01} hiddenLocationHandler={hiddenLocationHandler} />;
       case 'package':
-        return <Package navigation={navigation} partners={pPackage} searchHandler={packageSearchHandler} setKeyword={setKeyword02} keyword={keyword02} />;
+        return <Package navigation={navigation} partners={pPackage} searchHandler={packageSearchHandler} setKeyword={setKeyword02} keyword={keyword02} hiddenLocationHandler={hiddenLocationHandler} />;
       case 'general':
-        return <General navigation={navigation} partners={pGeneral} searchHandler={generalSearchHandler} setKeyword={setKeyword03} keyword={keyword03} />;
+        return <General navigation={navigation} partners={pGeneral} searchHandler={generalSearchHandler} setKeyword={setKeyword03} keyword={keyword03} hiddenLocationHandler={hiddenLocationHandler} />;
       case 'etc':
-        return <Etc navigation={navigation} partners={pEtc} searchHandler={etcSearchHandler} setKeyword={setKeyword04} keyword={keyword04} />;
+        return <Etc navigation={navigation} partners={pEtc} searchHandler={etcSearchHandler} setKeyword={setKeyword04} keyword={keyword04} hiddenLocationHandler={hiddenLocationHandler} />;
     }
   };
 
@@ -218,6 +232,7 @@ const Partner03 = (props) => {
             onPress={async () => {
               await jumpTo('all');
               await setTabIndex('all');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -250,6 +265,7 @@ const Partner03 = (props) => {
             onPress={async () => {
               await jumpTo('package');
               await setTabIndex('package');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -286,6 +302,7 @@ const Partner03 = (props) => {
             onPress={async () => {
               await jumpTo('general');
               await setTabIndex('general');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -321,6 +338,7 @@ const Partner03 = (props) => {
             onPress={async () => {
               await jumpTo('etc');
               await setTabIndex('etc');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -379,7 +397,7 @@ const Partner03 = (props) => {
           style={{
             paddingHorizontal: 20,
           }}>
-          <PartnersNav navigation={navigation} routeName={routeName} />
+          <PartnersNav navigation={navigation} routeName={routeName} toggleLocation={toggleLocation} isActiveLocation={isActiveLocation} setActiveLocation={setActiveLocation} />
         </View>
 
         {/* TabView */}
@@ -394,6 +412,7 @@ const Partner03 = (props) => {
               onIndexChange={setIndex}
             />
           )}
+          style={{zIndex:-1}}
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}

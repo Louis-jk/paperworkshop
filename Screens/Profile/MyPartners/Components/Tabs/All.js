@@ -5,11 +5,7 @@ import List from '../List';
 import {SCDream4, SCDream5, SCDream6} from '../../../../../src/font';
 
 const All = (props) => {
-  const navigation = props.navigation;
-  const partners = props.partners;
-  const searchHandler = props.searchHandler;
-  const setKeyword = props.setKeyword;
-  const keyword = props.keyword;
+  const {navigation, partners, searchHandler, setKeyword, keyword, hiddenLocationHandler} = props;
   
   const renderRow = ({item, index}) => {
     return <List item={item} index={index} navigation={navigation} />;
@@ -33,6 +29,7 @@ const All = (props) => {
           placeholder="업체명을 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
+          onFocus={() => hiddenLocationHandler()}
           onChangeText={(text) => setKeyword(text)}
           style={[styles.normalText, {width: '80%', height:50}]}
           onSubmitEditing={() => searchHandler(keyword)}
