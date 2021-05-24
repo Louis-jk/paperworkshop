@@ -22,11 +22,12 @@ const Etc = (props) => {
 
   const [galleries, setGalleries] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [keyword, setKeyword] = React.useState(''); // search 키워드
 
-  const getApi = () => {
+  const getApi = (payload) => {
     setIsLoading(true);
 
-    GalleryApi.getPartnerType('proc_gallery_list', cate1, ca_id)
+    GalleryApi.getGalleryType('proc_gallery_list', cate1, ca_id, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setGalleries(res.data.item);
@@ -88,7 +89,7 @@ const Etc = (props) => {
           backgroundColor: '#fff',
           // paddingBottom: 10,
         }}>
-        <GalleryNav navigation={navigation} routeName={routeName} />
+        <GalleryNav navigation={navigation} routeName={routeName} getGallery={getApi} keyword={keyword} setKeyword={setKeyword} />
 
         <FlatList
           data={galleries}

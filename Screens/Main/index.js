@@ -201,12 +201,12 @@ const index = (props) => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: 5,
-                  flexWrap: 'wrap',
+                  // flexWrap: 'wrap',
                 }}>
                 <Text
                   style={[
                     styles.normalText,
-                    {textAlign: 'center', fontSize: 12, color: '#366DE5'},
+                    {textAlign: 'center', fontSize: 12, color: '#366DE5', marginBottom: 5},
                   ]}>
                   {item.status === '0'
                     ? '견적요청'

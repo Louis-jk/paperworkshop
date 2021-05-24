@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   TextInput,
+  Keyboard,
 } from 'react-native';
 
 import axios from 'axios';
@@ -16,12 +17,15 @@ import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const GalleryNav = (props) => {
   const navigation = props.navigation;
-  const routeName = props.routeName;
+  const {routeName, getGallery, keyword, setKeyword} = props;
+
+  // console.log("props", props);
+  // console.log("getGallery", getGallery);
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [packagesInfo, setPackagesInfo] = React.useState([]);
   const [generalInfo, setGeneralInfo] = React.useState([]);
-  const [etcInfo, setEtcInfo] = React.useState([]);
+  const [etcInfo, setEtcInfo] = React.useState([]);  
 
   const [isActivePackages, setIsActivePackages] = React.useState(false);
   const togglePackages = () => {
@@ -46,9 +50,10 @@ const GalleryNav = (props) => {
 
   const getPackages = () => {
     setIsLoading(true);
-    GalleryApi.getPartner('proc_cate_list', '1')
+    GalleryApi.getGallery('proc_cate_list', '1')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
+          console.log("res ?", res);
           setPackagesInfo(res.data.item);
           setIsLoading(false);
         } else {
@@ -67,7 +72,7 @@ const GalleryNav = (props) => {
 
   const getGenerals = () => {
     setIsLoading(true);
-    GalleryApi.getPartner('proc_cate_list', '0')
+    GalleryApi.getGallery('proc_cate_list', '0')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setGeneralInfo(res.data.item);
@@ -88,7 +93,7 @@ const GalleryNav = (props) => {
 
   const getEtc = () => {
     setIsLoading(true);
-    GalleryApi.getPartner('proc_cate_list', '2')
+    GalleryApi.getGallery('proc_cate_list', '2')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setEtcInfo(res.data.item);
@@ -474,12 +479,56 @@ const GalleryNav = (props) => {
           paddingHorizontal: 10,
         }}>
         <TextInput
+          value={keyword}
           placeholder="키워드를 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
-          style={[styles.normalText, {width: '80%', height: 45}]}
+          onChangeText={text => setKeyword(text)}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+            getGallery(keyword);
+          }}
+          style={[styles.normalText, {width: '80%', height: 50}]}
         />
-        <TouchableOpacity>
+        {keyword ? 
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+              Keyboard.dismiss();
+              setKeyword(null);
+              getGallery(null);
+              // getSearchHistoryAPI();
+              // setVisibleKeyword(true);
+              // setVisibleResult(false);
+            }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 23,
+                height: 23,
+                borderRadius: 23,
+                backgroundColor: '#EFEFEF',
+              }}>
+              <Image
+                source={require('../../src/assets/icon_close02.png')}
+                resizeMode="cover"
+                style={{
+                  width: 15,
+                  height: 15,
+                }}
+                fadeDuration={1000}
+              />
+            </View>
+          </TouchableOpacity>
+          : null}
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => {
+            Keyboard.dismiss();
+            getGallery(keyword);
+          }}
+        >
           <Image
             source={require('../../src/assets/top_seach.png')}
             resizeMode="contain"
