@@ -537,6 +537,8 @@ const index = (props) => {
               style={[styles.normalText, {width: '70%', height: 50}]}
               onChangeText={(text) => setKeyword(text)}
               onSubmitEditing={() => getReviewsAPI(keyword)}
+              returnKeyType="search"
+              returnKeyLabel="검색"
             />
             {keyword ? 
             <TouchableOpacity

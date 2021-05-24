@@ -267,6 +267,8 @@ const QnA = (props) => {
               style={[styles.normalText, {width: '80%', height: 50}]}
               onChangeText={(text) => setSearch(text)}
               onSubmitEditing={() => qnaListAPIHandler(search)}
+              returnKeyType="search"
+              returnKeyLabel="검색"
             />
             {search ? 
             <TouchableOpacity

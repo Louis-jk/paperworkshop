@@ -206,6 +206,8 @@ const Tips = (props) => {
               style={[styles.normalText, {width: '80%', height: 50}]}
               onChangeText={(text) => setKeyword(text)}
               onSubmitEditing={() => getTipsAPI(keyword)}
+              returnKeyType="search"
+              returnKeyLabel="검색"
             />
             {keyword ? 
             <TouchableOpacity
