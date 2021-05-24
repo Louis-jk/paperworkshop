@@ -35,9 +35,9 @@ const Tips = (props) => {
     setVisibleStep01((prev) => !prev);
   };
 
-  const getTipsAPI = () => {
+  const getTipsAPI = (payload) => {
     setLoading(true);
-    CcenterAPI.getTips(keyword)
+    CcenterAPI.getTips(payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setList(res.data.item);
@@ -203,15 +203,44 @@ const Tips = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%'}]}
+              style={[styles.normalText, {width: '80%', height: 50}]}
               onChangeText={(text) => setKeyword(text)}
-              onSubmitEditing={() => getTipsAPI()}
+              onSubmitEditing={() => getTipsAPI(keyword)}
             />
+            {keyword ? 
+            <TouchableOpacity
+            activeOpacity={1}
+              onPress={() => {
+                Keyboard.dismiss();
+                setKeyword(null);
+                getTipsAPI(null);
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 20,
+                  height: 20,
+                  borderRadius: 20,
+                  backgroundColor: '#EFEFEF',
+                  marginRight: 7
+                }}>
+                <Image
+                  source={require('../../src/assets/icon_close02.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 10,
+                    height: 10,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+            : null}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
                 Keyboard.dismiss();
-                getTipsAPI();
+                getTipsAPI(keyword);
               }}>
               <Image
                 source={require('../../src/assets/top_seach.png')}

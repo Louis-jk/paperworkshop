@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
 
 import {useSelector} from 'react-redux';
@@ -99,6 +100,7 @@ const QnAwrite = (props) => {
                 borderRadius: 4,
                 paddingHorizontal: 10,
                 marginBottom: titleError ? 5 : 25,
+                height: 50
               },
             ]}
             onChangeText={(text) => {
@@ -149,8 +151,11 @@ const QnAwrite = (props) => {
                 flex: 1,
                 textAlignVertical: 'top',
                 paddingLeft: 10,
+                paddingRight: 10,
+                lineHeight: 22,
                 paddingVertical: 10,
                 marginBottom: contentError ? 5 : 50,
+                paddingTop: Platform.OS === 'ios' ? 15 : 0,
               },
             ]}
             onChangeText={(text) => {

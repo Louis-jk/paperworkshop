@@ -209,7 +209,7 @@ const Notice = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%'}]}
+              style={[styles.normalText, {width: '80%', height: 50}]}
               onChangeText={text => setKeyword(text)}
               onSubmitEditing={() => getNoticeListHandler(keyword)}
             />

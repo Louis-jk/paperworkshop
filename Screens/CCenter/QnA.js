@@ -264,7 +264,7 @@ const QnA = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%'}]}
+              style={[styles.normalText, {width: '80%', height: 50}]}
               onChangeText={(text) => setSearch(text)}
               onSubmitEditing={() => qnaListAPIHandler(search)}
             />
@@ -272,6 +272,7 @@ const QnA = (props) => {
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
+                Keyboard.dismiss();
                 setSearch(null);
                 qnaListAPIHandler(null);
               }}>
@@ -299,7 +300,7 @@ const QnA = (props) => {
             <TouchableOpacity
               onPress={() => {
                 Keyboard.dismiss();
-                qnaListAPI();
+                qnaListAPIHandler(search);
               }}
               activeOpacity={1}>
               <Image

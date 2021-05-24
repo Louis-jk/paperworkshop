@@ -11,6 +11,7 @@ import {
   Alert,
   ActivityIndicator,
   FlatList,
+  Keyboard
 } from 'react-native';
 
 import Header from '../Common/Header';
@@ -206,7 +207,7 @@ const index = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%'}]}
+              style={[styles.normalText, {width: '80%', height: 50}]}
               onChangeText={text => setKeyword(text)}
               onSubmitEditing={() => getFaqListHandler(keyword)}
             />
@@ -214,6 +215,7 @@ const index = (props) => {
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
+                Keyboard.dismiss();
                 setKeyword(null);
                 getFaqListHandler(null);
               }}>
@@ -240,7 +242,11 @@ const index = (props) => {
             : null}
              <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => getFaqListHandler(keyword)}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  getFaqListHandler(keyword);
+                  }
+                }
               >
               <Image
                 source={require('../../src/assets/top_seach.png')}

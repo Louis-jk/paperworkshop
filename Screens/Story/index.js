@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   ImageBackground,
   TextInput,
   Alert,
@@ -40,9 +41,9 @@ const index = (props) => {
     setVisibleStep01((prev) => !prev);
   };
 
-  const getReviewsAPI = () => {
+  const getReviewsAPI = (payload) => {
     setLoading(true);
-    CcenterAPI.getReviews(cate1, keyword)
+    CcenterAPI.getReviews(cate1, payload)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setReviews(res.data.item);
@@ -489,7 +490,7 @@ const index = (props) => {
                 }}
                 itemStyle={{
                   justifyContent: 'flex-start',
-                  paddingVertical: 10,
+                  paddingVertical: 10
                 }}
                 labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
                 dropDownStyle={{backgroundColor: '#fff'}}
@@ -533,15 +534,44 @@ const index = (props) => {
               placeholder="업체명을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%', height: 50}]}
+              style={[styles.normalText, {width: '70%', height: 50}]}
               onChangeText={(text) => setKeyword(text)}
-              onSubmitEditing={() => getReviewsAPI()}
+              onSubmitEditing={() => getReviewsAPI(keyword)}
             />
+            {keyword ? 
+            <TouchableOpacity
+            activeOpacity={1}
+              onPress={() => {
+                Keyboard.dismiss();
+                setKeyword(null);
+                getReviewsAPI(null);
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 20,
+                  height: 20,
+                  borderRadius: 20,
+                  backgroundColor: '#EFEFEF',
+                  marginRight: 7
+                }}>
+                <Image
+                  source={require('../../src/assets/icon_close02.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 10,
+                    height: 10,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+            : null}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
                 Keyboard.dismiss();
-                getReviewsAPI();
+                getReviewsAPI(keyword);
               }}>
               <Image
                 source={require('../../src/assets/top_seach.png')}
