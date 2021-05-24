@@ -5,9 +5,7 @@ import List from '../List';
 import {SCDream4, SCDream5, SCDream6} from '../../../../src/font';
 
 const Package = (props) => {
-  const navigation = props.navigation;
-  const partners = props.partners;
-  const searchHandler = props.searchHandler;
+  const {navigation, partners, searchHandler, hiddenLocationHandler} = props;
 
   const [keyword, setKeyword] = React.useState('');
 
@@ -16,7 +14,7 @@ const Package = (props) => {
   };
 
   return (
-    <View style={{paddingHorizontal: 16}}>
+    <View style={{paddingHorizontal: 16, marginBottom: 50}}>
       <View
         style={{
           flexDirection: 'row',
@@ -33,6 +31,7 @@ const Package = (props) => {
           placeholder="업체명을 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
+          onFocus={() => hiddenLocationHandler()}
           onChangeText={(text) => setKeyword(text)}
           style={[styles.normalText, {width: '80%', height:50}]}
           onSubmitEditing={() => searchHandler(keyword)}

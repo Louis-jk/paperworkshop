@@ -7,10 +7,8 @@ import {SCDream4, SCDream5, SCDream6} from '../../../../src/font';
 
 
 const All = (props) => {
-  const navigation = props.navigation;
-  const partners = props.partners;
-  const searchHandler = props.searchHandler;
-
+  const {navigation, partners, searchHandler, hiddenLocationHandler} = props;
+  
   const [keyword, setKeyword] = React.useState('');
 
   const renderRow = ({item, index}) => {
@@ -18,7 +16,7 @@ const All = (props) => {
   };
 
   return (
-    <View style={{paddingHorizontal: 16}}>
+    <View style={{paddingHorizontal: 16, marginBottom: 50}}>
       <View
         style={{
           flexDirection: 'row',
@@ -35,6 +33,7 @@ const All = (props) => {
           placeholder="업체명을 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
+          onFocus={() => hiddenLocationHandler()}
           onChangeText={(text) => setKeyword(text)}
           style={[styles.normalText, {width: '80%', height:50}]}
           onSubmitEditing={() => searchHandler(keyword)}

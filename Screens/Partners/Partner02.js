@@ -8,6 +8,7 @@ import {
   TextInput,
   Dimensions,
   ActivityIndicator,
+  Keyboard
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 
@@ -31,6 +32,18 @@ const Partner02 = (props) => {
   const [pGeneral, setPgeneral] = React.useState([]);
   const [pEtc, setPetc] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  // 지역 파트너스 지역 리스트 출력부분 toggle
+  const [isActiveLocation, setActiveLocation] = React.useState(false);
+  const toggleLocation = () => {
+    setActiveLocation(!isActiveLocation);
+    Keyboard.dismiss();
+  };
+
+  // 업체명 검색 input 선택시 실행 메소드
+  const hiddenLocationHandler = () => {
+    setActiveLocation(false);
+  };
 
   const getPartnersAll = (payload) => {
     setIsLoading(true);
@@ -157,13 +170,13 @@ const Partner02 = (props) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'all':
-        return <All navigation={navigation} partners={partners} searchHandler={allSearchHandler} />;
+        return <All navigation={navigation} partners={partners} searchHandler={allSearchHandler} hiddenLocationHandler={hiddenLocationHandler} />;
       case 'package':
-        return <Package navigation={navigation} partners={pPackage} searchHandler={packageSearchHandler} />;
+        return <Package navigation={navigation} partners={pPackage} searchHandler={packageSearchHandler} hiddenLocationHandler={hiddenLocationHandler} />;
       case 'general':
-        return <General navigation={navigation} partners={pGeneral} searchHandler={generalSearchHandler} />;
+        return <General navigation={navigation} partners={pGeneral} searchHandler={generalSearchHandler} hiddenLocationHandler={hiddenLocationHandler} />;
       case 'etc':
-        return <Etc navigation={navigation} partners={pEtc} searchHandler={etcSearchHandler}/>;
+        return <Etc navigation={navigation} partners={pEtc} searchHandler={etcSearchHandler} hiddenLocationHandler={hiddenLocationHandler} />;
     }
   };
 
@@ -193,6 +206,7 @@ const Partner02 = (props) => {
             onPress={async () => {
               await jumpTo('all');
               await setTabIndex('all');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -225,6 +239,7 @@ const Partner02 = (props) => {
             onPress={async () => {
               await jumpTo('package');
               await setTabIndex('package');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -261,6 +276,7 @@ const Partner02 = (props) => {
             onPress={async () => {
               await jumpTo('general');
               await setTabIndex('general');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -296,6 +312,7 @@ const Partner02 = (props) => {
             onPress={async () => {
               await jumpTo('etc');
               await setTabIndex('etc');
+              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -354,16 +371,10 @@ const Partner02 = (props) => {
           style={{
             paddingHorizontal: 20,
           }}>
-          <PartnersNav navigation={navigation} routeName={routeName} />
+          <PartnersNav navigation={navigation} routeName={routeName} toggleLocation={toggleLocation} isActiveLocation={isActiveLocation} setActiveLocation={setActiveLocation} />
         </View>
-        {/* <CategoryNav
-          navigation={navigation}
-          routeName={routeName}
-          cateName={cateName}
-        /> */}
-
+        
         {/* TabView */}
-
         <TabView
           renderTabBar={(props) => (
             <TabBar
@@ -374,6 +385,7 @@ const Partner02 = (props) => {
               onIndexChange={setIndex}
             />
           )}
+          style={{zIndex:-1}}
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}

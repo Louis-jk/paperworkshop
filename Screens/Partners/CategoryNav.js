@@ -10,10 +10,8 @@ import {
 import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const CategoryNav = (props) => {
-  const navigation = props.navigation;
-  const routeName = props.routeName;
-  const cateName = props.cateName;
-  const propLocation = props.location;
+  const {navigation, routeName, cateName, location: propLocation} = props;
+  // const propLocation = props.location;
 
   const packageIds = ['9', '10', '11', '12', '13', '14'];
   const generalIds = ['1', '4', '5', '6', '7', '8'];
