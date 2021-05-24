@@ -52,7 +52,7 @@ const Detail = (props) => {
           setDetail(res.data.item[0]);
           setLoading(false);
         } else {
-          Alert.alert(res.data.message, '', [
+          Alert.alert(res.data.message, '관리', [
             {
               text: '확인',
             },
@@ -118,7 +118,7 @@ const Detail = (props) => {
         }
       })
       .catch((err) => {
-        Alert.alert(res.data.message, err, [
+        Alert.alert(err, '관리자에게 문의하세요.', [
           {
             text: '확인',
           },
@@ -142,16 +142,10 @@ const Detail = (props) => {
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setMyFavorP(res.data.item);
-        } else {
-          Alert.alert(res.data.message, '', [
-            {
-              text: '확인',
-            },
-          ]);
-        }
+        } 
       })
       .catch((err) => {
-        Alert.alert(res.data.message, err, [
+        Alert.alert(err, '관리자에게 문의하세요.', [
           {
             text: '확인',
           },
