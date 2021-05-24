@@ -20,6 +20,7 @@
 		624C6554CCB8E6E11AFC915F /* libPods-paper_workshop-paper_workshopTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7A94637149249087B3FF1B /* libPods-paper_workshop-paper_workshopTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B83718D026539D53003B5D9F /* 1024.png in Resources */ = {isa = PBXBuildFile; fileRef = B83718CF26539D53003B5D9F /* 1024.png */; };
+		B88D83DF265B84EE00C84E75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B88D83E1265B84EE00C84E75 /* InfoPlist.strings */; };
 		B8BC04332657704900ED4A5D /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		B8EBE1FC2653B3E70030C945 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = B8EBE1FB2653B3E70030C945 /* Fonts */; };
 		B8F91E6A2656461C0047C976 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F91E692656461C0047C976 /* SwiftBridge.swift */; };
@@ -68,6 +69,8 @@
 		9C531EDD8744FEF4AD0569A6 /* Pods-paper_workshop-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-paper_workshop-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-paper_workshop-tvOSTests/Pods-paper_workshop-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B83713EB26539420003B5D9F /* paper_workshop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = paper_workshop.entitlements; path = paper_workshop/paper_workshop.entitlements; sourceTree = "<group>"; };
 		B83718CF26539D53003B5D9F /* 1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1024.png; sourceTree = "<group>"; };
+		B88D83E0265B84EE00C84E75 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B88D83E6265B854500C84E75 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B8EBE1FB2653B3E70030C945 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		B8F91E682656461C0047C976 /* paper_workshop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "paper_workshop-Bridging-Header.h"; sourceTree = "<group>"; };
 		B8F91E692656461C0047C976 /* SwiftBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
@@ -148,6 +151,7 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				B8F91E692656461C0047C976 /* SwiftBridge.swift */,
 				B8F91E682656461C0047C976 /* paper_workshop-Bridging-Header.h */,
+				B88D83E1265B84EE00C84E75 /* InfoPlist.strings */,
 			);
 			name = paper_workshop;
 			sourceTree = "<group>";
@@ -334,6 +338,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -361,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8BC04332657704900ED4A5D /* main.jsbundle in Resources */,
+				B88D83DF265B84EE00C84E75 /* InfoPlist.strings in Resources */,
 				B8EBE1FC2653B3E70030C945 /* Fonts in Resources */,
 				B83718D026539D53003B5D9F /* 1024.png in Resources */,
 				B8F91ED82656493D0047C976 /* GoogleService-Info.plist in Resources */,
@@ -687,6 +693,18 @@
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B88D83E1265B84EE00C84E75 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B88D83E0265B84EE00C84E75 /* en */,
+				B88D83E6265B854500C84E75 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
