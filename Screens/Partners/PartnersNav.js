@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Platform, Image} from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import {SCDream4, SCDream5, SCDream6} from '../../src/font';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PartnersNav = (props) => {
   const navigation = props.navigation;
@@ -34,6 +36,7 @@ const PartnersNav = (props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        zIndex: 3000,
       }}>
       {routeName === 'Partners' ? (
         <View style={{position: 'relative'}}>
@@ -184,8 +187,90 @@ const PartnersNav = (props) => {
           </Text>
         </TouchableOpacity>
       )}
+      {Platform.OS === 'ios' && (
+        <View
+          style={{
+            width: 95,
+            // borderWidth: 1,
+            // borderColor: '#E5E5E5',
+            // borderBottomRightRadius: 5,
+            // borderBottomLeftRadius: 5,
+            // borderRadius: 5,
+            // backgroundColor: '#fff',
+            // paddingLeft: 7,
+          }}>
+          <DropDownPicker
+            placeholder={'지역파트너스'}
+            placeholderStyle={{
+              fontFamily: SCDream4,
+              fontSize: 14,
+              color: '#000',
+            }}
+            value={locations}
+            activeLabelStyle={{color: '#000'}}
+            activeItemStyle={{color: '#000'}}
+            selectedLabelStyle={{color: '#000'}}
+            items={[
+              {label: '서울', value: 'seoul'},
+              {label: '부산', value: 'busan'},
+              {label: '대구', value: 'daegu'},
+              {label: '인천', value: 'incheon'},
+              {label: '광주', value: 'gwangju'},
+              {label: '세종/대전/청주', value: 'sejong'},
+              {label: '울산', value: 'ulsan'},
+              {label: '경기', value: 'gyeongi'},
+              {label: '강원', value: 'gangwon'},
+              {label: '충청', value: 'choongcheong'},
+              {label: '전라', value: 'jeonra'},
+              {label: '경상', value: 'gyeongsang'},
+              {label: '제주', value: 'jeju'},
+            ]}
+            dropDownMaxHeight={300}
+            zIndex={3000}
+            containerStyle={{height: 50}}
+            style={{
+              backgroundColor: '#fff',
+              borderTopRightRadius: 4,
+              borderTopLeftRadius: 4,
+              borderBottomRightRadius: 4,
+              borderBottomLeftRadius: 4,
+            }}
+            itemStyle={{
+              justifyContent: 'flex-start',
+              paddingVertical: 10,
+            }}
+            labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
+            dropDownStyle={{backgroundColor: '#fff'}}
+            onChangeItem={(item) => {
+              {
+                navigation.navigate('Partners03', {
+                  screen: 'Partners03',
+                  name: 'All',
+                  location: item.value,
+                });
+                setActiveLocation(false);
+              }
+            }}
+            autoCapitalize="none"            
+            customArrowDown={() => (
+              <Image
+                source={require('../../src/assets/arr01.png')}
+                style={{width: 20, height: 20}}
+                resizeMode="contain"
+              />
+            )}
+            customArrowUp={() => (
+              <Image
+                source={require('../../src/assets/arr01_top.png')}
+                style={{width: 20, height: 20}}
+                resizeMode="contain"
+              />
+            )}
+          />
+        </View>
+      )}
 
-      {routeName === 'Partners03' ? (
+      {Platform.OS === 'android' && routeName === 'Partners03' ? (
         <View style={{position: 'relative'}}>
           <TouchableOpacity onPress={toggleLocation} activeOpacity={0.8}>
             <Text
@@ -212,7 +297,7 @@ const PartnersNav = (props) => {
             }}
           />
         </View>
-      ) : (
+      ) : Platform.OS === 'android' ? (
         <TouchableOpacity onPress={toggleLocation} activeOpacity={0.8}>
           <Text
             style={[
@@ -227,8 +312,8 @@ const PartnersNav = (props) => {
             지역파트너스
           </Text>
         </TouchableOpacity>
-      )}
-      {isActiveLocation && (
+      ) : null}
+      {Platform.OS === 'android' && isActiveLocation && (
         <View
           style={{
             position: 'absolute',
@@ -241,7 +326,6 @@ const PartnersNav = (props) => {
             // borderBottomLeftRadius: 5,
             borderRadius: 5,
             backgroundColor: '#fff',
-            zIndex: 100,
             paddingLeft: 7,
           }}>
           <View style={{paddingVertical: 5}}>
