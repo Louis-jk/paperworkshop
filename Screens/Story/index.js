@@ -14,8 +14,10 @@ import {
   FlatList,
   ActivityIndicator,
   Keyboard,
+  Platform,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import Header from '../Common/Header';
 import CcenterAPI from '../../src/api/Ccenter';
@@ -404,6 +406,7 @@ const index = (props) => {
             marginBottom: 10,
             backgroundColor: '#fff',
           }}>
+          {Platform.OS === 'android' ? (
           <View
             style={{
               zIndex: 2000,
@@ -441,6 +444,7 @@ const index = (props) => {
                   fontFamily: SCDream4,
                   width: '80%',
                   color: cate1 ? '#000' : '#A2A2A2',
+                  height: 50
                 }}
                 editable={false}
                 collapsable={true}
@@ -456,6 +460,62 @@ const index = (props) => {
               />
             </TouchableOpacity>
           </View>
+          ) : 
+          Platform.OS === 'ios' ? (
+            <View style={{width:110, zIndex: 3000}}>
+              <DropDownPicker
+                placeholder={'전체'}
+                placeholderStyle={{
+                  fontFamily: SCDream4,
+                  fontSize: 14,
+                  color: '#000'
+                }}
+                value={category}
+                activeLabelStyle={{color: '#000'}}
+                activeItemStyle={{color: '#000'}}
+                selectedLabelStyle={{color: '#000'}}
+                items={category.map((v, _i) => {
+                  return {value: v, label: v};
+                })}
+                dropDownMaxHeight={300}
+                zIndex={3000}
+                containerStyle={{height: 52, marginRight: 5}}
+                style={{
+                  backgroundColor: '#fff',
+                  borderTopRightRadius: 4,
+                  borderTopLeftRadius: 4,
+                  borderBottomRightRadius: 4,
+                  borderBottomLeftRadius: 4,
+                }}
+                itemStyle={{
+                  justifyContent: 'flex-start',
+                  paddingVertical: 10,
+                }}
+                labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
+                dropDownStyle={{backgroundColor: '#fff'}}
+                onChangeItem={(item) => {
+                  setCategoryFn(item.value);
+                  setVisibleStep01(false);
+                }}
+                autoCapitalize="none"            
+                customArrowDown={() => (
+                  <Image
+                    source={require('../../src/assets/arr01.png')}
+                    style={{width: 20, height: 20}}
+                    resizeMode="contain"
+                  />
+                )}
+                customArrowUp={() => (
+                  <Image
+                    source={require('../../src/assets/arr01_top.png')}
+                    style={{width: 20, height: 20}}
+                    resizeMode="contain"
+                  />
+                )}
+              />
+            </View>
+          ) : null
+          }
           <View
             style={{
               flexDirection: 'row',
@@ -473,7 +533,7 @@ const index = (props) => {
               placeholder="업체명을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%'}]}
+              style={[styles.normalText, {width: '80%', height: 50}]}
               onChangeText={(text) => setKeyword(text)}
               onSubmitEditing={() => getReviewsAPI()}
             />
@@ -502,7 +562,7 @@ const index = (props) => {
         showsVerticalScrollIndicator={false}
         progressViewOffset={true}
         refreshing={true}
-        style={{backgroundColor: '#fff', paddingHorizontal: 20}}
+        style={{backgroundColor: '#fff', paddingHorizontal: 20, zIndex: -1}}
         ListEmptyComponent={
           <View
             style={{
@@ -516,7 +576,7 @@ const index = (props) => {
         }
       />
 
-      {visibleStep01 && (
+      {Platform.OS === 'android' && visibleStep01 && (
         <View
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{zIndex: 1000}}
