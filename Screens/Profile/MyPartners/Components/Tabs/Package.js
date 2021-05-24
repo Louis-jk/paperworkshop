@@ -34,6 +34,8 @@ const Package = (props) => {
           style={[styles.normalText, {width: '80%', height:50}]}
           onSubmitEditing={() => searchHandler(keyword)}
           autoCapitalize="none"
+          returnKeyType="search"
+          returnKeyLabel="검색"
         />
         {keyword ? 
         <TouchableOpacity

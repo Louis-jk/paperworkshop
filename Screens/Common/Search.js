@@ -251,9 +251,11 @@ const Search = (props) => {
             placeholderTextColor="#BEBEBE"
             onChangeText={(text) => setKeyword(text)}
             autoFocus={false}
-            style={[styles.normalText, {width: '80%', height: 45}]}
+            style={[styles.normalText, {width: '80%', height: 50}]}
             onSubmitEditing={() => sendSearchAPI()}
             autoCapitalize="none"
+            returnKeyType="search"
+            returnKeyLabel="검색"
           />
           {keyword ? 
           <TouchableOpacity

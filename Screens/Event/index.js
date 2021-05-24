@@ -254,10 +254,12 @@ const index = (props) => {
             placeholder="이벤트 제목 또는 내용을 입력하세요."
             placeholderTextColor="#BEBEBE"
             autoFocus={false}
-            style={[styles.normalText, {width: '80%'}]}
+            style={[styles.normalText, {width: '80%', height: 50}]}
             onChangeText={(text) => setSearch(text)}
             onSubmitEditing={() => getEventListAPI(search)}
             autoCapitalize="none"
+            returnKeyType="search"
+            returnKeyLabel="검색"
           />
           {search ? 
           <TouchableOpacity

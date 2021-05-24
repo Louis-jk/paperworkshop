@@ -490,6 +490,8 @@ const GalleryNav = (props) => {
             getGallery(keyword);
           }}
           style={[styles.normalText, {width: '80%', height: 50}]}
+          returnKeyType="search"
+          returnKeyLabel="검색"
         />
         {keyword ? 
           <TouchableOpacity
