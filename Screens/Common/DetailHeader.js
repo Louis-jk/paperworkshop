@@ -7,7 +7,8 @@ import {
   Image,
   TouchableWithoutFeedback,
   SafeAreaView,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
@@ -205,7 +206,11 @@ const DetailHeader = (props) => {
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
-            onPress={() => navigation.openDrawer('right')}
+            onPress={() => { 
+              Keyboard.dismiss();
+              navigation.openDrawer('right');
+              }
+            }
             hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
             <View>
               <Image
