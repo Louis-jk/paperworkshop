@@ -576,10 +576,13 @@ const Edit = (props) => {
           {/* 성함 변경 */}
           <View style={styles.profileBox}>
             <Text style={[styles.profileTitle, {marginBottom: 10}]}>성함</Text>
+            {sns_type !== 'apple' ? 
             <View style={styles.flexRowCenter}>
               <Text style={styles.profileDesc}>{mb_name}</Text>
             </View>
-            {/* <TextInput
+            : null }
+            {sns_type === 'apple' ? 
+            <TextInput
               value={mb_name}
               placeholder="성함을 입력해주세요."
               placeholderTextColor="#aaa"
@@ -591,11 +594,13 @@ const Edit = (props) => {
                   borderRadius: 4,
                   paddingHorizontal: 10,
                   color: '#111',
+                  height: 50
                 },
               ]}
               autoCapitalize="none"
-              editable={false}
-            /> */}
+              // editable={false}
+            />
+            : null }
           </View>
           {/* // 성함 변경 */}
 
@@ -778,7 +783,7 @@ const Edit = (props) => {
             <Text style={[styles.profileTitle, {marginBottom: 10}]}>
               이메일
             </Text>
-            {sns_check !== 'Y' ? (
+            {(sns_type !== 'kakao' && sns_type !== 'google' && sns_type !== 'naver')? (
               <TextInput
                 value={email ? email : mb_email}
                 placeholder="이메일을 입력해주세요."
@@ -790,6 +795,7 @@ const Edit = (props) => {
                     borderColor: '#E3E3E3',
                     borderRadius: 4,
                     paddingHorizontal: 10,
+                    height: 50
                   },
                 ]}
                 onChangeText={(text) => setEmail(text)}

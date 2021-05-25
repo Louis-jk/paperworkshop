@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@actbase/react-kakaosdk": "^0.9.4",
+    "@invertase/react-native-apple-authentication": "^2.1.2",
     "@react-native-async-storage/async-storage": "1.14.1",
     "@react-native-clipboard/clipboard": "1.7.0",
     "@react-native-community/datetimepicker": "3.0.9",
@@ -28,6 +29,7 @@
     "@react-navigation/stack": "5.12.8",
     "axios": "0.21.1",
     "formik": "2.2.6",
+    "jwt-decode": "^3.1.2",
     "moment": "2.29.1",
     "qs": "6.9.6",
     "react": "16.13.1",
@@ -74,7 +76,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "7.22.0",
     "jest": "26.6.3",
-    "metro-react-native-babel-preset": "0.64.0",
+    "metro-react-native-babel-preset": "^0.66.0",
     "prettier": "^2.2.1",
     "react-test-renderer": "16.13.1"
   },

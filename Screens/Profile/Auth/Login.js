@@ -28,7 +28,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin'; // 구글 로그인
 import {NaverLogin, getProfile} from '@react-native-seoul/naver-login'; // 네이버 로그인
-
+import jwtDecode from 'jwt-decode';
 import {setFcmToken} from '../../../Modules/InfoReducer';
 import {
   UserId,
@@ -47,10 +47,85 @@ import {
 import Auth from '../../../src/api/Auth.js';
 import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
+// Apple login login start
+import { appleAuth } from '@invertase/react-native-apple-authentication';
+
+/**
+ * You'd technically persist this somewhere for later use.
+ */
+let user = null;
+
+/**
+ * Fetches the credential state for the current user, if any, and updates state on completion.
+ */
+async function fetchAndUpdateCredentialState(updateCredentialStateForUser) {
+  if (user === null) {
+    updateCredentialStateForUser('N/A');
+  } else {
+    const credentialState = await appleAuth.getCredentialStateForUser(user);
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      updateCredentialStateForUser('AUTHORIZED');
+    } else {
+      updateCredentialStateForUser(credentialState);
+    }
+  }
+}
+
+/**
+ * Starts the Sign In flow.
+ */
+async function onAppleButtonPress(updateCredentialStateForUser) {
+  console.warn('Beginning Apple Authentication');
+
+  // start a login request
+  try {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+
+    const {
+      user: newUser,
+      email,
+      nonce,
+      identityToken,
+      realUserStatus /* etc */,
+    } = appleAuthRequestResponse;
+
+    user = newUser;
+
+    fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
+      updateCredentialStateForUser(`Error: ${error.code}`),
+    );
+
+    if (identityToken) {
+      // e.g. sign in with Firebase Auth using `nonce` & `identityToken`
+      console.log(nonce, identityToken);
+    } else {
+      // no token - failed sign-in?
+    }
+
+    if (realUserStatus === appleAuth.UserStatus.LIKELY_REAL) {
+      console.log("사람입니다.");
+    }
+
+    console.warn(`Apple Authentication Completed, ${user}, ${email}`);
+  } catch (error) {
+    if (error.code === appleAuth.Error.CANCELED) {
+      console.warn('애플 로그인을 취소하였습니다.');
+    } else {
+      console.error(error);
+    }
+  }
+}
+// Apple login login end
+
 const Login = (props) => {
   const navigation = props.navigation;
 
   const dispatch = useDispatch();
+  const [credentialStateForUser, updateCredentialStateForUser] = React.useState(-1);
+  console.log("credentialStateForUser", credentialStateForUser);
 
   const loginIdRef = React.useRef(null);
   const loginPwdRef = React.useRef(null);
@@ -77,25 +152,42 @@ const Login = (props) => {
   // SNS 로그인 처리(디비 접속)
   const SnsLoginHandler = (payload, token, type) => {
     let kakaoPhoneNum = '';
+    let applePhoneNum = '';
+    let appleName = '';
+    let appleEmail = '';
+
     if (type === 'kakao') {
       // kakaoPhoneNum = payload.phoneNumber !== 'null' ? payload.phoneNumber : '';
       kakaoPhoneNum = '';
     }
+    if (type === 'apple') {
+      applePhoneNum = '';
+      if(payload.email !== '' || payload.email !== null) {
+        appleEmail = payload.email;
+      } else {
+        appleEmail = '';
+      }
 
-    let id = type !== 'google' ? payload.id : payload.user.id;
+    }
+
+    let id = type === 'google' ? payload.user.id : type === 'apple' ? payload.sub : payload.id;
     let idToken = token;
     let name =
       type === 'naver'
         ? payload.name
         : type === 'kakao'
         ? payload.properties.nickname
+        : type === 'apple' 
+        ? appleName
         : payload.user.name;
-    let email = type === 'google' ? payload.user.email : type === 'kakao' ? payload.kakao_account.email : payload.email;
+    let email = type === 'google' ? payload.user.email : type === 'kakao' ? payload.kakao_account.email : type === 'apple' ? appleEmail : payload.email;
     let profileImg =
       type === 'naver'
         ? payload.profile_image
         : type === 'kakao'
         ? payload.properties.profile_image
+        : type === 'apple'
+        ? ''
         : payload.user.photo;
     let mobile =
       type === 'naver' ? payload.mobile : type === 'kakao' ? kakaoPhoneNum : '';
@@ -145,6 +237,58 @@ const Login = (props) => {
         ]);
       });
   };
+
+  // 애플 로그인   
+  const appleLogin = async () => {
+    
+    try {
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+
+      console.log("appleAuthRequestResponse",appleAuthRequestResponse);
+
+      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+
+      if(credentialState === appleAuth.State.AUTHORIZED) {
+        const {identityToken, user, email, nonce, realUserStatus} = appleAuthRequestResponse;
+       
+        const decoded = jwtDecode(identityToken);
+
+        let appleUserInfo = {
+          idToken : identityToken,
+          user,
+          email,
+          nonce,
+          realUserStatus
+        }
+        await SnsLoginHandler(decoded, identityToken, 'apple');
+        // console.log("decoded", decoded);
+        // console.log("appleUserInfo", appleUserInfo);
+        // console.log("user", user);
+        // console.log("identityToken", identityToken);
+      }      
+    }
+    catch(err) {
+      if(err.code === appleAuth.Error.CANCELED) {
+        // console.warn('User canceled Apple Sign in.');
+        Alert.alert('애플로 로그인을 취소하셨습니다.', '', [
+          {
+            text: '확인'
+          }
+        ])
+      }
+      else {
+        Alert.alert('애플 로그인에 실패했습니다.','', [
+          {
+            text: '확인'
+          }
+        ]);
+        console.error(err);
+      }
+    }
+  }
 
   // 구글 로그인
   const [userInfo, setuserInfo] = React.useState([]);
@@ -428,6 +572,36 @@ const Login = (props) => {
       });
   };
 
+  // 애플 로그인 관련 start
+  React.useEffect(() => {
+    if (!appleAuth.isSupported) return;
+
+    fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
+      updateCredentialStateForUser(`Error: ${error.code}`),
+    );
+  }, []);
+  
+  React.useEffect(() => {
+    if (!appleAuth.isSupported) return;
+
+    return appleAuth.onCredentialRevoked(async () => {
+      console.warn('Credential Revoked');
+      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
+        updateCredentialStateForUser(`Error: ${error.code}`),
+      );
+    });
+  }, []);
+
+  if (!appleAuth.isSupported) {
+    return (
+      <View style={[styles.container, styles.horizontal]}>
+        <Text>Apple Authentication is not supported on this device.</Text>
+      </View>
+    );
+  }
+  // 애플 로그인 관련 end
+
+
   return (
     <>
     {isLoading && (
@@ -450,7 +624,7 @@ const Login = (props) => {
         </View>
       )}
       <SafeAreaView style={{ backgroundColor: '#fff' }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <View
           style={{
             flex: 1,
@@ -631,7 +805,7 @@ const Login = (props) => {
             <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
           </View>
 
-          <View style={{marginBottom: 10}}>
+          <View>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => kakaoLogin()}
@@ -679,7 +853,7 @@ const Login = (props) => {
             {Platform.OS === 'ios' ? (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => Alert.alert('애플로그인')}
+                onPress={() => appleLogin()}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',

@@ -45,11 +45,19 @@ const index = (props) => {
   const [middleBanners, setMiddleBanners] = React.useState([]); // 메인 중간 슬라이더(배너)
 
   const dispatch = useDispatch();
-  const {mb_id, mb_hp, sns_check} = useSelector((state) => state.UserInfoReducer);
+  const {mb_id, mb_hp, mb_name, sns_check, sns_type} = useSelector((state) => state.UserInfoReducer);
 
   // SNS 로그인일 경우 휴대폰번호가 없으면 회원정보 수정페이지로 보내기
   const checkSNSLoginMobileNumHandler = () => {
-    if(mb_hp === '' || mb_hp === null) {
+    if(sns_type === 'apple' && ((mb_hp === '' || mb_hp === null) || (mb_name === '' || mb_name === null))) {
+      Alert.alert('성함과 휴대폰 번호를 입력해주세요.', '회원정보수정페이지로 이동합니다.', [
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('ProfileEdit')
+        }
+      ])
+      return false;
+    } else if(mb_hp === '' || mb_hp === null) {
       Alert.alert('휴대폰번호를 입력해주세요.', '회원정보수정페이지로 이동합니다.', [
         {
           text: '확인',
@@ -64,7 +72,7 @@ const index = (props) => {
 
   React.useEffect(() => {
     if(sns_check === 'Y') {
-      console.log("SNS 로그인 중");
+      // console.log("SNS 로그인 중");
       checkSNSLoginMobileNumHandler();
     }
   }, []);
