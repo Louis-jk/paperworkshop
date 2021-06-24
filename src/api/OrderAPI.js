@@ -30,7 +30,7 @@ export default {
         method: 'proc_my_estimate_detail',
         pe_id,
         mb_id,
-        company_id
+        company_id,
       }),
     });
   },
@@ -90,7 +90,7 @@ export default {
         method: 'proc_my_estimate_copy2',
         pe_id,
         delivery_date,
-        estimate_date
+        estimate_date,
       }),
     });
   },
@@ -104,4 +104,14 @@ export default {
   //     }),
   //   });
   // },
+  // 나의 견적의뢰 삭제 0621
+  deleteMyOrder(pe_id) {
+    return Send({
+      method: 'post',
+      data: qs.stringify({
+        method: 'proc_my_estimate_delete',
+        pe_id,
+      }),
+    });
+  },
 };

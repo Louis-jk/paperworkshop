@@ -1,17 +1,40 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Platform, Image, Keyboard} from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 const PartnersNav = (props) => {
-  const {navigation, routeName, toggleLocation, isActiveLocation, setActiveLocation} = props;
+  const navigation = props.navigation;
+  const routeName = props.routeName;
 
-  // const [isActiveLocation, setActiveLocation] = React.useState(false);
-  // const toggleLocation = () => {
-  //   setActiveLocation(!isActiveLocation);
-  //   Keyboard.dismiss();
-  // };
+  const isTab = props.isTab == undefined ? true : props.isTab;
+  const [isTabValue, setIsTabValue] = React.useState(null);
+
+  const tabIndex = props.tabIndex == undefined ? null : props.tabIndex;
+  const [tabIndexValue, setTabIndexValue] = React.useState(null);
+  // console.log(tabIndex); // 'all', 0621
+
+  const getIsTab = () => {
+    if (isTab !== isTabValue) {
+      setIsTabValue(!isTabValue);
+    }
+  };
+  getIsTab();
+
+  const [isActiveLocation, setActiveLocation] = React.useState(false);
+  const toggleLocation = () => {
+    setActiveLocation(!isActiveLocation);
+  };
+
+  const toggleHandler = () => {
+    if (
+      tabIndexValue !== tabIndex &&
+      isTabValue == false &&
+      isActiveLocation == true
+    ) {
+      setActiveLocation(false);
+      setTabIndexValue(tabIndex);
+    }
+  };
+  toggleHandler();
 
   const locations = [
     'seoul',
@@ -36,7 +59,6 @@ const PartnersNav = (props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        zIndex: 3000,
       }}>
       {routeName === 'Partners' ? (
         <View style={{position: 'relative'}}>
@@ -187,10 +209,12 @@ const PartnersNav = (props) => {
           </Text>
         </TouchableOpacity>
       )}
-     
+
       {routeName === 'Partners03' ? (
         <View style={{position: 'relative'}}>
-          <TouchableOpacity onPress={toggleLocation} activeOpacity={0.8}>
+          <TouchableOpacity
+            onPress={() => toggleLocation()}
+            activeOpacity={0.8}>
             <Text
               style={[
                 styles.mediumText,
@@ -216,7 +240,7 @@ const PartnersNav = (props) => {
           />
         </View>
       ) : (
-        <TouchableOpacity onPress={toggleLocation} activeOpacity={0.8}>
+        <TouchableOpacity onPress={() => toggleLocation()} activeOpacity={0.8}>
           <Text
             style={[
               isActiveLocation ? styles.mediumText : styles.normalText,
@@ -244,6 +268,7 @@ const PartnersNav = (props) => {
             // borderBottomLeftRadius: 5,
             borderRadius: 5,
             backgroundColor: '#fff',
+            zIndex: 100,
             paddingLeft: 7,
           }}>
           <View style={{paddingVertical: 5}}>
@@ -262,7 +287,7 @@ const PartnersNav = (props) => {
                 }}>
                 <Text
                   style={{
-                    fontFamily: SCDream4,
+                    fontFamily: 'SCDream4',
                     fontSize: 12,
                     color: '#707070',
                   }}>
@@ -308,13 +333,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

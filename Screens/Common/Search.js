@@ -15,8 +15,6 @@ import {
   Keyboard,
   ImageBackground,
   ActivityIndicator,
-  Platform,
-  StatusBar
 } from 'react-native';
 
 import moment from 'moment';
@@ -26,7 +24,6 @@ import AutoHeightImage from 'react-native-auto-height-image';
 
 import SearchAPI from '../../src/api/Search';
 import {useSelector} from 'react-redux';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Search = (props) => {
   const navigation = props.navigation;
@@ -158,6 +155,58 @@ const Search = (props) => {
     setKeyword(null);
   }, []);
 
+  console.log('historyKeyword', historyKeyword);
+
+  // const resultRender = ({item, index}) => {
+  //   return (
+  //     <>
+  //       {item.notice !== null ? (
+  //         <>
+  //           <TouchableOpacity
+  //             key={index}
+  //             style={{paddingHorizontal: 20}}
+  //             activeOpacity={0.8}
+  //             onPress={() =>
+  //               navigation.navigate('CCenterNoticeDetail', {item: item.notice})
+  //             }>
+  //             <View style={styles.categoryWrap}>
+  //               <View
+  //                 style={{
+  //                   justifyContent: 'flex-start',
+  //                   alignItems: 'flex-start',
+  //                 }}>
+  //                 <View
+  //                   style={{
+  //                     flexDirection: 'row',
+  //                     justifyContent: 'flex-start',
+  //                     alignItems: 'center',
+  //                     marginBottom: 12,
+  //                   }}>
+  //                   <Text style={styles.categoryTitle}>
+  //                     {item.notice.title}
+  //                   </Text>
+  //                   {/* <Text style={styles.new}>
+  //                     {item.notice.new_yn === 'Y' ? 'NEW' : null}
+  //                   </Text> */}
+  //                 </View>
+  //                 <Text style={styles.categoryDate}>
+  //                   {item.notice.datetime}
+  //                 </Text>
+  //               </View>
+  //             </View>
+  //           </TouchableOpacity>
+  //           <View
+  //             style={{
+  //               height: 0.5,
+  //               width: Dimensions.get('window').width,
+  //               backgroundColor: '#E3E3E3',
+  //             }}
+  //           />
+  //         </>
+  //       ) : null}
+  //     </>
+  //   );
+  // };
 
   const renderRow = ({item, index}) => {
     return (
@@ -208,8 +257,6 @@ const Search = (props) => {
 
   return (
     <>
-    {/* {Platform.OS === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> } */}
-    <SafeAreaView style={{backgroundColor:'#fff'}}>
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={styles.headerCtrl}>
@@ -251,42 +298,40 @@ const Search = (props) => {
             placeholderTextColor="#BEBEBE"
             onChangeText={(text) => setKeyword(text)}
             autoFocus={false}
-            style={[styles.normalText, {width: '80%', height: 50}]}
+            style={[styles.normalText, {width: '80%'}]}
             onSubmitEditing={() => sendSearchAPI()}
             autoCapitalize="none"
-            returnKeyType="search"
-            returnKeyLabel="검색"
           />
-          {keyword ? 
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => {
-              setKeyword(null);
-              getSearchHistoryAPI();
-              setVisibleKeyword(true);
-              setVisibleResult(false);
-            }}>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 23,
-                height: 23,
-                borderRadius: 23,
-                backgroundColor: '#EFEFEF',
+          {keyword ? (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                setKeyword(null);
+                getSearchHistoryAPI();
+                setVisibleKeyword(true);
+                setVisibleResult(false);
               }}>
-              <Image
-                source={require('../../src/assets/icon_close02.png')}
-                resizeMode="cover"
+              <View
                 style={{
-                  width: 15,
-                  height: 15,
-                }}
-                fadeDuration={1000}
-              />
-            </View>
-          </TouchableOpacity>
-          : null}
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 23,
+                  height: 23,
+                  borderRadius: 23,
+                  backgroundColor: '#EFEFEF',
+                }}>
+                <Image
+                  source={require('../../src/assets/icon_close02.png')}
+                  resizeMode="cover"
+                  style={{
+                    width: 15,
+                    height: 15,
+                  }}
+                  fadeDuration={1000}
+                />
+              </View>
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity activeOpacity={1} onPress={() => sendSearchAPI()}>
             <Image
               source={require('../../src/assets/top_seach.png')}
@@ -326,7 +371,7 @@ const Search = (props) => {
                       flex: 1,
                       height: Dimensions.get('window').height - 300,
                     }}>
-                    <Text style={{fontFamily: SCDream4}}>
+                    <Text style={{fontFamily: 'SCDream4'}}>
                       검색하신 내역이 없습니다.
                     </Text>
                   </View>
@@ -913,7 +958,6 @@ const Search = (props) => {
           </ScrollView>
         )}
       </View>
-    </SafeAreaView>
     </>
   );
 };
@@ -945,13 +989,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   searchTitle: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
     fontSize: 16,
     color: '#000000',
     marginTop: 10,
   },
   searchSubTitle: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
     fontSize: 16,
     color: '#000000',
     marginVertical: 10,
@@ -960,12 +1004,12 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   searchKeyword: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000000',
   },
   searchDate: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 13,
     color: '#A2A2A2',
   },
@@ -990,34 +1034,34 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   categoryBtnTxt: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 11,
     color: '#fff',
   },
   new: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#366DE5',
     marginLeft: 10,
   },
   categoryTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 14,
     color: '#000',
   },
   categoryDate: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 13,
     color: '#A2A2A2',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

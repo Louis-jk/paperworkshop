@@ -38,13 +38,12 @@ import {
   setUserFileType,
   setUserFileName,
   setUserFileSize,
-  setUserMemo
+  setUserMemo,
 } from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
 
 import OrderAPI from '../../src/api/OrderAPI';
 import Modal from './EtcOrderModal';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Step02 = (props) => {
   const navigation = props.navigation;
@@ -95,16 +94,15 @@ const Step02 = (props) => {
       let pLocation = partner_location.split(',');
       setDefaultLocat(pLocation);
     }
-    
+
     const nowDate = new Date();
 
-    let defaultDeliveryDate = new Date(nowDate.setDate(nowDate.getDate() + 7));   
+    let defaultDeliveryDate = new Date(nowDate.setDate(nowDate.getDate() + 7));
     setDeliveryDate(defaultDeliveryDate);
-
   }, []);
 
-  console.log("date 오늘날짜 ?", date);
-  console.log("deliveryDate 납품 희망일 ?", deliveryDate);
+  // console.log('date 오늘날짜 ?', date);
+  // console.log('deliveryDate 납품 희망일 ?', deliveryDate);
 
   const onChange01 = (event, selectedDate) => {
     setShow01(Platform.OS === 'ios');
@@ -131,8 +129,7 @@ const Step02 = (props) => {
         ],
       );
       setDeliveryDate(weekAgoDate);
-    } 
-    else if (selectedDateFormated < weekAgoDateFormated) {
+    } else if (selectedDateFormated < weekAgoDateFormated) {
       Alert.alert(
         '납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.',
         '날짜를 다시 선택해주세요.',
@@ -143,8 +140,7 @@ const Step02 = (props) => {
         ],
       );
       setDeliveryDate(weekAgoDate);
-    } 
-    else {
+    } else {
       setDeliveryDate(selectedDate);
     }
   };
@@ -163,9 +159,9 @@ const Step02 = (props) => {
         ],
       );
       setEstimateDate(date);
-    } else if(selectedDate >= deliveryDate) {
+    } else if (selectedDate >= deliveryDate) {
       Alert.alert(
-        '견적 마감일은 납품 희망일과 같은 날짜이거나 이후 날짜일 수 없습니다.',
+        '견적 마감일은 납품 희망일보다 이후 날짜일 수 없습니다.',
         '날짜를 다시 선택해주세요.',
         [
           {
@@ -230,17 +226,15 @@ const Step02 = (props) => {
       }
     }
   };
-  
 
   const sendOrderBefore = () => {
     let deli = moment(deliveryDate).format('YYYY-MM-DD'); // 납품 희망일 형식 변환
     let esti = moment(estimateDate).format('YYYY-MM-DD'); // 견적 마감일 형식 변환
-        
+
     sendOrderAPI(deli, esti);
   };
 
   const sendOrderAPI = (deli, esti) => {
-
     let file = {uri: fileUrlCurrent, type: fileTypeCurrent, name: fileName};
 
     const frmdata = new FormData();
@@ -257,7 +251,7 @@ const Step02 = (props) => {
     frmdata.append('memo', memo);
     frmdata.append('delivery_date', deli);
     frmdata.append('estimate_date', esti);
-    frmdata.append('pe_file[]', file);
+    frmdata.append('pe_file[]', file.uri === null ? '' : file);
     frmdata.append('status', '0');
 
     OrderAPI.sendOrder(frmdata)
@@ -303,14 +297,13 @@ const Step02 = (props) => {
 
   // 다음 스텝
   const nextStep = (title, name, mobile) => {
-
     const nowDate = new Date();
     let weekAgo = nowDate.setDate(nowDate.getDate() + 7);
 
     let deliveryDateFormated = moment(deliveryDate).format('YYYY-MM-DD');
     let weekAgoDateFormated = moment(weekAgo).format('YYYY-MM-DD');
 
-    if(deliveryDateFormated < weekAgoDateFormated ) {
+    if (deliveryDateFormated < weekAgoDateFormated) {
       Alert.alert(
         '납품 희망일은 현재일 기준 7일 이후부터 선택 가능합니다.',
         '날짜를 다시 선택해주세요.',
@@ -337,7 +330,7 @@ const Step02 = (props) => {
       navigation.navigate('OrderStep03', {
         screen: propsScreenName === 'DirectOrder' ? propsScreenName : null,
       });
-    }   
+    }
   };
 
   // 기타인쇄 견적신청
@@ -410,7 +403,7 @@ const Step02 = (props) => {
                 <Text
                   style={[styles.boldText, {fontSize: 16, marginBottom: 20}]}>
                   기본 정보
-                </Text>              
+                </Text>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -437,7 +430,6 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
-                      height: 50
                     },
                   ]}
                   onChangeText={(value) => {
@@ -447,13 +439,12 @@ const Step02 = (props) => {
                   }}
                   onSubmitEditing={() => nameRef.current.focus()}
                   autoCapitalize="none"
-                  onBlur={formikProps.handleBlur('order_title')}
                 />
                 {titleError && (
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: SCDream4,
+                      fontFamily: 'SCDream4',
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -467,10 +458,10 @@ const Step02 = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: SCDream4,
+                        fontFamily: 'SCDream4',
                         fontSize: 12,
                         lineHeight: 18,
-                        color: '#366DE5',
+                        color: '#FF3A2B', // 06-04
                         marginBottom: 5,
                       }}>
                       {formikProps.touched.order_title &&
@@ -507,7 +498,6 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
-                      height: 50
                     },
                   ]}
                   onChangeText={(value) => {
@@ -517,13 +507,12 @@ const Step02 = (props) => {
                   }}
                   onSubmitEditing={() => mobileRef.current.focus()}
                   autoCapitalize="none"
-                  onBlur={formikProps.handleBlur('order_name')}
                 />
                 {nameError && (
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: SCDream4,
+                      fontFamily: 'SCDream4',
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -537,10 +526,10 @@ const Step02 = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: SCDream4,
+                        fontFamily: 'SCDream4',
                         fontSize: 12,
                         lineHeight: 18,
-                        color: '#366DE5',
+                        color: '#FF3A2B', // 06-04
                         marginBottom: 5,
                       }}>
                       {formikProps.touched.order_name &&
@@ -578,7 +567,6 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
-                      height: 50
                     },
                   ]}
                   onChangeText={(value) => {
@@ -591,34 +579,22 @@ const Step02 = (props) => {
                   onBlur={formikProps.handleBlur('order_mobile')}
                   keyboardType="number-pad"
                 />
-                {mobileError && (
-                  <Text
-                    style={{
-                      width: '100%',
-                      fontFamily: SCDream4,
-                      fontSize: 12,
-                      lineHeight: 18,
-                      color: '#366DE5',
-                      marginBottom: 5,
-                    }}>
-                    휴대폰 번호를 입력해주세요.
-                  </Text>
-                )}
+
                 {formikProps.touched.order_mobile &&
                   formikProps.errors.order_mobile && (
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: SCDream4,
+                        fontFamily: 'SCDream4',
                         fontSize: 12,
                         lineHeight: 18,
-                        color: '#366DE5',
+                        color: '#FF3A2B', // 06-04
                         marginBottom: 5,
                       }}>
                       {formikProps.touched.order_mobile &&
                         formikProps.errors.order_mobile}
                     </Text>
-                  )}                 
+                  )}
               </View>
               {/* // 휴대폰 번호  */}
 
@@ -652,7 +628,6 @@ const Step02 = (props) => {
                       borderRadius: 4,
                       paddingHorizontal: 10,
                       marginBottom: 5,
-                      height: 50
                     },
                   ]}
                   onChangeText={(text) => setCompany(text)}
@@ -783,7 +758,7 @@ const Step02 = (props) => {
                       justifyContent: 'flex-start',
                       paddingVertical: 10,
                     }}
-                    labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
+                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
                     dropDownStyle={{backgroundColor: '#fff'}}
                     onChangeItem={(item) => setLocation(item.value)}
                     autoCapitalize="none"
@@ -876,7 +851,7 @@ const Step02 = (props) => {
                       justifyContent: 'flex-start',
                       paddingVertical: 10,
                     }}
-                    labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
+                    labelStyle={{fontFamily: 'SCDream4', color: '#A2A2A2'}}
                     dropDownStyle={{backgroundColor: '#fff'}}
                     onChangeItem={(item) => setLocation(item.value)}
                     autoCapitalize="none"
@@ -901,10 +876,10 @@ const Step02 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: SCDream4,
+                      fontFamily: 'SCDream4',
                       fontSize: 12,
                       lineHeight: 18,
-                      color: '#366DE5',
+                      color: '#FF3A2B', // 06-04
                       marginVertical: 5,
                     }}>
                     지역을 선택해주세요.
@@ -957,7 +932,6 @@ const Step02 = (props) => {
                           paddingHorizontal: 10,
                           width: '70%',
                           color: deliveryDate ? '#111' : '#A2A2A2',
-                          height: 50
                         },
                       ]}
                       autoCapitalize="none"
@@ -1015,7 +989,6 @@ const Step02 = (props) => {
                           paddingHorizontal: 10,
                           width: '70%',
                           color: estimateDate ? '#111' : '#A2A2A2',
-                          height: 50
                         },
                       ]}
                       autoCapitalize="none"
@@ -1039,6 +1012,19 @@ const Step02 = (props) => {
                   />
                 )}
               </View>
+              {/* (0604 added : 구문 추가) */}
+              <Text
+                style={{
+                  width: '100%',
+                  fontFamily: 'SCDream4',
+                  fontSize: 12,
+                  lineHeight: 18,
+                  color: '#366DE5',
+                  marginTop: -20,
+                  marginBottom: 20,
+                }}>
+                납품 희망일은 현재일 기준으로 7일 이후부터 가능합니다.
+              </Text>
               {/* // 납품 희망일, 견적 마감일  */}
 
               {/* 파일 첨부  */}
@@ -1083,7 +1069,6 @@ const Step02 = (props) => {
                         borderRadius: 4,
                         paddingHorizontal: 10,
                         marginRight: 10,
-                        height: 50
                       },
                     ]}
                     editable={false}
@@ -1210,7 +1195,7 @@ const Step02 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: SCDream4,
+                      fontFamily: 'SCDream4',
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -1347,12 +1332,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   profileTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 15,
     color: '#111',
   },
   profileRequired: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
   },
@@ -1429,13 +1414,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

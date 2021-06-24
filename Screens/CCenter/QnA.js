@@ -19,7 +19,6 @@ import {useSelector} from 'react-redux';
 
 import Header from '../Common/Header';
 import Info from '../../src/api/Info';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const QnA = (props) => {
   const navigation = props.navigation;
@@ -228,7 +227,7 @@ const QnA = (props) => {
               alignItems: 'center',
             }}>
             <Text
-              style={{fontFamily: SCDream4, fontSize: 13, color: '#275696'}}>
+              style={{fontFamily: 'SCDream4', fontSize: 13, color: '#275696'}}>
               문의 등록
             </Text>
             <Image
@@ -264,17 +263,14 @@ const QnA = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%', height: 50}]}
+              style={[styles.normalText, {width: '80%'}]}
               onChangeText={(text) => setSearch(text)}
               onSubmitEditing={() => qnaListAPIHandler(search)}
-              returnKeyType="search"
-              returnKeyLabel="검색"
             />
             {search ? 
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
-                Keyboard.dismiss();
                 setSearch(null);
                 qnaListAPIHandler(null);
               }}>
@@ -302,7 +298,7 @@ const QnA = (props) => {
             <TouchableOpacity
               onPress={() => {
                 Keyboard.dismiss();
-                qnaListAPIHandler(search);
+                qnaListAPI();
               }}
               activeOpacity={1}>
               <Image
@@ -335,7 +331,7 @@ const QnA = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontFamily: SCDream4}}>
+            <Text style={{fontFamily: 'SCDream4'}}>
               문의하신 내역이 없습니다.
             </Text>
           </View>
@@ -363,7 +359,7 @@ const styles = StyleSheet.create({
     marginRight: 7,
   },
   categoryBtnTxt: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 11,
     color: '#275696',
   },
@@ -377,33 +373,33 @@ const styles = StyleSheet.create({
     marginRight: 7,
   },
   categoryBtnTxt02: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 11,
     color: '#000',
   },
   new: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#366DE5',
   },
   categoryTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 14,
     color: '#000',
   },
   categoryDate: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 13,
     color: '#A2A2A2',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

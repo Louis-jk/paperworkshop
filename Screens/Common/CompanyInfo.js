@@ -16,8 +16,6 @@ import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import Header from '../Common/Header';
 import Footer from '../Common/Footer';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
-
 
 // import { WebView } from 'react-native-webview';
 
@@ -37,7 +35,7 @@ const CompanyInfo = (props) => {
         source={{
           uri: `http://dmonster1506.cafe24.com/bbs/content.php?co_id=company`,
         }}
-        scalesPageToFit={Platform.OS === 'android' ? true : false}
+        scalesPageToFit={Platform.OS === 'Android' ? true : false}
         viewportContent={'width=device-width, user-scalable=no'}
       />
       <Footer navigation={navigation} />
@@ -57,13 +55,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

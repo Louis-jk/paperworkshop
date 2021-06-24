@@ -15,7 +15,6 @@ import Header from '../Common/Header';
 import GalleryNav from './GalleryNav';
 import List from './Components/List';
 import GalleryApi from '../../src/api/Gallery';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -23,13 +22,11 @@ const index = (props) => {
 
   const [galleries, setGalleries] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [keyword, setKeyword] = React.useState(''); // search 키워드
 
-  // 인쇄/패키지 갤러리 전체 불러오기
-  const getApi = (payload) => {
+  const getApi = () => {
     setIsLoading(true);
-  
-    GalleryApi.getGallery('proc_gallery_list', '', payload)
+
+    GalleryApi.getPartner('proc_gallery_list', '')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setGalleries(res.data.item);
@@ -85,10 +82,9 @@ const index = (props) => {
           paddingHorizontal: 20,
           paddingTop: 20,
           backgroundColor: '#fff',
-          zIndex: -1
           // paddingBottom: 10,
         }}>
-        <GalleryNav navigation={navigation} routeName={routeName} getGallery={getApi} keyword={keyword} setKeyword={setKeyword} />
+        <GalleryNav navigation={navigation} routeName={routeName} />
 
         <FlatList
           data={galleries}
@@ -100,7 +96,6 @@ const index = (props) => {
           showsVerticalScrollIndicator={false}
           progressViewOffset={true}
           refreshing={true}
-          style={{zIndex: -1}}
           ListEmptyComponent={
             <View
               style={{
@@ -109,7 +104,7 @@ const index = (props) => {
                 flex: 1,
                 height: Dimensions.get('window').height - 300,
               }}>
-              <Text style={{fontFamily: SCDream4}}>
+              <Text style={{fontFamily: 'SCDream4'}}>
                 해당 갤러리가 없습니다.
               </Text>
             </View>
@@ -125,13 +120,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -1,14 +1,29 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, FlatList, Dimensions, TextInput, TouchableOpacity, Image, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 
 import List from '../List';
 import PartnersApi from '../../../../src/api/Partners';
-import {SCDream4, SCDream5, SCDream6} from '../../../../src/font';
-
 
 const All = (props) => {
-  const {navigation, partners, searchHandler, hiddenLocationHandler} = props;
-  
+  const navigation = props.navigation;
+  const partners = props.partners;
+  const searchHandler = props.searchHandler;
+
+  const [isActiveLocation, setActiveLocation] = React.useState(false);
+  const toggleLocation = () => {
+    setActiveLocation(!isActiveLocation);
+  };
+
   const [keyword, setKeyword] = React.useState('');
 
   const renderRow = ({item, index}) => {
@@ -16,7 +31,7 @@ const All = (props) => {
   };
 
   return (
-    <View style={{paddingHorizontal: 16, marginBottom: 50}}>
+    <View style={{paddingHorizontal: 16}}>
       <View
         style={{
           flexDirection: 'row',
@@ -33,46 +48,42 @@ const All = (props) => {
           placeholder="업체명을 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
-          onFocus={() => hiddenLocationHandler()}
           onChangeText={(text) => setKeyword(text)}
-          style={[styles.normalText, {width: '80%', height:50}]}
+          style={[styles.normalText, {width: '80%'}]}
           onSubmitEditing={() => searchHandler(keyword)}
           autoCapitalize="none"
-          returnKeyType="search"
-          returnKeyLabel="검색"
         />
-        {keyword ? 
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => {
-            setKeyword(null);
-            searchHandler(null);
-          }}>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: 23,
-              height: 23,
-              borderRadius: 23,
-              backgroundColor: '#EFEFEF',
+        {keyword ? (
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+              setKeyword(null);
+              searchHandler(null);
             }}>
-            <Image
-              source={require('../../../../src/assets/icon_close02.png')}
-              resizeMode="cover"
+            <View
               style={{
-                width: 15,
-                height: 15,
-              }}
-              fadeDuration={1000}
-            />
-          </View>
-        </TouchableOpacity>
-        : null}
-        <TouchableOpacity 
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 23,
+                height: 23,
+                borderRadius: 23,
+                backgroundColor: '#EFEFEF',
+              }}>
+              <Image
+                source={require('../../../../src/assets/icon_close02.png')}
+                resizeMode="cover"
+                style={{
+                  width: 15,
+                  height: 15,
+                }}
+                fadeDuration={1000}
+              />
+            </View>
+          </TouchableOpacity>
+        ) : null}
+        <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => searchHandler(keyword)}
-        >
+          onPress={() => searchHandler(keyword)}>
           <Image
             source={require('../../../../src/assets/top_seach.png')}
             resizeMode="contain"
@@ -98,7 +109,7 @@ const All = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontFamily: SCDream4}}>해당 업체가 없습니다.</Text>
+            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
           </View>
         }
         // onEndReached={handleLoadMore}
@@ -112,13 +123,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

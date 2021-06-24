@@ -8,8 +8,6 @@ import {
   TextInput,
   Dimensions,
   ActivityIndicator,
-  Keyboard,
-  Alert
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import {useSelector} from 'react-redux';
@@ -22,7 +20,6 @@ import Package from './Components/Tabs/Package';
 import General from './Components/Tabs/General';
 import Etc from './Components/Tabs/Etc';
 import PartnersApi from '../../../src/api/Partners';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const Partner01 = (props) => {
   const navigation = props.navigation;
@@ -40,18 +37,6 @@ const Partner01 = (props) => {
   const [keyword03, setKeyword03] = React.useState(''); // 일반인쇄 키워드
   const [keyword04, setKeyword04] = React.useState(''); // 기타인쇄 키워드
 
-  // 지역 파트너스 지역 리스트 출력부분 toggle
-  const [isActiveLocation, setActiveLocation] = React.useState(false);
-  const toggleLocation = () => {
-    setActiveLocation(!isActiveLocation);
-    Keyboard.dismiss();
-  };
-
-  // 업체명 검색 input 선택시 실행 메소드
-  const hiddenLocationHandler = () => {
-    setActiveLocation(false);
-  };
-  
   const getPartnersAll = (payload) => {
     setIsLoading(true);
 
@@ -153,19 +138,19 @@ const Partner01 = (props) => {
 
   const allSearchHandler = (payload) => {
     getPartnersAll(payload);
-  }
+  };
 
   const packageSearchHandler = (payload) => {
     getPartnersPackage(payload);
-  }
+  };
 
   const generalSearchHandler = (payload) => {
     getPartnersGeneral(payload);
-  }
+  };
 
   const etcSearchHandler = (payload) => {
     getPartnersEtc(payload);
-  }
+  };
 
   const initialLayout = {width: Dimensions.get('window').width};
 
@@ -180,13 +165,45 @@ const Partner01 = (props) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'all':
-        return <All navigation={navigation} partners={partners} searchHandler={allSearchHandler} setKeyword={setKeyword01} keyword={keyword01} hiddenLocationHandler={hiddenLocationHandler} />;
+        return (
+          <All
+            navigation={navigation}
+            partners={partners}
+            searchHandler={allSearchHandler}
+            setKeyword={setKeyword01}
+            keyword={keyword01}
+          />
+        );
       case 'package':
-        return <Package navigation={navigation} partners={pPackage} searchHandler={packageSearchHandler} setKeyword={setKeyword02} keyword={keyword02} hiddenLocationHandler={hiddenLocationHandler} />;
+        return (
+          <Package
+            navigation={navigation}
+            partners={pPackage}
+            searchHandler={packageSearchHandler}
+            setKeyword={setKeyword02}
+            keyword={keyword02}
+          />
+        );
       case 'general':
-        return <General navigation={navigation} partners={pGeneral} searchHandler={generalSearchHandler} setKeyword={setKeyword03} keyword={keyword03} hiddenLocationHandler={hiddenLocationHandler} />;
+        return (
+          <General
+            navigation={navigation}
+            partners={pGeneral}
+            searchHandler={generalSearchHandler}
+            setKeyword={setKeyword03}
+            keyword={keyword03}
+          />
+        );
       case 'etc':
-        return <Etc navigation={navigation} partners={pEtc} searchHandler={etcSearchHandler} setKeyword={setKeyword04} keyword={keyword04} hiddenLocationHandler={hiddenLocationHandler} />;
+        return (
+          <Etc
+            navigation={navigation}
+            partners={pEtc}
+            searchHandler={etcSearchHandler}
+            setKeyword={setKeyword04}
+            keyword={keyword04}
+          />
+        );
     }
   };
 
@@ -216,7 +233,6 @@ const Partner01 = (props) => {
             onPress={async () => {
               await jumpTo('all');
               await setTabIndex('all');
-              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -225,7 +241,7 @@ const Partner01 = (props) => {
                   : styles.mediumText,
                 {
                   fontFamily:
-                    tabIndex === 'all' && index === 0 ? SCDream5 : SCDream4,
+                    tabIndex === 'all' && index === 0 ? 'SCDream5' : 'SCDream4',
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -249,7 +265,6 @@ const Partner01 = (props) => {
             onPress={async () => {
               await jumpTo('package');
               await setTabIndex('package');
-              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -259,8 +274,8 @@ const Partner01 = (props) => {
                 {
                   fontFamily:
                     tabIndex === 'package' || index === 1
-                      ? SCDream5
-                      : SCDream4,
+                      ? 'SCDream5'
+                      : 'SCDream4',
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -286,7 +301,6 @@ const Partner01 = (props) => {
             onPress={async () => {
               await jumpTo('general');
               await setTabIndex('general');
-              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -296,8 +310,8 @@ const Partner01 = (props) => {
                 {
                   fontFamily:
                     tabIndex === 'general' || index === 2
-                      ? SCDream5
-                      : SCDream4,
+                      ? 'SCDream5'
+                      : 'SCDream4',
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -322,7 +336,6 @@ const Partner01 = (props) => {
             onPress={async () => {
               await jumpTo('etc');
               await setTabIndex('etc');
-              hiddenLocationHandler();
             }}>
             <Text
               style={[
@@ -331,7 +344,7 @@ const Partner01 = (props) => {
                   : styles.mediumText,
                 {
                   fontFamily:
-                    tabIndex === 'etc' || index === 3 ? SCDream5 : SCDream4,
+                    tabIndex === 'etc' || index === 3 ? 'SCDream5' : 'SCDream4',
                   paddingVertical: 12,
                   fontSize: 13,
                   color:
@@ -381,10 +394,16 @@ const Partner01 = (props) => {
           style={{
             paddingHorizontal: 20,
           }}>
-          <PartnersNav navigation={navigation} routeName={routeName} toggleLocation={toggleLocation} isActiveLocation={isActiveLocation} setActiveLocation={setActiveLocation} />
+          <PartnersNav navigation={navigation} routeName={routeName} />
         </View>
-        
+        {/* <CategoryNav
+          navigation={navigation}
+          routeName={routeName}
+          cateName={cateName}
+        /> */}
+
         {/* TabView */}
+
         <TabView
           renderTabBar={(props) => (
             <TabBar
@@ -395,7 +414,6 @@ const Partner01 = (props) => {
               onIndexChange={setIndex}
             />
           )}
-          style={{zIndex:-1}}
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
@@ -417,13 +435,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

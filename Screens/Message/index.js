@@ -17,7 +17,6 @@ import {useSelector} from 'react-redux';
 
 import Header from '../Common/Header';
 import ChatAPI from '../../src/api/Chat';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -33,8 +32,8 @@ const index = (props) => {
     setLoading(true);
     ChatAPI.getChatRoomList(mb_id)
       .then((res) => {
-        console.log("chatList", res);
-        console.log("mb_id??", mb_id);
+        console.log('chatList', res);
+        console.log('mb_id??', mb_id);
         if (res.data.result === '1') {
           setRooms(res.data.item);
         }
@@ -54,7 +53,7 @@ const index = (props) => {
     const unsubscribe = navigation.addListener('focus', () => {
       getChatRoomListAPI();
     });
-    
+
     return unsubscribe;
   }, [navigation]);
 
@@ -104,8 +103,6 @@ const index = (props) => {
     );
   };
 
-  console.log('rooms', rooms);
-
   const renderRow = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -113,7 +110,7 @@ const index = (props) => {
         onPress={() =>
           navigation.navigate('MessageDetail', {
             screen: 'MessageDetail',
-            params: {chatId: item.pe_id, pmId: item.pm_id}
+            params: {chatId: item.pe_id, pmId: item.pm_id},
           })
         }
         activeOpacity={0.8}>
@@ -130,8 +127,16 @@ const index = (props) => {
               }}
             />
             <View style={{flex: 2}}>
-              <Text style={{...styles.msgInfoName, width: '87%'}} numberOfLines={1}>{item.company_name}</Text>
-              <Text style={{...styles.msgInfoName, width: '87%'}} numberOfLines={1}>제목 : {item.title}</Text>
+              <Text
+                style={{...styles.msgInfoName, width: '87%'}}
+                numberOfLines={1}>
+                {item.company_name}
+              </Text>
+              <Text
+                style={{...styles.msgInfoName, width: '87%'}}
+                numberOfLines={1}>
+                제목 : {item.title}
+              </Text>
               {item.msg ? (
                 <View
                   style={{
@@ -142,12 +147,14 @@ const index = (props) => {
                   <Text
                     style={[
                       styles.msgInfoContent,
-                      {fontFamily: SCDream5, color: '#275696'},
+                      {fontFamily: 'SCDream5', color: '#275696'},
                     ]}
                     numberOfLines={1}>
                     최신글 :
                   </Text>
-                  <Text style={{...styles.msgInfoContent, width: '67%'}} numberOfLines={1}>
+                  <Text
+                    style={{...styles.msgInfoContent, width: '67%'}}
+                    numberOfLines={1}>
                     {' '}
                     {item.msg}
                   </Text>
@@ -160,9 +167,16 @@ const index = (props) => {
                 </Text>
               )}
             </View>
-            <View style={{position: 'absolute', top: -10, right: -10, width: 30, height: 30}}>
+            <View
+              style={{
+                position: 'absolute',
+                top: -10,
+                right: -10,
+                width: 30,
+                height: 30,
+              }}>
               <TouchableOpacity
-                style={{position:'absolute', top: 0, right: 0}}
+                style={{position: 'absolute', top: 0, right: 0}}
                 activeOpacity={0.8}
                 onPress={() => goOutChatRoomChecking(item.pm_id)}>
                 <Image
@@ -225,7 +239,7 @@ const index = (props) => {
                   flex: 1,
                   height: Dimensions.get('window').height - 200,
                 }}>
-                <Text style={{fontFamily: SCDream4}}>
+                <Text style={{fontFamily: 'SCDream4'}}>
                   채팅 내역이 없습니다.
                 </Text>
               </View>
@@ -257,24 +271,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   msgInfoName: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000000',
     marginBottom: 5,
   },
   msgInfoContent: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 13,
     color: '#000000',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -18,7 +18,6 @@ import {
 
 import Header from '../Common/Header';
 import CcenterAPI from '../../src/api/Ccenter';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Tips = (props) => {
   const navigation = props.navigation;
@@ -35,9 +34,9 @@ const Tips = (props) => {
     setVisibleStep01((prev) => !prev);
   };
 
-  const getTipsAPI = (payload) => {
+  const getTipsAPI = () => {
     setLoading(true);
-    CcenterAPI.getTips(payload)
+    CcenterAPI.getTips(keyword)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setList(res.data.item);
@@ -203,46 +202,15 @@ const Tips = (props) => {
               placeholder="제목을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '80%', height: 50}]}
+              style={[styles.normalText, {width: '80%'}]}
               onChangeText={(text) => setKeyword(text)}
-              onSubmitEditing={() => getTipsAPI(keyword)}
-              returnKeyType="search"
-              returnKeyLabel="검색"
+              onSubmitEditing={() => getTipsAPI()}
             />
-            {keyword ? 
-            <TouchableOpacity
-            activeOpacity={1}
-              onPress={() => {
-                Keyboard.dismiss();
-                setKeyword(null);
-                getTipsAPI(null);
-              }}>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 20,
-                  height: 20,
-                  borderRadius: 20,
-                  backgroundColor: '#EFEFEF',
-                  marginRight: 7
-                }}>
-                <Image
-                  source={require('../../src/assets/icon_close02.png')}
-                  resizeMode="cover"
-                  style={{
-                    width: 10,
-                    height: 10,
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
-            : null}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
                 Keyboard.dismiss();
-                getTipsAPI(keyword);
+                getTipsAPI();
               }}>
               <Image
                 source={require('../../src/assets/top_seach.png')}
@@ -272,7 +240,7 @@ const Tips = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontFamily: SCDream4}}>리뷰가 없습니다.</Text>
+            <Text style={{fontFamily: 'SCDream4'}}>리뷰가 없습니다.</Text>
           </View>
         }
       />
@@ -303,7 +271,7 @@ const Tips = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: SCDream4}}>일반인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -315,7 +283,7 @@ const Tips = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: SCDream4}}>패키지</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -327,7 +295,7 @@ const Tips = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: SCDream4}}>기타인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
@@ -350,33 +318,33 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   categoryBtnTxt: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 11,
     color: '#fff',
   },
   new: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#366DE5',
   },
   categoryTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 15,
     color: '#000',
   },
   categoryDate: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 13,
     color: '#A2A2A2',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

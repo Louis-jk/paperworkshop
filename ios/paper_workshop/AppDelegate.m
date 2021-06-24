@@ -1,12 +1,9 @@
-#import <RNAKakaoSDK/WithKakaoSDK.h>
-#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
-#import <Firebase.h>
 #import "AppDelegate.h"
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import "RNSplashScreen.h"
-#import <RNGoogleSignin/RNGoogleSignin.h>
+
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -30,14 +27,9 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  if ([FIRApp defaultApp] == nil) {
-      [FIRApp configure];
-    }
-  
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
-  
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -51,7 +43,6 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  [RNSplashScreen show];
   return YES;
 }
 
@@ -64,24 +55,4 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 }
 
-
-- (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
-
-  if ([url.scheme isEqualToString:@"com.dmonster.paperworkshop"]) {
-
-    return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
-
-  }
-
-  if ([WithKakaoSDK isKakaoTalkLoginUrl:url]) {
-
-    return [WithKakaoSDK handleOpenUrl:url];
-
-  }
-
- 
-
-  return false;
-
-}
 @end

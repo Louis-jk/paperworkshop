@@ -3,25 +3,23 @@ import qs from 'qs';
 
 export default {
   // 전체 갤러리
-  getGallery(method, cate1, search) {
+  getPartner(method, cate1) {
     return Send({
       method: 'post',
       data: qs.stringify({
         method,
         cate1,
-        search
       }),
     });
   },
   // 타입별 갤러리
-  getGalleryType(method, cate1, ca_id, search) {
+  getPartnerType(method, cate1, ca_id) {
     return Send({
       method: 'post',
       data: qs.stringify({
         method,
         cate1,
         ca_id: ca_id ? ca_id : null,
-        search
       }),
     });
   },

@@ -14,16 +14,16 @@ import {
   FlatList,
   Platform,
   PermissionsAndroid,
-  SafeAreaView
+  BackHandler,
+  ToastAndroid,
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Dash from 'react-native-dash';
 import {TabView, SceneMap} from 'react-native-tab-view';
-import messaging from '@react-native-firebase/messaging';
 import Footer from '../Common/Footer';
 import Main from '../../src/api/Main';
 import {useDispatch, useSelector} from 'react-redux';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 
 import {selectCate1} from '../../Modules/OrderReducer';
 import OrderAPI from '../../src/api/OrderAPI';
@@ -31,9 +31,41 @@ import OrderAPI from '../../src/api/OrderAPI';
 import FirstRoute from './Component/FirstRoute';
 import SecondRoute from './Component/SecondRoute';
 import ThirdRoute from './Component/ThirdRoute';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
+  // 0621 - S
+  // const [test, setTest] = React.useState('');
+  // console.log(test);
+
+  // const count = React.useRef(0);
+  // let timeout;
+  // const backAction = () => {
+  //   if (test === 'Main') {
+  //     if (count.current === 0) {
+  //       count.current += 1;
+  //       ToastAndroid.show(
+  //         '한번 더 누르면 앱을 종료합니다.',
+  //         ToastAndroid.SHORT,
+  //       );
+
+  //       timeout = setTimeout(() => {
+  //         count.current -= 1;
+  //       }, 2000);
+  //     } else if (count.current >= 1) {
+  //       clearTimeout(timeout);
+  //       BackHandler.exitApp();
+  //     }
+  //   }
+  //   return true;
+  // };
+
+  // React.useEffect(() => {
+  //   setTest(props.route.name);
+  //   const back = BackHandler.addEventListener('hardwareBackPress', backAction);
+  //   return () => back.remove();
+  // }, [backAction]);
+  // 0621 - E
+
   const navigation = props.navigation;
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -45,53 +77,32 @@ const index = (props) => {
   const [middleBanners, setMiddleBanners] = React.useState([]); // 메인 중간 슬라이더(배너)
 
   const dispatch = useDispatch();
-  const {mb_id, mb_hp, mb_name, sns_check, sns_type} = useSelector((state) => state.UserInfoReducer);
+  const {mb_id} = useSelector((state) => state.UserInfoReducer);
 
-  // SNS 로그인일 경우 휴대폰번호가 없으면 회원정보 수정페이지로 보내기
-  const checkSNSLoginMobileNumHandler = () => {
-    if(sns_type === 'apple' && ((mb_hp === '' || mb_hp === null) || (mb_name === '' || mb_name === null))) {
-      Alert.alert('성함과 휴대폰 번호를 입력해주세요.', '회원정보수정페이지로 이동합니다.', [
-        {
-          text: '확인',
-          onPress: () => navigation.navigate('ProfileEdit')
-        }
-      ])
-      return false;
-    } else if(mb_hp === '' || mb_hp === null) {
-      Alert.alert('휴대폰번호를 입력해주세요.', '회원정보수정페이지로 이동합니다.', [
-        {
-          text: '확인',
-          onPress: () => navigation.navigate('ProfileEdit')
-        }
-      ])
-    }
-    else {
-      return false;
-    }
-  }
+  // var screen = 'Main';
+  // var screenParams = {};
 
-  React.useEffect(() => {
-    if(sns_check === 'Y') {
-      // console.log("SNS 로그인 중");
-      checkSNSLoginMobileNumHandler();
-    }
-  }, []);
+  // const resetAction = CommonActions.reset({
+  //     index: 1,
+  //     routes: [
+  //         { name: 'Main' },
+  //     ],
+  // });
+  // props.navigation.dispatch(resetAction);
 
   // 안드로이드 권한 설정
   const requestAndroidPermission = async () => {
     try {
-      const granted = await PermissionsAndroid.requestMultiple(
-        [
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-        ]
-      );
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      ]);
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the camera");
+        console.log('You can use the camera');
       } else {
-        console.log("Camera permission denied");
+        console.log('Camera permission denied');
       }
     } catch (err) {
       console.warn(err);
@@ -209,12 +220,12 @@ const index = (props) => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: 5,
-                  // flexWrap: 'wrap',
+                  flexWrap: 'wrap',
                 }}>
                 <Text
                   style={[
                     styles.normalText,
-                    {textAlign: 'center', fontSize: 12, color: '#366DE5', marginBottom: 5},
+                    {textAlign: 'center', fontSize: 12, color: '#366DE5'},
                   ]}>
                   {item.status === '0'
                     ? '견적요청'
@@ -300,20 +311,18 @@ const index = (props) => {
   };
 
   React.useEffect(() => {
-    if(Platform.OS === 'android') {
-      requestAndroidPermission();
-    }
+    requestAndroidPermission();
     setIsLoading(true);
     getMainTopSlider();
     getMainMiddleSlider();
     getAllOrderList();
+    // setTest(props.route.name);
   }, []);
 
   const mainCarouselRef = React.useRef(null);
   const stepCarouselRef = React.useRef(null);
   const bannerCarouselRef = React.useRef(null);
 
-  // 페이퍼공작소의 제작과정 슬라이더 이미지
   const steps = [
     {
       id: 1,
@@ -542,15 +551,20 @@ const index = (props) => {
     extrapolate: 'clamp',
   });
 
+  const headerzIndex = offset.interpolate({
+    inputRange: [0, 200],
+    outputRange: [5, 0],
+    extrapolate: 'clamp',
+  });
+
   const [offsetY, setOffsetY] = React.useState(0);
 
   const handleScroll = (e) => {
     setOffsetY(e.nativeEvent.contentOffset.y);
   };
 
-  return (    
-    <SafeAreaView style={{ backgroundColor: '#fff' }}>
-      <View style={{position: 'relative'}}>
+  return (
+    <View style={{position: 'relative'}}>
       {isLoading && (
         <View
           style={{
@@ -569,15 +583,15 @@ const index = (props) => {
           }}>
           <ActivityIndicator size="large" color="#275696" />
         </View>
-      )}      
-      {Platform.OS === 'android' ? <StatusBar hidden={true} /> : <StatusBar translucent barStyle="dark-content"  /> }
+      )}
+      <StatusBar hidden={true} />
 
       <Animated.View
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
-          zIndex: 5,
+          zIndex: headerzIndex,
           elevation: 0,
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -659,8 +673,8 @@ const index = (props) => {
               itemWidth={minItemWidth}
               layout="default"
               autoplay={true}
-              autoplayDelay={3000}
-              autoplayInterval={1000}
+              autoplayDelay={1000}
+              autoplayInterval={3000}
               loop={true}
               onSnapToItem={(index) => {
                 setMainActiveSlide(index);
@@ -1036,10 +1050,7 @@ const index = (props) => {
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
               layout="default"
-              autoplay={true}
-              autoplayDelay={3000}
-              autoplayInterval={1000}
-              loop={true}
+              loop={false}
               onSnapToItem={(index) => {
                 setStepActiveSlide(index);
 
@@ -1069,8 +1080,8 @@ const index = (props) => {
               itemWidth={itemWidth}
               layout="default"
               autoplay={true}
-              autoplayDelay={3000}
-              autoplayInterval={1000}
+              autoplayDelay={1000}
+              autoplayInterval={5000}
               loop={true}
               onSnapToItem={(index) => {
                 setActiveSlide(index);
@@ -1189,6 +1200,12 @@ const index = (props) => {
                 실시간 견적 처리 현황
               </Text>
 
+              <Image
+                source={require('../../src/images/next.png')}
+                resizeMode="contain"
+                style={{width: 14, height: 15}}
+              />
+
               {/* <TouchableWithoutFeedback
                 onPress={() => navigation.navigate('Estimate')}>
                 <View
@@ -1236,7 +1253,7 @@ const index = (props) => {
                     flex: 1,
                     height: 200,
                   }}>
-                  <Text style={{fontFamily: SCDream4}}>
+                  <Text style={{fontFamily: 'SCDream4'}}>
                     실시간 견적 처리 현황 리스트가 없습니다.
                   </Text>
                 </View>
@@ -1274,8 +1291,7 @@ const index = (props) => {
         <Footer navigation={navigation} />
       </Animated.ScrollView>
     </View>
-    </SafeAreaView>
-    );
+  );
 };
 
 const styles = StyleSheet.create({
@@ -1315,20 +1331,20 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep02BadgeText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
     paddingHorizontal: 5,
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

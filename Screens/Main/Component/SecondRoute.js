@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 
 import PartnersAPI from '../../../src/api/Partners';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const SecondRoute = (props) => {
   const {navigation} = props;
@@ -183,7 +182,7 @@ const SecondRoute = (props) => {
             flex: 1,
             height: 200,
           }}>
-          <Text style={{fontFamily: SCDream4}}>
+          <Text style={{fontFamily: 'SCDream4'}}>
             실시간 견적 처리 현황 리스트가 없습니다.
           </Text>
         </View>
@@ -194,13 +193,13 @@ const SecondRoute = (props) => {
 
 const styles = StyleSheet.create({
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

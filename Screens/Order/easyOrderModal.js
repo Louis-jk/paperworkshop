@@ -2,20 +2,22 @@ import * as React from 'react';
 import {
   View,
   Text,
-  TextInput,
   Dimensions,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
+  ActivityIndicator, // 0623
 } from 'react-native';
 
 import Modal from 'react-native-modal';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
-const easyOrderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
+// 0623 버퍼링 해결중
+const easyOrderModal = ({
+  toggleModal,
+  isVisible,
+  goEasyComplete,
+  isLoading, // 0623
+  setCheck, // 0623
+}) => {
   return (
     <View>
       <Modal isVisible={isVisible}>
@@ -26,7 +28,23 @@ const easyOrderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
             alignItems: 'center',
           }}>
           {/* <Button title="Show modal" onPress={toggleModal} /> */}
-
+          {isLoading && (
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                height: Dimensions.get('window').height,
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 100,
+                elevation: 0,
+              }}>
+              <ActivityIndicator size="large" color="#275696" />
+            </View>
+          )}
           <View
             style={{
               backgroundColor: '#fff',
@@ -34,18 +52,20 @@ const easyOrderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
               paddingVertical: 20,
               paddingHorizontal: 20,
             }}>
-            <Text style={[styles.boldText, { fontSize: 16, color: '#000' }]}>간단 견적 제출</Text>
+            <Text style={[styles.boldText, {fontSize: 16, color: '#000'}]}>
+              간단 견적 제출
+            </Text>
 
             {/* 컨텐츠 */}
             <View style={styles.container}>
-              <View style={{ marginBottom: 20 }}>
+              <View style={{marginBottom: 20}}>
                 <View style={styles.partnerInfoBox}>
                   <Text style={styles.partnerInfoTitle}>
                     작성하신 내용대로 견적 신청을 하시겠습니까?
                   </Text>
                   <Text style={styles.partnerInfoDesc}>
-                    간단 견적 신청 시, 세부 견적 보완을 위해 페이퍼 공작소 매니저가 별도로
-                    연락드립니다.
+                    간단 견적 신청 시, 세부 견적 보완을 위해 페이퍼 공작소
+                    매니저가 별도로 연락드립니다.
                   </Text>
                 </View>
               </View>
@@ -62,7 +82,7 @@ const easyOrderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
                     // borderRadius: 5,
                     backgroundColor: '#fff',
                   }}>
-                  <View style={{ height: '100%' }} />
+                  <View style={{height: '100%'}} />
                   <TouchableWithoutFeedback onPress={toggleModal}>
                     <View
                       style={{
@@ -90,7 +110,10 @@ const easyOrderModal = ({ toggleModal, isVisible, goEasyComplete }) => {
                     </View>
                   </TouchableWithoutFeedback>
 
-                  <TouchableWithoutFeedback onPress={goEasyComplete}>
+                  {/* 0623 */}
+                  <TouchableWithoutFeedback
+                    onPressOut={() => setCheck(true)}
+                    onPressIn={() => goEasyComplete()}>
                     <View
                       style={{
                         flex: 1,
@@ -137,25 +160,25 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   partnerInfoTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
     marginBottom: 10,
   },
   partnerInfoDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 20,
     color: '#000000',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

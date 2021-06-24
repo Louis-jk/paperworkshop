@@ -7,9 +7,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   SafeAreaView,
-  Platform
 } from 'react-native';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Header = (props) => {
   const navigation = props.navigation;
@@ -171,7 +169,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    lineHeight: Platform.OS === 'android' ? 50 : 0,
+    lineHeight: 50,
   },
   icons: {
     flexDirection: 'row',
@@ -179,13 +177,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -19,7 +19,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import {selectCate1, selectCaId, setUserId} from '../../Modules/OrderReducer';
 import DetailHeader from '../Common/DetailHeader';
 import Modal from '../Common/GeneralInfoModal';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 // import Modal from '../Common/InfoModal';
 
 const General = (props) => {
@@ -245,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingHorizontal: 20,
-    paddingBottom: 10,
+    paddingVertical: 10,
     backgroundColor: '#fff',
   },
   infoBox: {
@@ -331,7 +330,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     width: 120,
     textAlign: 'center',
     fontSize: 14,
@@ -340,13 +339,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

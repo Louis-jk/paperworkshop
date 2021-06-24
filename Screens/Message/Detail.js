@@ -12,10 +12,6 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Keyboard,
-  Platform,
-  InputAccessoryView,
-  Button,
-  NativeEventEmitter
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
@@ -26,20 +22,18 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import FastImage from 'react-native-fast-image'; // gif 이미지 출력 패키지
 import RNFetchBlob from 'rn-fetch-blob'; // 파일 다운로드 패키지
 import DocumentPicker from 'react-native-document-picker'; // 파일 업로드 패키지
-import ImagePicker from 'react-native-image-crop-picker'; // 이미지 업로드 패키지
 import {GiftedChat, SystemMessage} from 'react-native-gifted-chat'; // 채팅 패키지
 
 import DetailHeader from '../Common/DetailHeader';
 import ChatAPI from '../../src/api/Chat';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Detail = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
   const {chatId, pmId} = props.route.params;
 
-  // console.log("chatId:::::", chatId);
-  // console.log("pmId:::::", pmId);
+  // console.log('chatId:::::', chatId);
+  // console.log('pmId:::::', pmId);
 
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
 
@@ -49,18 +43,18 @@ const Detail = (props) => {
   const [msgFile, setMsgFile] = React.useState(''); // 채팅 파일(이미지 또는 엑셀, pdf 등) 값
   const [firstDate, setFirstDate] = React.useState(null); // 채팅 최초 시작일
   const [chatDateHistory, setChatDateHistory] = React.useState([]); // 채팅 날짜 갱신일
-  
+
   const listRef = React.useRef(null);
-  
+
   // 채팅방 글 히스토리 가져오기
   const getChatHistoryAPI = () => {
     setLoading(true);
     ChatAPI.getChatHistory(pmId)
       .then((res) => {
-        // console.log('ㅎㅎㅎ', res);
+        console.log('ㅎㅎㅎ', res);
         if (res.data.result === '1' && res.data.count > 0) {
           setChatHistory(res.data.item);
-          setLoading(false);          
+          setLoading(false);
         } else if (res.data.result === '1' && res.data.count === 0) {
           setLoading(false);
         } else {
@@ -90,8 +84,8 @@ const Detail = (props) => {
     return unsubscribe;
   }, [navigation]);
 
-  console.log('chatHistory', chatHistory);
-  console.log('chatDateHistory', chatDateHistory);
+  // console.log('chatHistory', chatHistory);
+  // console.log('chatDateHistory', chatDateHistory);
 
   // 이미지 모달창
   const ImageModal = ({toggleModal, isVisible, imgPath}) => {
@@ -142,7 +136,7 @@ const Detail = (props) => {
               paddingHorizontal: 14,
               paddingVertical: 7,
             }}>
-            <Text style={{fontFamily: SCDream4, fontSize: 13, color: '#fff'}}>
+            <Text style={{fontFamily: 'SCDream4', fontSize: 13, color: '#fff'}}>
               닫기
             </Text>
           </TouchableOpacity>
@@ -175,10 +169,9 @@ const Detail = (props) => {
 
   // 채팅 메세지 전송
   const sendMessageAPI = (type, payload) => {
-
     let frmData = new FormData();
 
-    if(type === 'msg') {      
+    if (type === 'msg') {
       frmData.append('method', 'proc_my_message');
       frmData.append('mb_id', mb_id);
       frmData.append('pm_id', pmId);
@@ -191,7 +184,7 @@ const Detail = (props) => {
       frmData.append('msg', '');
       frmData.append('bf_file[]', payload);
     }
-    
+
     ChatAPI.sendMessage(frmData)
       .then((res) => {
         if (res.data.result === '1') {
@@ -215,13 +208,10 @@ const Detail = (props) => {
       });
   };
 
-
   // 채팅 메세지 파일 전송
   const sendMessageFileAPI = (uri, type, name) => {
-
     let file = {uri, type, name};
     sendMessageAPI('file', file);
-
   };
 
   // 파일 다운로드 메소드
@@ -250,51 +240,11 @@ const Detail = (props) => {
 
   const [source, setSource] = React.useState({});
 
-  // 이미지 업로드
-  const pickImageHandler = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      sortOrder: 'none',
-      compressImageMaxWidth: 500,
-      compressImageMaxHeight: 500,
-      compressImageQuality: 1,
-      compressVideoPreset: 'MediumQuality',
-      includeExif: true,
-      cropperCircleOverlay: true,
-      useFrontCamera: false,
-      // includeBase64: true,
-      cropping: false,
-    })
-      .then((img) => {
-        setMsgFile({
-          uri: img.path,
-          type: img.mime,
-          name: img.path.slice(img.path.lastIndexOf('/')),
-        });
-        Alert.alert('이미지를 전송하시겠습니까?', '', [
-          {
-            text: '확인',
-            onPress: () => sendMessageFileAPI(img.path, img.mime, img.path.slice(img.path.lastIndexOf('/'))),
-          },
-          {
-            text: '취소'
-          }
-        ]);
-      })
-      .catch((err) => {
-        Alert.alert(err, '이미지 업로드중 에러가 발생하였습니다.', [
-          {
-            text: '확인'
-          }
-        ]);
-      });
-  };
-
   // 파일 업로드 메소드
   const filePicker = async () => {
     try {
       const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images],
+        type: [DocumentPicker.types.allFiles],
       });
       setMsgFile({
         uri: res.uri,
@@ -307,8 +257,8 @@ const Detail = (props) => {
           onPress: () => sendMessageFileAPI(res.uri, res.type, res.name),
         },
         {
-          text: '취소'
-        }
+          text: '취소',
+        },
       ]);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -386,24 +336,54 @@ const Detail = (props) => {
       });
   };
 
-  // const onKeyPressHandler = ({NativeEventEmitter}) => {
-  //   if (NativeEventEmitter.key === 'Enter') {
-  //     sendMessageAPI('msg', message);
-  //   }
+  // let arr = [];
+  // const Chatdate = () => {
+  //   let arrDate = moment(item.chat_date).diff(moment(), 'days');
+  //   arr.push(arrDate);
+  //   let reduceData = arr.reduce(function (a, b) {
+  //     if (a.indexOf(b) < 0) a.push(b);
+  //     return a;
+  //   }, []);
+
+  //   reduceData.map((v, i) => {
+  //     return (
+  //       <View
+  //         style={{
+  //           marginTop: 50,
+  //           marginBottom: 10,
+  //           flexDirection: 'row',
+  //           justifyContent: 'center',
+  //           alignItems: 'center',
+  //         }}>
+  //         <Text key={i} style={styles.normalText}>
+  //           asdasdsadsadsadsadsadasdasdasd
+  //         </Text>
+  //       </View>
+  //     );
+  //   });
   // };
- 
 
   const renderRow = ({item, idx}) => {
+    console.log(item);
     return (
-      <View key={item.pc_id} style={{paddingHorizontal:20}}>
-        {item.diff === 'Y' ?
-          <View style={{marginTop: 50, marginBottom: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+      <View key={item.pc_id} style={{paddingHorizontal: 20}}>
+        {item.diff === 'Y' ? (
+          <View
+            style={{
+              marginTop: 50,
+              marginBottom: 10,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <Text style={{marginRight: 10}}>- - - - - - - -</Text>
-            <Text style={styles.normalText}>{moment(item.chat_date).locale('ko').format('YYYY.MM.DD (ddd)')}</Text>
+            <Text style={styles.normalText}>
+              {moment(item.chat_date).locale('ko').format('YYYY.MM.DD (ddd)')}
+            </Text>
             <Text style={{marginLeft: 10}}>- - - - - - - -</Text>
           </View>
-        : null}
-        {item.msg ? 
+        ) : null}
+        {item.msg ? (
           <View
             style={{
               alignSelf: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
@@ -413,43 +393,7 @@ const Detail = (props) => {
               paddingVertical: 10,
               width: '70%',
             }}>
-            {item.mb_id !== mb_id ? 
-            <Image
-              source={{uri: `${item.mb_profile}`}}
-              resizeMode="cover"
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 50,
-                marginRight: 10,
-              }}
-            /> : null}
-            <View style={item.mb_id === mb_id ? styles.msgBubbleP : styles.msgBubble}>
-              <Text style={item.mb_id === mb_id ? styles.msgTextP : styles.msgText}>{item.msg}</Text>
-            </View>
-            <Text
-              style={{
-                fontFamily: SCDream4,
-                alignSelf: 'flex-end',
-                fontSize: 12,
-                color: '#000000',
-              }}>
-              {moment(item.chat_date).format('HH:mm')}
-            </Text>
-          </View>
-        : null }
-        {
-          item.bf_file && (item.bf_file_ext === 'jpg' || item.bf_file_ext === 'png') ?
-          <View
-            style={{
-              alignSelf: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
-              flexDirection: item.mb_id === mb_id ? 'row-reverse' : 'row',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              paddingVertical: 10,
-              width: '70%',
-            }}>
-            {item.mb_id !== mb_id ? 
+            {item.mb_id !== mb_id ? (
               <Image
                 source={{uri: `${item.mb_profile}`}}
                 resizeMode="cover"
@@ -459,7 +403,51 @@ const Detail = (props) => {
                   borderRadius: 50,
                   marginRight: 10,
                 }}
-              /> : null}
+              />
+            ) : null}
+            <View
+              style={
+                item.mb_id === mb_id ? styles.msgBubbleP : styles.msgBubble
+              }>
+              <Text
+                style={item.mb_id === mb_id ? styles.msgTextP : styles.msgText}>
+                {item.msg}
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontFamily: 'SCDream4',
+                alignSelf: 'flex-end',
+                fontSize: 12,
+                color: '#000000',
+              }}>
+              {moment(item.chat_date).format('HH:mm')}
+            </Text>
+          </View>
+        ) : null}
+        {item.bf_file &&
+        (item.bf_file_ext === 'jpg' || item.bf_file_ext === 'png') ? (
+          <View
+            style={{
+              alignSelf: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
+              flexDirection: item.mb_id === mb_id ? 'row-reverse' : 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              paddingVertical: 10,
+              width: '70%',
+            }}>
+            {item.mb_id !== mb_id ? (
+              <Image
+                source={{uri: `${item.mb_profile}`}}
+                resizeMode="cover"
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 50,
+                  marginRight: 10,
+                }}
+              />
+            ) : null}
             <View
               style={{
                 backgroundColor: '#fff',
@@ -487,7 +475,7 @@ const Detail = (props) => {
             </View>
             <Text
               style={{
-                fontFamily: SCDream4,
+                fontFamily: 'SCDream4',
                 alignSelf: 'flex-end',
                 fontSize: 12,
                 color: '#000000',
@@ -495,10 +483,8 @@ const Detail = (props) => {
               {moment(item.chat_date).format('HH:mm')}
             </Text>
           </View>
-          : null
-        }
-        {
-          item.bf_file && item.bf_file_ext === 'gif' ? 
+        ) : null}
+        {item.bf_file && item.bf_file_ext === 'gif' ? (
           <View
             style={{
               alignSelf: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
@@ -508,7 +494,7 @@ const Detail = (props) => {
               paddingVertical: 10,
               width: '70%',
             }}>
-            {item.mb_id !== mb_id ? 
+            {item.mb_id !== mb_id ? (
               <Image
                 source={{uri: `${item.mb_profile}`}}
                 resizeMode="cover"
@@ -518,7 +504,8 @@ const Detail = (props) => {
                   borderRadius: 50,
                   marginRight: 10,
                 }}
-            /> : null}
+              />
+            ) : null}
             <View
               style={{
                 backgroundColor: '#fff',
@@ -546,7 +533,7 @@ const Detail = (props) => {
             </View>
             <Text
               style={{
-                fontFamily: SCDream4,
+                fontFamily: 'SCDream4',
                 alignSelf: 'flex-end',
                 fontSize: 12,
                 color: '#000000',
@@ -554,15 +541,17 @@ const Detail = (props) => {
               {moment(item.chat_date).format('HH:mm')}
             </Text>
           </View>
-          : null
-        }
-        {
-          item.bf_file &&
-          item.bf_file_ext !== 'gif' &&
-          item.bf_file_ext !== 'jpg' &&
-          item.bf_file_ext !== 'png' ? 
-          <View style={{flexDirection: 'row', justifyContent: item.mb_id === mb_id ? 'flex-end' : 'flex-start'}}>
-            {item.mb_id !== mb_id ? 
+        ) : null}
+        {item.bf_file &&
+        item.bf_file_ext !== 'gif' &&
+        item.bf_file_ext !== 'jpg' &&
+        item.bf_file_ext !== 'png' ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: item.mb_id === mb_id ? 'flex-end' : 'flex-start',
+            }}>
+            {item.mb_id !== mb_id ? (
               <Image
                 source={{uri: `${item.mb_profile}`}}
                 resizeMode="cover"
@@ -572,14 +561,12 @@ const Detail = (props) => {
                   borderRadius: 50,
                   marginRight: 10,
                 }}
-            /> : null}
+              />
+            ) : null}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() =>
-                fileDownloadHandler(
-                  item.bf_file,
-                  item.bf_file_soure,
-                )
+                fileDownloadHandler(item.bf_file, item.bf_file_soure)
               }
               style={{
                 flexDirection: item.mb_id === mb_id ? 'row-reverse' : 'row',
@@ -601,13 +588,15 @@ const Detail = (props) => {
                   resizeMode="cover"
                   style={{width: 30, height: 30, marginRight: 10}}
                 />
-                <Text style={{...styles.normalText, width: '80%'}} numberOfLines={1}>
+                <Text
+                  style={{...styles.normalText, width: '80%'}}
+                  numberOfLines={1}>
                   {item.bf_file_soure}
                 </Text>
               </View>
               <Text
                 style={{
-                  fontFamily: SCDream4,
+                  fontFamily: 'SCDream4',
                   alignSelf: 'flex-end',
                   fontSize: 12,
                   color: '#000000',
@@ -616,10 +605,10 @@ const Detail = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-          : null}
+        ) : null}
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -661,8 +650,10 @@ const Detail = (props) => {
         showsVerticalScrollIndicator={false}
         progressViewOffset={true}
         refreshing={true}
-        onContentSizeChange={() => listRef.current.scrollToEnd( {animated : true, duration : 500})}
-        ListEmptyComponent={(
+        onContentSizeChange={() =>
+          listRef.current.scrollToEnd({animated: true, duration: 500})
+        }
+        ListEmptyComponent={
           <View
             style={{
               justifyContent: 'center',
@@ -670,42 +661,24 @@ const Detail = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 230,
             }}>
-            <Text style={{fontFamily: SCDream4}}>
-              채팅 내역이 없습니다.
-            </Text>
+            <Text style={{fontFamily: 'SCDream4'}}>채팅 내역이 없습니다.</Text>
           </View>
-        )}
-      />     
+        }
+      />
 
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
           backgroundColor: '#275696',
-          paddingVertical: Platform.OS === 'android' ? 10 : 0,
+          paddingVertical: 10,
           paddingHorizontal: 20,
         }}>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => {
-              if(Platform.OS === 'ios') {
-                Alert.alert('파일과 이미지중 어느쪽을 전송하시겠습니까?', '아래 버튼 중 선택해주세요.', [
-                  {
-                    text: '파일선택',
-                    onPress: () => filePicker()
-                  },
-                  {
-                    text: '이미지선택',
-                    onPress: () => pickImageHandler()
-                  }
-                ])
-              } else {
-                filePicker()
-              }
-            }
-          }
+          onPress={() => filePicker()}
           style={{flex: 1}}>
           <Image
             source={require('../../src/assets/chat_fileupload.png')}
@@ -721,34 +694,18 @@ const Detail = (props) => {
             autoCapitalize="none"
             style={{
               textAlignVertical: 'center',
-              fontFamily: SCDream4,
+              fontFamily: 'SCDream4',
               color: '#000',
               fontSize: 14,
               lineHeight: 22,
               backgroundColor: '#fff',
               borderRadius: 5,
               paddingLeft: 10,
-              paddingTop: 10,
               marginHorizontal: 10,
-              marginVertical: 10,
-              height: 50
             }}
             onChangeText={(text) => setMessage(text)}
             multiline={true}
-            autoCompleteType="off"
-            autoCorrect={false}
-            enablesReturnKeyAutomatically={true}
-            // onKeyPress={() => onKeyPressHandler()}
-            returnKeyType="send"
-            returnKeyLabel="전송"
-            blurOnSubmit={true}
-            // inputAccessoryViewID="Next"
           />
-          {/* <InputAccessoryView nativeID="Next">
-            <TouchableOpacity onPress={() => alert("hi?")} style={styles.accessory}>
-              <Text>버튼</Text>
-            </TouchableOpacity>
-          </InputAccessoryView> */}
         </View>
         <TouchableOpacity
           activeOpacity={0.8}
@@ -769,29 +726,20 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#EFEFEF',
   },
-  accessory: {
-    width: Dimensions.get('window').width,
-    height: 48,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: '#F8F8F8',
-    paddingHorizontal: 8
-  },
   msgBubble: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+    borderTopRightRadius: 50,
     marginRight: 5,
     marginTop: 10,
   },
   msgText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 20,
     color: '#000000',
@@ -803,25 +751,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#275696',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderTopLeftRadius: 20,
+    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 50,
+    borderTopLeftRadius: 50,
     marginLeft: 5,
   },
   msgTextP: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 20,
     color: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const List = ({item, index, navigation}) => {
   return (
@@ -33,7 +32,6 @@ const List = ({item, index, navigation}) => {
         height: 220,
         backgroundColor: '#fff',
         paddingHorizontal: 2,
-        zIndex: -1
         // marginRight: index % 2 === 0 ? '1%' : 0,
         // marginLeft: index % 2 !== 0 ? '1%' : 0,
       }}>
@@ -156,13 +154,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

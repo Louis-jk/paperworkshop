@@ -19,8 +19,8 @@ import 'moment/locale/ko';
 
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
+// 박가공, 형압, 부분 실크, 코딩 "조종필요" -> "조정필요", 0621
 const FeedBack = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
@@ -46,11 +46,11 @@ const FeedBack = (props) => {
     let method = '';
 
     if (cate1 === '0') {
-      method = 'proc_my_real2_estimate_detail';
+      method = 'proc_my_real2_estimate_detail'; // (WEB)JSON 테스트 - 견적제안보기(일반인쇄), 0623
     } else if (cate1 === '1') {
-      method = 'proc_my_real2_estimate_detail2';
+      method = 'proc_my_real2_estimate_detail2'; // 견적제안보기(패키지인쇄), 0623
     } else {
-      method = 'proc_my_real2_estimate_detail3';
+      method = 'proc_my_real2_estimate_detail3'; // 견적제안보기(기타인쇄), 0623
     }
 
     OrderAPI.getOfferDetail(method, pd_id)
@@ -59,12 +59,13 @@ const FeedBack = (props) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setDetails(res.data.item.basic);
           setInfo05(res.data.item.estimate);
+          console.log(11111111111111111, res.data.item.estimate);
           if (cate1 !== '2') {
             setInfo01(res.data.item.basic2);
             setInfo02(res.data.item.feeder);
             setInfo03(res.data.item.print);
             setInfo04(res.data.item.end);
-          } 
+          }
           setLoading(false);
         }
       })
@@ -87,7 +88,6 @@ const FeedBack = (props) => {
   // // console.log('info03', info03);
   // // console.log('info04', info04);
   // console.log('info05', info05);
-  
 
   // 파일 다운로드 핸들러
   const fileDownloadHandler = (filePath, fileName) => {
@@ -158,7 +158,7 @@ const FeedBack = (props) => {
               paddingHorizontal: 14,
               paddingVertical: 7,
             }}>
-            <Text style={{fontFamily: SCDream4, fontSize: 13, color: '#fff'}}>
+            <Text style={{fontFamily: 'SCDream4', fontSize: 13, color: '#fff'}}>
               닫기
             </Text>
           </TouchableOpacity>
@@ -366,14 +366,14 @@ const FeedBack = (props) => {
                       marginRight: 5,
                     }}
                   />
-                  <Text style={{fontFamily: SCDream4}}>
+                  <Text style={{fontFamily: 'SCDream4'}}>
                     {details.pe_source_file}
                   </Text>
                 </TouchableOpacity>
               ) : (
                 <Text
                   style={{
-                    fontFamily: SCDream4,
+                    fontFamily: 'SCDream4',
                     color: '#B5B5B5',
                     fontSize: 13,
                   }}>
@@ -383,7 +383,7 @@ const FeedBack = (props) => {
             </View>
           </View>
 
-          {/* 경계 라인 */}          
+          {/* 경계 라인 */}
           <View
             style={{
               height: 1,
@@ -400,7 +400,7 @@ const FeedBack = (props) => {
           />
           {/* // 경계 라인 */}
 
-          {cate1 == '2' &&
+          {cate1 == '2' && (
             <View style={[styles.wrap, {marginVertical: 10}]}>
               <Text
                 style={[
@@ -421,7 +421,7 @@ const FeedBack = (props) => {
                 </View>
               </View>
             </View>
-          }
+          )}
 
           {/* 커스텀 */}
           {cate1 !== '2' && info05 !== null ? (
@@ -780,14 +780,14 @@ const FeedBack = (props) => {
                             marginRight: 5,
                           }}
                         />
-                        <Text style={{fontFamily: SCDream4}}>
+                        <Text style={{fontFamily: 'SCDream4'}}>
                           {info01.pe_source_file2}
                         </Text>
                       </TouchableOpacity>
                     ) : (
                       <Text
                         style={{
-                          fontFamily: SCDream4,
+                          fontFamily: 'SCDream4',
                           color: '#B5B5B5',
                           fontSize: 13,
                         }}>
@@ -1252,7 +1252,7 @@ const FeedBack = (props) => {
                       <View style={styles.details}>
                         <Text
                           style={[styles.detailsTitle02, {color: '#366DE5'}]}>
-                          박가공 (조종필요)
+                          박가공 (조정필요)
                         </Text>
                         <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
                           {info05.edit_foil === 'Y' ? '있음' : '없음'}
@@ -1271,7 +1271,7 @@ const FeedBack = (props) => {
                       <View style={styles.details}>
                         <Text
                           style={[styles.detailsTitle02, {color: '#366DE5'}]}>
-                          형압 (조종필요)
+                          형압 (조정필요)
                         </Text>
                         <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
                           {info05.edit_press === 'Y' ? '있음' : '없음'}
@@ -1290,7 +1290,7 @@ const FeedBack = (props) => {
                       <View style={styles.details}>
                         <Text
                           style={[styles.detailsTitle02, {color: '#366DE5'}]}>
-                          부분 실크 (조종필요)
+                          부분 실크 (조정필요)
                         </Text>
                         <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
                           {info05.edit_silk === 'Y' ? '있음' : '없음'}
@@ -1307,7 +1307,7 @@ const FeedBack = (props) => {
                       <View style={styles.details}>
                         <Text
                           style={[styles.detailsTitle02, {color: '#366DE5'}]}>
-                          코팅 (조종필요)
+                          코팅 (조정필요)
                         </Text>
                         <Text style={[styles.detailsDesc, {color: '#366DE5'}]}>
                           {info05.edit_coting}
@@ -1318,7 +1318,7 @@ const FeedBack = (props) => {
                       <View style={styles.details}>
                         <Text
                           style={{
-                            fontFamily: SCDream5,
+                            fontFamily: 'SCDream5',
                             fontSize: 15,
                             marginTop: 20,
                             marginBottom: 7,
@@ -1664,82 +1664,81 @@ const FeedBack = (props) => {
                 ]}>
                 견적서 파일
               </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                  }}>
-                    {console.log("info05",info05)}
-                  {info05.bf_file &&
-                  (info05.type_name === 'jpg' || info05.type_name === 'png') ? (
-                    <TouchableOpacity
-                      onPress={() => imageModalHandler(info05.bf_file)}>
-                      <Image
-                        source={{uri: `${info05.bf_file}`}}
-                        resizeMode="cover"
-                        style={{
-                          width: 114,
-                          height: 114,
-                          borderRadius: 5,
-                          marginRight: 10,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  ) : info05.bf_file && info05.type_name === 'gif' ? (
-                    <TouchableOpacity
-                      onPress={() => imageModalHandler(info05.bf_file)}>
-                      <FastImage
-                        source={{uri: `${info05.bf_file}`}}
-                        resizeMode={FastImage.resizeMode.cover}
-                        style={{
-                          width: 114,
-                          height: 114,
-                          borderRadius: 5,
-                          marginRight: 10,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  ) : info05.bf_file &&
-                    (info05.type_name !== 'jpg' ||
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                }}>
+                {console.log('info05', info05)}
+                {info05.bf_file &&
+                (info05.type_name === 'jpg' || info05.type_name === 'png') ? (
+                  <TouchableOpacity
+                    onPress={() => imageModalHandler(info05.bf_file)}>
+                    <Image
+                      source={{uri: `${info05.bf_file}`}}
+                      resizeMode="cover"
+                      style={{
+                        width: 114,
+                        height: 114,
+                        borderRadius: 5,
+                        marginRight: 10,
+                      }}
+                    />
+                  </TouchableOpacity>
+                ) : info05.bf_file && info05.type_name === 'gif' ? (
+                  <TouchableOpacity
+                    onPress={() => imageModalHandler(info05.bf_file)}>
+                    <FastImage
+                      source={{uri: `${info05.bf_file}`}}
+                      resizeMode={FastImage.resizeMode.cover}
+                      style={{
+                        width: 114,
+                        height: 114,
+                        borderRadius: 5,
+                        marginRight: 10,
+                      }}
+                    />
+                  </TouchableOpacity>
+                ) : info05.bf_file &&
+                  (info05.type_name !== 'jpg' ||
                     info05.type_name !== 'png' ||
                     info05.type_name !== 'gif') ? (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() =>
-                        fileDownloadHandler(info05.bf_file, info05.bf_file_source)
-                      }
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      fileDownloadHandler(info05.bf_file, info05.bf_file_source)
+                    }
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      source={require('../../../src/assets/icon_down.png')}
+                      resizeMode="cover"
                       style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                      }}>
-                      <Image
-                        source={require('../../../src/assets/icon_down.png')}
-                        resizeMode="cover"
-                        style={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: 5,
-                          marginRight: 5,
-                        }}
-                      />
-                      <Text style={{fontFamily: SCDream4}}>
-                        {info05.bf_file_source}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <Text
-                      style={{
-                        fontFamily: SCDream4,
-                        color: '#B5B5B5',
-                        fontSize: 13,
-                      }}>
-                      첨부파일이 없습니다.
+                        width: 20,
+                        height: 20,
+                        borderRadius: 5,
+                        marginRight: 5,
+                      }}
+                    />
+                    <Text style={{fontFamily: 'SCDream4'}}>
+                      {info05.bf_file_source}
                     </Text>
-                  )}
-                </View>
-               
+                  </TouchableOpacity>
+                ) : (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream4',
+                      color: '#B5B5B5',
+                      fontSize: 13,
+                    }}>
+                    첨부파일이 없습니다.
+                  </Text>
+                )}
+              </View>
             </View>
           )}
         </ScrollView>
@@ -1770,13 +1769,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#A2A2A2',
     lineHeight: 23,
   },
   infoStepTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#000000',
   },
@@ -1798,19 +1797,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   detailsTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     width: 150,
     fontSize: 14,
     color: '#A2A2A2',
   },
   detailsDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000',
     marginTop: 5,
   },
   detailsTitle02: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     width: 200,
     fontSize: 14,
     color: '#A2A2A2',
@@ -1821,20 +1820,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 18,
     color: '#000000',
     marginTop: 20,
     marginBottom: 25,
   },
   orderInfoDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#000',
     marginBottom: 10,
   },
   textInput: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     borderWidth: 1,
     borderColor: '#E3E3E3',
     borderRadius: 4,
@@ -1869,12 +1868,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoContentTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#111',
   },
   orderInfoContentDetail: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#707070',
   },
@@ -1905,13 +1904,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, Image, Platform} from 'react-native';
+import {Image, BackHandler, ToastAndroid} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -19,6 +19,8 @@ import {
   ProfileEditStackNavigator,
   MessageStackNavigator,
   MessageDetailStackNavigator,
+  Terms,
+  Privacy,
   OrderStackNavigator,
   MyOrderStackNavigator,
   ReviewStackNavigator,
@@ -28,23 +30,64 @@ import {
   MyPartnersStackNavigator,
   SearchStackNavigator,
 } from './StackNavigator';
+import SelectPartnerStep01 from '../Screens/Profile/MyOrder/SelectPartnerStep01';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export const BottomTabNavigator = () => {
+export const BottomTabNavigator = (props) => {
+  // console.log(props?.route?.state?.index);
+
+  // 0621 - S
+  // const [test, setTest] = React.useState('');
+  // console.log(test);
+  // console.log(test === undefined); // true
+  // console.log(test === null); // fasle
+  // console.log(test == undefined); // true
+  // console.log(test == null); //true
+
+  // let count = React.useRef(0);
+  // let timeout;
+  // const backAction = () => {
+  //   if (test === 'Main') {
+  //     if (count.current === 0) {
+  //       count.current += 1;
+  //       ToastAndroid.show(
+  //         '한번 더 누르면 앱을 종료합니다.',
+  //         ToastAndroid.SHORT,
+  //       );
+
+  //       timeout = setTimeout(() => {
+  //         count.current -= 1;
+  //       }, 2000);
+  //     } else if (count.current >= 1) {
+  //       clearTimeout(timeout);
+  //       BackHandler.exitApp();
+  //     }
+  //   }
+  //   return true;
+  // };
+
+  // React.useEffect(() => {
+  //   setTest(props.route);
+  //   const back = BackHandler.addEventListener('hardwareBackPress', backAction);
+  //   return () => back.remove();
+  // }, [backAction]);
+  // 0621 - E
+
   return (
     <Tab.Navigator
+      backBehavior={'initialRoute'} // 0618, 0621
       tabBarOptions={{
         activeTintColor: '#ACACAC',
         inactiveTintColor: '#ACACAC',
         labelStyle: {
           fontSize: 12,
           letterSpacing: -1,
-          paddingBottom: 5,          
+          paddingBottom: 5,
         },
         style: {
-          height: Platform.OS === 'android' ? 70 : 100,
+          height: 70,
           width: '100%',
           paddingRight: 5,
         },
@@ -130,7 +173,7 @@ export const BottomTabNavigator = () => {
 
 const TabNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>      
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Check" component={LoginStackNavigator} />
       <Stack.Screen name="Login" component={LoginStackNavigator} />
       <Stack.Screen name="EntryBefore" component={LoginStackNavigator} />
@@ -145,6 +188,10 @@ const TabNavigator = () => {
         name="MessageDetail"
         component={MessageDetailStackNavigator}
       />
+
+      <Stack.Screen name="Terms" component={Terms} />
+      <Stack.Screen name="Privacy" component={Privacy} />
+
       <Stack.Screen name="Order" component={OrderStackNavigator} />
       <Stack.Screen name="DirectOrder" component={OrderStackNavigator} />
       <Stack.Screen name="OrderPackage" component={OrderStackNavigator} />
