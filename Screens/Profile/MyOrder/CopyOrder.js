@@ -21,7 +21,6 @@ import FastImage from 'react-native-fast-image';
 
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const CopyOrder = (props) => {
   const navigation = props.navigation;
@@ -29,7 +28,7 @@ const CopyOrder = (props) => {
   const pe_id = props.route.params.pe_id;
   const cate1 = props.route.params.cate1;
 
-  console.log("pe_id?", pe_id);
+  console.log('pe_id?', pe_id);
 
   const [details, setDetails] = React.useState([]);
 
@@ -149,7 +148,7 @@ const CopyOrder = (props) => {
               paddingHorizontal: 14,
               paddingVertical: 7,
             }}>
-            <Text style={{fontFamily: SCDream4, fontSize: 13, color: '#fff'}}>
+            <Text style={{fontFamily: 'SCDream4', fontSize: 13, color: '#fff'}}>
               닫기
             </Text>
           </TouchableOpacity>
@@ -250,7 +249,7 @@ const CopyOrder = (props) => {
         ],
       );
       setdDayDate(date);
-    } else if(selectedDate >= arriveDate) {
+    } else if (selectedDate >= arriveDate) {
       Alert.alert(
         '견적 마감일은 납품 희망일과 같은 날짜이거나 이후 날짜일 수 없습니다.',
         '날짜를 다시 선택해주세요.',
@@ -289,60 +288,63 @@ const CopyOrder = (props) => {
   };
 
   const estimateCopyHandler = () => {
-    OrderAPI.estimateCopy(pe_id).then(res => {
-      if(res.data.result === '1') {
-        
-        sendEstimateCopyAPIHandler(res.data.item);
-      } else {
-        Alert.alert(res.data.message, '관리자에게 문의하세요.', [
-          {
-            text: '확인'
-          }
-        ])
-      }
-    }).catch(err => {
-      Alert.alert(err, '관리자에게 문의하세요.', [
-        {
-          text: '확인'
+    OrderAPI.estimateCopy(pe_id)
+      .then((res) => {
+        if (res.data.result === '1') {
+          sendEstimateCopyAPIHandler(res.data.item);
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요.', [
+            {
+              text: '확인',
+            },
+          ]);
         }
-      ])
-    })
-  }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
+          {
+            text: '확인',
+          },
+        ]);
+      });
+  };
 
   const sendEstimateCopyAPIHandler = (newPeId) => {
     let arrDate = moment(arriveDate).format('YYYY-MM-DD');
     let dDate = moment(dDayDate).format('YYYY-MM-DD');
 
-    console.log("arrDate ::::", arrDate);
-    console.log("dDate ::::", dDate);
+    console.log('arrDate ::::', arrDate);
+    console.log('dDate ::::', dDate);
 
-    OrderAPI.sendEstimateCopy(newPeId, arrDate, dDate).then(res => {
-      
-      if(res.data.result === '1') {
-        Alert.alert(res.data.message, '나의 견적 페이지로 이동합니다.', [
+    OrderAPI.sendEstimateCopy(newPeId, arrDate, dDate)
+      .then((res) => {
+        if (res.data.result === '1') {
+          Alert.alert(res.data.message, '나의 견적 페이지로 이동합니다.', [
+            {
+              text: '확인',
+              onPress: () =>
+                navigation.navigate('MyOrder', {screen: 'MyOrder'}),
+            },
+          ]);
+        } else {
+          Alert.alert(res.data.message, '관리자에게 문의하세요.', [
+            {
+              text: '확인',
+            },
+          ]);
+        }
+      })
+      .catch((err) => {
+        Alert.alert(err, '관리자에게 문의하세요.', [
           {
             text: '확인',
-            onPress: () => navigation.navigate('MyOrder', {screen: 'MyOrder'})
-          }
-        ])
-      } else {
-        Alert.alert(res.data.message, '관리자에게 문의하세요.', [
-          {
-            text: '확인'
-          }
-        ])
-      }
-    }).catch(err => {
-      Alert.alert(err, '관리자에게 문의하세요.', [
-        {
-          text: '확인'
-        }
-      ])
-    })
-  }
+          },
+        ]);
+      });
+  };
 
-  console.log("arriveDate", arriveDate);
-  console.log("dDayDate", dDayDate);
+  console.log('arriveDate', arriveDate);
+  console.log('dDayDate', dDayDate);
 
   return (
     <>
@@ -469,7 +471,8 @@ const CopyOrder = (props) => {
                   (필수)
                 </Text> */}
               </View>
-              <View style={[
+              <View
+                style={[
                   styles.normalText,
                   {
                     borderWidth: 1,
@@ -482,7 +485,9 @@ const CopyOrder = (props) => {
                     alignItems: 'flex-start',
                   },
                 ]}>
-                <Text style={{fontFamily: SCDream4, fontSize:14}}>{title}</Text>  
+                <Text style={{fontFamily: 'SCDream4', fontSize: 14}}>
+                  {title}
+                </Text>
               </View>
             </View>
             {/* // 제목 */}
@@ -1182,12 +1187,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   profileTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 15,
     color: '#111',
   },
   profileRequired: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
   },
@@ -1198,13 +1203,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#275696',
     lineHeight: 23,
   },
   infoStepTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#000000',
   },
@@ -1215,20 +1220,20 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   details: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   detailsTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     width: 100,
     fontSize: 14,
     color: '#A2A2A2',
     marginVertical: 5,
   },
   detailsTitle02: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     width: 230,
     fontSize: 14,
     lineHeight: 22,
@@ -1236,7 +1241,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   detailsDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000',
   },
@@ -1246,24 +1251,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   orderInfoTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#000000',
     marginTop: 20,
   },
   orderInfoTitleRow: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     marginTop: 20,
   },
   orderInfoDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#000',
     marginBottom: 10,
   },
   textInput: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     borderWidth: 1,
     borderColor: '#E3E3E3',
     borderRadius: 4,
@@ -1293,18 +1298,18 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   orderInfoContentRow: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   orderInfoContentTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#111',
   },
   orderInfoContentDetail: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#707070',
   },
@@ -1317,7 +1322,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   cancelBtnText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
@@ -1331,7 +1336,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
@@ -1345,19 +1350,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnBorderText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

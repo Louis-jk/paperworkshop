@@ -6,26 +6,21 @@ import {
   Image,
   StyleSheet,
   TextInput,
-  Keyboard,
 } from 'react-native';
 
 import axios from 'axios';
 import qs from 'qs';
 
 import GalleryApi from '../../src/api/Gallery';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const GalleryNav = (props) => {
   const navigation = props.navigation;
-  const {routeName, getGallery, keyword, setKeyword} = props;
-
-  // console.log("props", props);
-  // console.log("getGallery", getGallery);
+  const routeName = props.routeName;
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [packagesInfo, setPackagesInfo] = React.useState([]);
   const [generalInfo, setGeneralInfo] = React.useState([]);
-  const [etcInfo, setEtcInfo] = React.useState([]);  
+  const [etcInfo, setEtcInfo] = React.useState([]);
 
   const [isActivePackages, setIsActivePackages] = React.useState(false);
   const togglePackages = () => {
@@ -50,10 +45,9 @@ const GalleryNav = (props) => {
 
   const getPackages = () => {
     setIsLoading(true);
-    GalleryApi.getGallery('proc_cate_list', '1')
+    GalleryApi.getPartner('proc_cate_list', '1')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
-          console.log("res ?", res);
           setPackagesInfo(res.data.item);
           setIsLoading(false);
         } else {
@@ -72,7 +66,7 @@ const GalleryNav = (props) => {
 
   const getGenerals = () => {
     setIsLoading(true);
-    GalleryApi.getGallery('proc_cate_list', '0')
+    GalleryApi.getPartner('proc_cate_list', '0')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setGeneralInfo(res.data.item);
@@ -93,7 +87,7 @@ const GalleryNav = (props) => {
 
   const getEtc = () => {
     setIsLoading(true);
-    GalleryApi.getGallery('proc_cate_list', '2')
+    GalleryApi.getPartner('proc_cate_list', '2')
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setEtcInfo(res.data.item);
@@ -249,7 +243,7 @@ const GalleryNav = (props) => {
                 setIsActiveGeneral(false);
                 setIsActiveEtc(false);
               }}>
-              <Text style={{fontFamily: SCDream4, fontSize: 12}}>전체</Text>
+              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
             </TouchableOpacity>
             {packagesInfo.map((v, idx) => (
               <TouchableOpacity
@@ -267,7 +261,7 @@ const GalleryNav = (props) => {
                   setIsActiveGeneral(false);
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
                 </Text>
               </TouchableOpacity>
@@ -345,7 +339,7 @@ const GalleryNav = (props) => {
                 setIsActiveGeneral(false);
                 setIsActiveEtc(false);
               }}>
-              <Text style={{fontFamily: SCDream4, fontSize: 12}}>전체</Text>
+              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
             </TouchableOpacity>
             {generalInfo.map((v, idx) => (
               <TouchableOpacity
@@ -363,7 +357,7 @@ const GalleryNav = (props) => {
                   setIsActiveGeneral(false);
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
                 </Text>
               </TouchableOpacity>
@@ -441,7 +435,7 @@ const GalleryNav = (props) => {
                 setIsActiveGeneral(false);
                 setIsActiveEtc(false);
               }}>
-              <Text style={{fontFamily: SCDream4, fontSize: 12}}>전체</Text>
+              <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>전체</Text>
             </TouchableOpacity>
             {etcInfo.map((v, idx) => (
               <TouchableOpacity
@@ -459,7 +453,7 @@ const GalleryNav = (props) => {
                   setIsActiveGeneral(false);
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v.ca_id === v.ca_id && v.ca_name}
                 </Text>
               </TouchableOpacity>
@@ -477,61 +471,14 @@ const GalleryNav = (props) => {
           borderColor: '#DEDEDE',
           borderRadius: 5,
           paddingHorizontal: 10,
-          zIndex: -1
         }}>
         <TextInput
-          value={keyword}
           placeholder="키워드를 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
-          onChangeText={text => setKeyword(text)}
-          onSubmitEditing={() => {
-            Keyboard.dismiss();
-            getGallery(keyword);
-          }}
-          style={[styles.normalText, {width: '80%', height: 50}]}
-          returnKeyType="search"
-          returnKeyLabel="검색"
+          style={[styles.normalText, {width: '80%'}]}
         />
-        {keyword ? 
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => {
-              Keyboard.dismiss();
-              setKeyword(null);
-              getGallery(null);
-              // getSearchHistoryAPI();
-              // setVisibleKeyword(true);
-              // setVisibleResult(false);
-            }}>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 23,
-                height: 23,
-                borderRadius: 23,
-                backgroundColor: '#EFEFEF',
-              }}>
-              <Image
-                source={require('../../src/assets/icon_close02.png')}
-                resizeMode="cover"
-                style={{
-                  width: 15,
-                  height: 15,
-                }}
-                fadeDuration={1000}
-              />
-            </View>
-          </TouchableOpacity>
-          : null}
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-            Keyboard.dismiss();
-            getGallery(keyword);
-          }}
-        >
+        <TouchableOpacity>
           <Image
             source={require('../../src/assets/top_seach.png')}
             resizeMode="contain"
@@ -548,13 +495,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

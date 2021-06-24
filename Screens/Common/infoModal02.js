@@ -13,7 +13,6 @@ import {
 
 import Modal from 'react-native-modal';
 import AutoHeightImage from 'react-native-auto-height-image';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const InfoModal02 = ({ toggleModal, isVisible }) => {
   return (
@@ -133,25 +132,25 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   partnerInfoTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 15,
     color: '#275696',
     marginBottom: 10,
   },
   partnerInfoDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 13,
     lineHeight: 20,
     color: '#000000',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -7,11 +7,8 @@ import {
   Image,
   TouchableWithoutFeedback,
   SafeAreaView,
-  Platform,
-  Keyboard
 } from 'react-native';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
-
+import {useDimensions} from '@react-native-community/hooks';
 
 const DetailHeader = (props) => {
   const navigation = props.navigation;
@@ -172,7 +169,7 @@ const DetailHeader = (props) => {
 
   return (
     <SafeAreaView style={{backgroundColor: '#fff'}}>
-      <View style={container}>
+      <View style={({width: useDimensions().window.width}, container)}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={headerCtrl}>
             <View style={{paddingVertical: 10, paddingRight: 3}}>
@@ -206,11 +203,7 @@ const DetailHeader = (props) => {
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
-            onPress={() => { 
-              Keyboard.dismiss();
-              navigation.openDrawer('right');
-              }
-            }
+            onPress={() => navigation.openDrawer('right')}
             hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
             <View>
               <Image
@@ -231,19 +224,20 @@ const DetailHeader = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('window').width,
+    // width: Dimensions.get('window').width,
     backgroundColor: '#fff',
     paddingHorizontal: 25,
-    paddingVertical: Platform.OS === 'android' ? 3 : 0,
+    paddingVertical: 3,
     // height: 55,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   headerCtrl: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    // backgroundColor: '#ffaaee',
   },
   headerTitle: {
     fontSize: 18,
@@ -255,13 +249,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

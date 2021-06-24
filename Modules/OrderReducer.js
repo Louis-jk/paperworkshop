@@ -174,7 +174,10 @@ export const setUserPageCnt = (payload) => ({type: SET_PAGE_CNT, payload});
 export const setUserPageCnt2 = (payload) => ({type: SET_PAGE_CNT2, payload});
 export const setUserBindType = (payload) => ({type: SET_BIND_TYPE, payload});
 export const setUserStandard = (payload) => ({type: SET_STANDARD, payload});
-export const setUserStandardEtc = (payload) => ({type: SET_STANDARD_ETC, payload});
+export const setUserStandardEtc = (payload) => ({
+  type: SET_STANDARD_ETC,
+  payload,
+});
 export const setUserThomsonType = (payload) => ({
   type: SET_THOMSON_TYPE,
   payload,
@@ -330,28 +333,28 @@ const initialize = {
 // reducer create
 export default function setOrder(state = initialize, action) {
   switch (action.type) {
-    case RESET: 
+    case RESET:
       return {
-        cate1: '', 
-        ca_id: '', 
-        type_id: '', 
-        type_name: '', 
-        pf_id: '', 
-        pf_id2: '', 
-        pd_id: '', 
-        pd_id2: '', 
-        pn_id: '', 
-        pn_id2: '', 
-        paper_name2: '', 
-        paper_name2_02: '', 
-        mb_id: '', 
+        cate1: '',
+        ca_id: '',
+        type_id: '',
+        type_name: '',
+        pf_id: '',
+        pf_id2: '',
+        pd_id: '',
+        pd_id2: '',
+        pn_id: '',
+        pn_id2: '',
+        paper_name2: '',
+        paper_name2_02: '',
+        mb_id: '',
         company_id: '',
-        title: '', 
+        title: '',
         company: '',
         mb_name: '',
         mb_hp: '',
-        design_print: '', 
-        favor_area: '', 
+        design_print: '',
+        favor_area: '',
         delivery_date: '',
         estimate_date: '',
         pe_file_url: '',
@@ -365,7 +368,7 @@ export default function setOrder(state = initialize, action) {
         cnt: '',
         cnt_etc: '',
         wood_pattern: '',
-        stype: '', 
+        stype: '',
         board_tk: '',
         ground_method: '',
         way_edit: '',
@@ -373,20 +376,20 @@ export default function setOrder(state = initialize, action) {
         page_cnt: '',
         page_cnt2: '',
         bind_type: '',
-        standard: '', 
-        thomson_type: '', 
+        standard: '',
+        thomson_type: '',
         writeing_paper: '',
-        cover_color: '', 
+        cover_color: '',
         section_color: '',
-        back_side: '', 
-        geomancer: '', 
+        back_side: '',
+        geomancer: '',
         pe_file02_url: '',
         pe_file02_type: '',
         pe_file02_name: '',
         pe_file02_size: '',
-        paper_weight: '', 
+        paper_weight: '',
         paper_weight2: '',
-        paper_weight_etc: '', 
+        paper_weight_etc: '',
         paper_weight_etc2: '',
         paper_goal: '',
         paper_goal_etc: '',
@@ -400,7 +403,7 @@ export default function setOrder(state = initialize, action) {
         proof_printing2: '',
         print_supervision: '',
         print_supervision2: '',
-        park_processing: '', 
+        park_processing: '',
         park_processing2: '',
         press_design: '',
         press_design2: '',
@@ -471,7 +474,7 @@ export default function setOrder(state = initialize, action) {
       return {
         ...state,
         pf_direct_name2: action.payload,
-      };      
+      };
     case SELECT_PAPER_NAME:
       return {
         ...state,

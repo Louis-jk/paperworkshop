@@ -21,7 +21,6 @@ import Carousel from 'react-native-snap-carousel';
 import Header from './Header';
 import Footer from '../Common/Footer';
 import EventAPI from '../../src/api/Event';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -254,12 +253,10 @@ const index = (props) => {
             placeholder="이벤트 제목 또는 내용을 입력하세요."
             placeholderTextColor="#BEBEBE"
             autoFocus={false}
-            style={[styles.normalText, {width: '80%', height: 50}]}
+            style={[styles.normalText, {width: '80%'}]}
             onChangeText={(text) => setSearch(text)}
             onSubmitEditing={() => getEventListAPI(search)}
             autoCapitalize="none"
-            returnKeyType="search"
-            returnKeyLabel="검색"
           />
           {search ? 
           <TouchableOpacity
@@ -317,7 +314,7 @@ const index = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontFamily: SCDream4}}>이벤트가 없습니다.</Text>
+            <Text style={{fontFamily: 'SCDream4'}}>이벤트가 없습니다.</Text>
           </View>
         }
       />
@@ -343,13 +340,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

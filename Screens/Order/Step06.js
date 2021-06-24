@@ -15,7 +15,6 @@ import DetailHeader from '../Common/DetailHeader';
 import Modal from './detailOrderModal';
 import InfoModal from '../Common/infoModal02';
 import OrderAPI from '../../src/api/OrderAPI';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 import {
   setUserParkProc,
@@ -26,11 +25,10 @@ import {
   setUserPartialSilk2,
   setUserCoating,
   setUserCoating2,
-  setUserNumbering
+  setUserNumbering,
 } from '../../Modules/OrderReducer';
 
 import BoxTypeAPI from '../../src/api/BoxType';
-
 
 const Step06 = (props) => {
   const navigation = props.navigation;
@@ -38,7 +36,6 @@ const Step06 = (props) => {
   const propsScreenName = props.route.params.screen;
 
   const dispatch = useDispatch();
-
 
   const {
     cate1,
@@ -105,14 +102,13 @@ const Step06 = (props) => {
     proof_printing,
     proof_printing2,
     print_supervision,
-    print_supervision2,    
+    print_supervision2,
     outside,
     status,
     way_edit,
     pf_direct_name,
-    pf_direct_name2
+    pf_direct_name2,
   } = useSelector((state) => state.OrderReducer);
-
 
   const [getFoil, setGetFoil] = React.useState([]); // 박가공 정보
   const [getPress, setGetPress] = React.useState([]); // 형압 정보
@@ -126,46 +122,44 @@ const Step06 = (props) => {
 
   const [getNumbering, setGetNumbering] = React.useState([]); // 넘버링 정보 - 스티커의 경우
 
-
   const postProcessAPIHandler = () => {
-   
     BoxTypeAPI.getPostProcess(cate1, ca_id)
-      .then(res => {
-        if(res.data.result === '1' && res.data.count > 0) {
-          console.log("후가공", res);
+      .then((res) => {
+        if (res.data.result === '1' && res.data.count > 0) {
+          console.log('후가공', res);
           setGetFoil(res.data.item[0].park_processing);
           setGetPress(res.data.item[0].press_design);
           setGetSilk(res.data.item[0].partial_silk);
           setGetLaminate(res.data.item[0].coating);
-          if(cate1 === '0' && (ca_id ==='1' || ca_id === '4')) {
+          if (cate1 === '0' && (ca_id === '1' || ca_id === '4')) {
             setGetFoil2(res.data.item[0].park_processing2);
             setGetPress2(res.data.item[0].press_design2);
             setGetSilk2(res.data.item[0].partial_silk2);
             setGetLaminate2(res.data.item[0].coating2);
           }
-          if(cate1 === '0' && ca_id ==='6') {
+          if (cate1 === '0' && ca_id === '6') {
             setGetNumbering(res.data.item[0].numbering);
           }
         } else {
           Alert.alert(res.data.message, '관리자에게 문의하세요.', [
             {
-              text: '확인'
-            }
-          ])  
+              text: '확인',
+            },
+          ]);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         Alert.alert(err, '관리자에게 문의하세요.', [
           {
-            text: '확인'
-          }
-        ])
+            text: '확인',
+          },
+        ]);
       });
-  }
+  };
 
   React.useEffect(() => {
     postProcessAPIHandler();
-  },[])
+  }, []);
 
   //  박가공 유무
   const [foil, setFoil] = React.useState('Y');
@@ -207,13 +201,13 @@ const Step06 = (props) => {
     dispatch(setUserPartialSilk(v));
   };
 
-   //  넘버링 유무
-   const [numbering, setNumbering] = React.useState('Y');
+  //  넘버링 유무
+  const [numbering, setNumbering] = React.useState('Y');
 
-   const setNumberingChoise = (v) => {
-     setNumbering(v);
-     dispatch(setUserNumbering(v));
-   };
+  const setNumberingChoise = (v) => {
+    setNumbering(v);
+    dispatch(setUserNumbering(v));
+  };
 
   //  부분 실크 유무 - 내지
   const [silk02, setSilk02] = React.useState('Y');
@@ -244,15 +238,18 @@ const Step06 = (props) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
 
   const toggleModal = () => {
-    console.log("press");
+    console.log('press');
     if (ca_id !== '10' && laminate === '') {
       setLaminateError(true);
-    } 
-    else if (ca_id !== '10' && (ca_id === '1' || ca_id === '4') && laminate02 === '') {
+    } else if (
+      ca_id !== '10' &&
+      (ca_id === '1' || ca_id === '4') &&
+      laminate02 === ''
+    ) {
       setLaminateError02(true);
     } else {
       setModalVisible(!isModalVisible);
-    }    
+    }
   };
 
   const [isInfoModalVisible, setInfoModalVisible] = React.useState(false);
@@ -262,21 +259,32 @@ const Step06 = (props) => {
   };
 
   const sendOrderAPI = () => {
-
     let pe_file01 = {};
-    if(pe_file_url !== null && pe_file_type !== null && pe_file_name !== null) {
+    if (
+      pe_file_url !== null &&
+      pe_file_type !== null &&
+      pe_file_name !== null
+    ) {
       pe_file01 = {uri: pe_file_url, type: pe_file_type, name: pe_file_name};
     } else {
       pe_file01 = '';
     }
 
     let pe_file02 = {};
-    if(pe_file02_url !== null && pe_file02_type !== null && pe_file02_name !== null) {
-      pe_file02 = {uri: pe_file02_url, type: pe_file02_type, name: pe_file02_name};
+    if (
+      pe_file02_url !== null &&
+      pe_file02_type !== null &&
+      pe_file02_name !== null
+    ) {
+      pe_file02 = {
+        uri: pe_file02_url,
+        type: pe_file02_type,
+        name: pe_file02_name,
+      };
     } else {
       pe_file02 = '';
     }
-    
+
     const frmdata = new FormData();
     frmdata.append('method', 'proc_estimate');
     frmdata.append('cate1', cate1);
@@ -360,7 +368,7 @@ const Step06 = (props) => {
     OrderAPI.sendOrder(frmdata)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
-          console.log("return ::::::", res);
+          console.log('return ::::::', res);
           setModalVisible(!isModalVisible);
           // navigation.navigate('easyOrderComplete');
           navigation.reset({routes: [{name: 'easyOrderComplete'}]});
@@ -451,173 +459,170 @@ const Step06 = (props) => {
 
           <View style={styles.wrap}>
             {/* 박가공  */}
-            {getFoil &&
-              getFoil.length > 1 && (
-                <View style={{marginBottom: 25}}>
-                  {cate1 === '0' && (ca_id === '1' || ca_id === '4') ? (
-                    <Text
-                      style={{
-                        fontFamily: SCDream5,
-                        fontSize: 15,
-                        marginBottom: 20,
-                      }}>
-                      {'<표지>'}
-                    </Text>
-                  ) : null}
+            {getFoil && getFoil.length > 1 && (
+              <View style={{marginBottom: 25}}>
+                {cate1 === '0' && (ca_id === '1' || ca_id === '4') ? (
+                  <Text
+                    style={{
+                      fontFamily: 'SCDream5',
+                      fontSize: 15,
+                      marginBottom: 20,
+                    }}>
+                    {'<표지>'}
+                  </Text>
+                ) : null}
 
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      marginBottom: 10,
-                    }}>
-                    <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                      박가공
-                    </Text>
-                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                    }}>
-                    {getFoil.map((p, idx) => (
-                      <TouchableOpacity
-                        key={idx}
-                        activeOpacity={1}
-                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                        onPress={() => setFoilChoise(p)}
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'flex-start',
-                          alignItems: 'center',
-                          marginRight: 20,
-                        }}>
-                        <Image
-                          source={
-                            foil === p
-                              ? require('../../src/assets/radio_on.png')
-                              : require('../../src/assets/radio_off.png')
-                          }
-                          resizeMode="contain"
-                          style={{width: 20, height: 20, marginRight: 5}}
-                        />
-                        <Text style={[styles.normalText, {fontSize: 14}]}>
-                          {p === 'Y' ? '있음' : '없음'}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}>
+                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                    박가공
+                  </Text>
+                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              )}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  {getFoil.map((p, idx) => (
+                    <TouchableOpacity
+                      key={idx}
+                      activeOpacity={1}
+                      hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                      onPress={() => setFoilChoise(p)}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        marginRight: 20,
+                      }}>
+                      <Image
+                        source={
+                          foil === p
+                            ? require('../../src/assets/radio_on.png')
+                            : require('../../src/assets/radio_off.png')
+                        }
+                        resizeMode="contain"
+                        style={{width: 20, height: 20, marginRight: 5}}
+                      />
+                      <Text style={[styles.normalText, {fontSize: 14}]}>
+                        {p === 'Y' ? '있음' : '없음'}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            )}
             {/* // 박가공  */}
 
             {/* 형압  */}
-            {getPress &&
-              getPress.length > 1 && (
-                <View style={{marginBottom: 25}}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      marginBottom: 10,
-                    }}>
-                    <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                      형압
-                    </Text>
-                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                    }}>
-                    {getPress.map((p, idx) => (
-                      <TouchableOpacity
-                        key={idx}
-                        activeOpacity={1}
-                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                        onPress={() => setPressChoise(p)}
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'flex-start',
-                          alignItems: 'center',
-                          marginRight: 20,
-                        }}>
-                        <Image
-                          source={
-                            press === p
-                              ? require('../../src/assets/radio_on.png')
-                              : require('../../src/assets/radio_off.png')
-                          }
-                          resizeMode="contain"
-                          style={{width: 20, height: 20, marginRight: 5}}
-                        />
-                        <Text style={[styles.normalText, {fontSize: 14}]}>
-                          {p === 'Y' ? '있음' : '없음'}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
+            {getPress && getPress.length > 1 && (
+              <View style={{marginBottom: 25}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}>
+                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                    형압
+                  </Text>
+                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              )}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  {getPress.map((p, idx) => (
+                    <TouchableOpacity
+                      key={idx}
+                      activeOpacity={1}
+                      hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                      onPress={() => setPressChoise(p)}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        marginRight: 20,
+                      }}>
+                      <Image
+                        source={
+                          press === p
+                            ? require('../../src/assets/radio_on.png')
+                            : require('../../src/assets/radio_off.png')
+                        }
+                        resizeMode="contain"
+                        style={{width: 20, height: 20, marginRight: 5}}
+                      />
+                      <Text style={[styles.normalText, {fontSize: 14}]}>
+                        {p === 'Y' ? '있음' : '없음'}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            )}
             {/* // 형압  */}
 
             {/* 부분 실크  */}
-            {getSilk &&
-              getSilk.length > 1 && (
-                <View style={{marginBottom: 25}}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      marginBottom: 10,
-                    }}>
-                    <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                      부분 실크
-                    </Text>
-                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                    }}>
-                    {getSilk.map((p, idx) => (
-                      <TouchableOpacity
-                        key={idx}
-                        activeOpacity={1}
-                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                        onPress={() => setSilkChoise(p)}
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'flex-start',
-                          alignItems: 'center',
-                          marginRight: 20,
-                        }}>
-                        <Image
-                          source={
-                            silk === p
-                              ? require('../../src/assets/radio_on.png')
-                              : require('../../src/assets/radio_off.png')
-                          }
-                          resizeMode="contain"
-                          style={{width: 20, height: 20, marginRight: 5}}
-                        />
-                        <Text style={[styles.normalText, {fontSize: 14}]}>
-                          {p === 'Y' ? '있음' : '없음'}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
+            {getSilk && getSilk.length > 1 && (
+              <View style={{marginBottom: 25}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}>
+                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                    부분 실크
+                  </Text>
+                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                 </View>
-              )}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  {getSilk.map((p, idx) => (
+                    <TouchableOpacity
+                      key={idx}
+                      activeOpacity={1}
+                      hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                      onPress={() => setSilkChoise(p)}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        marginRight: 20,
+                      }}>
+                      <Image
+                        source={
+                          silk === p
+                            ? require('../../src/assets/radio_on.png')
+                            : require('../../src/assets/radio_off.png')
+                        }
+                        resizeMode="contain"
+                        style={{width: 20, height: 20, marginRight: 5}}
+                      />
+                      <Text style={[styles.normalText, {fontSize: 14}]}>
+                        {p === 'Y' ? '있음' : '없음'}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            )}
             {/* // 부분 실크  */}
 
             {/* 코팅  */}
@@ -677,7 +682,7 @@ const Step06 = (props) => {
                   <Text
                     style={{
                       width: '100%',
-                      fontFamily: SCDream4,
+                      fontFamily: 'SCDream4',
                       fontSize: 12,
                       lineHeight: 18,
                       color: '#366DE5',
@@ -690,9 +695,71 @@ const Step06 = (props) => {
             ) : null}
             {/* // 코팅  */}
 
-             {/* 넘버링  */}
-             {getNumbering &&
-             getNumbering.length > 1 && (
+            {/* 넘버링  */}
+            {getNumbering && getNumbering.length > 1 && (
+              <View style={{marginBottom: 25}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}>
+                  <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                    넘버링
+                  </Text>
+                  {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  {getNumbering.map((p, idx) => (
+                    <TouchableOpacity
+                      key={idx}
+                      activeOpacity={1}
+                      hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                      onPress={() => setNumberingChoise(p)}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        marginRight: 20,
+                      }}>
+                      <Image
+                        source={
+                          numbering === p
+                            ? require('../../src/assets/radio_on.png')
+                            : require('../../src/assets/radio_off.png')
+                        }
+                        resizeMode="contain"
+                        style={{width: 20, height: 20, marginRight: 5}}
+                      />
+                      <Text style={[styles.normalText, {fontSize: 14}]}>
+                        {p === 'Y' ? '있음' : '없음'}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            )}
+            {/* // 넘버링  */}
+          </View>
+
+          {cate1 === '0' && (ca_id === '1' || ca_id === '4') ? (
+            <View style={styles.wrap}>
+              <Text
+                style={{
+                  fontFamily: 'SCDream5',
+                  fontSize: 15,
+                  marginBottom: 20,
+                }}>
+                {'<내지>'}
+              </Text>
+              {/* 박가공  */}
+              {getFoil2 && getFoil2.length > 1 && (
                 <View style={{marginBottom: 25}}>
                   <View
                     style={{
@@ -702,7 +769,7 @@ const Step06 = (props) => {
                       marginBottom: 10,
                     }}>
                     <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                      넘버링
+                      박가공
                     </Text>
                     {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                   </View>
@@ -712,12 +779,12 @@ const Step06 = (props) => {
                       justifyContent: 'flex-start',
                       alignItems: 'center',
                     }}>
-                    {getNumbering.map((p, idx) => (
+                    {getFoil2.map((p, idx) => (
                       <TouchableOpacity
                         key={idx}
                         activeOpacity={1}
                         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                        onPress={() => setNumberingChoise(p)}
+                        onPress={() => setFoilChoise02(p)}
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'flex-start',
@@ -726,7 +793,7 @@ const Step06 = (props) => {
                         }}>
                         <Image
                           source={
-                            numbering === p
+                            foil02 === p
                               ? require('../../src/assets/radio_on.png')
                               : require('../../src/assets/radio_off.png')
                           }
@@ -741,177 +808,110 @@ const Step06 = (props) => {
                   </View>
                 </View>
               )}
-            {/* // 넘버링  */}
-
-          </View>
-
-          {cate1 === '0' && (ca_id === '1' || ca_id === '4') ? (
-            <View style={styles.wrap}>
-              <Text
-                style={{
-                  fontFamily: SCDream5,
-                  fontSize: 15,
-                  marginBottom: 20,
-                }}>
-                {'<내지>'}
-              </Text>
-              {/* 박가공  */}
-              {getFoil2 &&
-                getFoil2.length > 1 && (
-                  <View style={{marginBottom: 25}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                        marginBottom: 10,
-                      }}>
-                      <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                        박가공
-                      </Text>
-                      {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                      }}>
-                      {getFoil2.map((p, idx) => (
-                        <TouchableOpacity
-                          key={idx}
-                          activeOpacity={1}
-                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                          onPress={() => setFoilChoise02(p)}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            marginRight: 20,
-                          }}>
-                          <Image
-                            source={
-                              foil02 === p
-                                ? require('../../src/assets/radio_on.png')
-                                : require('../../src/assets/radio_off.png')
-                            }
-                            resizeMode="contain"
-                            style={{width: 20, height: 20, marginRight: 5}}
-                          />
-                          <Text style={[styles.normalText, {fontSize: 14}]}>
-                            {p === 'Y' ? '있음' : '없음'}
-                          </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  </View>
-                )}
               {/* // 박가공  */}
 
               {/* 형압  */}
-              {getPress2 &&
-                getPress2.length > 1 && (
-                  <View style={{marginBottom: 25}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                        marginBottom: 10,
-                      }}>
-                      <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                        형압
-                      </Text>
-                      {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                      }}>
-                      {getPress2.map((p, idx) => (
-                        <TouchableOpacity
-                          key={idx}
-                          activeOpacity={1}
-                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                          onPress={() => setPressChoise02(p)}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            marginRight: 20,
-                          }}>
-                          <Image
-                            source={
-                              press02 === p
-                                ? require('../../src/assets/radio_on.png')
-                                : require('../../src/assets/radio_off.png')
-                            }
-                            resizeMode="contain"
-                            style={{width: 20, height: 20, marginRight: 5}}
-                          />
-                          <Text style={[styles.normalText, {fontSize: 14}]}>
-                            {p === 'Y' ? '있음' : '없음'}
-                          </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
+              {getPress2 && getPress2.length > 1 && (
+                <View style={{marginBottom: 25}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 10,
+                    }}>
+                    <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                      형압
+                    </Text>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                   </View>
-                )}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    {getPress2.map((p, idx) => (
+                      <TouchableOpacity
+                        key={idx}
+                        activeOpacity={1}
+                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        onPress={() => setPressChoise02(p)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                        }}>
+                        <Image
+                          source={
+                            press02 === p
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {p === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
+              )}
               {/* // 형압  */}
 
               {/* 부분 실크  */}
-              {getSilk2 &&
-                getSilk2.length > 1 && (
-                  <View style={{marginBottom: 25}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                        marginBottom: 10,
-                      }}>
-                      <Text style={[styles.profileTitle, {marginRight: 5}]}>
-                        부분 실크
-                      </Text>
-                      {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                      }}>
-                      {getSilk2.map((p, idx) => (
-                        <TouchableOpacity
-                          key={idx}
-                          activeOpacity={1}
-                          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                          onPress={() => setSilkChoise02(p)}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            marginRight: 20,
-                          }}>
-                          <Image
-                            source={
-                              silk02 === p
-                                ? require('../../src/assets/radio_on.png')
-                                : require('../../src/assets/radio_off.png')
-                            }
-                            resizeMode="contain"
-                            style={{width: 20, height: 20, marginRight: 5}}
-                          />
-                          <Text style={[styles.normalText, {fontSize: 14}]}>
-                            {p === 'Y' ? '있음' : '없음'}
-                          </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
+              {getSilk2 && getSilk2.length > 1 && (
+                <View style={{marginBottom: 25}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      marginBottom: 10,
+                    }}>
+                    <Text style={[styles.profileTitle, {marginRight: 5}]}>
+                      부분 실크
+                    </Text>
+                    {/* <Text style={[styles.profileRequired]}>(필수)</Text> */}
                   </View>
-                )}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    {getSilk2.map((p, idx) => (
+                      <TouchableOpacity
+                        key={idx}
+                        activeOpacity={1}
+                        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                        onPress={() => setSilkChoise02(p)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginRight: 20,
+                        }}>
+                        <Image
+                          source={
+                            silk02 === p
+                              ? require('../../src/assets/radio_on.png')
+                              : require('../../src/assets/radio_off.png')
+                          }
+                          resizeMode="contain"
+                          style={{width: 20, height: 20, marginRight: 5}}
+                        />
+                        <Text style={[styles.normalText, {fontSize: 14}]}>
+                          {p === 'Y' ? '있음' : '없음'}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
+              )}
               {/* // 부분 실크  */}
 
               {/* 코팅  */}
@@ -972,7 +972,7 @@ const Step06 = (props) => {
                     <Text
                       style={{
                         width: '100%',
-                        fontFamily: SCDream4,
+                        fontFamily: 'SCDream4',
                         fontSize: 12,
                         lineHeight: 18,
                         color: '#366DE5',
@@ -1083,12 +1083,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   profileTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 15,
     color: '#111',
   },
   profileRequired: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#366DE5',
   },
@@ -1165,13 +1165,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

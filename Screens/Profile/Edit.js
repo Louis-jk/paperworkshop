@@ -28,7 +28,6 @@ import FastImage from 'react-native-fast-image';
 
 import Header from '../Common/DetailHeader';
 import Timer from '../Common/Timer';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const baseUrl = 'http://dmonster1506.cafe24.com/json/proc_json.php/';
 
@@ -122,8 +121,8 @@ const Edit = (props) => {
 
   const onFailConfirm = () => {
     setIsSend(false);
-    setReSend(true);
-    setReSendStatus('y');
+    // setReSend(true); // (0604)
+    // setReSendStatus('y'); // (0604)
   };
 
   // 인증여부 mb_1 의 인증'Y' 미인증 'N'를 위한 상태값
@@ -152,7 +151,7 @@ const Edit = (props) => {
         url: `${baseUrl}`,
         data: qs.stringify({
           method: 'proc_cert_confirm',
-          mb_hp: mobileNo,
+          mb_hp: mb_hp, // Previous Value mobileNo
           cert_num: mobileConfirmId,
           rt_yn: 'N',
         }),
@@ -271,11 +270,11 @@ const Edit = (props) => {
   frmdata.append('method', 'proc_modify_member');
   frmdata.append('mb_id', mb_id);
   frmdata.append('mb_password', pwd ? pwd : '');
-  frmdata.append('mb_hp', mobileNo);
+  frmdata.append('mb_hp', mb_hp); // Previous Value mobileNo
   frmdata.append('mb_1', confirm);
   frmdata.append('mb_email', email ? email : mb_email);
   frmdata.append('mb_2', company ? company : mb_2 ? mb_2 : '');
-  frmdata.append('mb_img', source);
+  frmdata.append('mb_img', '');
 
   const [imgMime, setImgMime] = React.useState(null);
 
@@ -306,14 +305,13 @@ const Edit = (props) => {
   }, [navigation]);
 
   const onSubmit = () => {
-
-    if(!isMobileConfimed) {
-      Alert.alert('휴대폰 번호를 인증해주세요.','', [
+    if (!isMobileConfimed) {
+      Alert.alert('휴대폰 번호를 인증해주세요.', '', [
         {
           text: '확인',
-          onPress: () => mobileRef.current.focus()
-        }
-      ])
+          onPress: () => mobileRef.current.focus(),
+        },
+      ]);
     } else {
       axios({
         method: 'post',
@@ -358,7 +356,7 @@ const Edit = (props) => {
             },
           ]);
         });
-    }    
+    }
   };
 
   return (
@@ -457,7 +455,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: SCDream4,
+                    fontFamily: 'SCDream4',
                     fontSize: 14,
                   }}>
                   구글 로그인 완료
@@ -488,7 +486,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: SCDream4,
+                    fontFamily: 'SCDream4',
                     fontSize: 14,
                   }}>
                   카카오 로그인 완료
@@ -519,7 +517,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: SCDream4,
+                    fontFamily: 'SCDream4',
                     fontSize: 14,
                     color: '#fff',
                   }}>
@@ -551,7 +549,7 @@ const Edit = (props) => {
                 />
                 <Text
                   style={{
-                    fontFamily: SCDream4,
+                    fontFamily: 'SCDream4',
                     fontSize: 14,
                     color: '#fff',
                   }}>
@@ -576,13 +574,10 @@ const Edit = (props) => {
           {/* 성함 변경 */}
           <View style={styles.profileBox}>
             <Text style={[styles.profileTitle, {marginBottom: 10}]}>성함</Text>
-            {sns_type !== 'apple' ? 
             <View style={styles.flexRowCenter}>
               <Text style={styles.profileDesc}>{mb_name}</Text>
             </View>
-            : null }
-            {sns_type === 'apple' ? 
-            <TextInput
+            {/* <TextInput
               value={mb_name}
               placeholder="성함을 입력해주세요."
               placeholderTextColor="#aaa"
@@ -594,13 +589,11 @@ const Edit = (props) => {
                   borderRadius: 4,
                   paddingHorizontal: 10,
                   color: '#111',
-                  height: 50
                 },
               ]}
               autoCapitalize="none"
-              // editable={false}
-            />
-            : null }
+              editable={false}
+            /> */}
           </View>
           {/* // 성함 변경 */}
 
@@ -645,7 +638,7 @@ const Edit = (props) => {
               </View>
               <Text
                 style={{
-                  fontFamily: SCDream4,
+                  fontFamily: 'SCDream4',
                   fontSize: 12,
                   color: '#366DE5',
                 }}>
@@ -681,7 +674,6 @@ const Edit = (props) => {
                     borderRadius: 4,
                     paddingHorizontal: 10,
                     marginRight: 10,
-                    height: 50
                   },
                 ]}
                 onChangeText={(text) => setMobileNo(text)}
@@ -691,7 +683,7 @@ const Edit = (props) => {
               />
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => reAuthenticateSMS(mobileNo)}
+                onPress={() => reAuthenticateSMS(mb_hp ? mb_hp : mobileNo)}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -739,7 +731,6 @@ const Edit = (props) => {
                     borderRadius: 4,
                     paddingHorizontal: 10,
                     marginRight: 10,
-                    height: 50
                   },
                 ]}
                 onChangeText={(text) => setMobileConfirmId(text)}
@@ -768,13 +759,13 @@ const Edit = (props) => {
               </TouchableOpacity>
             </View>
             <Text
-                style={{
-                  fontFamily: SCDream4,
-                  fontSize: 12,
-                  color: '#366DE5',
-                }}>
-                ※ 휴대폰 번호는 반드시 입력하여 인증받으셔야 합니다.
-              </Text>
+              style={{
+                fontFamily: 'SCDream4',
+                fontSize: 12,
+                color: '#366DE5',
+              }}>
+              ※ 휴대폰 번호는 반드시 입력하여 인증받으셔야 합니다.
+            </Text>
           </View>
           {/* // 휴대폰 번호 변경 */}
 
@@ -783,7 +774,7 @@ const Edit = (props) => {
             <Text style={[styles.profileTitle, {marginBottom: 10}]}>
               이메일
             </Text>
-            {(sns_type !== 'kakao' && sns_type !== 'google' && sns_type !== 'naver')? (
+            {sns_check !== 'Y' ? (
               <TextInput
                 value={email ? email : mb_email}
                 placeholder="이메일을 입력해주세요."
@@ -795,7 +786,6 @@ const Edit = (props) => {
                     borderColor: '#E3E3E3',
                     borderRadius: 4,
                     paddingHorizontal: 10,
-                    height: 50
                   },
                 ]}
                 onChangeText={(text) => setEmail(text)}
@@ -826,7 +816,6 @@ const Edit = (props) => {
                   borderColor: '#E3E3E3',
                   borderRadius: 4,
                   paddingHorizontal: 10,
-                  height: 50
                 },
               ]}
               onChangeText={(text) => setCompany(text)}
@@ -868,13 +857,13 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   profileTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 15,
     lineHeight: 19,
     marginBottom: 10,
   },
   profileDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 15,
     color: '#111',
   },
@@ -885,7 +874,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
@@ -897,7 +886,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   cancelBtnText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 16,
     color: '#111',
     textAlign: 'center',
@@ -909,13 +898,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   listTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 19,
     marginBottom: 5,
   },
   listDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     lineHeight: 16,
     color: '#A2A2A2',
@@ -935,13 +924,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E3E3',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -12,7 +12,7 @@ export default {
         cate1,
         popular,
         location,
-        search
+        search,
       }),
     });
   },
@@ -68,7 +68,7 @@ export default {
         cate1,
         popular,
         location,
-        search
+        search,
       }),
     });
   },

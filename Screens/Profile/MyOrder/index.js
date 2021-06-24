@@ -12,20 +12,18 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import DropDownPicker from 'react-native-dropdown-picker';
-
+import {useSelector, useDispatch} from 'react-redux';
+import {UserEstimateCnt} from '../../../Modules/UserInfoReducer';
 import moment from 'moment';
 import 'moment/locale/ko';
 
 import DetailHeader from '../../Common/DetailHeader';
 import OrderAPI from '../../../src/api/OrderAPI';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
   const routeName = props.route.name;
-
+  const dispatch = useDispatch();
   const {mb_id} = useSelector((state) => state.UserInfoReducer);
   const [myOrders, setMyOrders] = React.useState([]);
   const [visibleStep01, setVisibleStep01] = React.useState(false);
@@ -47,10 +45,11 @@ const index = (props) => {
     setLoading(true);
 
     OrderAPI.getMyOrder(mb_id, status, cate1, search)
-      .then((res) => {        
+      .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
-          console.log("result :: ", res);
+          // console.log('result :: ', res);
           setMyOrders(res.data.item);
+          dispatch(UserEstimateCnt(res.data.count));
         } else {
           setMyOrders(null);
         }
@@ -86,7 +85,7 @@ const index = (props) => {
     setVisibleStep02((prev) => !prev);
   };
 
-  console.log('myOrders', myOrders);
+  // console.log('myOrders', myOrders);
 
   const renderRow = ({item, index}) => {
     return (
@@ -279,10 +278,9 @@ const index = (props) => {
                 value={step01}
                 placeholder="진행현황 선택"
                 style={{
-                  fontFamily: SCDream4,
+                  fontFamily: 'SCDream4',
                   width: '80%',
                   color: step01 ? '#000' : '#A2A2A2',
-                  height: 45
                 }}
                 editable={false}
                 collapsable={true}
@@ -301,60 +299,46 @@ const index = (props) => {
 
           <View
             style={{
-              flex:1,
+              zIndex: 2000,
               position: 'relative',
               width: '39%',
+              borderWidth: 1,
+              borderColor: '#E3E3E3',
+              borderTopRightRadius: 4,
+              borderTopLeftRadius: 4,
+              borderBottomRightRadius: visibleStep02 ? 0 : 4,
+              borderBottomLeftRadius: visibleStep02 ? 0 : 4,
               paddingHorizontal: 10,
+              backgroundColor: '#fff',
             }}>
-            <DropDownPicker
-              placeholder={'분류 선택'}
-              placeholderStyle={{
-                fontSize: 14,
-                color: '#A2A2A2',
-                fontWeight: '400',
-              }}
-              value={location}
-              activeLabelStyle={{color: '#000'}}
-              activeItemStyle={{color: '#000'}}
-              selectedLabelStyle={{color: '#000'}}
-              items={[
-                {label: '전체', value: '전체'},
-                {label: '패키지', value: '패키지'},
-                {label: '일반인쇄물', value: '일반인쇄물'},
-                {label: '기타인쇄물', value: '기타인쇄물'},
-              ]}
-              zIndex={3000}
-              containerStyle={{height: 50}}
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={toggleMenu02}
               style={{
-                backgroundColor: '#fff',
-                borderTopRightRadius: 4,
-                borderTopLeftRadius: 4,
-                borderBottomRightRadius: 4,
-                borderBottomLeftRadius: 4,
-              }}
-              itemStyle={{
-                justifyContent: 'flex-start',
-                paddingVertical: 10,
-              }}
-              labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
-              dropDownStyle={{backgroundColor: '#fff'}}
-              onChangeItem={(item) => setLocation(item.value)}
-              autoCapitalize="none"
-              customArrowDown={() => (
-                <Image
-                  source={require('../../../src/assets/arr01.png')}
-                  style={{width: 25, height: 25}}
-                  resizeMode="contain"
-                />
-              )}
-              customArrowUp={() => (
-                <Image
-                  source={require('../../../src/assets/arr01_top.png')}
-                  style={{width: 25, height: 25}}
-                  resizeMode="contain"
-                />
-              )}
-            />
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                value={step02}
+                placeholder="분류 선택"
+                style={{
+                  fontFamily: 'SCDream4',
+                  width: '80%',
+                  color: step02 ? '#000' : '#A2A2A2',
+                }}
+                editable={false}
+              />
+              <Image
+                source={
+                  visibleStep02
+                    ? require('../../../src/assets/arr01_top.png')
+                    : require('../../../src/assets/arr01.png')
+                }
+                style={{width: 25, height: 25}}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -362,7 +346,6 @@ const index = (props) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            zIndex: -1
           }}>
           <TextInput
             value={keyword}
@@ -377,7 +360,6 @@ const index = (props) => {
                 paddingHorizontal: 15,
                 flex: 2,
                 marginRight: 5,
-                height: 50
               },
             ]}
             onChangeText={(text) => setKeyword(text)}
@@ -426,7 +408,7 @@ const index = (props) => {
                 flex: 1,
                 height: Dimensions.get('window').height,
               }}>
-              <Text style={{marginTop: -300, fontFamily: SCDream4}}>
+              <Text style={{marginTop: -300, fontFamily: 'SCDream4'}}>
                 견적 의뢰 건이 없습니다.
               </Text>
             </View>
@@ -464,7 +446,7 @@ const index = (props) => {
               setStatus('');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>전체</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -477,7 +459,7 @@ const index = (props) => {
               setStatus('0');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>견적요청</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>견적요청</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -490,7 +472,7 @@ const index = (props) => {
               setStatus('1');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>입찰중</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>입찰중</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -503,7 +485,7 @@ const index = (props) => {
               setStatus('2');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
               파트너최종선정(견적확정대기)
             </Text>
           </TouchableOpacity>
@@ -518,7 +500,7 @@ const index = (props) => {
               setStatus('3');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
               파트너최종선정(계약금입금대기)
             </Text>
           </TouchableOpacity>
@@ -533,7 +515,7 @@ const index = (props) => {
               setStatus('4');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
               파트너최종선정(계약금입금완료)
             </Text>
           </TouchableOpacity>
@@ -548,7 +530,7 @@ const index = (props) => {
               setStatus('5');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
               인쇄제작요청가능
             </Text>
           </TouchableOpacity>
@@ -563,7 +545,7 @@ const index = (props) => {
               setStatus('6');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
               인쇄제작요청완료
             </Text>
           </TouchableOpacity>
@@ -578,7 +560,7 @@ const index = (props) => {
               setStatus('7');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>납품완료</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>납품완료</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -591,7 +573,7 @@ const index = (props) => {
               setStatus('8');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>수령완료</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>수령완료</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -604,12 +586,87 @@ const index = (props) => {
               setStatus('9');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 14, fontFamily: SCDream4}}>마감</Text>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>마감</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
 
-     
+      {visibleStep02 && (
+        <ScrollView
+          nestedScrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{zIndex: 1000}}
+          style={{
+            position: 'absolute',
+            top: 126,
+            right: 20,
+            backgroundColor: '#fff',
+            width: '35.2%',
+            zIndex: 1000,
+            borderWidth: 1,
+            borderColor: '#E3E3E3',
+            paddingVertical: 10,
+            borderBottomRightRadius: 4,
+            borderBottomLeftRadius: 4,
+          }}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep02('전체');
+              setCate1('');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep02('패키지');
+              setCate1('1');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>패키지</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep02('일반인쇄물');
+              setCate1('0');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              일반인쇄물
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+            onPress={() => {
+              setStep02('기타인쇄물');
+              setCate1('2');
+              setVisibleStep02(false);
+            }}>
+            <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>
+              기타인쇄물
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
     </>
   );
 };
@@ -722,13 +779,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   listTitle: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     lineHeight: 19,
     marginBottom: 5,
   },
   listDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     lineHeight: 16,
     color: '#A2A2A2',
@@ -743,19 +800,19 @@ const styles = StyleSheet.create({
     color: '#A2A2A2',
   },
   listStep02: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#275696',
     marginBottom: 2,
   },
   listDday02: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     alignSelf: 'flex-end',
     fontSize: 14,
     color: '#000000',
   },
   listStep03: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#000000',
   },
@@ -796,7 +853,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep02BadgeText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
@@ -811,20 +868,20 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   listStep03BadgeText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 12,
     color: '#000000',
     paddingVertical: 2,
     paddingHorizontal: 5,
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

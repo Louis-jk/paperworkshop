@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, BackHandler, ToastAndroid} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import MainScreen from '../Screens/Main';
@@ -148,8 +148,6 @@ export const MainStackNavigator = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="Main" component={MainScreen} />
-      <Stack.Screen name="Terms" component={TermsScreen} />
-      <Stack.Screen name="Privacy" component={PrivacyScreen} />
       <Stack.Screen name="Estimate" component={EstimateScreen} />
     </Stack.Navigator>
   );
@@ -277,6 +275,30 @@ export const ProfileEditStackNavigator = () => {
 };
 
 export const LoginStackNavigator = () => {
+  // 0618, 0621 - S
+  let count = React.useRef(0);
+  let timeout;
+  const backAction = () => {
+    if (count.current === 0) {
+      count.current += 1;
+      ToastAndroid.show('한번 더 누르면 앱을 종료합니다.', ToastAndroid.SHORT);
+
+      timeout = setTimeout(() => {
+        count.current -= 1;
+      }, 2000);
+    } else if (count.current >= 1) {
+      clearTimeout(timeout);
+      BackHandler.exitApp();
+    }
+    return true;
+  };
+
+  React.useEffect(() => {
+    const back = BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => back.remove();
+  }, [backAction]);
+  // 0618, 0621 - E
+
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Check" component={CheckScreen} />
@@ -336,6 +358,22 @@ export const MessageDetailStackNavigator = () => {
   );
 };
 
+export const Terms = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Terms" component={TermsScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const Privacy = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Privacy" component={PrivacyScreen} />
+    </Stack.Navigator>
+  );
+};
+
 export const OrderStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -348,7 +386,10 @@ export const OrderStackNavigator = () => {
       <Stack.Screen name="OrderStep03" component={OrderStep03Screen} />
       <Stack.Screen name="OrderStep04" component={OrderStep04Screen} />
       <Stack.Screen name="OrderStep05" component={OrderStep05Screen} />
-      <Stack.Screen name="OrderStep05After" component={OrderStep05AfterScreen} />
+      <Stack.Screen
+        name="OrderStep05After"
+        component={OrderStep05AfterScreen}
+      />
       <Stack.Screen name="OrderStep06" component={OrderStep06Screen} />
       <Stack.Screen
         name="easyOrderComplete"

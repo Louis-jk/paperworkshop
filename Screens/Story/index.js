@@ -8,21 +8,17 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   ImageBackground,
   TextInput,
   Alert,
   FlatList,
   ActivityIndicator,
   Keyboard,
-  Platform,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
-import DropDownPicker from 'react-native-dropdown-picker';
 
 import Header from '../Common/Header';
 import CcenterAPI from '../../src/api/Ccenter';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -41,9 +37,9 @@ const index = (props) => {
     setVisibleStep01((prev) => !prev);
   };
 
-  const getReviewsAPI = (payload) => {
+  const getReviewsAPI = () => {
     setLoading(true);
-    CcenterAPI.getReviews(cate1, payload)
+    CcenterAPI.getReviews(cate1, keyword)
       .then((res) => {
         if (res.data.result === '1' && res.data.count > 0) {
           setReviews(res.data.item);
@@ -103,7 +99,7 @@ const index = (props) => {
             paddingHorizontal: 20,
             paddingTop: 20,
           }}>
-          <Text style={{fontFamily: SCDream6, marginRight: 5}}>
+          <Text style={{fontFamily: 'SCDream6', marginRight: 5}}>
             {item.ccompany_name}
           </Text>
           <View
@@ -407,7 +403,6 @@ const index = (props) => {
             marginBottom: 10,
             backgroundColor: '#fff',
           }}>
-          {Platform.OS === 'android' ? (
           <View
             style={{
               zIndex: 2000,
@@ -442,10 +437,9 @@ const index = (props) => {
                 }
                 placeholder="인쇄종류"
                 style={{
-                  fontFamily: SCDream4,
+                  fontFamily: 'SCDream4',
                   width: '80%',
                   color: cate1 ? '#000' : '#A2A2A2',
-                  height: 50
                 }}
                 editable={false}
                 collapsable={true}
@@ -461,62 +455,6 @@ const index = (props) => {
               />
             </TouchableOpacity>
           </View>
-          ) : 
-          Platform.OS === 'ios' ? (
-            <View style={{width:110, zIndex: 3000}}>
-              <DropDownPicker
-                placeholder={'전체'}
-                placeholderStyle={{
-                  fontFamily: SCDream4,
-                  fontSize: 14,
-                  color: '#000'
-                }}
-                value={category}
-                activeLabelStyle={{color: '#000'}}
-                activeItemStyle={{color: '#000'}}
-                selectedLabelStyle={{color: '#000'}}
-                items={category.map((v, _i) => {
-                  return {value: v, label: v};
-                })}
-                dropDownMaxHeight={300}
-                zIndex={3000}
-                containerStyle={{height: 52, marginRight: 5}}
-                style={{
-                  backgroundColor: '#fff',
-                  borderTopRightRadius: 4,
-                  borderTopLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                  borderBottomLeftRadius: 4,
-                }}
-                itemStyle={{
-                  justifyContent: 'flex-start',
-                  paddingVertical: 10
-                }}
-                labelStyle={{fontFamily: SCDream4, color: '#A2A2A2'}}
-                dropDownStyle={{backgroundColor: '#fff'}}
-                onChangeItem={(item) => {
-                  setCategoryFn(item.value);
-                  setVisibleStep01(false);
-                }}
-                autoCapitalize="none"            
-                customArrowDown={() => (
-                  <Image
-                    source={require('../../src/assets/arr01.png')}
-                    style={{width: 20, height: 20}}
-                    resizeMode="contain"
-                  />
-                )}
-                customArrowUp={() => (
-                  <Image
-                    source={require('../../src/assets/arr01_top.png')}
-                    style={{width: 20, height: 20}}
-                    resizeMode="contain"
-                  />
-                )}
-              />
-            </View>
-          ) : null
-          }
           <View
             style={{
               flexDirection: 'row',
@@ -534,46 +472,15 @@ const index = (props) => {
               placeholder="업체명을 입력해주세요."
               placeholderTextColor="#BEBEBE"
               autoFocus={false}
-              style={[styles.normalText, {width: '70%', height: 50}]}
+              style={[styles.normalText, {width: '80%'}]}
               onChangeText={(text) => setKeyword(text)}
-              onSubmitEditing={() => getReviewsAPI(keyword)}
-              returnKeyType="search"
-              returnKeyLabel="검색"
+              onSubmitEditing={() => getReviewsAPI()}
             />
-            {keyword ? 
-            <TouchableOpacity
-            activeOpacity={1}
-              onPress={() => {
-                Keyboard.dismiss();
-                setKeyword(null);
-                getReviewsAPI(null);
-              }}>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 20,
-                  height: 20,
-                  borderRadius: 20,
-                  backgroundColor: '#EFEFEF',
-                  marginRight: 7
-                }}>
-                <Image
-                  source={require('../../src/assets/icon_close02.png')}
-                  resizeMode="cover"
-                  style={{
-                    width: 10,
-                    height: 10,
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
-            : null}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
                 Keyboard.dismiss();
-                getReviewsAPI(keyword);
+                getReviewsAPI();
               }}>
               <Image
                 source={require('../../src/assets/top_seach.png')}
@@ -594,7 +501,7 @@ const index = (props) => {
         showsVerticalScrollIndicator={false}
         progressViewOffset={true}
         refreshing={true}
-        style={{backgroundColor: '#fff', paddingHorizontal: 20, zIndex: -1}}
+        style={{backgroundColor: '#fff', paddingHorizontal: 20}}
         ListEmptyComponent={
           <View
             style={{
@@ -603,12 +510,12 @@ const index = (props) => {
               flex: 1,
               height: Dimensions.get('window').height - 300,
             }}>
-            <Text style={{fontFamily: SCDream4}}>리뷰가 없습니다.</Text>
+            <Text style={{fontFamily: 'SCDream4'}}>리뷰가 없습니다.</Text>
           </View>
         }
       />
 
-      {Platform.OS === 'android' && visibleStep01 && (
+      {visibleStep01 && (
         <View
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{zIndex: 1000}}
@@ -636,7 +543,7 @@ const index = (props) => {
                 setCategoryFn(c);
                 setVisibleStep01(false);
               }}>
-              <Text style={{fontSize: 14, fontFamily: SCDream4}}>{c}</Text>
+              <Text style={{fontSize: 14, fontFamily: 'SCDream4'}}>{c}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -650,13 +557,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const CategoryNav = (props) => {
   const navigation = props.navigation;
@@ -70,7 +69,7 @@ const CategoryNav = (props) => {
           <Text
             style={{
               paddingVertical: 12,
-              fontFamily: cateName === 'All' ? SCDream5 : SCDream4,
+              fontFamily: cateName === 'All' ? 'SCDream5' : 'SCDream4',
               fontSize: 13,
               color: cateName === 'All' ? '#275696' : '#B5B5B5',
             }}>
@@ -91,7 +90,7 @@ const CategoryNav = (props) => {
           <Text
             style={{
               paddingVertical: 12,
-              fontFamily: cateName === 'Packages' ? SCDream5 : SCDream4,
+              fontFamily: cateName === 'Packages' ? 'SCDream5' : 'SCDream4',
               fontSize: 13,
               color:
                 cateName === 'Packages' ||
@@ -133,7 +132,7 @@ const CategoryNav = (props) => {
                   });
                   setIsActivePackages(false);
                 }}>
-                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v === '9'
                     ? '칼라박스'
                     : v === '10'
@@ -166,7 +165,7 @@ const CategoryNav = (props) => {
           <Text
             style={{
               paddingVertical: 12,
-              fontFamily: cateName === 'General' ? SCDream5 : SCDream4,
+              fontFamily: cateName === 'General' ? 'SCDream5' : 'SCDream4',
               fontSize: 13,
               color:
                 cateName === 'General' ||
@@ -208,7 +207,7 @@ const CategoryNav = (props) => {
                   });
                   setIsActiveGeneral(false);
                 }}>
-                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v === '1'
                     ? '카달로그,브로슈어,팜플렛'
                     : v === '4'
@@ -241,7 +240,7 @@ const CategoryNav = (props) => {
           <Text
             style={{
               paddingVertical: 12,
-              fontFamily: cateName === 'Etc' ? SCDream5 : SCDream4,
+              fontFamily: cateName === 'Etc' ? 'SCDream5' : 'SCDream4',
               fontSize: 13,
               color:
                 cateName === 'Etc' || (cateName === 'Etc' && isActiveEtc)
@@ -282,7 +281,7 @@ const CategoryNav = (props) => {
                   });
                   setIsActiveEtc(false);
                 }}>
-                <Text style={{fontFamily: SCDream4, fontSize: 12}}>
+                <Text style={{fontFamily: 'SCDream4', fontSize: 12}}>
                   {v === '15'
                     ? '상품권/티켓'
                     : v === '16'
@@ -316,7 +315,7 @@ const CategoryNav = (props) => {
           placeholder="업체명을 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
-          style={[styles.normalText, {width: '80%', height:50}]}
+          style={[styles.normalText, {width: '80%'}]}
         />
         <TouchableOpacity>
           <Image
@@ -335,13 +334,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

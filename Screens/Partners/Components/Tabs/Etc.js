@@ -2,10 +2,11 @@ import * as React from 'react';
 import {View, Text, StyleSheet, FlatList, Dimensions, TextInput, TouchableOpacity, Image, Alert} from 'react-native';
 
 import List from '../List';
-import {SCDream4, SCDream5, SCDream6} from '../../../../src/font';
 
 const Etc = (props) => {
-  const {navigation, partners, searchHandler, hiddenLocationHandler} = props;
+  const navigation = props.navigation;
+  const partners = props.partners;
+  const searchHandler = props.searchHandler;
 
   const [keyword, setKeyword] = React.useState('');
 
@@ -14,7 +15,7 @@ const Etc = (props) => {
   };
 
   return (
-    <View style={{paddingHorizontal: 16, marginBottom: 50}}>
+    <View style={{paddingHorizontal: 16}}>
       <View
         style={{
           flexDirection: 'row',
@@ -31,13 +32,10 @@ const Etc = (props) => {
           placeholder="업체명을 입력하세요."
           placeholderTextColor="#BEBEBE"
           autoFocus={false}
-          onFocus={() => hiddenLocationHandler()}
           onChangeText={(text) => setKeyword(text)}
-          style={[styles.normalText, {width: '80%', height:50}]}
+          style={[styles.normalText, {width: '80%'}]}
           onSubmitEditing={() => searchHandler(keyword)}
           autoCapitalize="none"
-          returnKeyType="search"
-          returnKeyLabel="검색"
         />
         {keyword ? 
         <TouchableOpacity
@@ -96,7 +94,7 @@ const Etc = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontFamily: SCDream4}}>해당 업체가 없습니다.</Text>
+            <Text style={{fontFamily: 'SCDream4'}}>해당 업체가 없습니다.</Text>
           </View>
         }
         // onEndReached={handleLoadMore}
@@ -110,13 +108,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

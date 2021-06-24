@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 import Header from '../Common/Header';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const CreateInfo = (props) => {
   const navigation = props.navigation;
@@ -105,7 +104,7 @@ const CreateInfo = (props) => {
             alignItems: 'center',
             height: Dimensions.get('window').height - 400,
           }}>
-          <Text style={{fontFamily: SCDream4}}>인쇄/패키지 제작정보</Text>
+          <Text style={{fontFamily: 'SCDream4'}}>인쇄/패키지 제작정보</Text>
         </View>
       </ScrollView>
       {visibleStep01 && (
@@ -134,7 +133,7 @@ const CreateInfo = (props) => {
               setStep01('일반인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: SCDream4}}>일반인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>일반인쇄</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -146,7 +145,7 @@ const CreateInfo = (props) => {
               setStep01('패키지');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: SCDream4}}>패키지</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>패키지</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
@@ -158,7 +157,7 @@ const CreateInfo = (props) => {
               setStep01('기타인쇄');
               setVisibleStep01(false);
             }}>
-            <Text style={{fontSize: 15, fontFamily: SCDream4}}>기타인쇄</Text>
+            <Text style={{fontSize: 15, fontFamily: 'SCDream4'}}>기타인쇄</Text>
           </TouchableOpacity>
         </ScrollView>
       )}
@@ -171,13 +170,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

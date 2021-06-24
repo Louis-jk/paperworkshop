@@ -9,7 +9,6 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
-  Platform
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,7 +17,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Collapsible from 'react-native-collapsible';
 import FastImage from 'react-native-fast-image';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 import Main from '../../src/api/Main';
 
@@ -38,7 +36,6 @@ const DrawerMenu = (props) => {
   } = useSelector((state) => state.UserInfoReducer);
 
   const [imgMime, setImgMime] = React.useState(null);
-
 
   // Redux에서 가입시 회원 정보 가져오기
 
@@ -147,8 +144,6 @@ const DrawerMenu = (props) => {
     ]);
   };
 
-
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View>
@@ -158,7 +153,6 @@ const DrawerMenu = (props) => {
             paddingHorizontal: 20,
             paddingVertical: 25,
             marginBottom: 20,
-            paddingTop: Platform.OS === 'ios' ? 50 : 0
           }}>
           <View
             style={{
@@ -981,13 +975,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

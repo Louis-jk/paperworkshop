@@ -1,8 +1,14 @@
 import * as React from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 
 import DetailHeader from '../Common/DetailHeader';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const CancelOrder = (props) => {
   const navigation = props.navigation;
@@ -21,20 +27,28 @@ const CancelOrder = (props) => {
           paddingVertical: 20,
           backgroundColor: '#fff',
         }}>
-        <View style={{ marginTop: 60, marginBottom: 25 }}>
+        <View style={{marginTop: 60, marginBottom: 25}}>
           <Image
             source={require('../../src/assets/icon04.png')}
             resizeMode="cover"
-            style={{ width: 65, height: 65, marginBottom: 25 }}
+            style={{width: 65, height: 65, marginBottom: 25}}
           />
-          <Text style={[styles.boldText, { fontSize: 22, color: '#000000', marginBottom: 20 }]}>
+          <Text
+            style={[
+              styles.boldText,
+              {fontSize: 22, color: '#000000', marginBottom: 20},
+            ]}>
             견적 요청이 종료되었습니다.
           </Text>
 
-          <Text style={[styles.normalText, { fontSize: 15, color: '#111111', marginBottom: 2 }]}>
+          <Text
+            style={[
+              styles.normalText,
+              {fontSize: 15, color: '#111111', marginBottom: 2},
+            ]}>
             기존 정보는 모두 삭제되었으므로
           </Text>
-          <Text style={[styles.normalText, { fontSize: 15, color: '#111111' }]}>
+          <Text style={[styles.normalText, {fontSize: 15, color: '#111111'}]}>
             견적 요청을 원하신다면 신규로 작성해주세요.
           </Text>
         </View>
@@ -43,13 +57,17 @@ const CancelOrder = (props) => {
           style={{
             width: '100%',
           }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Stack')} activeOpacity={0.8}>
-            <View style={[styles.goHomeBtn, { marginBottom: 10 }]}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Root')} // Stack : 갤러리 화면으로 이동함. -> Root, 0623
+            activeOpacity={0.8}>
+            <View style={[styles.goHomeBtn, {marginBottom: 10}]}>
               <Text style={styles.goHomeBtnText}>홈으로</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Order')} activeOpacity={0.8}>
-            <View style={[styles.submitBtn, { marginBottom: 10 }]}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Order')}
+            activeOpacity={0.8}>
+            <View style={[styles.submitBtn, {marginBottom: 10}]}>
               <Text style={styles.submitBtnText}>비교 견적 신청</Text>
             </View>
           </TouchableOpacity>
@@ -72,7 +90,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   goHomeBtnText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#275696',
     textAlign: 'center',
@@ -86,19 +104,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   submitBtnText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

@@ -10,17 +10,16 @@ import {
   Alert,
   ScrollView,
   Platform,
-  BackHandler, 
+  BackHandler,
   ToastAndroid,
   ActivityIndicator,
-  SafeAreaView
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-// import {
-//   login as kLogin,
-//   getProfile as getKakaoProfile,
-// } from '@react-native-seoul/kakao-login'; // 카카오 로그인
-import KakaoSDK from '@actbase/react-kakaosdk';
+import {CommonActions} from '@react-navigation/native';
+import {
+  login as kLogin,
+  getProfile as getKakaoProfile,
+} from '@react-native-seoul/kakao-login'; // 카카오 로그인
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -28,7 +27,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin'; // 구글 로그인
 import {NaverLogin, getProfile} from '@react-native-seoul/naver-login'; // 네이버 로그인
-import jwtDecode from 'jwt-decode';
+
 import {setFcmToken} from '../../../Modules/InfoReducer';
 import {
   UserId,
@@ -45,87 +44,11 @@ import {
   LoginCheck,
 } from '../../../Modules/UserInfoReducer';
 import Auth from '../../../src/api/Auth.js';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
-
-// Apple login login start
-import { appleAuth } from '@invertase/react-native-apple-authentication';
-
-/**
- * You'd technically persist this somewhere for later use.
- */
-let user = null;
-
-/**
- * Fetches the credential state for the current user, if any, and updates state on completion.
- */
-async function fetchAndUpdateCredentialState(updateCredentialStateForUser) {
-  if (user === null) {
-    updateCredentialStateForUser('N/A');
-  } else {
-    const credentialState = await appleAuth.getCredentialStateForUser(user);
-    if (credentialState === appleAuth.State.AUTHORIZED) {
-      updateCredentialStateForUser('AUTHORIZED');
-    } else {
-      updateCredentialStateForUser(credentialState);
-    }
-  }
-}
-
-/**
- * Starts the Sign In flow.
- */
-async function onAppleButtonPress(updateCredentialStateForUser) {
-  console.warn('Beginning Apple Authentication');
-
-  // start a login request
-  try {
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-    });
-
-    const {
-      user: newUser,
-      email,
-      nonce,
-      identityToken,
-      realUserStatus /* etc */,
-    } = appleAuthRequestResponse;
-
-    user = newUser;
-
-    fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
-      updateCredentialStateForUser(`Error: ${error.code}`),
-    );
-
-    if (identityToken) {
-      // e.g. sign in with Firebase Auth using `nonce` & `identityToken`
-      console.log(nonce, identityToken);
-    } else {
-      // no token - failed sign-in?
-    }
-
-    if (realUserStatus === appleAuth.UserStatus.LIKELY_REAL) {
-      console.log("사람입니다.");
-    }
-
-    console.warn(`Apple Authentication Completed, ${user}, ${email}`);
-  } catch (error) {
-    if (error.code === appleAuth.Error.CANCELED) {
-      console.warn('애플 로그인을 취소하였습니다.');
-    } else {
-      console.error(error);
-    }
-  }
-}
-// Apple login login end
 
 const Login = (props) => {
   const navigation = props.navigation;
 
   const dispatch = useDispatch();
-  const [credentialStateForUser, updateCredentialStateForUser] = React.useState(-1);
-  console.log("credentialStateForUser", credentialStateForUser);
 
   const loginIdRef = React.useRef(null);
   const loginPwdRef = React.useRef(null);
@@ -152,42 +75,24 @@ const Login = (props) => {
   // SNS 로그인 처리(디비 접속)
   const SnsLoginHandler = (payload, token, type) => {
     let kakaoPhoneNum = '';
-    let applePhoneNum = '';
-    let appleName = '';
-    let appleEmail = '';
-
     if (type === 'kakao') {
-      // kakaoPhoneNum = payload.phoneNumber !== 'null' ? payload.phoneNumber : '';
-      kakaoPhoneNum = '';
-    }
-    if (type === 'apple') {
-      applePhoneNum = '';
-      if(payload.email !== '' || payload.email !== null) {
-        appleEmail = payload.email;
-      } else {
-        appleEmail = '';
-      }
-
+      kakaoPhoneNum = payload.phoneNumber !== 'null' ? payload.phoneNumber : '';
     }
 
-    let id = type === 'google' ? payload.user.id : type === 'apple' ? payload.sub : payload.id;
+    let id = type !== 'google' ? payload.id : payload.user.id;
     let idToken = token;
     let name =
       type === 'naver'
         ? payload.name
         : type === 'kakao'
-        ? payload.properties.nickname
-        : type === 'apple' 
-        ? appleName
+        ? payload.nickname
         : payload.user.name;
-    let email = type === 'google' ? payload.user.email : type === 'kakao' ? payload.kakao_account.email : type === 'apple' ? appleEmail : payload.email;
+    let email = type !== 'google' ? payload.email : payload.user.email;
     let profileImg =
       type === 'naver'
         ? payload.profile_image
         : type === 'kakao'
-        ? payload.properties.profile_image
-        : type === 'apple'
-        ? ''
+        ? payload.profileImageUrl
         : payload.user.photo;
     let mobile =
       type === 'naver' ? payload.mobile : type === 'kakao' ? kakaoPhoneNum : '';
@@ -219,14 +124,12 @@ const Login = (props) => {
           dispatch(SnsCheck(res.data.item.sns_check));
           dispatch(SnsType(res.data.item.sns_type));
           dispatch(LoginCheck('Y'));
-          navigation.navigate('Stack');
-          // const resetAction = CommonActions.reset({
-          //   index: 1,
-          //   routes: [
-          //     { name: 'EntryBefore' },
-          //   ],
-          // });
-          // navigation.dispatch(resetAction);
+          // navigation.navigate('EntryBefore');
+          const resetAction = CommonActions.reset({
+            index: 1,
+            routes: [{name: 'EntryBefore'}],
+          });
+          navigation.dispatch(resetAction);
         }
       })
       .catch((err) => {
@@ -237,58 +140,6 @@ const Login = (props) => {
         ]);
       });
   };
-
-  // 애플 로그인   
-  const appleLogin = async () => {
-    
-    try {
-      const appleAuthRequestResponse = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-      });
-
-      console.log("appleAuthRequestResponse",appleAuthRequestResponse);
-
-      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
-
-      if(credentialState === appleAuth.State.AUTHORIZED) {
-        const {identityToken, user, email, nonce, realUserStatus} = appleAuthRequestResponse;
-       
-        const decoded = jwtDecode(identityToken);
-
-        let appleUserInfo = {
-          idToken : identityToken,
-          user,
-          email,
-          nonce,
-          realUserStatus
-        }
-        await SnsLoginHandler(decoded, identityToken, 'apple');
-        // console.log("decoded", decoded);
-        // console.log("appleUserInfo", appleUserInfo);
-        // console.log("user", user);
-        // console.log("identityToken", identityToken);
-      }      
-    }
-    catch(err) {
-      if(err.code === appleAuth.Error.CANCELED) {
-        // console.warn('User canceled Apple Sign in.');
-        Alert.alert('애플로 로그인을 취소하셨습니다.', '', [
-          {
-            text: '확인'
-          }
-        ])
-      }
-      else {
-        Alert.alert('애플 로그인에 실패했습니다.','', [
-          {
-            text: '확인'
-          }
-        ]);
-        console.error(err);
-      }
-    }
-  }
 
   // 구글 로그인
   const [userInfo, setuserInfo] = React.useState([]);
@@ -304,26 +155,26 @@ const Login = (props) => {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
-        Alert.alert('구글 로그인을 취소하셨습니다.','', [
+        Alert.alert('구글 로그인을 취소하셨습니다.', '', [
           {
-            text: '확인'
-          }
+            text: '확인',
+          },
         ]);
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation (e.g. sign in) is in progress already
         // alert('Signin in progress');
-        Alert.alert('구글 로그인 진행 중.','', [
+        Alert.alert('구글 로그인 진행 중.', '', [
           {
-            text: '확인'
-          }
+            text: '확인',
+          },
         ]);
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
         // alert('PLAY_SERVICES_NOT_AVAILABLE');
-        Alert.alert('귀하의 구글 계정은 사용하실 수 없는 계정입니다.','', [
+        Alert.alert('귀하의 구글 계정은 사용하실 수 없는 계정입니다.', '', [
           {
-            text: '확인'
-          }
+            text: '확인',
+          },
         ]);
       } else {
         // some other error happened
@@ -341,67 +192,37 @@ const Login = (props) => {
 
   // 카카오 로그인
   const kakaoLogin = async () => {
-    try{
-      KakaoSDK.init('2194770efdaf3f52d4f09e1dc7f0c83b');
-      const tokens = await KakaoSDK.login();
-      console.log("kakao login tokens :: ", tokens);
-      await kakaoGetProfile(tokens.access_token);
-      // const accessToken = await KakaoSDK.getAccessToken();
-      // console.log("kakao accessToken :: ", accessToken);
-    }catch(err) {
-      Alert.alert('카카오톡 계정 정보가 없습니다.', '카카오톡을 사용 중이신지 확인해주세요.', [
-        {
-          text: '확인',
-        },
-      ]);
+    try {
+      const kakaoToken = await kLogin();
+      console.log('kakao ', kakaoToken);
+      await getKakaoProfileHandler(kakaoToken.accessToken);
+    } catch (err) {
+      console.log(err);
+      Alert.alert(
+        '카카오톡 계정 정보가 없습니다.',
+        '카카오톡을 사용 중이신지 확인해주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
     }
-    
-  }
+  };
 
-  const kakaoGetProfile = async (accessToken) => {
-    try{
-      const profile = await KakaoSDK.getProfile();
-      console.log("kakao profile ::", profile);
+  const getKakaoProfileHandler = async (accessToken) => {
+    try {
+      const profile = await getKakaoProfile();
+      console.log('profile', profile);
       await SnsLoginHandler(profile, accessToken, 'kakao');
-    } catch(err) {
+    } catch (err) {
       Alert.alert('오류가 발생하였습니다.', '다시 확인해주세요.', [
         {
           text: '확인',
         },
       ]);
-    }    
-  }
-  
-  // const kakaoLogin = async () => {
-  //   try {
-  //     const kakaoToken = await kLogin();
-  //     console.log('kakao ', kakaoToken);
-  //     alert("kakao", kakaoToken);
-  //     await getKakaoProfileHandler(kakaoToken.accessToken);
-  //   } catch (err) {
-  //     console.log(err);
-  //     alert("err", err);
-  //     Alert.alert('카카오톡 계정 정보가 없습니다.', '카카오톡을 사용 중이신지 확인해주세요.', [
-  //       {
-  //         text: '확인',
-  //       },
-  //     ]);
-  //   }
-  // };
-
-  // const getKakaoProfileHandler = async (accessToken) => {
-  //   try {
-  //     const profile = await getKakaoProfile();
-  //     console.log('profile', profile);
-  //     await SnsLoginHandler(profile, accessToken, 'kakao');
-  //   } catch (err) {
-  //     Alert.alert('오류가 발생하였습니다.', '다시 확인해주세요.', [
-  //       {
-  //         text: '확인',
-  //       },
-  //     ]);
-  //   }
-  // };
+    }
+  };
 
   // 네이버 로그인
   const ioskeys = {
@@ -439,7 +260,10 @@ const Login = (props) => {
   const getUserProfile = async (token) => {
     const profileResult = await getProfile(token.accessToken);
     if (profileResult.resultcode === '024') {
-      Alert.alert('네이버 계정 로그인을 실패하였습니다.', profileResult.message);
+      Alert.alert(
+        '네이버 계정 로그인을 실패하였습니다.',
+        profileResult.message,
+      );
       return;
     }
     console.log('profileResult', profileResult);
@@ -466,16 +290,17 @@ const Login = (props) => {
     setPwdEyes(!pwdEyes);
   };
 
-  // 안드로이드 뒤로가기 버튼 제어  
+  // 안드로이드 뒤로가기 버튼 제어
   let currentCount = 0;
 
-  const backAction = () => {    
-    if (currentCount < 1) {      
-      ToastAndroid.show("한번 더 누르면 앱을 종료합니다.", ToastAndroid.SHORT);
-      console.log("0에 해당");
+  const backAction = () => {
+    if (currentCount < 1) {
+      console.log(666666666666);
+      ToastAndroid.show('한번 더 누르면 앱을 종료합니다.', ToastAndroid.SHORT);
+      console.log('0에 해당');
       currentCount++;
     } else {
-      console.log("1에 해당");
+      console.log('1에 해당');
       BackHandler.exitApp();
     }
 
@@ -485,7 +310,7 @@ const Login = (props) => {
 
     return true;
   };
-  
+
   React.useEffect(() => {
     messaging()
       .getToken()
@@ -509,16 +334,16 @@ const Login = (props) => {
       setCheckPlatform('aos');
     }
 
-    BackHandler.addEventListener("hardwareBackPress", backAction);
+    BackHandler.addEventListener('hardwareBackPress', backAction);
 
-    return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
-
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
   // 로그인 API
   const login = () => {
     setLoading(true);
-    Auth.onLogin(loginId, loginPwd, fFcmToken, checkPlatform)
+    Auth.onLogin('heojh', 'Heojh1004@', fFcmToken, checkPlatform) // loginId, loginPwd, 0621
       .then((res) => {
         if (res.data.result === '1') {
           dispatch(UserId(res.data.item.mb_id));
@@ -533,7 +358,7 @@ const Login = (props) => {
           dispatch(LoginCheck('Y'));
           if (autoLogin) {
             storeData();
-            navigation.navigate('Stack');
+            navigation.navigate('EntryBefore');
             // const resetAction = CommonActions.reset({
             //   index: 1,
             //   routes: [
@@ -542,14 +367,14 @@ const Login = (props) => {
             // });
             // navigation.dispatch(resetAction);
           } else {
-            navigation.navigate('Stack');
+            navigation.navigate('EntryBefore');
             // const resetAction = CommonActions.reset({
             //   index: 1,
             //   routes: [
             //     { name: 'EntryBefore' },
             //   ],
             // });
-            // navigation.dispatch(resetAction);            
+            // navigation.dispatch(resetAction);
           }
           setLoading(false);
         } else {
@@ -568,43 +393,13 @@ const Login = (props) => {
           {
             text: '확인',
           },
-        ])
+        ]);
       });
   };
 
-  // 애플 로그인 관련 start
-  React.useEffect(() => {
-    if (!appleAuth.isSupported) return;
-
-    fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
-      updateCredentialStateForUser(`Error: ${error.code}`),
-    );
-  }, []);
-  
-  React.useEffect(() => {
-    if (!appleAuth.isSupported) return;
-
-    return appleAuth.onCredentialRevoked(async () => {
-      console.warn('Credential Revoked');
-      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
-        updateCredentialStateForUser(`Error: ${error.code}`),
-      );
-    });
-  }, []);
-
-  if (!appleAuth.isSupported) {
-    return (
-      <View style={[styles.container, styles.horizontal]}>
-        <Text>Apple Authentication is not supported on this device.</Text>
-      </View>
-    );
-  }
-  // 애플 로그인 관련 end
-
-
   return (
     <>
-    {isLoading && (
+      {isLoading && (
         <View
           style={{
             position: 'absolute',
@@ -623,8 +418,7 @@ const Login = (props) => {
           <ActivityIndicator size="large" color="#275696" />
         </View>
       )}
-      <SafeAreaView style={{ backgroundColor: '#fff' }}>
-        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             flex: 1,
@@ -757,7 +551,8 @@ const Login = (props) => {
                   borderRadius: 4,
                   paddingVertical: 15,
                 }}>
-                <Text style={[{fontSize: 16, color: '#fff'}, styles.normalText]}>
+                <Text
+                  style={[{fontSize: 16, color: '#fff'}, styles.normalText]}>
                   로그인
                 </Text>
               </TouchableOpacity>
@@ -805,7 +600,7 @@ const Login = (props) => {
             <View style={{width: 100, height: 1, backgroundColor: '#E3E3E3'}} />
           </View>
 
-          <View>
+          <View style={{marginBottom: 10}}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => kakaoLogin()}
@@ -824,7 +619,8 @@ const Login = (props) => {
                 resizeMode="contain"
                 style={{width: 30, height: 30}}
               />
-              <Text style={[{fontSize: 14, color: '#2A1617'}, styles.normalText]}>
+              <Text
+                style={[{fontSize: 14, color: '#2A1617'}, styles.normalText]}>
                 카카오로 로그인
               </Text>
             </TouchableOpacity>
@@ -853,7 +649,7 @@ const Login = (props) => {
             {Platform.OS === 'ios' ? (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => appleLogin()}
+                onPress={() => Alert.alert('애플로그인')}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
@@ -869,18 +665,19 @@ const Login = (props) => {
                   resizeMode="contain"
                   style={{width: 30, height: 30}}
                 />
-                <Text style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
+                <Text
+                  style={[{fontSize: 14, color: '#fff'}, styles.normalText]}>
                   애플로 로그인
                 </Text>
               </TouchableOpacity>
             ) : null}
             {/* <GoogleSigninButton
-              style={{width: 192, height: 48}}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-              onPress={gSignIn}
-              // disabled={this.state.isSigninInProgress}
-            /> */}
+            style={{width: 192, height: 48}}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={gSignIn}
+            // disabled={this.state.isSigninInProgress}
+          /> */}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => gSignIn()}
@@ -900,7 +697,8 @@ const Login = (props) => {
                 resizeMode="contain"
                 style={{width: 38, height: 40}}
               />
-              <Text style={[{fontSize: 14, color: '#333333'}, styles.normalText]}>
+              <Text
+                style={[{fontSize: 14, color: '#333333'}, styles.normalText]}>
                 구글로 로그인
               </Text>
             </TouchableOpacity>
@@ -926,14 +724,14 @@ const Login = (props) => {
                 paddingHorizontal: 10,
                 paddingVertical: 10,
               }}>
-              <Text style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
+              <Text
+                style={[styles.normalText, {fontSize: 14, color: '#275696'}]}>
                 회원가입
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
-      </SafeAreaView>
     </>
   );
 };
@@ -949,13 +747,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

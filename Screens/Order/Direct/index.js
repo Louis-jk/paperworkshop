@@ -22,7 +22,6 @@ import {
   setUserId,
 } from '../../../Modules/OrderReducer';
 import DetailHeader from '../../Common/DetailHeader';
-import {SCDream4, SCDream5, SCDream6} from '../../../src/font';
 
 const index = (props) => {
   const navigation = props.navigation;
@@ -333,13 +332,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoStepDesc: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
     fontSize: 14,
     color: '#484848',
     marginBottom: 10,
   },
   infoStepTitle: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     fontSize: 16,
     color: '#000000',
     marginBottom: 7,
@@ -412,7 +411,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   categoryItemText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
     width: 120,
     textAlign: 'center',
     fontSize: 14,
@@ -421,13 +420,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

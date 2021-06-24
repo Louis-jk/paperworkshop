@@ -14,7 +14,6 @@ import {
 import Dash from 'react-native-dash';
 import Header from '../Common/Header';
 import OrderAPI from '../../src/api/OrderAPI';
-import {SCDream4, SCDream5, SCDream6} from '../../src/font';
 
 const Estimate = (props) => {
   const navigation = props.navigation;
@@ -175,7 +174,7 @@ const Estimate = (props) => {
                 flex: 1,
                 height: Dimensions.get('window').height - 300,
               }}>
-              <Text style={{fontFamily: SCDream4}}>
+              <Text style={{fontFamily: 'SCDream4'}}>
                 실시간 견적 처리 현황 리스트가 없습니다.
               </Text>
             </View>
@@ -226,13 +225,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff00aa',
   },
   normalText: {
-    fontFamily: SCDream4,
+    fontFamily: 'SCDream4',
   },
   mediumText: {
-    fontFamily: SCDream5,
+    fontFamily: 'SCDream5',
   },
   boldText: {
-    fontFamily: SCDream6,
+    fontFamily: 'SCDream6',
   },
 });
 

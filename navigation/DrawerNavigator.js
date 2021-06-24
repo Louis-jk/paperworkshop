@@ -23,7 +23,7 @@ const DrawerNavigator = () => {
           width: Dimensions.get('window').width,
         }}
         screenOptions={{
-          gestureEnabled: false
+          gestureEnabled: false,
         }}
         drawerContent={(props) => <DrawerMenu {...props} />}>
         <Drawer.Screen name="Home" component={TabNavigator} />
